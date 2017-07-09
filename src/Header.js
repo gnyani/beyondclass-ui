@@ -8,7 +8,7 @@ class Header extends Component {
     return (
       <MuiThemeProvider>
       <div>
-        <Notifications />
+        <Notifications options={{zIndex: 5000}}/>
         <HeaderComponent />
       </div>
       </MuiThemeProvider>

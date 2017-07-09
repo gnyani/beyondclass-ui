@@ -6,6 +6,13 @@ import {notify} from 'react-notify-toast';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import { Grid, Row, Cell } from 'react-inline-grid';
+import styled from 'styled-components'
+
+const StayVisible = styled.div`
+  position: relative;
+  margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
+  transition: margin .1s;
+`
 
 class OtherSyllabus extends Component{
 
@@ -85,13 +92,16 @@ class OtherSyllabus extends Component{
 
    render(){
      return(
+    <StayVisible
+    {...this.props}
+    >
       <div >
         <div>
         <div style={{textAlign:'center'}}>
         <br />
         <br />
         <br />
-       <Paper zDepth={2} style={{width:'110%',borderRadius:'13%'}}  >
+       <Paper zDepth={2} style={{marginLeft:'18%',width:'60%'}}  >
         <br />
         <h4 style={{width: '100%'}}> Choose a Question Paper for retrieval </h4>
        <Grid>
@@ -181,8 +191,9 @@ class OtherSyllabus extends Component{
         </div>
          <br /> <br /> <br /> <br />
      </div>
-     <iframe src = {this.state.response} title="pdf syllabus" style={{height: '500px' ,width : '500px' , frameborder: '0'}} ></iframe>
+     <iframe src = {this.state.response} title="pdf syllabus" style={{marginLeft:'18%',height: '450px' ,width : '60%' , frameborder: '0'}} ></iframe>
      </div>
+     </StayVisible>
      )
    }
 

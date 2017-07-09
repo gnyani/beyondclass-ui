@@ -8,6 +8,13 @@ import MenuItem from 'material-ui/MenuItem';
 // import Img from 'react-image';
 // import Spinner from 'react-spinner';
 import { Grid, Row, Cell } from 'react-inline-grid';
+import styled from 'styled-components'
+
+const StayVisible = styled.div`
+  position: relative;
+  margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
+  transition: margin .1s;
+`
 
 class DefaultQp extends Component{
 
@@ -71,13 +78,16 @@ handleChange = (event, index, subject) => this.setState({subject});
 
   render(){
     return(
+  <StayVisible
+  {...this.props}
+  >
     <div>
      <div >
        <div style={{textAlign:'center'}}>
        <br />
        <br />
        <br />
-      <Paper zDepth={2} style={{width: '100%',borderRadius:'13%'}}  >
+      <Paper zDepth={2} style={{marginLeft:'18%',width: '60%'}}  >
        <br />
        <h4 style={{width: '100%'}}> choose a subject </h4>
       <Grid>
@@ -102,10 +112,11 @@ handleChange = (event, index, subject) => this.setState({subject});
        <RaisedButton label="Fetch" value="Fetch" primary={true} onTouchTap={this.validateAndFetch} />
        </Paper>
        </div>
-        <br /> <br /> <br /> <br />
+        <br /> <br /> <br />
     </div>
-    <iframe src = {this.state.response} title="pdf syllabus" style={{height: '500px' ,width : '500px' , frameborder: '1'}} ></iframe>
+    <iframe src = {this.state.response} title="pdf syllabus" style={{marginLeft:'18%',height: '400px' ,width : '60%' , frameborder: '1'}} ></iframe>
     </div>
+    </StayVisible>
     )
   }
 }

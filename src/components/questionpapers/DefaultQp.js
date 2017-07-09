@@ -4,10 +4,18 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Paper from 'material-ui/Paper';
 import {notify} from 'react-notify-toast';
 import MenuItem from 'material-ui/MenuItem';
-import { Image } from 'material-ui-image';
+//import { Image } from 'material-ui-image';
 // import Img from 'react-image';
 // import Spinner from 'react-spinner';
 import { Grid, Row, Cell } from 'react-inline-grid';
+
+import styled from 'styled-components'
+
+const StayVisible = styled.div`
+  position: relative;
+  margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
+  transition: margin .1s;
+`
 
 class DefaultQp extends Component{
 
@@ -21,6 +29,7 @@ class DefaultQp extends Component{
      }
      this.validateAndFetch = this.validateAndFetch.bind(this);
      this.fetchQp = this.fetchQp.bind(this);
+     this.image = this.image.bind(this);
    }
 
 validateAndFetch(){
@@ -71,15 +80,22 @@ fetchQp(){
 
 handleChange = (event, index, value) => this.setState({value});
 handleYearChange = (event, index, year) => this.setState({year});
-
+image(){
+  if(this.state.response){
+   return(<img alt="loading"src = {this.state.response} style={{marginLeft:'18%',width: '60%',height: '60%'}} />)
+   }
+}
   render(){
     return(
+    <StayVisible
+    {...this.props}
+    >
      <div >
        <div style={{textAlign:'center'}}>
        <br />
        <br />
        <br />
-      <Paper zDepth={2} style={{width: '200%',borderRadius:'13%'}}  >
+      <Paper zDepth={2} style={{marginLeft:'18%',width: '60%'}}  >
        <br />
        <h4 style={{width: '100%'}}> choose a subject </h4>
       <Grid>
@@ -122,8 +138,9 @@ handleYearChange = (event, index, year) => this.setState({year});
        </Paper>
        </div>
         <br /> <br /> <br /> <br />
-       <Image src = {this.state.response} style={{width: '140%',height: '140%'}} loadingStyle={{position: 'absolute'}} loadingSize={150}/>
+        {this.image()}
     </div>
+    </StayVisible>
     )
   }
 }

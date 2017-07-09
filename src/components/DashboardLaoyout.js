@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Body} from './main.js'
 import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
@@ -12,7 +13,8 @@ import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
-import {AddImageIcon,EditIcon,ActionBook,AvLibraryBooks,AvNote,ContentArchive,ActionAssignment,FileFileUpload,ActionViewList} from '../styledcomponents/SvgIcons.js'
+import {AddImageIcon,EditIcon,ImageCollectionsBookmark,ActionBook,AvLibraryBooks,AvNote,ContentArchive,ActionAssignment,
+       FileFileUpload,ActionViewList,ActionSpeakerNotes,AvMovie,ActionTimeline} from '../styledcomponents/SvgIcons.js'
 //import CustomAvatar from '../styledcomponents/CustomAvatar.js'
 const iconStyles = {
   marginRight: 24,
@@ -124,7 +126,21 @@ render(){
     <FlatButton label="Update Profile" hoverColor ={lightBlue100} fullWidth={true} icon={<AddImageIcon  color={blue500}/>}/>
     <br />
     </div>
-    <Divider/>
+<Divider />
+  <Link to='/anouncements' width={this.state.width}>
+    <MenuItem
+    primaryText={'AnouncementsBoard'}
+    leftIcon={<ActionSpeakerNotes color={blue500}/>}
+    />
+  </Link>
+<Divider/>
+    <Link to='/timeline' width={this.state.width}>
+      <MenuItem
+      primaryText={'Timeline'}
+      leftIcon={<ActionTimeline color={red500}/>}
+      />
+    </Link>
+<Divider/>
     <MenuItem
     primaryText={'QuestionPaper'}
     rightIcon={<ArrowDropRight />}
@@ -172,7 +188,35 @@ render(){
                         </Link>
                       ]}
         />
-    </Drawer>
+<Divider/>
+        <MenuItem primaryText={'Notes'}
+          leftIcon={<ImageCollectionsBookmark color={blue500} />}
+          rightIcon={<ArrowDropRight />}
+          menuItems={[
+                       <Link to='/notes/upload' width={this.state.width}>
+                        <MenuItem primaryText="Upload Notes" leftIcon={<FileFileUpload style={iconStyles} color={red500}/>}
+                        />
+                        </Link>,
+                        <Link to='/notes/view/list' width={this.state.width}>
+                        <MenuItem primaryText="View Notes" leftIcon={
+                          <ActionViewList style={iconStyles} color={blue500}/>
+                          }/>
+                        </Link>
+                      ]}
+        />
+<Divider />
+        <Link to="/entertainment" width={this.state.width} >
+          <MenuItem primaryText={'Entertainment'}
+            leftIcon={<AvMovie color={blue500} />}
+          />
+        </Link>
+
+</Drawer>
+<Body
+toggle = {this.handleToggle}
+width = {this.state.width}
+open = {this.state.open}
+/>
 </div>
    )
 }

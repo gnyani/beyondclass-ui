@@ -5,8 +5,15 @@ import Paper from 'material-ui/Paper';
 import {notify} from 'react-notify-toast';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
-import { Image } from 'material-ui-image';
+//import { Image } from 'material-ui-image';
 import { Grid, Row, Cell } from 'react-inline-grid';
+import styled from 'styled-components'
+
+const StayVisible = styled.div`
+  position: relative;
+  margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
+  transition: margin .1s;
+`
 
 class OtherQp extends Component{
 
@@ -24,6 +31,7 @@ class OtherQp extends Component{
        isLoaded : ''
      }
      this.validateAndFetch = this.validateAndFetch.bind(this);
+     this.image = this.image.bind(this);
    }
 
    validateAndFetch(){
@@ -86,15 +94,23 @@ class OtherQp extends Component{
    handleSemChange = (event, index, sem) => this.setState({sem});
    handleSubjectChange = (event , index, subject) => this.setState({subject});
    handleQpyearChange = (event, index, qpyear) => this.setState({qpyear});
+   image(){
+     if(this.state.response){
+       return(<img alt="loading" src = {this.state.response} style={{marginLeft:'18%',width: '60%'}} />);
+     }
+   }
 
    render(){
      return(
+    <StayVisible
+    {...this.props}
+    >
       <div >
         <div style={{textAlign:'center'}}>
         <br />
         <br />
         <br />
-       <Paper zDepth={2} style={{width:'110%',borderRadius:'13%'}}  >
+       <Paper zDepth={2} style={{marginLeft:'18%',width: '60%'}}  >
         <br />
         <h4 style={{width: '100%'}}> Choose a Question Paper for retrieval </h4>
        <Grid>
@@ -199,8 +215,10 @@ class OtherQp extends Component{
         </Paper>
         </div>
          <br /> <br /> <br /> <br />
-        <Image src = {this.state.response} style={{width: '150%',height: '150%'}} loadingStyle={{position: 'absolute'}} loadingSize={150}/>
+        {this.image()} 
+
      </div>
+  </StayVisible>
      )
    }
 

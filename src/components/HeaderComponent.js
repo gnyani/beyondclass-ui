@@ -17,6 +17,10 @@ class HeaderComponent extends Component {
     <Route path='/syllabus/other' component={DashboardLayout} />
     <Route path='/assignments/upload' component={DashboardLayout} />
     <Route path='/assignments/view/list' component={DashboardLayout} />
+    <Route path='/notes/upload' component={DashboardLayout} />
+    <Route path='/notes/view/list' component={DashboardLayout} />
+    <Route path='/anouncements' component={DashboardLayout} />
+    <Route path='/timeline' component={DashboardLayout} />
   </Switch>
 </HeaderStyle>
     );

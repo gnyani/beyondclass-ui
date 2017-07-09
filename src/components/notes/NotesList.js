@@ -15,7 +15,7 @@ const StayVisible = styled.div`
 `
 
 
-class AssignList extends Component{
+class NotesList extends Component{
 
   constructor(){
     super();
@@ -38,7 +38,7 @@ class AssignList extends Component{
    }
    else{
      this.setState({ buttonDisabled: true });
-     fetch('http://localhost:8080/user/assignmentslist', {
+     fetch('http://localhost:8080/user/noteslist', {
             method: 'POST',
             headers: {
                   'mode': 'cors',
@@ -67,6 +67,7 @@ class AssignList extends Component{
           this.setState({
             links : response.slice(),
             buttonDisabled  : false,
+            usermsg: '',
             isLoaded : true,
             loadedsubject : this.state.subject,
           })
@@ -91,7 +92,7 @@ class AssignList extends Component{
 >
   <div style={{textAlign:'center',marginLeft:'18%',width:'60%'}}>
      <br  />
-     <p > choose subject of assignment </p>
+     <p > choose subject of Notes </p>
      <Grid>
      <Row is="center">
      <Cell is="middle 4 tablet-2"><div>
@@ -112,7 +113,7 @@ class AssignList extends Component{
       </Grid>
 <Divider />
      <br />
-       <RaisedButton type="submit" label="View"  disabled={this.state.buttonDisabled} onClick={this.handleSubmit} />
+       <RaisedButton type="submit" label="View" disabled={this.state.buttonDisabled} onClick={this.handleSubmit} />
      <br />
      <br />
 <Divider />
@@ -129,7 +130,7 @@ class AssignList extends Component{
              <CardMedia>
                <iframe  title="assignments" src={src} />
              </CardMedia>
-             <CardTitle title={this.state.loadedsubject} subtitle="assignment" />
+             <CardTitle title={this.state.loadedsubject} subtitle="Notes" />
              <CardActions>
                <div style={{display:'flex'}}>
                <form method="post" action={src+"/download"}>
@@ -148,9 +149,9 @@ class AssignList extends Component{
     {this.state.usermsg}
     </div>
    </div>
-  </StayVisible>
+</StayVisible>
    )
   }
 }
 
-export default AssignList;
+export default NotesList;

@@ -13,7 +13,7 @@ const StayVisible = styled.div`
   transition: margin .1s;
 `
 
-class AssignUpload extends Component{
+class NotesUpload extends Component{
 
   constructor(props) {
     super(props);
@@ -43,7 +43,7 @@ class AssignUpload extends Component{
     else{
       console.log("file is" + this.state.file)
       this.setState({ buttonDisabled: true });
-      fetch('http://localhost:8080/user/assignments/upload', {
+      fetch('http://localhost:8080/user/notes/upload', {
              method: 'POST',
              headers: {
                    'mode': 'cors',
@@ -103,12 +103,12 @@ class AssignUpload extends Component{
     }
 
     return (
-      <StayVisible
-      {...this.props}
-      >
+    <StayVisible
+    {...this.props}
+    >
       <div style={{marginLeft:'18%',width:'60%'}}>
           <br  />
-          <p style={{marginLeft:'29%'}}> choose subject of assignment </p>
+          <p style={{marginLeft:'29%'}} > choose subject of notes </p>
           <Grid>
           <Row is="center">
           <Cell is="middle 4 tablet-2"><div>
@@ -132,18 +132,19 @@ class AssignUpload extends Component{
           <p style={{marginLeft:'29%'}}> Please upload a pdf file </p>
           <br />
           <form onSubmit={this._handleSubmit}>
-          <input type="file" style={{marginLeft:'10%'}}onChange={this._handleImageChange} />
-          <RaisedButton type="submit" label="Upload File"  style={{marginLeft:'15%'}}disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
+          <input type="file" style={{marginLeft:'10%'}} onChange={this._handleImageChange} />
+          <RaisedButton type="submit" label="Upload File" style={{marginLeft:'10%'}} disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
           </form>
           <div>
           <br />
           <br />
           {$imagePreview}
           </div>
+          {this.state.response}
       </div>
   </StayVisible>
     )
   }
 
 }
-export default AssignUpload;
+export default NotesUpload;
