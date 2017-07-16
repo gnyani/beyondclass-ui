@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {notify} from 'react-notify-toast';
-import Paper from 'material-ui/Paper';
 import {blue500,lightBlue300,redA700,yellowA200} from 'material-ui/styles/colors';
 //import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import styled from 'styled-components';
 import Pagination from 'material-ui-pagination';
+import '../student-adda.css'
 //import { Grid, Row, Cell } from 'react-inline-grid';
 
 const StayVisible = styled.div`
@@ -103,13 +103,8 @@ handleSubmit(){
 list(buffer){
   var i=0;
   for (i=0;i<this.state.users.length;i++){
-  buffer.push(
-              <div key={i} style={{display:'flex'}}>
-              <br /><br />
-               <li> <p style={fontStyle}> {this.state.users[i]} : </p> </li>
-               <br /> <br /><br />
-               <p style={messageStyle}> {this.state.messages[i]} </p><br />
-              </div>
+  buffer.push(<li>
+                <p className="name"> {this.state.users[i]} : {this.state.messages[i]} </p></li>
              )
   }
   return buffer
@@ -164,45 +159,23 @@ return(
 <StayVisible
   {...this.props}
 >
-<div  >
-    <h2 style={{textAlign:'center',fontSize:'150%'}}> Latest Anouncements </h2>
-    <br />
-   <Paper zDepth={2}  style={{height:'600px',width:'75%',marginLeft:'10%',backgroundColor:yellowA200}}>
-      <br />
-      <ul style={{marginLeft:'5%'}}> {this.list(buffer)} </ul>
-    </Paper>
-<Paper zDepth={2}  style={{height:'40px',width:'75%',marginLeft:'10%',backgroundColor:lightBlue300}} >
-    <div
-      style = { {
-        width: '75%',
-        marginLeft:'30%',
-      } }
-    >
+<div className="announcements">
+    <h2 className="headings"> Latest Anouncements </h2>
+   <div zDepth={2} className="container page">
+      <ul> {this.list(buffer)} </ul>
+    </div>
     <Pagination
     total = { this.state.total }
     current = { this.state.number }
     display = { this.state.display }
     onChange = { this.handlePageChange}
     />
-    </div>
-  </Paper>
-  <Paper zDepth={2}  style={{height:'100px',width:'75%',marginLeft:'10%'}}>
-  <div style={{display:'flex'}} >
-    <TextField
-      hintText="Anounce a message"
-      multiLine={true}
+    <input type="text"
       value={this.state.message}
-      floatingLabelText="Cannot exceed more than 200 chars"
-      floatingLabelFixed={true}
-      maxLength="200"
-      rows={2}
-      onChange={this.handleChange}
-      style={{width:'75%',marginLeft:'15px'}}
+      onChange={this.handleChange} className="input" placeholder="Give an anouncement"
     />
     <FlatButton label="Anounce"  disabled={this.state.buttonDisabled}
-     style={{marginLeft:'25px',marginTop:'30px'}} onTouchTap={this.handleSubmit}/>
-  </div>
-  </Paper>
+     id="AnnounceButton" onTouchTap={this.handleSubmit}/>
 </div>
 </StayVisible>
 );

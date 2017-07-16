@@ -1,6 +1,6 @@
 import React from 'react';
 import {Switch,Route} from 'react-router-dom'
-import Header from './header.js';
+import Banner from './Banner.js';
 import Register from './register.js';
 import Dashboard from './dashboard.js';
 import DefaultQp from './questionpapers/DefaultQp.js'
@@ -19,7 +19,7 @@ export const Body =(props) => {
     return(
 <main >
   <Switch>
-    <Route exact path='/' render={()=>(<Header {...props}/>)} />
+    <Route exact path='/' render={()=>(<Banner {...props}/>)} />
     <Route path='/register' render={()=>(<Register {...props}/>)}/>
     <Route path='/dashboard' render={() =>(<Dashboard {...props}/>)}/>
     <Route path='/questionpaper/default' render={()=>(<DefaultQp {...props} />)}/>

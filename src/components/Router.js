@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import {Switch,Route} from 'react-router-dom'
-import Header from './header.js';
+import Banner from './Banner.js';
 import DashboardLayout from './DashboardLaoyout.js'
+import Register from './register.js'
 import {HeaderStyle} from '../styledcomponents/Template'
-class HeaderComponent extends Component {
+class Router extends Component {
   render(){
     return(
 <HeaderStyle>
   <Switch>
-    <Route exact path='/' component={Header}/>
-    <Route path='/register' component={Header}/>
+    <Route exact path='/' component={Banner}/>
+    <Route path='/register' component={Register}/>
     <Route path='/dashboard' component={DashboardLayout}/>
     <Route path='/questionpaper/default' component={DashboardLayout} />
     <Route path='/questionpaper/other' component={DashboardLayout} />
@@ -26,4 +27,4 @@ class HeaderComponent extends Component {
     );
   }
 }
-export default HeaderComponent;
+export default Router;
