@@ -8,9 +8,9 @@ import {Link} from 'react-router-dom';
 import {NavAppBar} from '../styledcomponents/NavAppBar.js'
 import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import {lightBlue100,blue500, red500} from 'material-ui/styles/colors';
-import Avatar from 'material-ui/Avatar';
 import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
+import './student-adda.css';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
 import {AddImageIcon,EditIcon,ImageCollectionsBookmark,ActionBook,AvLibraryBooks,AvNote,ContentArchive,ActionAssignment,
@@ -113,13 +113,8 @@ render(){
      logout = {this.handleLogout}
      />
     <Drawer open={this.state.open} width = {this.state.width}>
-    <div
-     style={{
-       height: '200px',
-       width: '100%',
-     }}
-    >
-    <Avatar src={this.state.propiclink} size={100}  style={{marginLeft:'65px',marginTop:'30px'}} />
+    <div className="UserImageContainer">
+    <img src={this.state.propiclink} size={100} className="ProfilePic" />
     <IconButton><EditIcon /></IconButton>
     <br />
     <br />

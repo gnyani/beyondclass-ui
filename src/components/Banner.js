@@ -10,7 +10,7 @@ import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 
 import CustomAvatar from '../styledcomponents/CustomAvatar.js'
 
-class Header extends Component {
+class Banner extends Component {
 
   constructor() {
     super();
@@ -144,8 +144,8 @@ else{
 }
 }
 
-Header.contextTypes = {
+Banner.contextTypes = {
     router: PropTypes.object
 };
 
-export default withRouter(Header);
+export default withRouter(Banner);
