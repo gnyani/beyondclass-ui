@@ -1,17 +1,65 @@
-.StudentAdda{margin: 0; padding: 0; border: 0; outline: 0; font-size: 15px;
-            vertical-align: baseline; background: transparent;}
-body{ height: 100%; width: 100%; overflow: hidden;margin: 0;}
-body .headings {color: #444;text-align: center;padding: 15px;}
-body .container{width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 0px rgb(95, 87, 87);}
-.announcements{font-size: 20px; text-align: center;}
+.StudentAdda
+          { margin: 0;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            font-size: 15px;
+            vertical-align: baseline;
+            background: transparent;
+          }
+body
+  { height: 100%;
+     width: 100%;
+     overflow: hidden;
+     margin: 0;
+   }
+body .headings
+          { color: #444;
+            text-align: center;
+            padding: 0.1%;
+          }
+body .container
+          { width: calc(80%);
+            margin: 0 calc(10%);
+            box-shadow: -3px 8px 20px 0px rgb(95, 87, 87);
+          }
+.announcements
+          { font-size: 20px;
+            text-align: center;
+          }
 .UserImageContainer{}
-.UserImageContainer .ProfilePic {font-family: "Comic Sans MS", sans-serif;font-size: 140%;font-style: italic;
-  font-weight: 500;letter-spacing: 2px;word-wrap: break-word;width: 100px;height: 100px;
-  text-transform: uppercase;color: rgb(33, 150, 243); margin-top: 40px; margin-left: 75px;border-radius: 50%;}
+.UserImageContainer .ProfilePic
+                    {
+                     width: 40%;
+                     height: 40%;
+                     color: rgb(33, 150, 243);
+                     margin-top: 15%;
+                     margin-left: 27%;
+                     border-radius: 50%;
+                   }
 .announcements .page{}
-.announcements .container li .name{text-align: left;font-size: 20px;text-transform: capitalize;
-                  font-family: monospace;color: #444;padding: 18px 0px;margin: 0px;}
-.input{width: 70%;border: 0px;border-bottom: 1px solid black;
-    padding: 5px 0px;margin-bottom: 20px;}
-#AnnounceButton{box-shadow: 1px 2px 8px 0px black;}
-.vertical-scroll{height:600px;overflow-y: scroll}
+.announcements .container li .name
+                              { text-align: left;
+                                font-size: 20px;
+                                text-transform: capitalize;
+                                font-family: monospace;
+                                color: #444;
+                                padding: 18px 0px;
+                                margin: 0px;
+                              }
+.input
+      { float: left !important;
+        margin-left: 10%;
+        width: 65% !important;
+        border: 0px !important;
+        padding: 5px 0px !important;
+        margin-bottom: 20px !important;
+      }
+.AnnounceButton
+              { box-shadow: 1px 2px 8px 0px black;
+                margin-right: 3% !important;
+              }
+.vertical-scroll
+              { height:600px;
+                overflow-y: scroll
+              }
