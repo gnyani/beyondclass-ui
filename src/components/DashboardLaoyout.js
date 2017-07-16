@@ -14,7 +14,7 @@ import './student-adda.css';
 import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
 import {AddImageIcon,EditIcon,ImageCollectionsBookmark,ActionBook,AvLibraryBooks,AvNote,ContentArchive,ActionAssignment,
-       FileFileUpload,ActionViewList,ActionSpeakerNotes,AvMovie,ActionTimeline} from '../styledcomponents/SvgIcons.js'
+       FileFileUpload,ActionViewList,ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool} from '../styledcomponents/SvgIcons.js'
 //import CustomAvatar from '../styledcomponents/CustomAvatar.js'
 const iconStyles = {
   marginRight: 24,
@@ -206,6 +206,12 @@ render(){
           />
         </Link>
 
+<Divider />
+        <Link to="/coachingcentres" width={this.state.width} >
+          <MenuItem primaryText={'Coaching-Centres'}
+            leftIcon={<SocialSchool color={red500} />}
+          />
+        </Link>
 </Drawer>
 <Body
 toggle = {this.handleToggle}

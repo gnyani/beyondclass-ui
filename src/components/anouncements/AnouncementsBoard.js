@@ -93,6 +93,7 @@ handleSubmit(){
        this.populateData(1)
        this.setState({
          response : response,
+         number : 1,
          buttonDisabled  : false,
        })
        notify.show("file upload successful","success")
