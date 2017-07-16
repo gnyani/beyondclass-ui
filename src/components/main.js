@@ -17,7 +17,7 @@ import TimeLine from './timeline/TimeLine.js'
 export const Body =(props) => {
    console.log("from body" + props.width)
     return(
-<main >
+<main className="vertical-scroll">
   <Switch>
     <Route exact path='/' render={()=>(<Banner {...props}/>)} />
     <Route path='/register' render={()=>(<Register {...props}/>)}/>

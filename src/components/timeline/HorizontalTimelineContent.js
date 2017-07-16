@@ -13,6 +13,7 @@ import {ActionThumbUp} from '../../styledcomponents/SvgIcons.js';
 import {notify} from 'react-notify-toast';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
+import '../student-adda.css';
 //import Dropzone from 'react-dropzone'
 // import ImagesUploader from 'react-images-uploader';
 // import 'react-images-uploader/styles.css';
