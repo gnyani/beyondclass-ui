@@ -5,7 +5,7 @@ import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
-import './student-adda.css'
+import '../styles/student-adda.css'
 
 const StayVisible = styled.div`
   position: relative;

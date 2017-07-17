@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
-import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
 import {notify} from 'react-notify-toast';
 import MenuItem from 'material-ui/MenuItem';
+import '../../styles/student-adda.css';
 //import { Image } from 'material-ui-image';
 // import Img from 'react-image';
 // import Spinner from 'react-spinner';
@@ -41,8 +42,8 @@ validateAndFetch(){
   }
   else{
     console.log("in else")
-    notify.show("success","success");
     this.fetchQp();
+    notify.show("Retrieval Successful","success");
   }
 }
 
@@ -82,7 +83,7 @@ handleChange = (event, index, value) => this.setState({value});
 handleYearChange = (event, index, year) => this.setState({year});
 image(){
   if(this.state.response){
-   return(<img alt="loading"src = {this.state.response} style={{marginLeft:'18%',width: '60%',height: '60%'}} />)
+   return(<img alt="loading" src = {this.state.response} className="image"/>)
    }
 }
   render(){
@@ -90,56 +91,55 @@ image(){
     <StayVisible
     {...this.props}
     >
-     <div >
-       <div style={{textAlign:'center'}}>
+     <div className="QuestionPapers">
+       <div >
        <br />
        <br />
        <br />
-      <Paper zDepth={2} style={{marginLeft:'18%',width: '60%'}}  >
-       <br />
-       <h4 style={{width: '100%'}}> choose a subject </h4>
       <Grid>
       <Row is="center">
-      <Cell is="middle 4 tablet-2"><div>
+      <Cell is="1 tablet-2"><div >
       <label>  Subject: </label>
       </div></Cell>
-      <Cell is="3 tablet-2 phone-2"><div>
+      <Cell is="2 tablet-2 phone-2"><div>
        <DropDownMenu
          value={this.state.value}
          onChange={this.handleChange}
          autoWidth={true}
+         className="DropDownMenu"
        >
          <MenuItem value={1} primaryText="Select*" />
          <MenuItem value={'OS'} label="OS" primaryText="Operating Systems" />
          <MenuItem value={'DM'} label="DM" primaryText="Data Mining" />
        </DropDownMenu>
        </div></Cell>
-       </Row>
-       </Grid>
-       <Grid>
-       <Row is="center">
-       <Cell is="middle 4 tablet-2"><div>
+       <Cell is="1 tablet-2"><div>
        <label>  Year : </label>
        </div></Cell>
-       <Cell is="3 tablet-2 phone-2"><div>
+       <Cell is="2 tablet-2 phone-2"><div>
         <DropDownMenu
           value={this.state.year}
           onChange={this.handleYearChange}
           autoWidth={true}
+          className="DropDownMenu"
         >
           <MenuItem value={1} primaryText="Select*" />
           <MenuItem value={'2015'} label="2015" primaryText="2015" />
           <MenuItem value={'2016'} label="2016" primaryText="2016" />
         </DropDownMenu>
         </div></Cell>
+        <Cell is="1 tablet-2 phone-2"><div>
+         <RaisedButton label="Fetch" value="Fetch" primary={true} onTouchTap={this.validateAndFetch} />
+         </div></Cell>
         </Row>
        </Grid>
-       <RaisedButton label="Fetch" value="Fetch" primary={true} onTouchTap={this.validateAndFetch} />
-       </Paper>
        </div>
-        <br /> <br /> <br /> <br />
+<Divider/>
+        <br /> <br />
         {this.image()}
+         <br />
     </div>
+       <br /> <br /> <br />
     </StayVisible>
     )
   }

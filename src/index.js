@@ -5,7 +5,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import Router from './components/Router.js';
 import Notifications from 'react-notify-toast';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Style from './components/student-adda.css';
+import Style from './styles/student-adda.css';
 
 //import registerServiceWorker from './registerServiceWorker';
 
