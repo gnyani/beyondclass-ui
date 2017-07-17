@@ -6,7 +6,7 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import styled from 'styled-components';
 import Pagination from 'material-ui-pagination';
-import '../student-adda.css'
+import '../../styles/student-adda.css'
 //import { Grid, Row, Cell } from 'react-inline-grid';
 
 const StayVisible = styled.div`
