@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 //import SwipeableViews from 'react-swipeable-views';
 import Divider from 'material-ui/Divider';
 //import IconButton from 'material-ui/IconButton';
-import {lightBlue300} from 'material-ui/styles/colors';
+import {lightBlue300,blue500,redA700} from 'material-ui/styles/colors';
 import HorizontalTimeline from 'react-horizontal-timeline';
 import {Card, CardActions, CardHeader, CardMedia,CardText} from 'material-ui/Card';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import {ActionThumbUp} from '../../styledcomponents/SvgIcons.js';
+import {ActionThumbUp,CommunicationComment} from '../../styledcomponents/SvgIcons.js';
 import {notify} from 'react-notify-toast';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
@@ -32,6 +32,31 @@ import '../student-adda.css';
 // }
 // var eventHandlers = { addedfile: (file) => console.log(file) }
 
+const fontStyle={
+  fontFamily: "'Comic Sans MS',sans-serif",
+  fontSize:'140%',
+  fontStyle: 'italic',
+  fontWeight: '500',
+  letterSpacing: '2px',
+  wordWrap: 'break-word',
+  width:'100%',
+  height:'150%',
+  textTransform: 'uppercase',
+  color: blue500
+}
+
+const messageStyle={
+  fontFamily: "'Comic Sans MS',sans-serif",
+  fontSize:'120%',
+  fontStyle: 'italic',
+  fontWeight: '500',
+  wordWrap: 'break-word',
+  width:'75%',
+  letterSpacing: '2px',
+  textTransform: 'capitalize',
+  color: redA700
+
+}
 
 
 export default class HorizontalTimelineContent extends React.Component {
@@ -45,6 +70,7 @@ export default class HorizontalTimelineContent extends React.Component {
       postlikes: '',
       description: [],
       postUrls: [],
+      postOwners: [],
       likeUrls: [],
       commentUrls: [],
       likeCounts: [],
@@ -88,6 +114,7 @@ export default class HorizontalTimelineContent extends React.Component {
     this._handleSubmit = this._handleSubmit.bind(this);
     this.getLikedUsers = this.getLikedUsers.bind(this);
     this.getComments = this.getComments.bind(this);
+  //  this.getImage = this.getImage.bind(this);
   }
   // handleFileAdded(file) {
   //       console.log(file);
@@ -124,8 +151,12 @@ export default class HorizontalTimelineContent extends React.Component {
         filebase64: reader.result.split(',').pop()
       });
     }
-
+    if(file)
+    {
     reader.readAsDataURL(file)
+  }else{
+    reader.readAsText('blobing')
+  }
   }
 
   _handleSubmit(e) {
@@ -168,7 +199,28 @@ export default class HorizontalTimelineContent extends React.Component {
          })
 
   }
-
+// getImage(i){
+// var bufferImage =[];
+//   fetch(this.state.postUrls[i],{
+//     credentials: 'include',
+//     method: 'GET'
+//   }).then(response => {
+//     console.log("responsestatus is" + response.status)
+//     if(response.status===200)
+//   //  console.log("response text is" + response.text)
+//     return response.text()
+//   }).then(response =>{
+//     console.log("outside if" + response)
+//     if(response){
+//       console.log("inside if")
+//       bufferImage.push(
+//         <img alt="loading" src={this.state.postUrls[i]}  style={{width:'100%',height:'380px'}}/>
+//       );
+//     }
+//   })
+//   console.log("buffer is" + bufferImage)
+//   return bufferImage;
+// }
 
 loadTimeline(buffer){
     buffer = []
@@ -176,15 +228,19 @@ loadTimeline(buffer){
     console.log("inside loadTimeline")
 if(this.state.postUrls.length!==0)
 { for (i=0;i<this.state.postUrls.length;i++){
+    var bufferImage = []
+    if(this.state.postUrls[i] !== null)
+    bufferImage.push(<img alt="loading" src={this.state.postUrls[i]}  style={{width:'100%',height:'380px'}}/>)
     buffer.push(
         <Cell is="6 tablet-2" key={i}><div>
           <Card >
             <CardHeader
               title="Posted by"
-              subtitle={this.state.postUrls[i].split('-')[9]}
+              subtitle={this.state.postOwners[i]}
             />
             <CardMedia>
-              <img alt="loading" src={this.state.postUrls[i]}  style={{width:'100%',height:'380px'}}/>
+               {bufferImage}
+            {/*  {this.getImage(i)}*/}
             </CardMedia>
             <CardText style={{textAlign:'center'}}>
              {this.state.description[i]}
@@ -211,7 +267,7 @@ if(this.state.postUrls.length!==0)
               <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} />}/>
               </div></Cell>
               <Cell is="stretch 6 tablet-2"><div>
-              <FlatButton type="submit" label="Comment" fullWidth={true} onClick={this.showCommentBox.bind(this,i)} />
+              <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} />}/>
               </div></Cell>
               </Row>
               </Grid>
@@ -299,7 +355,14 @@ getComments(i){
   for(let j=0;j<parsedComments.length;j++){
    parsedMessages[j] = parsedComments[j].comment
    parsedUsers[j] =  parsedComments[j].user.firstName
-   comments[j] = <div key={j}><p> {parsedUsers[j]}: {parsedMessages[j]}</p> </div>
+   comments[j] = <div key={j} style={{display:'flex'}}>
+                  <br /><br />
+                  <ul style={{marginLeft:'5%'}}>
+                 <li> <p style={fontStyle}> {parsedUsers[j]}:</p> </li>
+                 </ul>
+                 <br /> <br /><br />
+                  <p style={messageStyle}> {parsedMessages[j]} </p>
+                  </div>
  }
 
  this.setState({
@@ -400,6 +463,7 @@ getLikedUsers(i){
        var newlikeUrls = []
        var newcommentUrls = []
        var newlikeCounts = []
+       var newpostOwners = []
 
        for(let i=0;i<response.length;i++)
         {
@@ -408,7 +472,7 @@ getLikedUsers(i){
           newlikeUrls.push(response[i].likeUrl)
           newcommentUrls.push(response[i].commentUrl)
           newlikeCounts.push(response[i].likes)
-
+          newpostOwners.push(response[i].owner)
         }
         this.setState({
           response: response,
@@ -419,7 +483,7 @@ getLikedUsers(i){
           likeUrls: newlikeUrls,
           commentUrls: newcommentUrls,
           likeCounts: newlikeCounts,
-
+          postOwners: newpostOwners,
         })
         console.log("responses are" + newcommentUrls  ,"postUrl" + newpostUrls, "likes" +newlikeCounts)
 

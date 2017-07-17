@@ -3,11 +3,10 @@ import {Switch,Route} from 'react-router-dom'
 import Banner from './Banner.js';
 import DashboardLayout from './DashboardLaoyout.js'
 import Register from './register.js'
-import {HeaderStyle} from '../styledcomponents/Template'
 class Router extends Component {
   render(){
     return(
-<HeaderStyle>
+
   <Switch>
     <Route exact path='/' component={Banner}/>
     <Route path='/register' component={Register}/>
@@ -22,8 +21,9 @@ class Router extends Component {
     <Route path='/notes/view/list' component={DashboardLayout} />
     <Route path='/anouncements' component={DashboardLayout} />
     <Route path='/timeline' component={DashboardLayout} />
+    <Route path='/coachingcentres' component={DashboardLayout} />
   </Switch>
-</HeaderStyle>
+
     );
   }
 }

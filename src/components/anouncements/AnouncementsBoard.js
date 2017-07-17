@@ -93,6 +93,7 @@ handleSubmit(){
        this.populateData(1)
        this.setState({
          response : response,
+         number : 1,
          buttonDisabled  : false,
        })
        notify.show("file upload successful","success")
@@ -170,12 +171,17 @@ return(
     display = { this.state.display }
     onChange = { this.handlePageChange}
     />
-    <input type="text"
-      value={this.state.message}
-      onChange={this.handleChange} className="input" placeholder="Give an anouncement"
-    />
+
+
+    <TextField
+     value = {this.state.message}
+     onChange = {this.handleChange}
+     hintText = "Give an anouncement"
+     className="input"
+     />
+
     <FlatButton label="Anounce"  disabled={this.state.buttonDisabled}
-     id="AnnounceButton" onTouchTap={this.handleSubmit}/>
+     className="AnnounceButton" onTouchTap={this.handleSubmit}/>
 </div>
 </StayVisible>
 );

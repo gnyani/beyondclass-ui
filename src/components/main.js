@@ -13,6 +13,7 @@ import AnouncementsBoard from './anouncements/AnouncementsBoard.js'
 import OtherSyllabus from './syllabus/OtherSyllabus.js'
 import OtherQp from './questionpapers/OtherQp.js'
 import TimeLine from './timeline/TimeLine.js'
+import CoachingCentres from './coachingcentres/CoachingCentres.js'
 
 export const Body =(props) => {
    console.log("from body" + props.width)
@@ -32,6 +33,7 @@ export const Body =(props) => {
     <Route path='/notes/view/list' render={()=>(<NotesList {...props} /> )} />
     <Route path='/anouncements' render={()=>(<AnouncementsBoard {...props}/>)} />
     <Route path='/timeline' render={()=>(<TimeLine {...props}/>)} />
+    <Route path='/coachingcentres' render={() =>(<CoachingCentres {...props} />)} />
   </Switch>
 </main>
     );
