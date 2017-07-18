@@ -61,7 +61,7 @@ body .container
                 margin-right: 3% !important;
               }
 .vertical-scroll
-              { height:800px;
+              { height:600px;
                 overflow-y: scroll
               }
 .QuestionPapers{}
@@ -70,6 +70,9 @@ body .container
                    bottom: 17px !important;
 
                  }
+::-webkit-scrollbar { width: 10px;border-radius: 10px;}
+::-webkit-scrollbar-thumb {background-color: rgb(255,171,64);border-radius: 5px; outline: 1px solid slategrey;}
+
 .QuestionPapers .image
                  {margin-left: 18%;
                   width: 60% ;
