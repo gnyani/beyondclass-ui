@@ -7,6 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 //import { Image } from 'material-ui-image';
 import { Grid, Row, Cell } from 'react-inline-grid';
+import '../../styles/student-adda.css';
 import styled from 'styled-components'
 
 const StayVisible = styled.div`
@@ -96,7 +97,7 @@ class OtherQp extends Component{
    handleQpyearChange = (event, index, qpyear) => this.setState({qpyear});
    image(){
      if(this.state.response){
-       return(<img alt="loading" src = {this.state.response} style={{marginLeft:'18%',width: '60%'}} />);
+       return(<img alt="loading" src = {this.state.response} className="image" />);
      }
    }
 
@@ -106,13 +107,13 @@ class OtherQp extends Component{
     {...this.props}
     >
       <div >
-        <div style={{textAlign:'center'}}>
+        <div className="QuestionPapers">
         <br />
         <br />
         <br />
-       <Paper zDepth={2} style={{marginLeft:'18%',width: '60%'}}  >
+       <Paper zDepth={2} className="paper"  >
         <br />
-        <h4 style={{width: '100%'}}> Choose a Question Paper for retrieval </h4>
+        <h4 className="h4"> Choose a Question Paper for retrieval </h4>
        <Grid>
        <Row is="start">
        <Cell is="middle 4 tablet-2 phone-2"><div>
@@ -126,7 +127,7 @@ class OtherQp extends Component{
           <MenuItem value={'JNTU'} label="JNTU" primaryText="JNTU" />
         </DropDownMenu>
         </div></Cell>
-        <Cell is="3 tablet-2 phone-2"><div>
+        <Cell is="4 tablet-2 phone-2"><div>
          <DropDownMenu
            value={this.state.college}
            onChange={this.handleCollegeChange}
@@ -167,7 +168,7 @@ class OtherQp extends Component{
        </DropDownMenu>
        </div></Cell>
 
-      <Cell is="3 tablet-2 phone-2"><div>
+      <Cell is="4 tablet-2 phone-2"><div>
       <DropDownMenu
        value={this.state.sem}
        onChange={this.handleSemChange}
@@ -195,7 +196,7 @@ class OtherQp extends Component{
 
        <Grid>
         <Row is="center">
-        <Cell is="3 tablet-2 phone-2"><div>
+        <Cell is="4 tablet-2 phone-2"><div>
         <DropDownMenu
          value={this.state.qpyear}
          onChange={this.handleQpyearChange}
@@ -209,13 +210,13 @@ class OtherQp extends Component{
         </Row>
         </Grid>
 <Divider />
-        <RaisedButton label="Fetch" value="Fetch" primary={true} onTouchTap={this.validateAndFetch} />
+        <RaisedButton label="Fetch" value="Fetch" primary={true} onTouchTap={this.validateAndFetch} className="button" />
         <br />
 
         </Paper>
         </div>
          <br /> <br /> <br /> <br />
-        {this.image()} 
+        {this.image()}
 
      </div>
   </StayVisible>

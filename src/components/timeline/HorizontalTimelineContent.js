@@ -230,7 +230,7 @@ if(this.state.postUrls.length!==0)
 { for (i=0;i<this.state.postUrls.length;i++){
     var bufferImage = []
     if(this.state.postUrls[i] !== null)
-    bufferImage.push(<img alt="loading" src={this.state.postUrls[i]}  style={{width:'100%',height:'380px'}}/>)
+    bufferImage.push(<img alt="loading" src={this.state.postUrls[i]} key={i} style={{width:'100%',height:'380px'}}/>)
     buffer.push(
         <Cell is="6 tablet-2" key={i}><div>
           <Card >

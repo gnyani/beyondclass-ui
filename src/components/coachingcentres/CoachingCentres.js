@@ -13,6 +13,7 @@ import {Card, CardActions, CardHeader,CardText} from 'material-ui/Card';
 import {blue500,lightBlue300} from 'material-ui/styles/colors';
 import {MapsRateReview,CommunicationContacts,CommunicationLocationOn} from '../../styledcomponents/SvgIcons.js';
 import { Rating } from 'material-ui-rating'
+import '../../styles/student-adda.css';
 //import StarRating from 'react-star-rating';
 //import StarRatingComponent from 'react-star-rating-component';
 //import GoogleMapComponent from './GoogleMap.js'
@@ -57,12 +58,16 @@ class CoachingCentres extends Component{
        rating : [],
        reviewBox: [],
        reviewText: '',
-       ratingValue: 1,
+       ratingValue: 0,
+       valueofi: 0,
+       buffer:[],
+       isDataLoaded: false,
      }
      this.populateData = this.populateData.bind(this)
      this.renderOrgCards = this.renderOrgCards.bind(this)
      this.handleContactBoxclose = this.handleContactBoxclose.bind(this)
      this.handleRatingChange = this.handleRatingChange.bind(this)
+     this.showReviewBox = this.showReviewBox.bind(this)
    }
 
    handleCoachingChange = (event, index, coachingType) => this.setState({coachingType});
@@ -70,30 +75,33 @@ class CoachingCentres extends Component{
    handleAreaChange = (event, index, area) => this.setState({area});
 
 renderOrgCards(){
-  var buffer = []
+ var buffer = []
   var i=0;
   console.log("inside loadTimeline")
 if(this.state.coachingcentreId.length!==0)
 { for (i=0;i<this.state.coachingcentreId.length;i++){
   buffer.push(
-      <div key={i} style={{textAlign:'centre'}}>
+      <div key={i} >
       <br /> <br /> <br />
-        <Card style={{width:'80%',marginLeft:'10%'}} >
+        <Card className="card" >
           <CardHeader
             title={this.state.orgname[i]}
             style={fontStyle}
             subtitle={this.state.coachingType}
           />
-          <CardText style={{textAlign:'center'}}>
+          <CardText className="cardText">
            {this.state.description[i]}
           </CardText>
           <CardActions>
-            <div >
+            <div>
+            <h1 className="rating">{this.state.rating[i]}</h1>
+            <div className="stars">
             <Rating
             value={this.state.rating[i]}
             max={5}
-            onChange={this.handleRatingChange(i)}
+            readOnly
             />
+            </div>
             <Grid>
             <Row is="start">
             <Cell is="stretch 4 tablet-2"><div>
@@ -112,22 +120,30 @@ if(this.state.coachingcentreId.length!==0)
           {this.state.reviewBox[i]}
         </Card>
      </div>)
+    // console.log(JSON.stringify(this.state.reviewBox[i]),"full log is"+JSON.stringify(this.state.reviewBox))
 }
 }
-return buffer;
+this.setState({
+  buffer: buffer,
+  isDataLoaded: true,
+})
 }
-handleRatingChange(value,i) {
-    this.setState({ratingValue: value});
+handleRatingChange(value) {
+    console.log("value is"+value)
+    this.setState({ratingValue: value},this.showReviewBox(this.state.valueofi));
 }
+
 showReviewBox(i){
   var reviewBox = []
+  console.log("this method got called")
   reviewBox[i]=   <div>
+                        <div className="stars">
                           <Rating
                           value={this.state.ratingValue}
                           max={5}
-                          onClick={this.handleRatingChange.bind(this)}
-                          onChange={(value)=>this.handleRatingChange(value,i)}
+                          onChange={this.handleRatingChange.bind(this)}
                           />
+                        </div>
                           <div style={{display:'flex',marginLeft:'5%'}}>
                           <TextField
                           hintText="Say Something about this place.Your feebback matters"
@@ -142,8 +158,13 @@ showReviewBox(i){
                           </div>
 
   this.setState({
+    valueofi: i,
     reviewBox: reviewBox,
+    isDataLoaded:true,
+  },function afterStateChange(){
+    this.renderOrgCards()
   })
+  console.log(JSON.stringify(this.state.reviewBox[i]))
 }
 postReview(i){
 
@@ -220,12 +241,16 @@ populateData(){
                feedetailsImages: newfeedetailsImages,
                buttonDisabled: false,
                rating: newrating,
-         })
+         },function afterTitleChange () {
+              this.renderOrgCards();
+          })
          console.log("users" + this.state.orgname[0],"messages" + this.state.feedetailsImages[0])
         })
 }
 
   render(){
+
+ var buffer = []
 
     const actions = [
       <FlatButton
@@ -238,7 +263,8 @@ populateData(){
      <StayVisible
      {...this.props}
      >
-     <div style={{marginLeft:'10%'}}>
+    <div className="coachingcentres">
+     <div className="div">
      <Grid>
      <Row is="start">
      <Cell is="3 tablet-2 phone-2"><div>
@@ -275,13 +301,16 @@ populateData(){
      </DropDownMenu>
      </div></Cell>
      <Cell is="1 tablet-2 phone-2"><div>
-     <RaisedButton label="Go" disabled={this.state.buttonDisabled} onClick={this.populateData}/>
+     <RaisedButton label="Go" disabled={this.state.buttonDisabled} onClick={this.populateData.bind(this)}/>
      </div></Cell>
      </Row>
      </Grid>
     </div>
 <Divider />
-   {this.renderOrgCards()}
+{/* <div>
+   {this.renderOrgCards(buffer)}
+ </div>*/}
+ {this.state.buffer}
 <Dialog
       title="ContactInfo"
       modal={false}
@@ -291,6 +320,7 @@ populateData(){
     >
     {this.state.contactdata}
 </Dialog>
+</div>
      </StayVisible>
    )
   }
