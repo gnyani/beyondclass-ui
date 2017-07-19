@@ -58,12 +58,16 @@ class AnouncementsBoard extends Component{
     this.populateData = this.populateData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
+    this.Enter = this.Enter.bind(this);
 }
 
 handleSubmit(){
    this.setState({
      buttonDisabled: true
    })
+   if(this.state.message===''){
+    console.log("hello");
+   }else{
   fetch('http://localhost:8080/user/anouncements/insert', {
          method: 'POST',
          headers: {
@@ -98,7 +102,7 @@ handleSubmit(){
        })
        notify.show("file upload successful","success")
        console.log(this.state.response)
-     })
+     })}
 }
 
 list(buffer){
@@ -152,6 +156,12 @@ handlePageChange(number){
 
 handleChange = (e) => this.setState({message:e.target.value});
 
+Enter(event){
+  if(event.key == 'Enter'){
+    this.handleSubmit();
+  }
+}
+
 render(){
 var buffer=[];
 console.log("props"+JSON.stringify(this.props.width))
@@ -178,9 +188,10 @@ return(
      onChange = {this.handleChange}
      hintText = "Give an anouncement"
      className="input"
+     onKeyPress={this.Enter}
      />
 
-    <FlatButton label="Anounce"  disabled={this.state.buttonDisabled}
+    <FlatButton label="Anounce" type="submit"  disabled={this.state.buttonDisabled}
      className="AnnounceButton" onTouchTap={this.handleSubmit}/>
 </div>
 </StayVisible>
