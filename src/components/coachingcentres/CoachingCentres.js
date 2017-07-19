@@ -15,6 +15,7 @@ import { Rating } from 'material-ui-rating'
 import {notify} from 'react-notify-toast';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import '../../styles/student-adda.css';
+import '../../styles/student-adda.css';
 
 
 const StayVisible = styled.div`
@@ -125,7 +126,6 @@ if(this.state.coachingcentreId.length!==0)
           {this.state.reviewBox[i]}
         </Card>
      </div>)
-    // console.log(JSON.stringify(this.state.reviewBox[i]),"full log is"+JSON.stringify(this.state.reviewBox))
 }
 }
 this.setState({
@@ -171,6 +171,14 @@ fetch('http://localhost:8080/coachingcentres/get/'+this.state.coachingcentreId[i
          });
          console.log("reviews" + JSON.stringify(this.state.normalReviews) ,"without state" +JSON.stringify(newNormalReviews) )
         })
+this.setState({
+  buffer: buffer,
+  isDataLoaded: true,
+})
+}
+handleRatingChange(value) {
+    console.log("value is"+value)
+    this.setState({ratingValue: value},this.showReviewBox(this.state.valueofi));
 }
 
 showReviewBox(i){
@@ -312,7 +320,7 @@ populateData(){
                feedetailsImages: newfeedetailsImages,
                buttonDisabled: false,
                rating: newrating,
-         },function afterStateChange () {
+         },function afterTitleChange () {
               this.renderOrgCards();
           })
          console.log("users" + this.state.orgname[0],"messages" + this.state.feedetailsImages[0])
@@ -320,6 +328,8 @@ populateData(){
 }
 
   render(){
+
+ var buffer = []
 
     const actions = [
       <FlatButton
