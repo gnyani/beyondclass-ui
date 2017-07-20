@@ -13,6 +13,8 @@ import {Card, CardActions, CardHeader,CardText} from 'material-ui/Card';
 import {blue500,lightBlue300} from 'material-ui/styles/colors';
 import {MapsRateReview,CommunicationContacts,CommunicationLocationOn} from '../../styledcomponents/SvgIcons.js';
 import { Rating } from 'material-ui-rating'
+import {notify} from 'react-notify-toast';
+import {Tabs, Tab} from 'material-ui/Tabs';
 import '../../styles/student-adda.css';
 //import StarRating from 'react-star-rating';
 //import StarRatingComponent from 'react-star-rating-component';
@@ -38,6 +40,7 @@ const fontStyle={
 }
 
 
+
 class CoachingCentres extends Component{
 
    constructor() {
@@ -61,13 +64,19 @@ class CoachingCentres extends Component{
        ratingValue: 0,
        valueofi: 0,
        buffer:[],
+       positiveReviews:[],
+       normalReviews:[],
+       negativeReviews:[],
+       reviewBoxOpen: false,
        isDataLoaded: false,
      }
      this.populateData = this.populateData.bind(this)
      this.renderOrgCards = this.renderOrgCards.bind(this)
-     this.handleContactBoxclose = this.handleContactBoxclose.bind(this)
+     this.handleDialogclose = this.handleDialogclose.bind(this)
      this.handleRatingChange = this.handleRatingChange.bind(this)
      this.showReviewBox = this.showReviewBox.bind(this)
+     this.handleReviewBoxOpen = this.handleReviewBoxOpen.bind(this)
+     this.fetchReviews = this.fetchReviews.bind(this)
    }
 
    handleCoachingChange = (event, index, coachingType) => this.setState({coachingType});
@@ -132,12 +141,48 @@ handleRatingChange(value) {
     console.log("value is"+value)
     this.setState({ratingValue: value},this.showReviewBox(this.state.valueofi));
 }
+handleReviewBoxOpen(i){
+      this.fetchReviews(i);
+}
+fetchReviews(i){
+fetch('http://localhost:8080/coachingcentres/get/'+this.state.coachingcentreId[i]+'/reviews',{
+          credentials: 'include',
+          method: 'GET'
+        }).then(response => {
+         console.log("status is" + response.status);
+         return response.json()
+        }).then(response => {
+          var newPositiveReviews = []
+          var newNormalReviews = []
+          var newNegativeReviews = []
+          for(let i=0;i<response.length;i++)
+          {
+            console.log(response[i].review)
+            if(response[i].rating.toString() === "4" || response[i].rating.toString() === "5")
+            {
+              newPositiveReviews.push(<div key={i} ><p>{response[i].email}:{response[i].review}</p><Divider /> </div>)
+            }else if (response[i].rating.toString() === "3") {
+              newNormalReviews.push(<div key={i} ><p>{response[i].email}:{response[i].review}</p><Divider /> </div>)
+            }else if (response[i].rating.toString() === "1" || response[i].rating.toString === "2") {
+              newNegativeReviews.push(<div key={i}><p>{response[i].email}:{response[i].review}</p><Divider /> </div>)
+            }
+          }
+          this.setState({
+          positiveReviews : newPositiveReviews.slice(),
+          normalReviews: newNormalReviews.slice(),
+          negativeReviews: newNegativeReviews.slice(),
+          reviewBoxOpen: true,
+         });
+         console.log("reviews" + JSON.stringify(this.state.normalReviews) ,"without state" +JSON.stringify(newNormalReviews) )
+        })
+}
 
 showReviewBox(i){
   var reviewBox = []
   console.log("this method got called")
   reviewBox[i]=   <div>
                         <div className="stars">
+                          <a onClick={this.handleReviewBoxOpen.bind(this,i)}> View Reviews</a>
                           <Rating
                           value={this.state.ratingValue}
                           max={5}
@@ -167,7 +212,36 @@ showReviewBox(i){
   console.log(JSON.stringify(this.state.reviewBox[i]))
 }
 postReview(i){
-
+  if(this.state.ratingValue===0)
+  notify.show("please give some rating before submitting","warning")
+  else{
+  fetch('http://localhost:8080/coachingcentres/post/'+this.state.coachingcentreId[i],{
+    method: 'POST' ,
+    headers: {
+          'mode': 'cors',
+          'Content-Type': 'application/json'
+      },
+  credentials: 'include',
+  body: JSON.stringify({
+    rating: this.state.ratingValue,
+    review : this.state.reviewText,
+ })
+}).then(response => {
+  if(response.status === 200)
+  {
+     return response.text();
+  }
+  else{
+    let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
+    notify.show("sorry something went wrong","custom",5000,myColor)
+  }
+}).then(response => {
+  console.log("response text is" + response)
+  notify.show("Review posted successfully","success")
+  console.log(this.state.response)
+})
+this.renderOrgCards()
+}
 }
 handleReviewChange = (e) => this.setState({reviewText:e.target.value});
 
@@ -197,9 +271,10 @@ populateContactData()
       contactdata: buffer
     })
 }
-handleContactBoxclose(){
+handleDialogclose(){
   this.setState({
-    contactbox: false
+    contactbox: false,
+    reviewBoxOpen: false,
   })
 }
 
@@ -230,7 +305,7 @@ populateData(){
              newemail.push(response[i].contactinfo.email)
              newmobilenumber.push(response[i].contactinfo.mobileNumber)
              newfeedetailsImages.push(response[i].feesdetailsUrl)
-             newrating.push(response[i].rating)
+             newrating.push(response[i].rating.toString().substring(0, 3))
           }
            this.setState({
                coachingcentreId: newcoachingcentreId,
@@ -241,7 +316,7 @@ populateData(){
                feedetailsImages: newfeedetailsImages,
                buttonDisabled: false,
                rating: newrating,
-         },function afterTitleChange () {
+         },function afterStateChange () {
               this.renderOrgCards();
           })
          console.log("users" + this.state.orgname[0],"messages" + this.state.feedetailsImages[0])
@@ -250,13 +325,11 @@ populateData(){
 
   render(){
 
- var buffer = []
-
     const actions = [
       <FlatButton
         label="Cancel"
         primary={true}
-        onTouchTap={this.handleContactBoxclose}
+        onTouchTap={this.handleDialogclose}
       />]
 
    return (
@@ -307,18 +380,40 @@ populateData(){
      </Grid>
     </div>
 <Divider />
-{/* <div>
-   {this.renderOrgCards(buffer)}
- </div>*/}
  {this.state.buffer}
 <Dialog
       title="ContactInfo"
       modal={false}
       actions={actions}
       open={this.state.contactbox}
-      onRequestClose={this.handleContactBoxclose}
+      onRequestClose={this.handleDialogclose}
     >
     {this.state.contactdata}
+</Dialog>
+<Dialog
+  title="Reviews"
+  actions={actions}
+  modal={false}
+  open={this.state.reviewBoxOpen}
+  onRequestClose={this.handleDialogClose}
+>
+          <Tabs>
+           <Tab label="Positive" className="coachingcentres">
+             <div >
+                {this.state.positiveReviews}
+             </div>
+           </Tab>
+           <Tab label="Normal" >
+             <div>
+                 {this.state.normalReviews}
+             </div>
+           </Tab>
+           <Tab label="Negative">
+             <div >
+                 {this.state.negativeReviews}
+             </div>
+           </Tab>
+          </Tabs>
 </Dialog>
 </div>
      </StayVisible>
