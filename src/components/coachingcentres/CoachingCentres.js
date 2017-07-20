@@ -15,7 +15,6 @@ import { Rating } from 'material-ui-rating'
 import {notify} from 'react-notify-toast';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import '../../styles/student-adda.css';
-import '../../styles/student-adda.css';
 
 
 const StayVisible = styled.div`
@@ -320,7 +319,7 @@ populateData(){
                feedetailsImages: newfeedetailsImages,
                buttonDisabled: false,
                rating: newrating,
-         },function afterTitleChange () {
+         },function afterStateChange () {
               this.renderOrgCards();
           })
          console.log("users" + this.state.orgname[0],"messages" + this.state.feedetailsImages[0])
@@ -328,8 +327,6 @@ populateData(){
 }
 
   render(){
-
- var buffer = []
 
     const actions = [
       <FlatButton
