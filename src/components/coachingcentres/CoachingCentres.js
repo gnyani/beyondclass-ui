@@ -1,5 +1,4 @@
 import React,{Component} from 'react'
-//import {notify} from 'react-notify-toast';
 import styled from 'styled-components'
 import DropDownMenu from 'material-ui/DropDownMenu';
 import TextField from 'material-ui/TextField';
@@ -16,9 +15,6 @@ import { Rating } from 'material-ui-rating'
 import {notify} from 'react-notify-toast';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import '../../styles/student-adda.css';
-//import StarRating from 'react-star-rating';
-//import StarRatingComponent from 'react-star-rating-component';
-//import GoogleMapComponent from './GoogleMap.js'
 
 
 const StayVisible = styled.div`
