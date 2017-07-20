@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import RaisedButton from 'material-ui/RaisedButton';
-import Paper from 'material-ui/Paper';
+import Divider from 'material-ui/Divider';
 import {notify} from 'react-notify-toast';
 import MenuItem from 'material-ui/MenuItem';
+import '../../styles/student-adda.css';
 // import { Image } from 'material-ui-image';
 // import Img from 'react-image';
 // import Spinner from 'react-spinner';
@@ -81,18 +82,14 @@ handleChange = (event, index, subject) => this.setState({subject});
   <StayVisible
   {...this.props}
   >
-    <div>
-     <div >
-       <div style={{textAlign:'center'}}>
+    <div className="Syllabus">
+       <div >
        <br />
        <br />
        <br />
-      <Paper zDepth={2} style={{marginLeft:'18%',width: '60%'}}  >
-       <br />
-       <h4 style={{width: '100%'}}> choose a subject </h4>
       <Grid>
       <Row is="center">
-      <Cell is="middle 4 tablet-2"><div>
+      <Cell is="middle 2 tablet-2"><div>
       <label>  Subject: </label>
       </div></Cell>
       <Cell is="3 tablet-2 phone-2"><div>
@@ -107,14 +104,15 @@ handleChange = (event, index, subject) => this.setState({subject});
          <MenuItem value={'DM'} label="DM" primaryText="Data Mining" />
        </DropDownMenu>
        </div></Cell>
+       <Cell is="middle 3 tablet-2 phone-2"><div>
+       <RaisedButton label="Fetch" value="Fetch" primary={true} onTouchTap={this.validateAndFetch} />
+       </div></Cell>
        </Row>
        </Grid>
-       <RaisedButton label="Fetch" value="Fetch" primary={true} onTouchTap={this.validateAndFetch} />
-       </Paper>
+<Divider />
        </div>
         <br /> <br /> <br />
-    </div>
-    <iframe src = {this.state.response} title="pdf syllabus" style={{marginLeft:'18%',height: '400px' ,width : '60%' , frameborder: '1'}} ></iframe>
+    <iframe src = {this.state.response} title="pdf syllabus" className="iframe" ></iframe>
     </div>
     </StayVisible>
     )

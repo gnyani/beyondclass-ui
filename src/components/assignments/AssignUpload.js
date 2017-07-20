@@ -5,6 +5,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import {notify} from 'react-notify-toast';
 import { Grid, Row, Cell } from 'react-inline-grid';
+import '../../styles/student-adda.css';
 import styled from 'styled-components'
 
 const StayVisible = styled.div`
@@ -99,16 +100,16 @@ class AssignUpload extends Component{
     let {imagePreviewUrl} = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
-      $imagePreview = (<iframe  title="preview pdf "src={imagePreviewUrl} style={{width:'400px', height: '350px'}}/>);
+      $imagePreview = (<iframe  title="preview pdf "src={imagePreviewUrl} className="iframe"/>);
     }
 
     return (
       <StayVisible
       {...this.props}
       >
-      <div style={{marginLeft:'18%',width:'60%'}}>
+      <div className="AssignUpload">
           <br  />
-          <p style={{marginLeft:'29%'}}> choose subject of assignment </p>
+          <p > choose subject of assignment </p>
           <Grid>
           <Row is="center">
           <Cell is="middle 4 tablet-2"><div>
@@ -129,13 +130,13 @@ class AssignUpload extends Component{
            </Grid>
 <Divider />
           <br />
-          <p style={{marginLeft:'29%'}}> Please upload a pdf file </p>
+          <p > Please upload a pdf file </p>
           <br />
           <form onSubmit={this._handleSubmit}>
-          <input type="file" style={{marginLeft:'10%'}}onChange={this._handleImageChange} />
-          <RaisedButton type="submit" label="Upload File"  style={{marginLeft:'15%'}}disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
+          <input type="file" onChange={this._handleImageChange} />
+          <RaisedButton type="submit" label="Upload File"  disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
           </form>
-          <div>
+          <div className="AssignUpload">
           <br />
           <br />
           {$imagePreview}

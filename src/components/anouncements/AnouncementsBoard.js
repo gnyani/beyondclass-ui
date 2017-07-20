@@ -100,7 +100,7 @@ handleSubmit(){
          number : 1,
          buttonDisabled  : false,
        })
-       notify.show("file upload successful","success")
+       notify.show("Anouncement uploaded successfully","success")
        console.log(this.state.response)
      })}
 }
@@ -157,7 +157,7 @@ handlePageChange(number){
 handleChange = (e) => this.setState({message:e.target.value});
 
 Enter(event){
-  if(event.key == 'Enter'){
+  if(event.key === 'Enter'){
     this.handleSubmit();
   }
 }

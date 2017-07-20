@@ -114,7 +114,7 @@ render(){
      />
     <Drawer open={this.state.open} width = {this.state.width}>
     <div className="UserImageContainer">
-    <img src={this.state.propiclink}  className="ProfilePic" />
+    <img src={this.state.propiclink}  alt="loading" className="ProfilePic" />
     <IconButton><EditIcon /></IconButton>
     <br />
     <br />

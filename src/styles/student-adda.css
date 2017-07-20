@@ -13,6 +13,23 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .vertical-scroll{ height:600px;overflow-y: scroll}
 .QuestionPapers{}
 .QuestionPapers .DropDownMenu{ position: relative  !important;bottom: 17px !important;}
-::-webkit-scrollbar { width: 10px;border-radius: 10px;}
-::-webkit-scrollbar-thumb {background-color: rgb(255,171,64);border-radius: 5px; outline: 1px solid slategrey;}
+::-webkit-scrollbar { width: 0.5em;border-radius: 0.5em;}
+::-webkit-scrollbar-thumb {background-color: darkgrey;border-radius: 0.5em; outline: 0.1em solid slategrey;}
 .QuestionPapers .image{margin-left: 18%;width: 60%;}
+.QuestionPapers .paper{margin-left:18% !important;width: 60% !important;}
+.QuestionPapers .h4{width:100%;text-align: center;}
+.QuestionPapers .button{margin: 0 calc(39%);}
+.Syllabus .paper {margin-left:18% !important; width: 60% !important;}
+.Syllabus .h4{width:100%;text-align: center;}
+.Syllabus .iframe{margin-left:18%;height: 400px ;width : 60% ;border:0;}
+.Syllabus .button{margin: 0 calc(39%);}
+.AssignUpload .iframe{width:60%;height: 350px;}
+.AssignUpload{text-align: center;}
+.coachingcentres{}
+.coachingcentres .title{text-align: center !important;}
+.coachingcentres .card{width:80% !important;margin-left:10% !important;}
+.coachingcentres .cardText{text-align: center !important;}
+.coachingcentres .rating{text-align: center; font-weight: normal;}
+.coachingcentres .stars{text-align: center;}
+.coachingcentres .div{margin-left: 10%;}
+.coachingcentres .li{ display: flex !important;}

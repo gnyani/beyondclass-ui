@@ -19,7 +19,6 @@ export const NavAppBar = (props) => {
           onLeftIconButtonTouchTap={props.toggle}
           iconElementRight={<RaisedButton label="Logout" secondary={true}/>}
           onRightIconButtonTouchTap={props.logout}
-          zDepth = {-1}
           />
       </StayVisible>
       )

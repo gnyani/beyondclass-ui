@@ -1,5 +1,4 @@
 import React,{Component} from 'react'
-//import {notify} from 'react-notify-toast';
 import styled from 'styled-components'
 import DropDownMenu from 'material-ui/DropDownMenu';
 import TextField from 'material-ui/TextField';
@@ -13,9 +12,9 @@ import {Card, CardActions, CardHeader,CardText} from 'material-ui/Card';
 import {blue500,lightBlue300} from 'material-ui/styles/colors';
 import {MapsRateReview,CommunicationContacts,CommunicationLocationOn} from '../../styledcomponents/SvgIcons.js';
 import { Rating } from 'material-ui-rating'
-//import StarRating from 'react-star-rating';
-//import StarRatingComponent from 'react-star-rating-component';
-//import GoogleMapComponent from './GoogleMap.js'
+import {notify} from 'react-notify-toast';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import '../../styles/student-adda.css';
 
 
 const StayVisible = styled.div`
@@ -35,6 +34,7 @@ const fontStyle={
   textTransform: 'uppercase',
   color: blue500
 }
+
 
 
 class CoachingCentres extends Component{
@@ -57,12 +57,22 @@ class CoachingCentres extends Component{
        rating : [],
        reviewBox: [],
        reviewText: '',
-       ratingValue: 1,
+       ratingValue: 0,
+       valueofi: 0,
+       buffer:[],
+       positiveReviews:[],
+       normalReviews:[],
+       negativeReviews:[],
+       reviewBoxOpen: false,
+       isDataLoaded: false,
      }
      this.populateData = this.populateData.bind(this)
      this.renderOrgCards = this.renderOrgCards.bind(this)
-     this.handleContactBoxclose = this.handleContactBoxclose.bind(this)
+     this.handleDialogclose = this.handleDialogclose.bind(this)
      this.handleRatingChange = this.handleRatingChange.bind(this)
+     this.showReviewBox = this.showReviewBox.bind(this)
+     this.handleReviewBoxOpen = this.handleReviewBoxOpen.bind(this)
+     this.fetchReviews = this.fetchReviews.bind(this)
    }
 
    handleCoachingChange = (event, index, coachingType) => this.setState({coachingType});
@@ -70,30 +80,33 @@ class CoachingCentres extends Component{
    handleAreaChange = (event, index, area) => this.setState({area});
 
 renderOrgCards(){
-  var buffer = []
+ var buffer = []
   var i=0;
   console.log("inside loadTimeline")
 if(this.state.coachingcentreId.length!==0)
 { for (i=0;i<this.state.coachingcentreId.length;i++){
   buffer.push(
-      <div key={i} style={{textAlign:'centre'}}>
+      <div key={i} >
       <br /> <br /> <br />
-        <Card style={{width:'80%',marginLeft:'10%'}} >
+        <Card className="card" >
           <CardHeader
             title={this.state.orgname[i]}
             style={fontStyle}
             subtitle={this.state.coachingType}
           />
-          <CardText style={{textAlign:'center'}}>
+          <CardText className="cardText">
            {this.state.description[i]}
           </CardText>
           <CardActions>
-            <div >
+            <div>
+            <h1 className="rating">{this.state.rating[i]}</h1>
+            <div className="stars">
             <Rating
             value={this.state.rating[i]}
             max={5}
-            onChange={this.handleRatingChange(i)}
+            readOnly
             />
+            </div>
             <Grid>
             <Row is="start">
             <Cell is="stretch 4 tablet-2"><div>
@@ -112,22 +125,66 @@ if(this.state.coachingcentreId.length!==0)
           {this.state.reviewBox[i]}
         </Card>
      </div>)
+    // console.log(JSON.stringify(this.state.reviewBox[i]),"full log is"+JSON.stringify(this.state.reviewBox))
 }
 }
-return buffer;
+this.setState({
+  buffer: buffer,
+  isDataLoaded: true,
+})
 }
-handleRatingChange(value,i) {
-    this.setState({ratingValue: value});
+handleRatingChange(value) {
+    console.log("value is"+value)
+    this.setState({ratingValue: value},this.showReviewBox(this.state.valueofi));
 }
+handleReviewBoxOpen(i){
+      this.fetchReviews(i);
+}
+fetchReviews(i){
+fetch('http://localhost:8080/coachingcentres/get/'+this.state.coachingcentreId[i]+'/reviews',{
+          credentials: 'include',
+          method: 'GET'
+        }).then(response => {
+         console.log("status is" + response.status);
+         return response.json()
+        }).then(response => {
+          var newPositiveReviews = []
+          var newNormalReviews = []
+          var newNegativeReviews = []
+          for(let i=0;i<response.length;i++)
+          {
+            console.log(response[i].review)
+            if(response[i].rating.toString() === "4" || response[i].rating.toString() === "5")
+            {
+              newPositiveReviews.push(<div key={i} ><p>{response[i].email}:{response[i].review}</p><Divider /> </div>)
+            }else if (response[i].rating.toString() === "3") {
+              newNormalReviews.push(<div key={i} ><p>{response[i].email}:{response[i].review}</p><Divider /> </div>)
+            }else if (response[i].rating.toString() === "1" || response[i].rating.toString === "2") {
+              newNegativeReviews.push(<div key={i}><p>{response[i].email}:{response[i].review}</p><Divider /> </div>)
+            }
+          }
+          this.setState({
+          positiveReviews : newPositiveReviews.slice(),
+          normalReviews: newNormalReviews.slice(),
+          negativeReviews: newNegativeReviews.slice(),
+          reviewBoxOpen: true,
+         });
+         console.log("reviews" + JSON.stringify(this.state.normalReviews) ,"without state" +JSON.stringify(newNormalReviews) )
+        })
+}
+
 showReviewBox(i){
   var reviewBox = []
+  console.log("this method got called")
   reviewBox[i]=   <div>
+                        <div className="stars">
+                          <a onClick={this.handleReviewBoxOpen.bind(this,i)}> View Reviews</a>
                           <Rating
                           value={this.state.ratingValue}
                           max={5}
-                          onClick={this.handleRatingChange.bind(this)}
-                          onChange={(value)=>this.handleRatingChange(value,i)}
+                          onChange={this.handleRatingChange.bind(this)}
                           />
+                        </div>
                           <div style={{display:'flex',marginLeft:'5%'}}>
                           <TextField
                           hintText="Say Something about this place.Your feebback matters"
@@ -142,11 +199,45 @@ showReviewBox(i){
                           </div>
 
   this.setState({
+    valueofi: i,
     reviewBox: reviewBox,
+    isDataLoaded:true,
+  },function afterStateChange(){
+    this.renderOrgCards()
   })
+  console.log(JSON.stringify(this.state.reviewBox[i]))
 }
 postReview(i){
-
+  if(this.state.ratingValue===0)
+  notify.show("please give some rating before submitting","warning")
+  else{
+  fetch('http://localhost:8080/coachingcentres/post/'+this.state.coachingcentreId[i],{
+    method: 'POST' ,
+    headers: {
+          'mode': 'cors',
+          'Content-Type': 'application/json'
+      },
+  credentials: 'include',
+  body: JSON.stringify({
+    rating: this.state.ratingValue,
+    review : this.state.reviewText,
+ })
+}).then(response => {
+  if(response.status === 200)
+  {
+     return response.text();
+  }
+  else{
+    let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
+    notify.show("sorry something went wrong","custom",5000,myColor)
+  }
+}).then(response => {
+  console.log("response text is" + response)
+  notify.show("Review posted successfully","success")
+  console.log(this.state.response)
+})
+this.renderOrgCards()
+}
 }
 handleReviewChange = (e) => this.setState({reviewText:e.target.value});
 
@@ -176,9 +267,10 @@ populateContactData()
       contactdata: buffer
     })
 }
-handleContactBoxclose(){
+handleDialogclose(){
   this.setState({
-    contactbox: false
+    contactbox: false,
+    reviewBoxOpen: false,
   })
 }
 
@@ -209,7 +301,7 @@ populateData(){
              newemail.push(response[i].contactinfo.email)
              newmobilenumber.push(response[i].contactinfo.mobileNumber)
              newfeedetailsImages.push(response[i].feesdetailsUrl)
-             newrating.push(response[i].rating)
+             newrating.push(response[i].rating.toString().substring(0, 3))
           }
            this.setState({
                coachingcentreId: newcoachingcentreId,
@@ -220,7 +312,9 @@ populateData(){
                feedetailsImages: newfeedetailsImages,
                buttonDisabled: false,
                rating: newrating,
-         })
+         },function afterStateChange () {
+              this.renderOrgCards();
+          })
          console.log("users" + this.state.orgname[0],"messages" + this.state.feedetailsImages[0])
         })
 }
@@ -231,14 +325,15 @@ populateData(){
       <FlatButton
         label="Cancel"
         primary={true}
-        onTouchTap={this.handleContactBoxclose}
+        onTouchTap={this.handleDialogclose}
       />]
 
    return (
      <StayVisible
      {...this.props}
      >
-     <div style={{marginLeft:'10%'}}>
+    <div className="coachingcentres">
+     <div className="div">
      <Grid>
      <Row is="start">
      <Cell is="3 tablet-2 phone-2"><div>
@@ -275,22 +370,48 @@ populateData(){
      </DropDownMenu>
      </div></Cell>
      <Cell is="1 tablet-2 phone-2"><div>
-     <RaisedButton label="Go" disabled={this.state.buttonDisabled} onClick={this.populateData}/>
+     <RaisedButton label="Go" disabled={this.state.buttonDisabled} onClick={this.populateData.bind(this)}/>
      </div></Cell>
      </Row>
      </Grid>
     </div>
 <Divider />
-   {this.renderOrgCards()}
+ {this.state.buffer}
 <Dialog
       title="ContactInfo"
       modal={false}
       actions={actions}
       open={this.state.contactbox}
-      onRequestClose={this.handleContactBoxclose}
+      onRequestClose={this.handleDialogclose}
     >
     {this.state.contactdata}
 </Dialog>
+<Dialog
+  title="Reviews"
+  actions={actions}
+  modal={false}
+  open={this.state.reviewBoxOpen}
+  onRequestClose={this.handleDialogClose}
+>
+          <Tabs>
+           <Tab label="Positive" className="coachingcentres">
+             <div >
+                {this.state.positiveReviews}
+             </div>
+           </Tab>
+           <Tab label="Normal" >
+             <div>
+                 {this.state.normalReviews}
+             </div>
+           </Tab>
+           <Tab label="Negative">
+             <div >
+                 {this.state.negativeReviews}
+             </div>
+           </Tab>
+          </Tabs>
+</Dialog>
+</div>
      </StayVisible>
    )
   }

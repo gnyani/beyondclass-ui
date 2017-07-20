@@ -6,6 +6,7 @@ import {notify} from 'react-notify-toast';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import { Grid, Row, Cell } from 'react-inline-grid';
+import '../../styles/student-adda.css';
 import styled from 'styled-components'
 
 const StayVisible = styled.div`
@@ -95,15 +96,14 @@ class OtherSyllabus extends Component{
     <StayVisible
     {...this.props}
     >
-      <div >
-        <div>
-        <div style={{textAlign:'center'}}>
+      <div className="Syllabus">
+        <div >
         <br />
         <br />
         <br />
-       <Paper zDepth={2} style={{marginLeft:'18%',width:'60%'}}  >
+       <Paper zDepth={2} className="paper"  >
         <br />
-        <h4 style={{width: '100%'}}> Choose a Question Paper for retrieval </h4>
+        <h4 className="h4"> Select a subject </h4>
        <Grid>
        <Row is="start">
        <Cell is="middle 4 tablet-2 phone-2"><div>
@@ -184,14 +184,13 @@ class OtherSyllabus extends Component{
       </Row>
       </Grid>
 <Divider />
-        <RaisedButton label="Fetch" value="Fetch" primary={true} onTouchTap={this.validateAndFetch} />
+        <RaisedButton label="Fetch" value="Fetch" primary={true} onTouchTap={this.validateAndFetch} className="button" />
         <br />
 
         </Paper>
         </div>
          <br /> <br /> <br /> <br />
-     </div>
-     <iframe src = {this.state.response} title="pdf syllabus" style={{marginLeft:'18%',height: '450px' ,width : '60%' , frameborder: '0'}} ></iframe>
+     <iframe src = {this.state.response} title="pdf syllabus" className="iframe" ></iframe>
      </div>
      </StayVisible>
      )

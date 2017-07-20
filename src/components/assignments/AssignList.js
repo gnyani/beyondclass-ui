@@ -93,7 +93,7 @@ class AssignList extends Component{
      <br  />
      <p > choose subject of assignment </p>
      <Grid>
-     <Row is="center">
+     <Row is="start">
      <Cell is="middle 4 tablet-2"><div>
      <label>  Subject: </label>
      </div></Cell>
@@ -118,7 +118,7 @@ class AssignList extends Component{
 <Divider />
      <div>
      <Grid>
-     <Row is="center">
+     <Row is="start">
      {this.state.links.map((src, index) => (
        <Cell is="6 tablet-2"><div>
            <Card >
