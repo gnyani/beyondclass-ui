@@ -7,7 +7,6 @@ import Notifications from 'react-notify-toast';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Style from './styles/student-adda.css';
 
-//import registerServiceWorker from './registerServiceWorker';
 
 injectTapEventPlugin();
 
@@ -20,9 +19,3 @@ ReactDOM.render(
   </div>
   </MuiThemeProvider>
 </HashRouter>, document.getElementById('router'));
-
-// ReactDOM.render(
-//   <HashRouter>
-//   <App />
-// </HashRouter>, document.getElementById('body'));
-//egisterServiceWorker();

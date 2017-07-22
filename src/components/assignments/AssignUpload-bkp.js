@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import ReactUploadFile from 'react-upload-file';
 import Dropzone from 'react-dropzone'
 import RaisedButton from 'material-ui/RaisedButton';
 import FontIcon from 'material-ui/FontIcon';
@@ -17,7 +16,6 @@ class AssignUpload extends Component{
       }
     }
     onDrop(acceptedFiles, rejectedFiles) {
-        // console.log('Accepted files: ', acceptedFiles[0].name);
         var filesToBeSent=this.state.filesToBeSent;
         if(filesToBeSent.length < this.state.printcount){
           filesToBeSent.push(acceptedFiles);

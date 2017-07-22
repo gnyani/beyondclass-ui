@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-//import SwipeableViews from 'react-swipeable-views';
 import Divider from 'material-ui/Divider';
-//import IconButton from 'material-ui/IconButton';
 import {lightBlue300,blue500,redA700} from 'material-ui/styles/colors';
 import HorizontalTimeline from 'react-horizontal-timeline';
 import {Card, CardActions, CardHeader, CardMedia,CardText} from 'material-ui/Card';
@@ -14,23 +12,6 @@ import {notify} from 'react-notify-toast';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import '../../styles/student-adda.css';
-//import Dropzone from 'react-dropzone'
-// import ImagesUploader from 'react-images-uploader';
-// import 'react-images-uploader/styles.css';
-// import 'react-images-uploader/font.css';
-//import HorizontalTimelineConfigurator from './HorizontalTimelineConfigurator';
-// import '../../../node_modules/react-dropzone-component/styles/filepicker.css';
-// import '../../../node_modules/dropzone/dist/min/dropzone.min.css';
-// import DropzoneComponent from 'react-dropzone-component';
-
-
-
-// var djsConfig = {
-//             addRemoveLinks: true,
-//             acceptedFiles: "image/jpeg,image/png",
-//             autoProcessQueue: false
-// }
-// var eventHandlers = { addedfile: (file) => console.log(file) }
 
 const fontStyle={
   fontFamily: "'Comic Sans MS',sans-serif",
@@ -114,15 +95,7 @@ export default class HorizontalTimelineContent extends React.Component {
     this._handleSubmit = this._handleSubmit.bind(this);
     this.getLikedUsers = this.getLikedUsers.bind(this);
     this.getComments = this.getComments.bind(this);
-  //  this.getImage = this.getImage.bind(this);
   }
-  // handleFileAdded(file) {
-  //       console.log(file);
-  //   }
-  //
-  //   handlePost() {
-  //       this.dropzone.processQueue();
-  //   }
 
   static propTypes = {
     content: PropTypes.arrayOf(PropTypes.object).isRequired
@@ -144,7 +117,6 @@ export default class HorizontalTimelineContent extends React.Component {
     let file = e.target.files[0];
 
     reader.onloadend = () => {
-      console.log("inside reader load end")
       this.setState({
         file: file,
         imagePreviewUrl: reader.result,
@@ -161,8 +133,6 @@ export default class HorizontalTimelineContent extends React.Component {
 
   _handleSubmit(e) {
     e.preventDefault();
-    // TODO: do something with -> this.state.file
-    console.log("filebase64" + this.state.filebase64)
       this.setState({ buttonDisabled: true });
       fetch('http://localhost:8080/users/timeline/upload', {
              method: 'POST',
@@ -185,7 +155,6 @@ export default class HorizontalTimelineContent extends React.Component {
              notify.show("sorry something went wrong","custom",5000,myColor)
            }
          }).then(response => {
-           console.log("response text is" + response)
            this.setState({
              response : response,
              buttonDisabled  : false,
@@ -195,37 +164,13 @@ export default class HorizontalTimelineContent extends React.Component {
            })
            notify.show("file upload successful","success")
            this.componentWillMount()
-           console.log(this.state.response)
          })
 
   }
-// getImage(i){
-// var bufferImage =[];
-//   fetch(this.state.postUrls[i],{
-//     credentials: 'include',
-//     method: 'GET'
-//   }).then(response => {
-//     console.log("responsestatus is" + response.status)
-//     if(response.status===200)
-//   //  console.log("response text is" + response.text)
-//     return response.text()
-//   }).then(response =>{
-//     console.log("outside if" + response)
-//     if(response){
-//       console.log("inside if")
-//       bufferImage.push(
-//         <img alt="loading" src={this.state.postUrls[i]}  style={{width:'100%',height:'380px'}}/>
-//       );
-//     }
-//   })
-//   console.log("buffer is" + bufferImage)
-//   return bufferImage;
-// }
 
 loadTimeline(buffer){
     buffer = []
     var i=0;
-    console.log("inside loadTimeline")
 if(this.state.postUrls.length!==0)
 { for (i=0;i<this.state.postUrls.length;i++){
     var bufferImage = []
@@ -240,7 +185,6 @@ if(this.state.postUrls.length!==0)
             />
             <CardMedia>
                {bufferImage}
-            {/*  {this.getImage(i)}*/}
             </CardMedia>
             <CardText style={{textAlign:'center'}}>
              {this.state.description[i]}
@@ -287,12 +231,10 @@ if(this.state.postUrls.length!==0)
   }
 
  handleCommentBoxOpen(i){
-   console.log("inside handleOpen");
     this.getComments(i)
  }
 
   handleOpen = (i) => {
-     console.log("inside handleOpen");
       this.getLikedUsers(i)
     };
 
@@ -320,7 +262,6 @@ showCommentBox(i){
   })
 }
 postComment(i){
-  console.log("value of I is" + i , "value of commentUrls" + this.state.commentUrls)
   fetch(this.state.commentUrls[i], {
          method: 'POST',
          headers: {
@@ -380,21 +321,17 @@ getLikedUsers(i){
     if(response.status===200)
     return response.json()
   }).then(response =>{
-     console.log("respose is" + JSON.stringify(response.length) )
      var likedusers = []
      if(response.length)
      {
-      // likedusers = response.slice()
        for(var j=0 ; j<response.length ; j++)
        {
          likedusers[j] = <div> {response[j]} <br /> </div>
        }
      }
      else{
-       console.log("inside else")
        likedusers[0] = 'No one Liked this post yet'
     }
-    console.log("likedUsers" + likedusers)
    this.setState({
    Dialogopen: true,
    likedUsers: likedusers
@@ -403,7 +340,6 @@ getLikedUsers(i){
 }
 
   disLikes(i){
-    console.log("inside disLikes" + this.state.likeUrls)
     var likeUrl = this.state.likeUrls[i]
       fetch(likeUrl+'/unlike',{
         credentials: 'include',
@@ -412,7 +348,6 @@ getLikedUsers(i){
         if(response.status===200)
         return response.text()
       }).then(response =>{
-         console.log("respose is" + response )
          var postlikes = this.state.likeCounts.slice()
          postlikes[i] = response.split(' ').pop()
          this.setState({
@@ -422,7 +357,6 @@ getLikedUsers(i){
 }
 
   addLikes(i){
-   console.log("inside addLikes" + this.state.likeUrls)
    var likeUrl = this.state.likeUrls[i]
      fetch(likeUrl,{
        credentials: 'include',
@@ -431,7 +365,6 @@ getLikedUsers(i){
        if(response.status===200)
        return response.text()
      }).then(response =>{
-        console.log("respose is" + response )
         if(response === "already liked")
         this.disLikes(i)
         else{
@@ -446,18 +379,12 @@ getLikedUsers(i){
 
   getPosts(index){
 
-      console.log("get posts index" + index ,"previous" + this.state.previous)
-      console.log('date is' + this.dates[index].toISOString().split('T')[0]);
       fetch('http://localhost:8080/users/timeline/posts?date='+this.dates[index].toISOString().split('T')[0],{
         credentials: 'include',
         method: 'GET'
      }).then(response => {
-       console.log("status is" + response.status);
-     //  console.log("response without json is" + response.text())
        return response.json()
      }).then(response => {
-       //console.log("response is " + response)
-       //console.log("response content is" + response.length)
        var newdescription = []
        var newpostUrls = []
        var newlikeUrls = []
@@ -485,10 +412,7 @@ getLikedUsers(i){
           likeCounts: newlikeCounts,
           postOwners: newpostOwners,
         })
-        console.log("responses are" + newcommentUrls  ,"postUrl" + newpostUrls, "likes" +newlikeCounts)
-
       })
-
   }
 
   handleCommentChange = (e) => this.setState({commentText:e.target.value});
@@ -508,29 +432,9 @@ getLikedUsers(i){
         onTouchTap={this.handleClose}
       />]
     var buffer=[];
-
-    // const config = this.componentConfig;
-    //     const djsConfig = this.djsConfig;
-    //
-    //     // For a list of all possible events (there are many), see README.md!
-    //     const eventHandlers = {
-    //         init: dz => this.dropzone = dz,
-    //         addedfile: this.handleFileAdded.bind(this)
-    //     }
     return (
       <div>
      <div  style={{textAlign:'center'}}>
-    {/* <Grid>
-     <Row is="center">
-     <Cell is="2 tablet-2"><div>
-     <DropzoneComponent config={config} eventHandlers={eventHandlers} djsConfig={djsConfig} />
-             <br /> <br />
-        </div></Cell>
-      <Cell is="2 tablet-2"><div>
-        <RaisedButton label="Upload"onClick={this.handlePost.bind(this)}></RaisedButton>
-      </div></Cell>
-        </Row>
-        </Grid>*/}
         <br /> <br />
         <TextField
         hintText="I guess you might wanna share something"

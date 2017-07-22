@@ -60,10 +60,8 @@ class NotesList extends Component{
               usermsg : 'sorry something went wrong',
               isLoaded: true
             })
-            console.log("usermsg is" + this.state.usermsg)
           }
         }).then(response => {
-          console.log("response text is" + response)
           this.setState({
             links : response.slice(),
             buttonDisabled  : false,
@@ -77,8 +75,6 @@ class NotesList extends Component{
             isLoaded: true
           })
           notify.show("file upload successful","success")
-          console.log("response sliced is " + response.slice())
-          console.log(this.state.links[1])
         })
    }
 

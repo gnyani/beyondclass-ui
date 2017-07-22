@@ -15,11 +15,9 @@ import PropTypes from 'prop-types';
 import IconButton from 'material-ui/IconButton';
 import {AddImageIcon,EditIcon,ImageCollectionsBookmark,ActionBook,AvLibraryBooks,AvNote,ContentArchive,ActionAssignment,
        FileFileUpload,ActionViewList,ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool} from '../styledcomponents/SvgIcons.js'
-//import CustomAvatar from '../styledcomponents/CustomAvatar.js'
 const iconStyles = {
   marginRight: 24,
 };
-
 
 class DashboardLaoyout extends Component{
 
@@ -39,11 +37,8 @@ handleLogout(){
            credentials: 'include',
            method: 'GET'
         }).then(response => {
-          console.log("status is" + response.status);
-        //  console.log("response without json is" + response.text())
            return response.text()
         }).then(response => {
-          console.log("response is"+response);
           if(response){
             let myColor = { background: '#0E1717', text: "#FFFFFF" };
             notify.show('Logout Successful!','success',3000,myColor);
@@ -62,13 +57,8 @@ componentWillMount(){
            credentials: 'include',
            method: 'GET'
         }).then(response => {
-          console.log("status is" + response.status);
-        //  console.log("response without json is" + response.text())
           return response.text()
         }).then(response => {
-          console.log("response is"+response);
-          // let myColor = { background: '#0E1717', text: "#FFFFFF" ,marginTop : '50%',zIndex : '3000'};
-          // notify.show("log in successful","custom", 5000, myColor);
           this.setState({
               username: response
           })
@@ -81,17 +71,12 @@ componentWillMount(){
            credentials: 'include',
            method: 'GET'
            }).then(response => {
-           console.log("status is" + response.status);
-           //  console.log("response without json is" + response.text())
            return response.text()
            }).then(response => {
-           console.log("response from server for pro pic is "+response);
            this.setState({
            propiclink : response,
            isLoaded : 'true'
            })
-            //    this.state.isLoggedIn = 'true'
-           console.log("propiclink from state is " + this.state.propiclink)
            })
 }
 handleToggle = () => {

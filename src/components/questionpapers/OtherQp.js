@@ -5,7 +5,6 @@ import Paper from 'material-ui/Paper';
 import {notify} from 'react-notify-toast';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
-//import { Image } from 'material-ui-image';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import '../../styles/student-adda.css';
 import styled from 'styled-components'
@@ -36,15 +35,12 @@ class OtherQp extends Component{
    }
 
    validateAndFetch(){
-     console.log("value of sub is" + this.state.value)
      if(this.state.university === 1 || this.state.college === 1 || this.state.branch === 1 ||
         this.state.year === 0 || this.state.sem === 0 || this.state.subject === 1 || this.state.qpyear === 1)
      {
-       console.log("inside if")
        notify.show("please fill in all the mandatory fields which are followed by *");
      }
      else{
-       console.log("in else")
        this.fetchQp();
        notify.show("Retrieval successful","success");
      }
@@ -77,12 +73,10 @@ class OtherQp extends Component{
             notify.show("sorry something went wrong","custom",5000,myColor)
           }
         }).then(response => {
-          console.log("response text is" + response)
           this.setState({
             response : response,
             isLoaded : true
           })
-          console.log(this.state.response)
         })
    }
 
