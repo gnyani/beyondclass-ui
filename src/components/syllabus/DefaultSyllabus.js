@@ -5,9 +5,6 @@ import Divider from 'material-ui/Divider';
 import {notify} from 'react-notify-toast';
 import MenuItem from 'material-ui/MenuItem';
 import '../../styles/student-adda.css';
-// import { Image } from 'material-ui-image';
-// import Img from 'react-image';
-// import Spinner from 'react-spinner';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import styled from 'styled-components'
 
@@ -31,14 +28,11 @@ class DefaultQp extends Component{
    }
 
 validateAndFetch(){
-  console.log("value of sub is" + this.state.value)
   if(this.state.value === 1)
   {
-    console.log("inside if")
     notify.show("please select a subject");
   }
   else{
-    console.log("in else")
     notify.show("success","success");
     this.fetchSyllabus();
   }
@@ -66,12 +60,10 @@ fetchSyllabus(){
          notify.show("sorry something went wrong","custom",5000,myColor)
        }
      }).then(response => {
-       console.log("response text is" + response)
        this.setState({
          response : response,
          isLoaded : true
        })
-       console.log(this.state.response)
      })
 }
 

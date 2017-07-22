@@ -5,8 +5,6 @@ import {
   orange700,
 } from 'material-ui/styles/colors';
 
-//const style = {margin: -9};
-
 class CustomAvatar extends Component{
 render(){
   return(

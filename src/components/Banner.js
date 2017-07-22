@@ -34,17 +34,12 @@ class Banner extends Component {
            credentials: 'include',
            method: 'GET'
         }).then(response => {
-          console.log("status is" + response.status);
-        //  console.log("response without json is" + response.text())
           return response.text()
         }).then(response => {
-          console.log("response from userLoggedin "+response);
           this.setState({
             isLoggedIn : 'true',
             isLoaded : 'true'
           })
-      //    this.state.isLoggedIn = 'true'
-          console.log("current state is" + this.state.isLoggedIn)
         })
   }
 
@@ -54,11 +49,8 @@ class Banner extends Component {
              credentials: 'include',
              method: 'GET'
           }).then(response => {
-            console.log("status is" + response.status);
-          //  console.log("response without json is" + response.text())
              return response.text()
           }).then(response => {
-            console.log("response is"+response);
             if(response){
               let myColor = { background: '#0E1717', text: "#FFFFFF" };
               notify.show('Logout Successful!','success',3000,myColor);
@@ -123,7 +115,6 @@ logoutToolbar(){
 )
 }
 render() {
-console.log("is user logged in " +this.state.isLoggedIn+" is data loaded" + this.state.isLoaded);
 if(!this.state.isLoaded){
   return <LoadingComponent />;
 }

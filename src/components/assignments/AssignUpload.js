@@ -35,14 +35,11 @@ class AssignUpload extends Component{
 
   _handleSubmit(e) {
     e.preventDefault();
-    // TODO: do something with -> this.state.file
-    console.log("filebase64" + this.state.filebase64)
     if(this.state.value === 1)
     {
     notify.show("please select a subject")
     }
     else{
-      console.log("file is" + this.state.file)
       this.setState({ buttonDisabled: true });
       fetch('http://localhost:8080/user/assignments/upload', {
              method: 'POST',
@@ -65,7 +62,6 @@ class AssignUpload extends Component{
              notify.show("sorry something went wrong","custom",5000,myColor)
            }
          }).then(response => {
-           console.log("response text is" + response)
            this.setState({
              response : response,
              buttonDisabled  : false,
@@ -73,7 +69,6 @@ class AssignUpload extends Component{
              file: ''
            })
            notify.show("file upload successful","success")
-           console.log(this.state.response)
          })
     }
   }
@@ -85,7 +80,6 @@ class AssignUpload extends Component{
     let file = e.target.files[0];
 
     reader.onloadend = () => {
-      console.log("inside reader load end")
       this.setState({
         file: file,
         imagePreviewUrl: reader.result,

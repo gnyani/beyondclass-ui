@@ -1,5 +1,4 @@
 import React,{Component} from 'react'
-//import Avatar from 'material-ui/Avatar';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import DatePicker from 'material-ui/DatePicker';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
@@ -81,59 +80,45 @@ class Register extends Component{
             credentials: 'include',
             method: 'GET'
          }).then(response => {
-           console.log("status is" + response.status);
-         // console.log("response without json is" + response.text())
            return response.text()
          }).then(response => {
-           console.log("username fetched is "+response);
            this.setState({
              username : response,
              isLoaded : 'true'
            })
-       //    this.state.isLoggedIn = 'true'
-           console.log("username in state " + this.state.username)
          })
    fetch('http://localhost:8080/user/propic', {
             credentials: 'include',
             method: 'GET'
             }).then(response => {
-            console.log("status is" + response.status);
-            //  console.log("response without json is" + response.text())
             return response.text()
             }).then(response => {
-            console.log("response from server for pro pic is "+response);
             this.setState({
             propiclink : response,
             isLoaded : 'true'
             })
-             //    this.state.isLoggedIn = 'true'
-            console.log("propiclink from state is " + this.state.propiclink)
             })
     fetch('http://localhost:8080/user/firstname', {
              credentials: 'include',
              method: 'GET'
              }).then(response => {
-             console.log("status is" + response.status);
              return response.text();
              }).then(response => {
              this.setState({
              firstName : response,
              isLoaded : 'true'
              })
-             console.log("firstname from state is " + this.state.firstname)
              })
      fetch('http://localhost:8080/user/lastname', {
               credentials: 'include',
               method: 'GET'
               }).then(response => {
-              console.log("status is" + response.status);
               return response.text();
               }).then(response => {
               this.setState({
               lastName : response,
               isLoaded : 'true'
               })
-              console.log("lastname from state is " + this.state.lastname)
               })
      }
 
@@ -160,7 +145,6 @@ class Register extends Component{
           dob: this.state.controlledDate,
         })
       }).then(response => {
-        console.log("status is" + response.status);
         return response.text();
       }).then(response => {
         if(response === 'User registration successful')
@@ -210,7 +194,6 @@ handleDateDismiss = (event, date) => {
 };
 
 validateDetails(){
-  console.log("value of branch" +this.state.valuebranch +this.state.valuecollege +this.state.valueyear + this.state.value)
  if(this.state.value === 1 || this.state.valuecollege === 1 || this.state.valueyear === 0 ||
     this.state.valuesemester === 0 || this.state.valuebranch === 1 || this.state.valuesection === 1)
  notify.show("please fill in all the mandatory fields which are followed by *","error");
