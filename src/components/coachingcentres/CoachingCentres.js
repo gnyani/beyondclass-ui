@@ -57,13 +57,15 @@ class CoachingCentres extends Component{
        rating : [],
        reviewBox: [],
        reviewText: '',
-       ratingValue: 0,
+       ratingValue: [],
        valueofi: 0,
        buffer:[],
        positiveReviews:[],
        normalReviews:[],
        negativeReviews:[],
+       ratingDone: false,
        reviewBoxOpen: false,
+       feedetails: false,
        isDataLoaded: false,
      }
      this.populateData = this.populateData.bind(this)
@@ -72,6 +74,7 @@ class CoachingCentres extends Component{
      this.handleRatingChange = this.handleRatingChange.bind(this)
      this.showReviewBox = this.showReviewBox.bind(this)
      this.handleReviewBoxOpen = this.handleReviewBoxOpen.bind(this)
+     this.handleShowFeeDetails = this.handleShowFeeDetails.bind(this)
      this.fetchReviews = this.fetchReviews.bind(this)
    }
 
@@ -109,6 +112,16 @@ if(this.state.coachingcentreId.length!==0)
             </div>
             <Grid>
             <Row is="start">
+            <Cell is="stretch 9 tablet-2"><div>
+            <a  className="link" onClick={this.handleReviewBoxOpen.bind(this,i)}> View Reviews</a>
+            </div></Cell>
+            <Cell is="stretch 2 tablet-2"><div>
+            <a  className="link" onClick={this.handleShowFeeDetails.bind(this,i)}>Fee Details</a>
+            </div></Cell>
+            </Row>
+            </Grid>
+            <Grid>
+            <Row is="start">
             <Cell is="stretch 4 tablet-2"><div>
             <FlatButton type="button" label="Review&Rating" fullWidth={true} icon={<MapsRateReview color={lightBlue300} />} onClick={this.showReviewBox.bind(this,i)}/>
             </div></Cell>
@@ -133,11 +146,24 @@ this.setState({
 })
 }
 handleRatingChange(value) {
-    console.log("value is"+value)
-    this.setState({ratingValue: value},this.showReviewBox(this.state.valueofi));
+    console.log("inside rating change is"+value)
+    var valuearr=[]
+    valuearr[this.state.valueofi] = value
+    this.setState({ratingDone: true,ratingValue: valuearr.slice(),isDataLoaded: true},
+                function onStateChange() {
+                  console.log("is rating Done" + this.state.ratingDone)
+               this.showReviewBox(this.state.valueofi)
+             });
 }
 handleReviewBoxOpen(i){
       this.fetchReviews(i);
+}
+
+handleShowFeeDetails(i){
+  this.setState({
+    feedetails: true,
+    currentFeeImage: this.state.feedetailsImages[i]
+  })
 }
 fetchReviews(i){
 fetch('http://localhost:8080/coachingcentres/get/'+this.state.coachingcentreId[i]+'/reviews',{
@@ -152,7 +178,6 @@ fetch('http://localhost:8080/coachingcentres/get/'+this.state.coachingcentreId[i
           var newNegativeReviews = []
           for(let i=0;i<response.length;i++)
           {
-            console.log(response[i].review)
             if(response[i].rating.toString() === "4" || response[i].rating.toString() === "5")
             {
               newPositiveReviews.push(<div key={i} ><p>{response[i].email}:{response[i].review}</p><Divider /> </div>)
@@ -168,7 +193,7 @@ fetch('http://localhost:8080/coachingcentres/get/'+this.state.coachingcentreId[i
           negativeReviews: newNegativeReviews.slice(),
           reviewBoxOpen: true,
          });
-         console.log("reviews" + JSON.stringify(this.state.normalReviews) ,"without state" +JSON.stringify(newNormalReviews) )
+         //console.log("reviews" + JSON.stringify(this.state.normalReviews) ,"without state" +JSON.stringify(newNormalReviews) )
         })
 this.setState({
   buffer: buffer,
@@ -181,13 +206,15 @@ handleRatingChange(value) {
 }
 
 showReviewBox(i){
+  console.log("reviewBox  is"+ this.state.reviewBox[i] +"is ratingDone" +this.state.ratingDone)
   var reviewBox = []
-  console.log("this method got called")
+  if(typeof this.state.reviewBox[i] === "undefined" ||  this.state.ratingDone === true  )
+  {
+    console.log("object length is"+ typeof this.state.reviewBox[i] )
   reviewBox[i]=   <div>
                         <div className="stars">
-                          <a onClick={this.handleReviewBoxOpen.bind(this,i)}> View Reviews</a>
                           <Rating
-                          value={this.state.ratingValue}
+                          value={this.state.ratingValue[i]}
                           max={5}
                           onChange={this.handleRatingChange.bind(this)}
                           />
@@ -207,12 +234,26 @@ showReviewBox(i){
 
   this.setState({
     valueofi: i,
+    ratingDone: false,
     reviewBox: reviewBox,
     isDataLoaded:true,
   },function afterStateChange(){
     this.renderOrgCards()
   })
-  console.log(JSON.stringify(this.state.reviewBox[i]))
+  //console.log(JSON.stringify(this.state.reviewBox[i]))
+}else{
+  reviewBox = []
+  console.log("inside else")
+  this.setState({
+    valueofi: i,
+    reviewBox: reviewBox.slice(),
+    ratingDone: false,
+    isDataLoaded:true,
+  },function afterStateChange(){
+    console.log("review box is"+reviewBox)
+    this.renderOrgCards()
+  })
+}
 }
 postReview(i){
   if(this.state.ratingValue===0)
@@ -226,7 +267,7 @@ postReview(i){
       },
   credentials: 'include',
   body: JSON.stringify({
-    rating: this.state.ratingValue,
+    rating: this.state.ratingValue[i],
     review : this.state.reviewText,
  })
 }).then(response => {
@@ -243,8 +284,13 @@ postReview(i){
   notify.show("Review posted successfully","success")
   console.log(this.state.response)
 })
-this.renderOrgCards()
 }
+this.setState({
+  reviewText:' ',
+  ratingValue: 0,
+},function OnstateChange(){
+  this.renderOrgCards()
+})
 }
 handleReviewChange = (e) => this.setState({reviewText:e.target.value});
 
@@ -278,6 +324,7 @@ handleDialogclose(){
   this.setState({
     contactbox: false,
     reviewBoxOpen: false,
+    feedetails: false,
   })
 }
 
@@ -392,6 +439,24 @@ populateData(){
       onRequestClose={this.handleDialogclose}
     >
     {this.state.contactdata}
+</Dialog>
+<Dialog
+      title="ContactInfo"
+      modal={false}
+      actions={actions}
+      open={this.state.contactbox}
+      onRequestClose={this.handleDialogclose}
+    >
+    {this.state.contactdata}
+</Dialog>
+<Dialog
+      title="FeeDetails"
+      modal={false}
+      actions={actions}
+      open={this.state.feedetails}
+      onRequestClose={this.handleDialogclose}
+    >
+    <img src={this.state.currentFeeImage} alt="loading" />
 </Dialog>
 <Dialog
   title="Reviews"

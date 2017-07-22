@@ -232,7 +232,7 @@ if(this.state.postUrls.length!==0)
     if(this.state.postUrls[i] !== null)
     bufferImage.push(<img alt="loading" src={this.state.postUrls[i]} key={i} style={{width:'100%',height:'380px'}}/>)
     buffer.push(
-        <Cell is="6 tablet-2" key={i}><div>
+        <Cell is="7 tablet-2" key={i}><div>
           <Card >
             <CardHeader
               title="Posted by"
@@ -250,12 +250,12 @@ if(this.state.postUrls.length!==0)
               <Grid>
               <Row is="start">
               <Cell is="stretch 7 tablet-2"><div>
-              <div style={{marginLeft:'10%'}}>
+              <div style={{marginLeft:'36%'}}>
              <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
               </div>
               </div></Cell>
               <Cell is="stretch 5 tablet-2"><div>
-              <div style={{marginLeft:'10%'}}>
+              <div style={{marginLeft:'15%'}}>
              <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
               </div>
               </div></Cell>

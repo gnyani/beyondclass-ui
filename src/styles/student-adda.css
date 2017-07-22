@@ -1,17 +1,26 @@
 .StudentAdda{ margin: 0;padding: 0;border: 0;font-size: 15px;vertical-align: baseline;background: transparent;}
-body {height: 100%;width: 100%;overflow: hidden;margin: 0;outline: 0;}
-body .headings{ color: #444;text-align: center;padding: 0.1%;}
+body {height: 100vh;width: 100%;overflow: hidden;margin: 0;outline: 0;}
+body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
+               font-size: 2em;letter-spacing: 0.07em;color: rgb(162,35,142)}
 body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 0px rgb(95, 87, 87);}
 .announcements{ font-size: 20px;text-align: center;}
-.UserImageContainer .ProfilePic{width: 40%;height: 40%;color: rgb(33, 150, 243);margin-top: 15%;margin-left: 27%;border-radius: 50%;}
-.announcements .container li .name{ text-align: left;font-size: 20px;text-transform: capitalize;font-family: monospace;
-              color: #444;padding: 18px 0px;margin: 0px;}
+.UserImageContainer .ProfilePic{width: 40%;height: 40% ;color: rgb(33, 150, 243);margin-top: 15%;margin-left: 27%;border-radius: 50%;}
+.announcements .container li .name{ text-align: left;text-transform: capitalize;font-family:"Comic Sans MS",sans-serif ;
+              padding: 18px 0px;margin: 0px;}
+.announcements .heading{color: #444;text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
+               font-size: 2em;letter-spacing: 0.07em;color: rgb(162,35,142)}
+.announcements .fontStyle{  font-size: 1em;font-style: italic;
+                            font-weight: 100;letter-spacing: 2px;color: rgb(1,175,173)}
+.announcements .messageStyle{   font-family: "Comic Sans MS",sans-serif;font-size:0.8em;font-style: italic;font-weight: 50;
+                               color: rgb(247,166,25)}
+.announcements .image{width: 4em;height: 4em ;border-radius: 50% }
 .input{ float: left !important;margin-left: 10%;width: 65% !important;border: 0px !important;padding: 5px 0px !important;margin-bottom: 20px !important;}
-.AnnounceButton{ box-shadow: 1px 2px 8px 0px black;margin-right: 3% !important;}
-.vertical-scroll{ height:600px;overflow-y: scroll}
+.AnnounceButton{ box-shadow: 1px 2px 8px 0px black;margin-right: 3% !important; border-radius: 1em !important;
+                 background-color: rgb(162,35,142) !important; color: rgb(255,255,255) !important;}
+.vertical-scroll:hover{height:92vh;;overflow-y: scroll;width: 100%;}
 .QuestionPapers{}
 .QuestionPapers .DropDownMenu{ position: relative  !important;bottom: 17px !important;}
-::-webkit-scrollbar { width: 0.5em;border-radius: 0.5em;}
+::-webkit-scrollbar { width: 0.4em;border-radius: 0.4em;}
 ::-webkit-scrollbar-thumb {background-color: darkgrey;border-radius: 0.5em; outline: 0.1em solid slategrey;}
 .QuestionPapers .image{margin-left: 18%;width: 60%;}
 .QuestionPapers .paper{margin-left:18% !important;width: 60% !important;}
@@ -31,4 +40,5 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .coachingcentres .stars{text-align: center;}
 .coachingcentres .div{margin-left: 10%;}
 .coachingcentres .li{ display: flex !important;}
->>>>>>> coaching centres and some syle changes
+.coachingcentres .link{margin-left: 16%}
+>>>>>>> styling enhancements
