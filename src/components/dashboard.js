@@ -1,6 +1,4 @@
 import React,{Component} from 'react'
-// import Drawer from 'material-ui/Drawer';
-// import MenuItem from 'material-ui/MenuItem';
 import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
@@ -13,7 +11,6 @@ const StayVisible = styled.div`
   transition: margin .1s;
 `
 class Dashboard extends Component{
-
   constructor(props) {
     super(props);
     this.state = {
@@ -32,13 +29,8 @@ getUser(){
            credentials: 'include',
            method: 'GET'
         }).then(response => {
-          console.log("status is" + response.status);
-        //  console.log("response without json is" + response.text())
           return response.text()
         }).then(response => {
-          console.log("response is"+response);
-          // let myColor = { background: '#0E1717', text: "#FFFFFF" ,marginTop : '50%',zIndex : '3000'};
-          // notify.show("log in successful","custom", 5000, myColor);
           this.setState({
               username: response
           })

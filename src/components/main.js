@@ -16,7 +16,6 @@ import TimeLine from './timeline/TimeLine.js'
 import CoachingCentres from './coachingcentres/CoachingCentres.js'
 
 export const Body =(props) => {
-   console.log("from body" + props.width)
     return(
 <main className="vertical-scroll">
   <Switch>

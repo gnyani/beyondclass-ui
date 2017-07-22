@@ -33,15 +33,12 @@ class OtherSyllabus extends Component{
    }
 
    validateAndFetch(){
-     console.log("value of sub is" + this.state.value)
      if(this.state.university === 1 || this.state.college === 1 || this.state.branch === 1 ||
         this.state.year === 0 || this.state.sem === 0 || this.state.subject === 1)
      {
-       console.log("inside if")
        notify.show("please fill in all the mandatory fields which are followed by *");
      }
      else{
-       console.log("in else")
        this.fetchSyllabus();
        notify.show("Retrieval successful","success");
      }
@@ -73,12 +70,10 @@ class OtherSyllabus extends Component{
             notify.show("sorry something went wrong","custom",5000,myColor)
           }
         }).then(response => {
-          console.log("response text is" + response)
           this.setState({
             response : response,
             isLoaded : true
           })
-          console.log(this.state.response)
         })
    }
 

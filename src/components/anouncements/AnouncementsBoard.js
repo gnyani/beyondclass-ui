@@ -39,7 +39,6 @@ handleSubmit(){
      buttonDisabled: true
    })
    if(this.state.message===''){
-    console.log("hello");
    }else{
   fetch('http://localhost:8080/user/anouncements/insert', {
          method: 'POST',
@@ -61,7 +60,6 @@ handleSubmit(){
          notify.show("sorry something went wrong","custom",5000,myColor)
        }
      }).then(response => {
-       console.log("response text is" + response)
        this.setState({
          users : [],
          messages : [],
@@ -74,7 +72,6 @@ handleSubmit(){
          buttonDisabled  : false,
        })
        notify.show("Anouncement uploaded successfully","success")
-       console.log(this.state.response)
      })}
 }
 
@@ -93,11 +90,8 @@ populateData(pageNumber){
            credentials: 'include',
            method: 'GET'
         }).then(response => {
-          console.log("status is" + response.status);
-        //  console.log("response without json is" + response.text())
           return response.json()
         }).then(response => {
-          console.log("response content is" + JSON.stringify(response.content.length))
           var newmessage = this.state.messages.slice()
           var newuser = this.state.users.slice()
           for(let i=0;i<response.content.length;i++)
@@ -107,9 +101,9 @@ populateData(pageNumber){
           }
            this.setState({
                users: newuser,
-               messages: newmessage
+               messages: newmessage,
+               total: response.totalPages
          })
-         console.log("users" + typeof this.state.users[0],"messages" + this.state.messages[0])
         })
 }
 
@@ -137,7 +131,6 @@ Enter(event){
 
 render(){
 var buffer=[];
-console.log("props"+JSON.stringify(this.props.width))
 return(
 
 <StayVisible
