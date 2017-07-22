@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import {notify} from 'react-notify-toast';
-import {blue500,lightBlue300,redA700,yellowA200} from 'material-ui/styles/colors';
-//import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import styled from 'styled-components';
 import Pagination from 'material-ui-pagination';
-import '../../styles/student-adda.css'
-//import { Grid, Row, Cell } from 'react-inline-grid';
+import{Row,Grid,Cell} from 'react-inline-grid';
+import '../../styles/student-adda.css';
 
 const StayVisible = styled.div`
   position: relative;
@@ -15,31 +13,6 @@ const StayVisible = styled.div`
   transition: margin .1s;
 `
 
-const fontStyle={
-  fontFamily: "'Comic Sans MS',sans-serif",
-  fontSize:'140%',
-  fontStyle: 'italic',
-  fontWeight: '500',
-  letterSpacing: '2px',
-  wordWrap: 'break-word',
-  width:'100%',
-  height:'150%',
-  textTransform: 'uppercase',
-  color: blue500
-}
-
-const messageStyle={
-  fontFamily: "'Comic Sans MS',sans-serif",
-  fontSize:'120%',
-  fontStyle: 'italic',
-  fontWeight: '500',
-  wordWrap: 'break-word',
-  width:'75%',
-  letterSpacing: '2px',
-  textTransform: 'capitalize',
-  color: redA700
-
-}
 class AnouncementsBoard extends Component{
 
   constructor() {
@@ -109,7 +82,7 @@ list(buffer){
   var i=0;
   for (i=0;i<this.state.users.length;i++){
   buffer.push(<li>
-                <p className="name"> {this.state.users[i]} : {this.state.messages[i]} </p></li>
+                <p className="name"> <span className="fontStyle">{this.state.users[i]} </span>: <span className="messageStyle">{this.state.messages[i]}</span> </p></li>
              )
   }
   return buffer
@@ -170,8 +143,17 @@ return(
 <StayVisible
   {...this.props}
 >
-<div className="announcements">
-    <h2 className="headings"> Latest Anouncements </h2>
+<div className="announcements ">
+    <Grid>
+    <Row is="center">
+    <Cell is="middle 1 tablet-1"><div>
+    <img  className="image" src={require('../../styledcomponents/images/announcements.jpeg')} alt="Problem loading"/>
+    </div></Cell>
+    <Cell is="6 tablet-5"><div>
+    <h2 className="heading"> Latest Announcements</h2>
+    </div></Cell>
+    </Row>
+    </Grid>
    <div zDepth={2} className="container page">
       <ul> {this.list(buffer)} </ul>
     </div>
@@ -191,7 +173,7 @@ return(
      onKeyPress={this.Enter}
      />
 
-    <FlatButton label="Anounce" type="submit"  disabled={this.state.buttonDisabled}
+    <FlatButton label="Announce" type="submit"  disabled={this.state.buttonDisabled}
      className="AnnounceButton" onTouchTap={this.handleSubmit}/>
 </div>
 </StayVisible>
