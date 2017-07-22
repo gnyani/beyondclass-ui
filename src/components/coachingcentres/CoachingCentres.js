@@ -195,14 +195,6 @@ fetch('http://localhost:8080/coachingcentres/get/'+this.state.coachingcentreId[i
          });
          //console.log("reviews" + JSON.stringify(this.state.normalReviews) ,"without state" +JSON.stringify(newNormalReviews) )
         })
-this.setState({
-  buffer: buffer,
-  isDataLoaded: true,
-})
-}
-handleRatingChange(value) {
-    console.log("value is"+value)
-    this.setState({ratingValue: value},this.showReviewBox(this.state.valueofi));
 }
 
 showReviewBox(i){
