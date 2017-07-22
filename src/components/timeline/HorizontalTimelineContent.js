@@ -8,29 +8,12 @@ import HorizontalTimeline from 'react-horizontal-timeline';
 import {Card, CardActions, CardHeader, CardMedia,CardText} from 'material-ui/Card';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
 import {ActionThumbUp,CommunicationComment} from '../../styledcomponents/SvgIcons.js';
 import {notify} from 'react-notify-toast';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import '../../styles/student-adda.css';
-//import Dropzone from 'react-dropzone'
-// import ImagesUploader from 'react-images-uploader';
-// import 'react-images-uploader/styles.css';
-// import 'react-images-uploader/font.css';
-//import HorizontalTimelineConfigurator from './HorizontalTimelineConfigurator';
-// import '../../../node_modules/react-dropzone-component/styles/filepicker.css';
-// import '../../../node_modules/dropzone/dist/min/dropzone.min.css';
-// import DropzoneComponent from 'react-dropzone-component';
 
-
-
-// var djsConfig = {
-//             addRemoveLinks: true,
-//             acceptedFiles: "image/jpeg,image/png",
-//             autoProcessQueue: false
-// }
-// var eventHandlers = { addedfile: (file) => console.log(file) }
 
 const fontStyle={
   fontFamily: "'Comic Sans MS',sans-serif",
@@ -116,13 +99,6 @@ export default class HorizontalTimelineContent extends React.Component {
     this.getComments = this.getComments.bind(this);
   //  this.getImage = this.getImage.bind(this);
   }
-  // handleFileAdded(file) {
-  //       console.log(file);
-  //   }
-  //
-  //   handlePost() {
-  //       this.dropzone.processQueue();
-  //   }
 
   static propTypes = {
     content: PropTypes.arrayOf(PropTypes.object).isRequired
@@ -162,7 +138,11 @@ export default class HorizontalTimelineContent extends React.Component {
   _handleSubmit(e) {
     e.preventDefault();
     // TODO: do something with -> this.state.file
-    console.log("filebase64" + this.state.filebase64)
+     var trimmedmessage = this.state.message.replace(/\s/g,'')
+    if(this.state.filebase64 === '' && trimmedmessage === '')
+    {
+      notify.show("Please type something","error")
+    }else{
       this.setState({ buttonDisabled: true });
       fetch('http://localhost:8080/users/timeline/upload', {
              method: 'POST',
@@ -193,35 +173,13 @@ export default class HorizontalTimelineContent extends React.Component {
              file: '',
              message: '',
            })
-           notify.show("file upload successful","success")
+           notify.show("Post uploaded successfully","success")
            this.componentWillMount()
            console.log(this.state.response)
          })
 
   }
-// getImage(i){
-// var bufferImage =[];
-//   fetch(this.state.postUrls[i],{
-//     credentials: 'include',
-//     method: 'GET'
-//   }).then(response => {
-//     console.log("responsestatus is" + response.status)
-//     if(response.status===200)
-//   //  console.log("response text is" + response.text)
-//     return response.text()
-//   }).then(response =>{
-//     console.log("outside if" + response)
-//     if(response){
-//       console.log("inside if")
-//       bufferImage.push(
-//         <img alt="loading" src={this.state.postUrls[i]}  style={{width:'100%',height:'380px'}}/>
-//       );
-//     }
-//   })
-//   console.log("buffer is" + bufferImage)
-//   return bufferImage;
-// }
-
+}
 loadTimeline(buffer){
     buffer = []
     var i=0;
@@ -519,7 +477,7 @@ getLikedUsers(i){
     //     }
     return (
       <div>
-     <div  style={{textAlign:'center'}}>
+     <div  style={{textAlign:'center'}} className="timeline">
     {/* <Grid>
      <Row is="center">
      <Cell is="2 tablet-2"><div>
@@ -546,8 +504,8 @@ getLikedUsers(i){
         <Cell is="6 tablet-6"><div>
         <input type="file" onChange={this._handleImageChange} />
         </div></Cell>
-        <Cell is="4 tablet-4"><div>
-        <RaisedButton type="submit" label="Post"  disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
+        <Cell is="4 tablet-4"><div >
+        <FlatButton  className="PostButton" type="submit" label="Post"  disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
         </div></Cell>
 
         </Row>
