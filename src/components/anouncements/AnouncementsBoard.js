@@ -38,7 +38,9 @@ handleSubmit(){
    this.setState({
      buttonDisabled: true
    })
-   if(this.state.message===''){
+   var trimmedmessage = this.state.message.replace(/\s/g,'')
+   if(trimmedmessage===''){
+    notify.show("Message cannot be null","error");
    }else{
   fetch('http://localhost:8080/user/anouncements/insert', {
          method: 'POST',
@@ -78,7 +80,7 @@ handleSubmit(){
 list(buffer){
   var i=0;
   for (i=0;i<this.state.users.length;i++){
-  buffer.push(<li>
+  buffer.push(<li key={i}>
                 <p className="name"> <span className="fontStyle">{this.state.users[i]} </span>: <span className="messageStyle">{this.state.messages[i]}</span> </p></li>
              )
   }
@@ -147,7 +149,7 @@ return(
     </div></Cell>
     </Row>
     </Grid>
-   <div zDepth={2} className="container page">
+   <div  className="container page">
       <ul> {this.list(buffer)} </ul>
     </div>
     <Pagination

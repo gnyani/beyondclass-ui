@@ -193,6 +193,7 @@ fetch('http://localhost:8080/coachingcentres/get/'+this.state.coachingcentreId[i
 }
 
 showReviewBox(i){
+  console.log("reviewBox  is"+ this.state.reviewBox[i] +"is ratingDone" +this.state.ratingDone)
   var reviewBox = []
   if(typeof this.state.reviewBox[i] === "undefined" ||  this.state.ratingDone === true  )
   {

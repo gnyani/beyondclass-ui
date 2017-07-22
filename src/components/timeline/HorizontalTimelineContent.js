@@ -6,7 +6,6 @@ import HorizontalTimeline from 'react-horizontal-timeline';
 import {Card, CardActions, CardHeader, CardMedia,CardText} from 'material-ui/Card';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import FlatButton from 'material-ui/FlatButton';
-import RaisedButton from 'material-ui/RaisedButton';
 import {ActionThumbUp,CommunicationComment} from '../../styledcomponents/SvgIcons.js';
 import {notify} from 'react-notify-toast';
 import TextField from 'material-ui/TextField';
@@ -133,6 +132,12 @@ export default class HorizontalTimelineContent extends React.Component {
 
   _handleSubmit(e) {
     e.preventDefault();
+    // TODO: do something with -> this.state.file
+     var trimmedmessage = this.state.message.replace(/\s/g,'')
+    if(this.state.filebase64 === '' && trimmedmessage === '')
+    {
+      notify.show("Please type something","error")
+    }else{
       this.setState({ buttonDisabled: true });
       fetch('http://localhost:8080/users/timeline/upload', {
              method: 'POST',
@@ -162,7 +167,7 @@ export default class HorizontalTimelineContent extends React.Component {
              file: '',
              message: '',
            })
-           notify.show("file upload successful","success")
+           notify.show("Post uploaded successfully","success")
            this.componentWillMount()
          })
 
@@ -450,8 +455,8 @@ getLikedUsers(i){
         <Cell is="6 tablet-6"><div>
         <input type="file" onChange={this._handleImageChange} />
         </div></Cell>
-        <Cell is="4 tablet-4"><div>
-        <RaisedButton type="submit" label="Post"  disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
+        <Cell is="4 tablet-4"><div >
+        <FlatButton  className="PostButton" type="submit" label="Post"  disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
         </div></Cell>
 
         </Row>
