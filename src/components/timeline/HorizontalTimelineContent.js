@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-//import SwipeableViews from 'react-swipeable-views';
 import Divider from 'material-ui/Divider';
-//import IconButton from 'material-ui/IconButton';
 import {lightBlue300,blue500,redA700} from 'material-ui/styles/colors';
 import HorizontalTimeline from 'react-horizontal-timeline';
 import {Card, CardActions, CardHeader, CardMedia,CardText} from 'material-ui/Card';
@@ -13,7 +11,6 @@ import {notify} from 'react-notify-toast';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import '../../styles/student-adda.css';
-
 
 const fontStyle={
   fontFamily: "'Comic Sans MS',sans-serif",
@@ -98,7 +95,6 @@ export default class HorizontalTimelineContent extends React.Component {
     this._handleSubmit = this._handleSubmit.bind(this);
     this.getLikedUsers = this.getLikedUsers.bind(this);
     this.getComments = this.getComments.bind(this);
-  //  this.getImage = this.getImage.bind(this);
   }
 
   static propTypes = {
@@ -121,7 +117,6 @@ export default class HorizontalTimelineContent extends React.Component {
     let file = e.target.files[0];
 
     reader.onloadend = () => {
-      console.log("inside reader load end")
       this.setState({
         file: file,
         imagePreviewUrl: reader.result,
@@ -166,7 +161,6 @@ export default class HorizontalTimelineContent extends React.Component {
              notify.show("sorry something went wrong","custom",5000,myColor)
            }
          }).then(response => {
-           console.log("response text is" + response)
            this.setState({
              response : response,
              buttonDisabled  : false,
@@ -176,15 +170,13 @@ export default class HorizontalTimelineContent extends React.Component {
            })
            notify.show("Post uploaded successfully","success")
            this.componentWillMount()
-           console.log(this.state.response)
          })
 
   }
-}
+
 loadTimeline(buffer){
     buffer = []
     var i=0;
-    console.log("inside loadTimeline")
 if(this.state.postUrls.length!==0)
 { for (i=0;i<this.state.postUrls.length;i++){
     var bufferImage = []
@@ -246,12 +238,10 @@ if(this.state.postUrls.length!==0)
   }
 
  handleCommentBoxOpen(i){
-   console.log("inside handleOpen");
     this.getComments(i)
  }
 
   handleOpen = (i) => {
-     console.log("inside handleOpen");
       this.getLikedUsers(i)
     };
 
@@ -279,7 +269,6 @@ showCommentBox(i){
   })
 }
 postComment(i){
-  console.log("value of I is" + i , "value of commentUrls" + this.state.commentUrls)
   fetch(this.state.commentUrls[i], {
          method: 'POST',
          headers: {
@@ -339,7 +328,6 @@ getLikedUsers(i){
     if(response.status===200)
     return response.json()
   }).then(response =>{
-     console.log("respose is" + JSON.stringify(response.length) )
      var likedusers = []
      if(response.length)
      {
@@ -349,10 +337,8 @@ getLikedUsers(i){
        }
      }
      else{
-       console.log("inside else")
        likedusers[0] = 'No one Liked this post yet'
     }
-    console.log("likedUsers" + likedusers)
    this.setState({
    Dialogopen: true,
    likedUsers: likedusers
@@ -361,7 +347,6 @@ getLikedUsers(i){
 }
 
   disLikes(i){
-    console.log("inside disLikes" + this.state.likeUrls)
     var likeUrl = this.state.likeUrls[i]
       fetch(likeUrl+'/unlike',{
         credentials: 'include',
@@ -370,7 +355,6 @@ getLikedUsers(i){
         if(response.status===200)
         return response.text()
       }).then(response =>{
-         console.log("respose is" + response )
          var postlikes = this.state.likeCounts.slice()
          postlikes[i] = response.split(' ').pop()
          this.setState({
@@ -380,7 +364,6 @@ getLikedUsers(i){
 }
 
   addLikes(i){
-   console.log("inside addLikes" + this.state.likeUrls)
    var likeUrl = this.state.likeUrls[i]
      fetch(likeUrl,{
        credentials: 'include',
@@ -389,7 +372,6 @@ getLikedUsers(i){
        if(response.status===200)
        return response.text()
      }).then(response =>{
-        console.log("respose is" + response )
         if(response === "already liked")
         this.disLikes(i)
         else{
@@ -404,13 +386,10 @@ getLikedUsers(i){
 
   getPosts(index){
 
-      console.log("get posts index" + index ,"previous" + this.state.previous)
-      console.log('date is' + this.dates[index].toISOString().split('T')[0]);
       fetch('http://localhost:8080/users/timeline/posts?date='+this.dates[index].toISOString().split('T')[0],{
         credentials: 'include',
         method: 'GET'
      }).then(response => {
-       console.log("status is" + response.status);
        return response.json()
      }).then(response => {
        var newdescription = []
@@ -443,10 +422,7 @@ getLikedUsers(i){
           postOwners: newpostOwners,
           postOwnerPics: newpostOwnerPics,
         })
-        console.log("responses are" + newcommentUrls  ,"postUrl" + newpostUrls, "likes" +newlikeCounts)
-
       })
-
   }
 
   handleCommentChange = (e) => this.setState({commentText:e.target.value});

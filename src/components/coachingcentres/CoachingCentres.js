@@ -85,7 +85,6 @@ class CoachingCentres extends Component{
 renderOrgCards(){
  var buffer = []
   var i=0;
-  console.log("inside loadTimeline")
 if(this.state.coachingcentreId.length!==0)
 { for (i=0;i<this.state.coachingcentreId.length;i++){
   buffer.push(
@@ -146,12 +145,10 @@ this.setState({
 })
 }
 handleRatingChange(value) {
-    console.log("inside rating change is"+value)
     var valuearr=[]
     valuearr[this.state.valueofi] = value
     this.setState({ratingDone: true,ratingValue: valuearr.slice(),isDataLoaded: true},
                 function onStateChange() {
-                  console.log("is rating Done" + this.state.ratingDone)
                this.showReviewBox(this.state.valueofi)
              });
 }
@@ -170,7 +167,6 @@ fetch('http://localhost:8080/coachingcentres/get/'+this.state.coachingcentreId[i
           credentials: 'include',
           method: 'GET'
         }).then(response => {
-         console.log("status is" + response.status);
          return response.json()
         }).then(response => {
           var newPositiveReviews = []
@@ -193,7 +189,6 @@ fetch('http://localhost:8080/coachingcentres/get/'+this.state.coachingcentreId[i
           negativeReviews: newNegativeReviews.slice(),
           reviewBoxOpen: true,
          });
-         //console.log("reviews" + JSON.stringify(this.state.normalReviews) ,"without state" +JSON.stringify(newNormalReviews) )
         })
 }
 
@@ -202,7 +197,6 @@ showReviewBox(i){
   var reviewBox = []
   if(typeof this.state.reviewBox[i] === "undefined" ||  this.state.ratingDone === true  )
   {
-    console.log("object length is"+ typeof this.state.reviewBox[i] )
   reviewBox[i]=   <div>
                         <div className="stars">
                           <Rating
@@ -232,17 +226,14 @@ showReviewBox(i){
   },function afterStateChange(){
     this.renderOrgCards()
   })
-  //console.log(JSON.stringify(this.state.reviewBox[i]))
 }else{
   reviewBox = []
-  console.log("inside else")
   this.setState({
     valueofi: i,
     reviewBox: reviewBox.slice(),
     ratingDone: false,
     isDataLoaded:true,
   },function afterStateChange(){
-    console.log("review box is"+reviewBox)
     this.renderOrgCards()
   })
 }
@@ -272,9 +263,7 @@ postReview(i){
     notify.show("sorry something went wrong","custom",5000,myColor)
   }
 }).then(response => {
-  console.log("response text is" + response)
   notify.show("Review posted successfully","success")
-  console.log(this.state.response)
 })
 }
 this.setState({
@@ -328,10 +317,8 @@ populateData(){
            credentials: 'include',
            method: 'GET'
         }).then(response => {
-          console.log("status is" + response.status);
           return response.json()
         }).then(response => {
-          console.log("response content is" + JSON.stringify(response.length))
           var newcoachingcentreId = []
           var neworgname = []
           var newdescription= []
@@ -361,7 +348,6 @@ populateData(){
          },function afterStateChange () {
               this.renderOrgCards();
           })
-         console.log("users" + this.state.orgname[0],"messages" + this.state.feedetailsImages[0])
         })
 }
 
