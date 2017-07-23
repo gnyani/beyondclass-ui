@@ -54,6 +54,7 @@ export default class HorizontalTimelineContent extends React.Component {
       description: [],
       postUrls: [],
       postOwners: [],
+      postOwnerPics: [],
       likeUrls: [],
       commentUrls: [],
       likeCounts: [],
@@ -195,10 +196,10 @@ if(this.state.postUrls.length!==0)
             <CardHeader
               title="Posted by"
               subtitle={this.state.postOwners[i]}
+              avatar={this.state.postOwnerPics[i]}
             />
             <CardMedia>
                {bufferImage}
-            {/*  {this.getImage(i)}*/}
             </CardMedia>
             <CardText style={{textAlign:'center'}}>
              {this.state.description[i]}
@@ -342,7 +343,6 @@ getLikedUsers(i){
      var likedusers = []
      if(response.length)
      {
-      // likedusers = response.slice()
        for(var j=0 ; j<response.length ; j++)
        {
          likedusers[j] = <div> {response[j]} <br /> </div>
@@ -411,17 +411,15 @@ getLikedUsers(i){
         method: 'GET'
      }).then(response => {
        console.log("status is" + response.status);
-     //  console.log("response without json is" + response.text())
        return response.json()
      }).then(response => {
-       //console.log("response is " + response)
-       //console.log("response content is" + response.length)
        var newdescription = []
        var newpostUrls = []
        var newlikeUrls = []
        var newcommentUrls = []
        var newlikeCounts = []
        var newpostOwners = []
+       var newpostOwnerPics =[]
 
        for(let i=0;i<response.length;i++)
         {
@@ -431,6 +429,7 @@ getLikedUsers(i){
           newcommentUrls.push(response[i].commentUrl)
           newlikeCounts.push(response[i].likes)
           newpostOwners.push(response[i].owner)
+          newpostOwnerPics.push(response[i].propicUrl)
         }
         this.setState({
           response: response,
@@ -442,6 +441,7 @@ getLikedUsers(i){
           commentUrls: newcommentUrls,
           likeCounts: newlikeCounts,
           postOwners: newpostOwners,
+          postOwnerPics: newpostOwnerPics,
         })
         console.log("responses are" + newcommentUrls  ,"postUrl" + newpostUrls, "likes" +newlikeCounts)
 
@@ -467,28 +467,9 @@ getLikedUsers(i){
       />]
     var buffer=[];
 
-    // const config = this.componentConfig;
-    //     const djsConfig = this.djsConfig;
-    //
-    //     // For a list of all possible events (there are many), see README.md!
-    //     const eventHandlers = {
-    //         init: dz => this.dropzone = dz,
-    //         addedfile: this.handleFileAdded.bind(this)
-    //     }
     return (
       <div>
      <div  style={{textAlign:'center'}} className="timeline">
-    {/* <Grid>
-     <Row is="center">
-     <Cell is="2 tablet-2"><div>
-     <DropzoneComponent config={config} eventHandlers={eventHandlers} djsConfig={djsConfig} />
-             <br /> <br />
-        </div></Cell>
-      <Cell is="2 tablet-2"><div>
-        <RaisedButton label="Upload"onClick={this.handlePost.bind(this)}></RaisedButton>
-      </div></Cell>
-        </Row>
-        </Grid>*/}
         <br /> <br />
         <TextField
         hintText="I guess you might wanna share something"

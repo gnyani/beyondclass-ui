@@ -22,7 +22,7 @@ class AnouncementsBoard extends Component{
       messages : [],
       message: '',
       response:'',
-      total: 20,
+      total: 3,
       display: 7,
       number: 1,
       buttonDisabled: false
@@ -108,7 +108,8 @@ populateData(pageNumber){
           }
            this.setState({
                users: newuser,
-               messages: newmessage
+               messages: newmessage,
+               total: response.totalPages
          })
          console.log("users" + typeof this.state.users[0],"messages" + this.state.messages[0])
         })
