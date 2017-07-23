@@ -51,6 +51,7 @@ export default class HorizontalTimelineContent extends React.Component {
       description: [],
       postUrls: [],
       postOwners: [],
+      postOwnerPics: [],
       likeUrls: [],
       commentUrls: [],
       likeCounts: [],
@@ -187,6 +188,7 @@ if(this.state.postUrls.length!==0)
             <CardHeader
               title="Posted by"
               subtitle={this.state.postOwners[i]}
+              avatar={this.state.postOwnerPics[i]}
             />
             <CardMedia>
                {bufferImage}
@@ -396,6 +398,7 @@ getLikedUsers(i){
        var newcommentUrls = []
        var newlikeCounts = []
        var newpostOwners = []
+       var newpostOwnerPics =[]
 
        for(let i=0;i<response.length;i++)
         {
@@ -405,6 +408,7 @@ getLikedUsers(i){
           newcommentUrls.push(response[i].commentUrl)
           newlikeCounts.push(response[i].likes)
           newpostOwners.push(response[i].owner)
+          newpostOwnerPics.push(response[i].propicUrl)
         }
         this.setState({
           response: response,
@@ -416,6 +420,7 @@ getLikedUsers(i){
           commentUrls: newcommentUrls,
           likeCounts: newlikeCounts,
           postOwners: newpostOwners,
+          postOwnerPics: newpostOwnerPics,
         })
       })
   }
@@ -437,9 +442,10 @@ getLikedUsers(i){
         onTouchTap={this.handleClose}
       />]
     var buffer=[];
+
     return (
       <div>
-     <div  style={{textAlign:'center'}}>
+     <div  style={{textAlign:'center'}} className="timeline">
         <br /> <br />
         <TextField
         hintText="I guess you might wanna share something"

@@ -22,7 +22,7 @@ class AnouncementsBoard extends Component{
       messages : [],
       message: '',
       response:'',
-      total: 20,
+      total: 3,
       display: 7,
       number: 1,
       buttonDisabled: false

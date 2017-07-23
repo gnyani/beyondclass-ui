@@ -285,7 +285,9 @@ componentDidmount(){
         >
           <MenuItem value={0} primaryText="Year*" />
           <MenuItem value={1} primaryText="One" />
-          <MenuItem value={3} primaryText="Two" />
+          <MenuItem value={2} primaryText="Two" />
+          <MenuItem value={3} primaryText="Three" />
+          <MenuItem value={4} primaryText="Four" />
         </DropDownMenu>
         </div></Cell>
         </Row>
