@@ -409,6 +409,7 @@ populateData(){
     </div>
 <Divider />
  {this.state.buffer}
+ <br /> <br /> <br />
 <Dialog
       title="ContactInfo"
       modal={false}
@@ -441,6 +442,7 @@ populateData(){
   actions={actions}
   modal={false}
   open={this.state.reviewBoxOpen}
+  autoScrollBodyContent={true}
   onRequestClose={this.handleDialogClose}
 >
           <Tabs>

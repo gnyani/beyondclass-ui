@@ -3,8 +3,10 @@ body {height: 100vh;width: 100%;overflow: hidden;margin: 0;outline: 0;}
 body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
                font-size: 2em;letter-spacing: 0.07em;color: rgb(162,35,142)}
 body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 0px rgb(95, 87, 87);}
-.announcements{ font-size: 20px;text-align: center;}
 .UserImageContainer .ProfilePic{width: 40%;height: 40% ;color: rgb(33, 150, 243);margin-top: 15%;margin-left: 27%;border-radius: 50%;}
+.image-upload > input{    display: none;}
+.image-upload img{cursor: pointer;}
+.announcements{ font-size: 20px;text-align: center;}
 .announcements .container li .name{ text-align: left;text-transform: capitalize;font-family:"Comic Sans MS",sans-serif ;
               padding: 18px 0px;margin: 0px;}
 .announcements .heading{color: #444;text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
@@ -18,10 +20,9 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .AnnounceButton{ box-shadow: 1px 2px 8px 0px black;margin-right: 3% !important; border-radius: 1em !important;
                  background-color: rgb(162,35,142) !important; color: rgb(255,255,255) !important;}
 .vertical-scroll{height:92vh;overflow-y: auto;width: 100%;}
-.QuestionPapers{}
-.QuestionPapers .DropDownMenu{ position: relative  !important;bottom: 17px !important;}
 ::-webkit-scrollbar { width: 0.4em;border-radius: 0.4em;}
 ::-webkit-scrollbar-thumb {background-color: darkgrey;border-radius: 0.5em; outline: 0.1em solid slategrey;}
+.QuestionPapers .DropDownMenu{ position: relative  !important;bottom: 17px !important;}
 .QuestionPapers .image{margin-left: 18%;width: 60%;}
 .QuestionPapers .paper{margin-left:18% !important;width: 60% !important;}
 .QuestionPapers .h4{width:100%;text-align: center;}
