@@ -173,6 +173,7 @@ export default class HorizontalTimelineContent extends React.Component {
          })
 
   }
+}
 
 loadTimeline(buffer){
     buffer = []

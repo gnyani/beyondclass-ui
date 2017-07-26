@@ -12,9 +12,13 @@ import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
 import '../styles/student-adda.css';
 import PropTypes from 'prop-types';
-import IconButton from 'material-ui/IconButton';
-import {AddImageIcon,EditIcon,ImageCollectionsBookmark,ActionBook,AvLibraryBooks,AvNote,ContentArchive,ActionAssignment,
+// import IconButton from 'material-ui/IconButton';
+import {AddImageIcon,ImageCollectionsBookmark,ActionBook,AvLibraryBooks,AvNote,ContentArchive,ActionAssignment,
        FileFileUpload,ActionViewList,ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool} from '../styledcomponents/SvgIcons.js'
+import AvatarEditor from 'react-avatar-editor';
+import Dialog from 'material-ui/Dialog';
+import Slider from 'material-ui/Slider';
+
 const iconStyles = {
   marginRight: 24,
 };
@@ -27,9 +31,91 @@ class DashboardLaoyout extends Component{
       open : true,
       width : 250,
       propiclink : '',
-      username : ''
+      username : '',
+      file: '',
+      filebase64: '',
+      imagePreviewUrl: '',
+      imageDialog: false,
+      secondSlider:1,
+
      }
      this.handleLogout = this.handleLogout.bind(this);
+     this.handleDialogclose = this.handleDialogclose.bind(this)
+     this._handleImageChange = this._handleImageChange.bind(this)
+     this.saveProPictoDB = this.saveProPictoDB.bind(this)
+     this.uploadProPic = this.uploadProPic.bind(this)
+     this.getProPicUrl = this.getProPicUrl.bind(this)
+}
+
+_handleImageChange(e) {
+  e.preventDefault();
+
+  let reader = new FileReader();
+  let file = e.target.files[0];
+
+  reader.onloadend = () => {
+    this.setState({
+      file: file,
+      imagePreviewUrl: reader.result,
+      filebase64: reader.result.split(',').pop(),
+      imageDialog : true,
+    });
+  }
+
+  reader.readAsDataURL(file)
+}
+saveProPictoDB(){
+if (this.editor) {
+  const canvas = this.editor.getImage()
+  var data = canvas.toDataURL().split(',').pop()
+  this.setState({
+    filebase64: data,
+  },function OnstateChange(){
+  this.uploadProPic()
+  })
+}
+}
+
+uploadProPic(){
+  fetch('http://localhost:8080/user/update/profilepic', {
+         method: 'POST',
+         headers: {
+               'mode': 'cors',
+               'Content-Type': 'application/json'
+           },
+       credentials: 'include',
+       body: JSON.stringify({
+         file : this.state.filebase64,
+      })
+     }).then(response => {
+       if(response.status === 200)
+       {
+         notify.show("Avatar Changed successfully","success")
+          return response.text();
+       }
+       else{
+         let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
+         notify.show("sorry something went wrong","custom",5000,myColor)
+       }
+     }).then(response => {
+       this.setState({
+         imagePreviewUrl: '',
+         imageDialog: false,
+         file: '',
+       },function OnstateChange(){
+         this.getProPicUrl()
+       })
+      //  var location = this.props.location
+      //  this.context.router.history.push(location)
+      //This needs to be fixed reloading the entire page is not a good Idea.
+       window.location.reload()
+     })
+}
+
+handleDialogclose(){
+  this.setState({
+    imageDialog: false,
+  })
 }
 
 handleLogout(){
@@ -51,6 +137,21 @@ handleLogout(){
         })
   }
 
+getProPicUrl(){
+  console.log("inside propic link")
+  fetch('http://localhost:8080/user/propic', {
+           credentials: 'include',
+           method: 'GET'
+           }).then(response => {
+           return response.text()
+           }).then(response => {
+           this.setState({
+           propiclink : response,
+           isLoaded : 'true'
+         })
+      })
+}
+
 componentWillMount(){
 
   fetch('http://localhost:8080/user/loggedin', {
@@ -66,18 +167,7 @@ componentWillMount(){
         notify.show("Please login before viewing dashboard");
         this.context.router.history.push('/');
        });
-
-  fetch('http://localhost:8080/user/propic', {
-           credentials: 'include',
-           method: 'GET'
-           }).then(response => {
-           return response.text()
-           }).then(response => {
-           this.setState({
-           propiclink : response,
-           isLoaded : 'true'
-           })
-           })
+     this.getProPicUrl()
 }
 handleToggle = () => {
   this.setState((prevState,props) =>{
@@ -86,9 +176,24 @@ handleToggle = () => {
     }
   })
 }
+handleSecondSlider = (event, value) => {
+  this.setState({secondSlider: value});
+};
 
+setEditorRef = (editor) => this.editor = editor
 
 render(){
+  const actions = [
+    <FlatButton
+      label="Save"
+      primary={true}
+      onTouchTap={this.saveProPictoDB}
+    />,
+    <FlatButton
+      label="Cancel"
+      primary={true}
+      onTouchTap={this.handleDialogclose}
+    />]
   return(
 <div>
     <NavAppBar
@@ -98,14 +203,16 @@ render(){
      logout = {this.handleLogout}
      />
     <Drawer open={this.state.open} width = {this.state.width}>
-    <div className="UserImageContainer">
-    <img src={this.state.propiclink}  alt="loading" className="ProfilePic" />
-    <IconButton><EditIcon /></IconButton>
+    <div className="image-upload UserImageContainer">
+    <label htmlFor="file-input">
+      <img src={this.state.propiclink}  alt="loading" className="ProfilePic"/>
+    </label>
+    <input type="file" id="file-input" onChange={this._handleImageChange}/>
+   </div>
     <br />
     <br />
     <FlatButton label="Update Profile" hoverColor ={lightBlue100} fullWidth={true} icon={<AddImageIcon  color={blue500}/>}/>
     <br />
-    </div>
 <Divider />
   <Link to='/anouncements' width={this.state.width}>
     <MenuItem
@@ -198,6 +305,37 @@ render(){
           />
         </Link>
 </Drawer>
+<Dialog
+      title="Change Your Avatar"
+      modal={false}
+      actions={actions}
+      open={this.state.imageDialog}
+      autoScrollBodyContent={true}
+      titleStyle={{textAlign:'center'}}
+      onRequestClose={this.handleDialogclose}
+    >
+    <Slider
+        min={1}
+        max={3}
+        step={0.01}
+        value={this.state.secondSlider}
+        sliderStyle={{marginLeft:'20%',width:'60%'}}
+        onChange={this.handleSecondSlider}
+      />
+    <AvatarEditor
+       image={this.state.imagePreviewUrl}
+       ref={this.setEditorRef}
+       width={450}
+       height={370}
+       border={[30,30]}
+       style={{marginLeft:'13%'}}
+       borderRadius={500}
+       color={[255, 255, 255, 0.6]} // RGBA
+       scale={this.state.secondSlider}
+     />
+     <br /> <br />
+
+</Dialog>
 <Body
 toggle = {this.handleToggle}
 width = {this.state.width}
