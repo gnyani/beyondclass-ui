@@ -12,7 +12,6 @@ import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
 import '../styles/student-adda.css';
 import PropTypes from 'prop-types';
-// import IconButton from 'material-ui/IconButton';
 import {AddImageIcon,ImageCollectionsBookmark,ActionBook,AvLibraryBooks,AvNote,ContentArchive,ActionAssignment,
        FileFileUpload,ActionViewList,ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool} from '../styledcomponents/SvgIcons.js'
 import AvatarEditor from 'react-avatar-editor';
