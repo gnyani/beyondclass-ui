@@ -29,7 +29,7 @@ class TimeLine extends React.Component {
         {...this.props}
       >
       <HorizontalTimelineContent
-        content={this.data} />
+        content={this.data} loggedinuser={this.props.loggedinuser}/>
     </StayVisible>
     );
   }

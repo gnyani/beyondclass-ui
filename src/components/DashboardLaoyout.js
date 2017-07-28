@@ -137,7 +137,6 @@ handleLogout(){
   }
 
 getProPicUrl(){
-  console.log("inside propic link")
   fetch('http://localhost:8080/user/propic', {
            credentials: 'include',
            method: 'GET'
@@ -213,14 +212,14 @@ render(){
     <FlatButton label="Update Profile" hoverColor ={lightBlue100} fullWidth={true} icon={<AddImageIcon  color={blue500}/>}/>
     <br />
 <Divider />
-  <Link to='/anouncements' width={this.state.width}>
+  <Link to='/anouncements' width={this.state.width} style={{ textDecoration: 'none' }}>
     <MenuItem
     primaryText={'AnouncementsBoard'}
     leftIcon={<ActionSpeakerNotes color={blue500}/>}
     />
   </Link>
 <Divider/>
-    <Link to='/timeline' width={this.state.width}>
+    <Link to='/timeline' width={this.state.width} style={{ textDecoration: 'none' }}>
       <MenuItem
       primaryText={'Timeline'}
       leftIcon={<ActionTimeline color={red500}/>}
@@ -291,14 +290,14 @@ render(){
                       ]}
         />
 <Divider />
-        <Link to="/entertainment" width={this.state.width} >
+        <Link to="/entertainment" width={this.state.width} style={{ textDecoration: 'none' }}>
           <MenuItem primaryText={'Entertainment'}
             leftIcon={<AvMovie color={blue500} />}
           />
         </Link>
 
 <Divider />
-        <Link to="/coachingcentres" width={this.state.width} >
+        <Link to="/coachingcentres" width={this.state.width} style={{ textDecoration: 'none' }}>
           <MenuItem primaryText={'Coaching-Centres'}
             leftIcon={<SocialSchool color={red500} />}
           />
@@ -339,6 +338,7 @@ render(){
 toggle = {this.handleToggle}
 width = {this.state.width}
 open = {this.state.open}
+loggedinuser = {this.state.username}
 />
 </div>
    )
