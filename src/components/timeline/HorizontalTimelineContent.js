@@ -1,44 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Divider from 'material-ui/Divider';
-import {lightBlue300,blue500,redA700} from 'material-ui/styles/colors';
+import {lightBlue300,redA700} from 'material-ui/styles/colors';
 import HorizontalTimeline from 'react-horizontal-timeline';
 import {Card, CardActions, CardHeader, CardMedia,CardText} from 'material-ui/Card';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import FlatButton from 'material-ui/FlatButton';
-import {ActionThumbUp,CommunicationComment} from '../../styledcomponents/SvgIcons.js';
+import {ActionThumbUp,CommunicationComment,NavigationClose} from '../../styledcomponents/SvgIcons.js';
 import {notify} from 'react-notify-toast';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import '../../styles/student-adda.css';
-
-const fontStyle={
-  fontFamily: "'Comic Sans MS',sans-serif",
-  fontSize:'140%',
-  fontStyle: 'italic',
-  fontWeight: '500',
-  letterSpacing: '2px',
-  wordWrap: 'break-word',
-  width:'100%',
-  height:'150%',
-  textTransform: 'uppercase',
-  color: blue500
-}
-
-const messageStyle={
-  fontFamily: "'Comic Sans MS',sans-serif",
-  fontSize:'120%',
-  fontStyle: 'italic',
-  fontWeight: '500',
-  wordWrap: 'break-word',
-  width:'75%',
-  letterSpacing: '2px',
-  textTransform: 'capitalize',
-  color: redA700
-
-}
-
-
 export default class HorizontalTimelineContent extends React.Component {
   constructor(props) {
     super(props);
@@ -51,10 +23,12 @@ export default class HorizontalTimelineContent extends React.Component {
       description: [],
       postUrls: [],
       postOwners: [],
+      postOwnerEmails: [],
       postOwnerPics: [],
       likeUrls: [],
       commentUrls: [],
       likeCounts: [],
+      fileNames: [],
       onclickcolor: '',
       commentText: '',
       Dialogopen: false,
@@ -62,11 +36,13 @@ export default class HorizontalTimelineContent extends React.Component {
       likedUsers: [],
       comments:[],
       commentBox:[],
+      currentIndex: 0,
       //Upload config
       file: '',
       filebase64: '',
       imagePreviewUrl: '',
       buttonDisabled: false,
+      DialogconfirmDelete: false,
       response: '',
       message:'',
       isDataLoaded: true,
@@ -94,6 +70,7 @@ export default class HorizontalTimelineContent extends React.Component {
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
     this.getLikedUsers = this.getLikedUsers.bind(this);
+    this.deletePost = this.deletePost.bind(this);
     this.getComments = this.getComments.bind(this);
   }
 
@@ -174,7 +151,33 @@ export default class HorizontalTimelineContent extends React.Component {
 
   }
 }
-
+deletePostConfirm(i){
+  this.setState({
+    DialogconfirmDelete: true,
+    currentIndex: i,
+  })
+}
+deletePost(){
+  fetch('http://localhost:8080/users/timeline/posts/'+this.state.fileNames[this.state.currentIndex]+'/delete',{
+    credentials: 'include',
+    method: 'GET'
+  }).then(response => {
+    if(response.status===200)
+    return response.text()
+  }).then(response =>{
+    if(response === "successfully deleted")
+    {
+     notify.show(response,"success")
+     this.componentWillMount()
+   }
+   else{
+     notify.show("sorry something went wrong please try again","error")
+   }
+   })
+   this.setState({
+     DialogconfirmDelete: false
+   })
+}
 loadTimeline(buffer){
     buffer = []
     var i=0;
@@ -183,13 +186,20 @@ if(this.state.postUrls.length!==0)
     var bufferImage = []
     if(this.state.postUrls[i] !== null)
     bufferImage.push(<img alt="loading" src={this.state.postUrls[i]} key={i} style={{width:'100%',height:'380px'}}/>)
+    if( this.state.postOwnerEmails[i] === this.props.loggedinuser )
+    {
     buffer.push(
         <Cell is="7 tablet-2" key={i}><div>
-          <Card >
+          <Card
+          onExpandChange={this.deletePostConfirm.bind(this,i)}
+          >
             <CardHeader
               title="Posted by"
               subtitle={this.state.postOwners[i]}
               avatar={this.state.postOwnerPics[i]}
+              showExpandableButton={true}
+              closeIcon={<NavigationClose color={redA700}/>}
+              openIcon={<NavigationClose color={redA700}/>}
             />
             <CardMedia>
                {bufferImage}
@@ -229,6 +239,56 @@ if(this.state.postUrls.length!==0)
           </Card>
        </div></Cell>
      )
+   }else{
+     buffer.push(
+         <Cell is="7 tablet-2" key={i}><div>
+           <Card
+           onExpandChange={this.deletePost.bind(this,i)}
+           >
+             <CardHeader
+               title="Posted by"
+               subtitle={this.state.postOwners[i]}
+               avatar={this.state.postOwnerPics[i]}
+             />
+             <CardMedia>
+                {bufferImage}
+             </CardMedia>
+             <CardText style={{textAlign:'center'}}>
+              {this.state.description[i]}
+             </CardText>
+             <CardActions>
+               <div >
+               <Grid>
+               <Row is="start">
+               <Cell is="stretch 7 tablet-2"><div>
+               <div style={{marginLeft:'36%'}}>
+              <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
+               </div>
+               </div></Cell>
+               <Cell is="stretch 5 tablet-2"><div>
+               <div style={{marginLeft:'15%'}}>
+              <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
+               </div>
+               </div></Cell>
+               </Row>
+               </Grid>
+               <Grid>
+               <Row is="start">
+               <Cell is="stretch 6 tablet-2"><div>
+               <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} />}/>
+               </div></Cell>
+               <Cell is="stretch 6 tablet-2"><div>
+               <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} />}/>
+               </div></Cell>
+               </Row>
+               </Grid>
+               </div>
+             </CardActions>
+              {this.state.commentBox[i]}
+           </Card>
+        </div></Cell>
+      )
+   }
    }
  }else{
    buffer.push(
@@ -301,17 +361,19 @@ getComments(i){
   var parsedMessages = []
   var parsedUsers = []
   var comments = []
-  for(let j=0;j<parsedComments.length;j++){
+  if(parsedComments.length!==0)
+  {
+  for(var j=0;j<parsedComments.length;j++){
    parsedMessages[j] = parsedComments[j].comment
    parsedUsers[j] =  parsedComments[j].user.firstName
-   comments[j] = <div key={j} style={{display:'flex'}}>
-                  <br /><br />
-                  <ul style={{marginLeft:'5%'}}>
-                 <li> <p style={fontStyle}> {parsedUsers[j]}:</p> </li>
+   comments[j] = <div key={j} className="timeline">
+                  <ul>
+                 <li> <p> <span className="fontStyle">{parsedUsers[j]}:</span><span className="messageStyle">{parsedMessages[j]}</span></p> </li>
                  </ul>
-                 <br /> <br /><br />
-                  <p style={messageStyle}> {parsedMessages[j]} </p>
-                  </div>
+                 </div>
+ }
+}else{
+   comments[0] = 'No Comments on This post yet'
  }
 
  this.setState({
@@ -334,7 +396,7 @@ getLikedUsers(i){
      {
        for(var j=0 ; j<response.length ; j++)
        {
-         likedusers[j] = <div> {response[j]} <br /> </div>
+         likedusers[j] = <div className="timeline"> <ul><li><p className="fontStyle"> {response[j]} </p></li></ul> <br /></div>
        }
      }
      else{
@@ -399,19 +461,24 @@ getLikedUsers(i){
        var newcommentUrls = []
        var newlikeCounts = []
        var newpostOwners = []
+       var newpostOwnerEmails = []
        var newpostOwnerPics =[]
+       var newfileNames = []
 
        for(let i=0;i<response.length;i++)
         {
+          newfileNames.push(response[i].filename)
           newdescription.push(response[i].description)
           newpostUrls.push(response[i].postUrl)
           newlikeUrls.push(response[i].likeUrl)
           newcommentUrls.push(response[i].commentUrl)
           newlikeCounts.push(response[i].likes)
           newpostOwners.push(response[i].owner)
+          newpostOwnerEmails.push(response[i].uploadeduser.email)
           newpostOwnerPics.push(response[i].propicUrl)
         }
         this.setState({
+          fileNames:newfileNames,
           response: response,
           value: index,
           previous: this.state.value,
@@ -421,6 +488,7 @@ getLikedUsers(i){
           commentUrls: newcommentUrls,
           likeCounts: newlikeCounts,
           postOwners: newpostOwners,
+          postOwnerEmails: newpostOwnerEmails,
           postOwnerPics: newpostOwnerPics,
         })
       })
@@ -430,12 +498,26 @@ getLikedUsers(i){
   handleChange = (e) => this.setState({message:e.target.value});
 
   render() {
+
     const state = this.state;
     let {imagePreviewUrl} = this.state;
     let $imagePreview = null;
     if (imagePreviewUrl) {
       $imagePreview = (<img  src={imagePreviewUrl} alt="loading" style={{width:'15%', height: '80px'}}/>);
     }
+
+    const actions1 = [
+      <FlatButton
+        label="Confirm"
+        primary={true}
+        onTouchTap={this.deletePost}
+      />,
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />
+    ]
     const actions = [
       <FlatButton
         label="Cancel"
@@ -498,6 +580,8 @@ getLikedUsers(i){
               modal={false}
               actions={actions}
               open={this.state.Dialogopen}
+              autoScrollBodyContent={true}
+              titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
               onRequestClose={this.handleClose}
             >
               {this.state.likedUsers}
@@ -508,9 +592,21 @@ getLikedUsers(i){
               modal={false}
               actions={actions}
               open={this.state.DialogCommentBox}
+              autoScrollBodyContent={true}
+              titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
               onRequestClose={this.handleClose}
             >
               {this.state.comments}
+        </Dialog>
+        <Dialog
+              title="Are you sure you want to delete this post"
+              modal={false}
+              actions={actions1}
+              open={this.state.DialogconfirmDelete}
+              autoScrollBodyContent={true}
+              titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+              onRequestClose={this.handleClose}
+            >
         </Dialog>
 
         <div>

@@ -9,13 +9,15 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .announcements{ font-size: 20px;text-align: center;}
 .announcements .container li .name{ text-align: left;text-transform: capitalize;font-family:"Comic Sans MS",sans-serif ;
               padding: 18px 0px;margin: 0px;}
-.announcements .heading{color: #444;text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
+.announcements .heading{text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
                font-size: 2em;letter-spacing: 0.07em;color: rgb(162,35,142)}
 .announcements .fontStyle{  font-size: 1em;font-style: italic;
-                            font-weight: 100;letter-spacing: 2px;color: rgb(1,175,173)}
+                            font-weight: 100;letter-spacing: 0.05em;color: rgb(1,175,173)}
 .announcements .messageStyle{   font-family: "Comic Sans MS",sans-serif;font-size:0.8em;font-style: italic;font-weight: 50;
-                               color: rgb(247,166,25)}
+                               color: rgb(247,166,25);letter-spacing: 0.04em;}
 .announcements .image{width: 4em;height: 4em ;border-radius: 50% }
+
+.announcements .deleteSpan{float:right; margin-right: 1.5em;}
 .input{ float: left !important;margin-left: 10%;width: 65% !important;border: 0px !important;padding: 5px 0px !important;margin-bottom: 20px !important;}
 .AnnounceButton{ box-shadow: 1px 2px 8px 0px black;margin-right: 3% !important; border-radius: 1em !important;
                  background-color: rgb(162,35,142) !important; color: rgb(255,255,255) !important;}
@@ -44,3 +46,7 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .coachingcentres .link{margin-left: 16%}
 .timeline .PostButton{box-shadow: 1px 2px 8px 0px black; border-radius: 1em !important;
                  background-color: rgb(124,109,174) !important; color: rgb(255,255,255) !important;}
+.timeline .fontStyle{  font-size: 1em;font-style: italic;
+                           font-weight: 100;letter-spacing: 0.1em;color: rgb(1,175,173)}
+.timeline .messageStyle{   font-family: "Comic Sans MS",sans-serif;font-size:0.8em;letter-spacing: 0.08em;font-style: italic;font-weight: 50;
+                             color: rgb(247,166,25)}
