@@ -2,12 +2,11 @@ import React, { Component } from 'react';
 import {Switch,Route} from 'react-router-dom'
 import Banner from './Banner.js';
 import DashboardLayout from './DashboardLaoyout.js'
-import Register from './register.js'
+import Register from './registration/register.js'
 class Router extends Component {
   render(){
     return(
-
-  <Switch>
+  <Switch >
     <Route exact path='/' component={Banner}/>
     <Route path='/register' component={Register}/>
     <Route path='/dashboard' component={DashboardLayout}/>
@@ -23,7 +22,6 @@ class Router extends Component {
     <Route path='/timeline' component={DashboardLayout} />
     <Route path='/coachingcentres' component={DashboardLayout} />
   </Switch>
-
     );
   }
 }

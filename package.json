@@ -19,11 +19,13 @@
     "react-loading": "^0.1.2",
     "react-notify-toast": "^0.3.0",
     "react-router-dom": "^4.1.1",
+    "react-slick": "^0.14.11",
     "react-spinner": "^0.2.7",
     "react-star-rating": "1.4.2",
     "react-swipeable-views": "^0.12.3",
     "react-tap-event-plugin": "^2.0.1",
     "react-upload-file": "^2.0.0-beta.6",
+    "slick-carousel": "^1.6.0",
     "styled-components": "^2.1.0",
     "yarn": "^0.27.5"
   },
