@@ -245,6 +245,7 @@ if(this.state.postUrls.length!==0)
          <Cell is="7 tablet-2" key={i}><div>
            <Card
            onExpandChange={this.deletePost.bind(this,i)}
+           style={{borderRadius:"1.5em"}}
            >
              <CardHeader
                title="Posted by"
