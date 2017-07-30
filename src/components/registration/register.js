@@ -194,7 +194,6 @@ componentDidmount(){
 }
 
 next() {
-  console.log("slide is" + this.state.currentSlide)
    this.slider.slickNext()
  }
  previous() {
@@ -203,7 +202,6 @@ next() {
  }
 previousButton(){
 var buffer=[];
-console.log("currentSlide"+ this.state.currentSlide)
   if(this.state.currentSlide === 0)
   {
     buffer = [];
