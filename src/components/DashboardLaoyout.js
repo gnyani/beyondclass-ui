@@ -330,6 +330,13 @@ render(){
             leftIcon={<SocialSchool color={red500} />}
           />
         </Link>
+        <Divider />
+          <Link to='/UserQuestions' width={this.state.width}>
+            <MenuItem
+            primaryText={'User Questions'}
+            leftIcon={<ActionSpeakerNotes color={blue500}/>}
+            />
+          </Link>
 </Drawer>
 <Dialog
       title="Change Your Avatar"

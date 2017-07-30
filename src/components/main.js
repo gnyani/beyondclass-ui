@@ -13,6 +13,7 @@ import OtherSyllabus from './syllabus/OtherSyllabus.js'
 import OtherQp from './questionpapers/OtherQp.js'
 import TimeLine from './timeline/TimeLine.js'
 import CoachingCentres from './coachingcentres/CoachingCentres.js'
+import UserQuestions from './user-questions/TimeLine.js'
 
 export const Body =(props) => {
     return(
@@ -31,6 +32,7 @@ export const Body =(props) => {
     <Route path='/anouncements' render={()=>(<AnouncementsBoard {...props}/>)} />
     <Route path='/timeline' render={()=>(<TimeLine {...props}/>)} />
     <Route path='/coachingcentres' render={() =>(<CoachingCentres {...props} />)} />
+    <Route path='/UserQuestions' render={() =>(<UserQuestions {...props} />)} />
   </Switch>
 </main>
     );
