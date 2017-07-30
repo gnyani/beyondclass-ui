@@ -58,7 +58,10 @@ class Register extends Component{
              username : response,
              isLoaded : 'true'
            })
-         })
+         }).catch(response => {
+         notify.show("Please Authenticate with Google before registering","warning");
+         this.context.router.history.push('/');
+        });
 
      fetch('http://localhost:8080/user/lastname', {
               credentials: 'include',
