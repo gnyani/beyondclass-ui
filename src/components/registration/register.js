@@ -1,10 +1,10 @@
 import React,{Component} from 'react'
-import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+//import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import FlatButton from 'material-ui/FlatButton'
 import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-import { Grid, Row, Cell } from 'react-inline-grid';
+//import { Grid, Row, Cell } from 'react-inline-grid';
 import Intro from './intro.js';
 import PersonalInfo from './personalinfo.js';
 import ClassDetails from './classdetails.js'

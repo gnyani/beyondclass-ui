@@ -31,6 +31,7 @@ class DashboardLaoyout extends Component{
       width : 250,
       propiclink : '',
       username : '',
+      fullImage: '',
       file: '',
       filebase64: '',
       imagePreviewUrl: '',
@@ -44,6 +45,7 @@ class DashboardLaoyout extends Component{
      this.saveProPictoDB = this.saveProPictoDB.bind(this)
      this.uploadProPic = this.uploadProPic.bind(this)
      this.getProPicUrl = this.getProPicUrl.bind(this)
+     this.postTimeline = this.postTimeline.bind(this)
 }
 
 _handleImageChange(e) {
@@ -56,7 +58,7 @@ _handleImageChange(e) {
     this.setState({
       file: file,
       imagePreviewUrl: reader.result,
-      filebase64: reader.result.split(',').pop(),
+      fullImage:reader.result.split(',').pop(),
       imageDialog : true,
     });
   }
@@ -104,10 +106,36 @@ uploadProPic(){
        },function OnstateChange(){
          this.getProPicUrl()
        })
+   // posting this change to timeline
+      this.postTimeline()
       //  var location = this.props.location
       //  this.context.router.history.push(location)
       //This needs to be fixed reloading the entire page is not a good Idea.
        window.location.reload()
+     })
+}
+postTimeline(){
+  fetch('http://localhost:8080/users/timeline/upload', {
+         method: 'POST',
+         headers: {
+               'mode': 'cors',
+               'Content-Type': 'application/json'
+           },
+       credentials: 'include',
+       body: JSON.stringify({
+         file : this.state.fullImage,
+         description: "   " ,
+         isprofilepicchange: true,
+      })
+     }).then(response => {
+       if(response.status === 200)
+       {
+          notify.show("profilepic updated successfully")
+       }
+       else{
+         let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
+         notify.show("sorry something went wrong","custom",5000,myColor)
+       }
      })
 }
 

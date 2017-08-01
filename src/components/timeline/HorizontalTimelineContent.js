@@ -36,6 +36,7 @@ export default class HorizontalTimelineContent extends React.Component {
       likedUsers: [],
       comments:[],
       commentBox:[],
+      isprofilepicchange: [],
       currentIndex: 0,
       //Upload config
       file: '',
@@ -188,7 +189,61 @@ if(this.state.postUrls.length!==0)
     bufferImage.push(<img alt="loading" src={this.state.postUrls[i]} key={i} style={{width:'100%',height:'380px'}}/>)
     if( this.state.postOwnerEmails[i] === this.props.loggedinuser )
     {
-    buffer.push(
+      if(this.state.isprofilepicchange[i] === true){
+        buffer.push(
+            <Cell is="7 tablet-2" key={i}><div>
+              <Card
+              onExpandChange={this.deletePostConfirm.bind(this,i)}
+              style={{borderRadius:"1.5em"}}
+              >
+                <CardHeader
+                  title={this.state.postOwners[i]}
+                  subtitle="Changed his profile picture"
+                  avatar={this.state.postOwnerPics[i]}
+                  showExpandableButton={true}
+                  closeIcon={<NavigationClose color={redA700}/>}
+                  openIcon={<NavigationClose color={redA700}/>}
+                />
+                <CardMedia>
+                   {bufferImage}
+                </CardMedia>
+                <CardText style={{textAlign:'center'}}>
+                 {this.state.description[i]}
+                </CardText>
+                <CardActions>
+                  <div >
+                  <Grid>
+                  <Row is="start">
+                  <Cell is="stretch 7 tablet-2"><div>
+                  <div style={{marginLeft:'36%'}}>
+                 <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
+                  </div>
+                  </div></Cell>
+                  <Cell is="stretch 5 tablet-2"><div>
+                  <div style={{marginLeft:'15%'}}>
+                 <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
+                  </div>
+                  </div></Cell>
+                  </Row>
+                  </Grid>
+                  <Grid>
+                  <Row is="start">
+                  <Cell is="stretch 6 tablet-2"><div>
+                  <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} />}/>
+                  </div></Cell>
+                  <Cell is="stretch 6 tablet-2"><div>
+                  <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} />}/>
+                  </div></Cell>
+                  </Row>
+                  </Grid>
+                  </div>
+                </CardActions>
+                 {this.state.commentBox[i]}
+              </Card>
+           </div></Cell>)
+      }
+    else{
+      buffer.push(
         <Cell is="7 tablet-2" key={i}><div>
           <Card
           onExpandChange={this.deletePostConfirm.bind(this,i)}
@@ -240,11 +295,58 @@ if(this.state.postUrls.length!==0)
           </Card>
        </div></Cell>
      )
-   }else{
+   }}else{
+     if(this.state.isprofilepicchange[i] === true){
+      buffer.push( <Cell is="7 tablet-2" key={i}><div>
+         <Card
+         style={{borderRadius:"1.5em"}}
+         >
+           <CardHeader
+             title={this.state.postOwners[i]}
+             subtitle="Changed his profile picture"
+             avatar={this.state.postOwnerPics[i]}
+           />
+           <CardMedia>
+              {bufferImage}
+           </CardMedia>
+           <CardText style={{textAlign:'center'}}>
+            {this.state.description[i]}
+           </CardText>
+           <CardActions>
+             <div >
+             <Grid>
+             <Row is="start">
+             <Cell is="stretch 7 tablet-2"><div>
+             <div style={{marginLeft:'36%'}}>
+            <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
+             </div>
+             </div></Cell>
+             <Cell is="stretch 5 tablet-2"><div>
+             <div style={{marginLeft:'15%'}}>
+            <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
+             </div>
+             </div></Cell>
+             </Row>
+             </Grid>
+             <Grid>
+             <Row is="start">
+             <Cell is="stretch 6 tablet-2"><div>
+             <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} />}/>
+             </div></Cell>
+             <Cell is="stretch 6 tablet-2"><div>
+             <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} />}/>
+             </div></Cell>
+             </Row>
+             </Grid>
+             </div>
+           </CardActions>
+            {this.state.commentBox[i]}
+         </Card>
+      </div></Cell>)
+    }else{
      buffer.push(
          <Cell is="7 tablet-2" key={i}><div>
            <Card
-           onExpandChange={this.deletePost.bind(this,i)}
            style={{borderRadius:"1.5em"}}
            >
              <CardHeader
@@ -291,6 +393,7 @@ if(this.state.postUrls.length!==0)
         </div></Cell>
       )
    }
+ }
    }
  }else{
    buffer.push(
@@ -466,6 +569,7 @@ getLikedUsers(i){
        var newpostOwnerEmails = []
        var newpostOwnerPics =[]
        var newfileNames = []
+       var newisprofilepicchange = []
 
        for(let i=0;i<response.length;i++)
         {
@@ -478,6 +582,7 @@ getLikedUsers(i){
           newpostOwners.push(response[i].owner)
           newpostOwnerEmails.push(response[i].uploadeduser.email)
           newpostOwnerPics.push(response[i].propicUrl)
+          newisprofilepicchange.push(response[i].profilepicchange)
         }
         this.setState({
           fileNames:newfileNames,
@@ -492,6 +597,7 @@ getLikedUsers(i){
           postOwners: newpostOwners,
           postOwnerEmails: newpostOwnerEmails,
           postOwnerPics: newpostOwnerPics,
+          isprofilepicchange: newisprofilepicchange,
         })
       })
   }
