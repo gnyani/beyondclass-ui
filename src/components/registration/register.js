@@ -13,6 +13,7 @@ import '../../styles/student-adda.css';
 import Slider from 'react-slick';
 import "../../../node_modules/slick-carousel/slick/slick.css";
 import "../../../node_modules/slick-carousel/slick/slick-theme.css";
+var properties = require('../properties.json');
 
 class Register extends Component{
     constructor() {
@@ -48,7 +49,7 @@ class Register extends Component{
   }
 
  getUserDetails(){
-   fetch('http://localhost:8080/user/name', {
+   fetch('http://'+properties.getHostName+':8080/user/name', {
             credentials: 'include',
             method: 'GET'
          }).then(response => {
@@ -63,7 +64,7 @@ class Register extends Component{
          this.context.router.history.push('/');
         });
 
-     fetch('http://localhost:8080/user/lastname', {
+     fetch('http://'+properties.getHostName+':8080/user/lastname', {
               credentials: 'include',
               method: 'GET'
               }).then(response => {
@@ -75,7 +76,7 @@ class Register extends Component{
               })
               })
 
-    fetch('http://localhost:8080/user/propic', {
+    fetch('http://'+properties.getHostName+':8080/user/propic', {
              credentials: 'include',
              method: 'GET'
              }).then(response => {
@@ -85,7 +86,7 @@ class Register extends Component{
              propiclink : response,
              })
              })
-   fetch('http://localhost:8080/user/firstname', {
+   fetch('http://'+properties.getHostName+':8080/user/firstname', {
             credentials: 'include',
             method: 'GET'
             }).then(response => {
@@ -98,7 +99,7 @@ class Register extends Component{
      }
 
  registerUser(){
-   fetch('http://localhost:8080/users/registration', {
+   fetch('http://'+properties.getHostName+':8080/users/registration', {
           credentials: 'include',
           method: 'POST',
           headers: {

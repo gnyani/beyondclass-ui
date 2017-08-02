@@ -6,6 +6,7 @@ import Divider from 'material-ui/Divider';
 import {notify} from 'react-notify-toast';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import styled from 'styled-components'
+var properties = require('../properties.json');
 
 const StayVisible = styled.div`
   position: relative;
@@ -40,7 +41,7 @@ class NotesUpload extends Component{
     }
     else{
       this.setState({ buttonDisabled: true });
-      fetch('http://localhost:8080/user/notes/upload', {
+      fetch('http://'+properties.getHostName+':8080/user/notes/upload', {
              method: 'POST',
              headers: {
                    'mode': 'cors',

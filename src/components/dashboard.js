@@ -4,6 +4,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import '../styles/student-adda.css'
+var properties = require('./properties.json');
 
 const StayVisible = styled.div`
   position: relative;
@@ -25,7 +26,7 @@ componentWillMount(){
 }
 
 getUser(){
-  fetch('http://localhost:8080/user/loggedin', {
+  fetch('http://'+properties.getHostName+':8080/user/loggedin', {
            credentials: 'include',
            method: 'GET'
         }).then(response => {

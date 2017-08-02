@@ -15,7 +15,7 @@ import { Rating } from 'material-ui-rating'
 import {notify} from 'react-notify-toast';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import '../../styles/student-adda.css';
-
+var properties = require('../properties.json');
 
 const StayVisible = styled.div`
   position: relative;
@@ -163,7 +163,7 @@ handleShowFeeDetails(i){
   })
 }
 fetchReviews(i){
-fetch('http://localhost:8080/coachingcentres/get/'+this.state.coachingcentreId[i]+'/reviews',{
+fetch('http://'+properties.getHostName+':8080/coachingcentres/get/'+this.state.coachingcentreId[i]+'/reviews',{
           credentials: 'include',
           method: 'GET'
         }).then(response => {
@@ -242,7 +242,7 @@ postReview(i){
   if(this.state.ratingValue===0)
   notify.show("please give some rating before submitting","warning")
   else{
-  fetch('http://localhost:8080/coachingcentres/post/'+this.state.coachingcentreId[i],{
+  fetch('http://'+properties.getHostName+':8080/coachingcentres/post/'+this.state.coachingcentreId[i],{
     method: 'POST' ,
     headers: {
           'mode': 'cors',
@@ -313,7 +313,7 @@ populateData(){
   this.setState({
     buttonDisabled: true
   })
-  fetch('http://localhost:8080/coachingcentres/get/'+this.state.coachingType+"-"+this.state.city+"-"+this.state.area, {
+  fetch('http://'+properties.getHostName+':8080/coachingcentres/get/'+this.state.coachingType+"-"+this.state.city+"-"+this.state.area, {
            credentials: 'include',
            method: 'GET'
         }).then(response => {

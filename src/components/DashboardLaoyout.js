@@ -258,12 +258,12 @@ render(){
     primaryText={'QuestionPaper'}
     rightIcon={<ArrowDropRight />}
     leftIcon={<ActionBook color={red500}/>}
-    menuItems={[<Link to='/questionpaper/default' width={this.state.width}>
-                <MenuItem primaryText="Current Sem" leftIcon={<AvNote style={iconStyles} color={red500}/>}
+    menuItems={[<Link to='/questionpaper/default' width={this.state.width} style={{ textDecoration: 'none' }}>
+                <MenuItem primaryText="Current Sem" leftIcon={<AvNote style={iconStyles} color={red500} />}
                 />
                 </Link>,
-                <Link to='/questionpaper/other' width={this.state.width}>
-                <MenuItem primaryText="Other Papers" leftIcon={
+                <Link to='/questionpaper/other' width={this.state.width} style={{ textDecoration: 'none' }}>
+                <MenuItem primaryText="Other Papers"  leftIcon={
                   <ContentArchive style={iconStyles} color={blue500}/>
                   }/>
                 </Link>
@@ -274,12 +274,12 @@ render(){
       leftIcon={<AvLibraryBooks color={blue500} />}
       rightIcon={<ArrowDropRight />}
       menuItems={[
-                   <Link to='/syllabus/default' width={this.state.width}>
+                   <Link to='/syllabus/default' width={this.state.width} style={{ textDecoration: 'none' }}>
                     <MenuItem primaryText="Current Syllabus" leftIcon={<AvNote style={iconStyles} color={red500}/>}
                     />
                     </Link>,
-                    <Link to='/syllabus/other' width={this.state.width}>
-                    <MenuItem primaryText="Other Syllabus" leftIcon={
+                    <Link to='/syllabus/other' width={this.state.width} style={{ textDecoration: 'none' }}>
+                    <MenuItem primaryText="Other Syllabus"  leftIcon={
                       <ContentArchive style={iconStyles} color={blue500}/>
                       }/>
                     </Link>
@@ -290,12 +290,12 @@ render(){
           leftIcon={<ActionAssignment color={red500} />}
           rightIcon={<ArrowDropRight />}
           menuItems={[
-                       <Link to='/assignments/upload' width={this.state.width}>
-                        <MenuItem primaryText="Upload Assign" leftIcon={<FileFileUpload style={iconStyles} color={red500}/>}
+                       <Link to='/assignments/upload' width={this.state.width} style={{ textDecoration: 'none' }}>
+                        <MenuItem primaryText="Upload Assign"  leftIcon={<FileFileUpload style={iconStyles} color={red500}/>}
                         />
                         </Link>,
-                        <Link to='/assignments/view/list' width={this.state.width}>
-                        <MenuItem primaryText="View Assign" leftIcon={
+                        <Link to='/assignments/view/list' width={this.state.width} style={{ textDecoration: 'none' }}>
+                        <MenuItem primaryText="View Assign"  leftIcon={
                           <ActionViewList style={iconStyles} color={blue500}/>
                           }/>
                         </Link>
@@ -306,12 +306,12 @@ render(){
           leftIcon={<ImageCollectionsBookmark color={blue500} />}
           rightIcon={<ArrowDropRight />}
           menuItems={[
-                       <Link to='/notes/upload' width={this.state.width}>
-                        <MenuItem primaryText="Upload Notes" leftIcon={<FileFileUpload style={iconStyles} color={red500}/>}
+                       <Link to='/notes/upload' width={this.state.width} style={{ textDecoration: 'none' }}>
+                        <MenuItem primaryText="Upload Notes"  leftIcon={<FileFileUpload style={iconStyles} color={red500}/>}
                         />
                         </Link>,
-                        <Link to='/notes/view/list' width={this.state.width}>
-                        <MenuItem primaryText="View Notes" leftIcon={
+                        <Link to='/notes/view/list' width={this.state.width} style={{ textDecoration: 'none' }}>
+                        <MenuItem primaryText="View Notes"  leftIcon={
                           <ActionViewList style={iconStyles} color={blue500}/>
                           }/>
                         </Link>

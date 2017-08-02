@@ -7,6 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 import '../../styles/student-adda.css';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import styled from 'styled-components'
+var properties = require('../properties.json');
 
 const StayVisible = styled.div`
   position: relative;
@@ -40,7 +41,7 @@ validateAndFetch(){
 
 fetchSyllabus(){
 
-  fetch('http://localhost:8080/user/syllabusurl', {
+  fetch('http://'+properties.getHostName+':8080/user/syllabusurl', {
          method: 'POST',
          headers: {
                'mode': 'cors',

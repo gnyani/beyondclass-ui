@@ -9,6 +9,7 @@ import Pagination from 'material-ui-pagination';
 import Dialog from 'material-ui/Dialog';
 import{Row,Grid,Cell} from 'react-inline-grid';
 import '../../styles/student-adda.css';
+var properties = require('../properties.json');
 
 const StayVisible = styled.div`
   position: relative;
@@ -51,7 +52,7 @@ handleSubmit(){
    if(trimmedmessage===''){
     notify.show("Message cannot be null","error");
    }else{
-  fetch('http://localhost:8080/user/announcements/insert', {
+  fetch('http://'+properties.getHostName+':8080/user/announcements/insert', {
          method: 'POST',
          headers: {
                'mode': 'cors',
@@ -107,7 +108,7 @@ else{
 }
 
 populateData(pageNumber){
-  fetch('http://localhost:8080/user/announcements/list?pageNumber='+pageNumber, {
+  fetch('http://'+properties.getHostName+':8080/user/announcements/list?pageNumber='+pageNumber, {
            credentials: 'include',
            method: 'GET'
         }).then(response => {
@@ -161,7 +162,7 @@ handleClose(){
   })
 }
 DeleteAnnouncement(){
-  fetch('http://localhost:8080/user/announcement/delete/'+this.state.announcementIds[this.state.currentIndex],{
+  fetch('http://'+properties.getHostName+':8080/user/announcement/delete/'+this.state.announcementIds[this.state.currentIndex],{
         credentials: 'include',
         method: 'GET'
       }).then(response =>{
