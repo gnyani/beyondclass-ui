@@ -7,6 +7,7 @@ import {notify} from 'react-notify-toast';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import '../../styles/student-adda.css';
 import styled from 'styled-components'
+var properties = require('../properties.json');
 
 const StayVisible = styled.div`
   position: relative;
@@ -41,7 +42,7 @@ class AssignUpload extends Component{
     }
     else{
       this.setState({ buttonDisabled: true });
-      fetch('http://localhost:8080/user/assignments/upload', {
+      fetch('http://'+properties.getHostName+':8080/user/assignments/upload', {
              method: 'POST',
              headers: {
                    'mode': 'cors',

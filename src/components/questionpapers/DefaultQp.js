@@ -6,8 +6,8 @@ import {notify} from 'react-notify-toast';
 import MenuItem from 'material-ui/MenuItem';
 import '../../styles/student-adda.css';
 import { Grid, Row, Cell } from 'react-inline-grid';
-
 import styled from 'styled-components'
+var properties = require('../properties.json');
 
 const StayVisible = styled.div`
   position: relative;
@@ -37,13 +37,12 @@ validateAndFetch(){
   }
   else{
     this.fetchQp();
-    notify.show("Retrieval Successful","success");
   }
 }
 
 fetchQp(){
 
-  fetch('http://localhost:8080/user/questionpaperurl', {
+  fetch('http://'+properties.getHostName+':8080/user/questionpaperurl', {
          method: 'POST',
          headers: {
                'mode': 'cors',
@@ -57,6 +56,7 @@ fetchQp(){
      }).then(response => {
        if(response.status === 200)
        {
+         notify.show("Retrieval Successful","success");
           return response.text();
        }
        else{
@@ -74,8 +74,16 @@ fetchQp(){
 handleChange = (event, index, value) => this.setState({value});
 handleYearChange = (event, index, year) => this.setState({year});
 image(){
+
   if(this.state.response){
-   return(<img alt="loading" src = {this.state.response} className="image"/>)
+    var obj = new Image();
+      obj.src = this.state.response
+      if(obj.complete){
+           return(<img alt="loading" src = {this.state.response} className="image"/>)
+      }else{
+
+        return(<p>Sorry no records found for this subject</p>);
+      }
    }
 }
   render(){
@@ -128,7 +136,7 @@ image(){
        </div>
 <Divider/>
         <br /> <br />
-        {this.image()}
+        {this.image.bind(this)}
          <br />
     </div>
        <br /> <br /> <br />

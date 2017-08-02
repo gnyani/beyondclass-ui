@@ -8,6 +8,7 @@ import Divider from 'material-ui/Divider';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import '../../styles/student-adda.css';
 import styled from 'styled-components'
+var properties = require('../properties.json');
 
 const StayVisible = styled.div`
   position: relative;
@@ -47,7 +48,7 @@ class OtherQp extends Component{
    }
    fetchQp(){
 
-     fetch('http://localhost:8080/user/questionpaperurl/other', {
+     fetch('http://'+properties.getHostName+':8080/user/questionpaperurl/other', {
             method: 'POST',
             headers: {
                   'mode': 'cors',

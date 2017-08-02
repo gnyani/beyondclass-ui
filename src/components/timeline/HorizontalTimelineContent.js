@@ -11,6 +11,8 @@ import {notify} from 'react-notify-toast';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import '../../styles/student-adda.css';
+var properties = require('../properties.json');
+
 export default class HorizontalTimelineContent extends React.Component {
   constructor(props) {
     super(props);
@@ -118,7 +120,7 @@ export default class HorizontalTimelineContent extends React.Component {
       notify.show("Please type something","error")
     }else{
       this.setState({ buttonDisabled: true });
-      fetch('http://localhost:8080/users/timeline/upload', {
+      fetch('http://'+properties.getHostName+':8080/users/timeline/upload', {
              method: 'POST',
              headers: {
                    'mode': 'cors',
@@ -159,7 +161,7 @@ deletePostConfirm(i){
   })
 }
 deletePost(){
-  fetch('http://localhost:8080/users/timeline/posts/'+this.state.fileNames[this.state.currentIndex]+'/delete',{
+  fetch('http://'+properties.getHostName+':8080/users/timeline/posts/'+this.state.fileNames[this.state.currentIndex]+'/delete',{
     credentials: 'include',
     method: 'GET'
   }).then(response => {
@@ -554,7 +556,7 @@ getLikedUsers(i){
 
   getPosts(index){
 
-      fetch('http://localhost:8080/users/timeline/posts?date='+this.dates[index].toISOString().split('T')[0],{
+      fetch('http://'+properties.getHostName+':8080/users/timeline/posts?date='+this.dates[index].toISOString().split('T')[0],{
         credentials: 'include',
         method: 'GET'
      }).then(response => {
