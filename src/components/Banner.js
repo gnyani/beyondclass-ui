@@ -81,7 +81,7 @@ loginToolbar(){
         <ToolbarTitle text="StudentAdda" style={{color:'#ffffff'}}/>
       </ToolbarGroup>
       <ToolbarGroup>
-      <form action="http://localhost:8080/google/login">
+      <form action="http://35.185.140.137:8080/google/login">
         <RaisedButton type="submit" label="Login/Signup" value="login" primary={true} />
       </form>
       </ToolbarGroup>
