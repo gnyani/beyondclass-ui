@@ -21,6 +21,7 @@ class Router extends Component {
     <Route path='/anouncements' component={DashboardLayout} />
     <Route path='/timeline' component={DashboardLayout} />
     <Route path='/coachingcentres' component={DashboardLayout} />
+    <Route path='/UserQuestions' component={DashboardLayout} />
   </Switch>
     );
   }

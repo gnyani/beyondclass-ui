@@ -434,81 +434,84 @@ getLikedUsers(i){
     var buffer=[];
     return (
       <div>
-     <div  style={{textAlign:'center'}}>
-        <br /> <br />
-        <TextField
-        hintText="I guess you might wanna share something"
-        value = {this.state.message}
-        onChange = {this.handleChange.bind(this)}
-        multiLine={true}
-        rows={2}
-        rowsMax={4}
-        style={{width:'60%'}}
-        />
-        <Grid>
-        <Row is="center">
-        <Cell is="6 tablet-6"><div>
-        <input type="file" onChange={this._handleImageChange} />
-        </div></Cell>
-        <Cell is="4 tablet-4"><div>
-        <RaisedButton type="submit" label="Post"  disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
-        </div></Cell>
-
-        </Row>
-        </Grid>
-        <br />
-        {$imagePreview}
-        <br />
-        </div>
-<Divider />
-        <div style={{ width: '80%', height: '100px', margin: '0 auto' }}>
-          <HorizontalTimeline
-            fillingMotion={{ stiffness: state.fillingMotionStiffness, damping: state.fillingMotionDamping }}
-            index={this.state.value}
-            indexClick={this.getPosts.bind(this)}
-            labelWidth={state.labelWidth}
-            linePadding={state.linePadding}
-            maxEventPadding={state.maxEventPadding}
-            minEventPadding={state.minEventPadding}
-            slidingMotion={{ stiffness: state.slidingMotionStiffness, damping: state.slidingMotionDamping }}
-            styles={{
-              background: state.stylesBackground,
-              foreground: state.stylesForeground,
-              outline: state.stylesOutline
-            }}
-            values={ this.dates }
-            isOpenEnding={state.isOpenEnding}
-            isOpenBeginning={state.isOpenBeginning}
-          />
-        </div>
-        <Dialog
-              title="Liked Users"
-              modal={false}
-              actions={actions}
-              open={this.state.Dialogopen}
-              onRequestClose={this.handleClose}
-            >
-              {this.state.likedUsers}
-        </Dialog>
-
-        <Dialog
-              title="Comments"
-              modal={false}
-              actions={actions}
-              open={this.state.DialogCommentBox}
-              onRequestClose={this.handleClose}
-            >
-              {this.state.comments}
-        </Dialog>
-
-        <div>
-            <Grid>
-            <Row is="center">
-            {this.loadTimeline(buffer)}
-            </Row>
-            </Grid>
-            </div>
-        </div>
+          <p>hello world</p>
+      </div>
+    //   <div>
+    //  <div  style={{textAlign:'center'}}>
+    //     <br /> <br />
+    //     <TextField
+    //     hintText="I guess you might wanna share something"
+    //     value = {this.state.message}
+    //     onChange = {this.handleChange.bind(this)}
+    //     multiLine={true}
+    //     rows={2}
+    //     rowsMax={4}
+    //     style={{width:'60%'}}
+    //     />
+    //     <Grid>
+    //     <Row is="center">
+    //     <Cell is="6 tablet-6"><div>
+    //     <input type="file" onChange={this._handleImageChange} />
+    //     </div></Cell>
+    //     <Cell is="4 tablet-4"><div>
+    //     <RaisedButton type="submit" label="Post"  disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
+    //     </div></Cell>
+    //
+    //     </Row>
+    //     </Grid>
+    //     <br />
+    //     {$imagePreview}
+    //     <br />
+    //     </div>
+    // <Divider />
+    //     <div style={{ width: '80%', height: '100px', margin: '0 auto' }}>
+    //       <HorizontalTimeline
+    //         fillingMotion={{ stiffness: state.fillingMotionStiffness, damping: state.fillingMotionDamping }}
+    //         index={this.state.value}
+    //         indexClick={this.getPosts.bind(this)}
+    //         labelWidth={state.labelWidth}
+    //         linePadding={state.linePadding}
+    //         maxEventPadding={state.maxEventPadding}
+    //         minEventPadding={state.minEventPadding}
+    //         slidingMotion={{ stiffness: state.slidingMotionStiffness, damping: state.slidingMotionDamping }}
+    //         styles={{
+    //           background: state.stylesBackground,
+    //           foreground: state.stylesForeground,
+    //           outline: state.stylesOutline
+    //         }}
+    //         values={ this.dates }
+    //         isOpenEnding={state.isOpenEnding}
+    //         isOpenBeginning={state.isOpenBeginning}
+    //       />
+    //     </div>
+    //     <Dialog
+    //           title="Liked Users"
+    //           modal={false}
+    //           actions={actions}
+    //           open={this.state.Dialogopen}
+    //           onRequestClose={this.handleClose}
+    //         >
+    //           {this.state.likedUsers}
+    //     </Dialog>
+    //
+    //     <Dialog
+    //           title="Comments"
+    //           modal={false}
+    //           actions={actions}
+    //           open={this.state.DialogCommentBox}
+    //           onRequestClose={this.handleClose}
+    //         >
+    //           {this.state.comments}
+    //     </Dialog>
+    //
+    //     <div>
+    //         <Grid>
+    //         <Row is="center">
+    //         {this.loadTimeline(buffer)}
+    //         </Row>
+    //         </Grid>
+    //         </div>
+    //     </div>
     );
   }
 }

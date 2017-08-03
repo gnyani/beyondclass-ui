@@ -75,6 +75,7 @@ export default class HorizontalTimelineContent extends React.Component {
     this.getLikedUsers = this.getLikedUsers.bind(this);
     this.deletePost = this.deletePost.bind(this);
     this.getComments = this.getComments.bind(this);
+    this.Enter = this.Enter.bind(this);
   }
 
   static propTypes = {
@@ -110,9 +111,15 @@ export default class HorizontalTimelineContent extends React.Component {
     reader.readAsText('blobing')
   }
   }
+  Enter(event){
+    if(event.key === 'Enter'){
+      console.log("hello world");
+      this._handleSubmit(event);
+    }
+  }
 
   _handleSubmit(e) {
-    e.preventDefault();
+    e.preventDefault()
     // TODO: do something with -> this.state.file
      var trimmedmessage = this.state.message.replace(/\s/g,'')
     if(this.state.filebase64 === '' && trimmedmessage === '')
@@ -644,6 +651,7 @@ getLikedUsers(i){
         hintText="I guess you might wanna share something"
         value = {this.state.message}
         onChange = {this.handleChange.bind(this)}
+        onKeyPress={this.Enter}
         multiLine={true}
         rows={2}
         rowsMax={4}

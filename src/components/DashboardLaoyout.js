@@ -37,7 +37,7 @@ class DashboardLaoyout extends Component{
       imagePreviewUrl: '',
       imageDialog: false,
       secondSlider:1,
-
+      selected: ''
      }
      this.handleLogout = this.handleLogout.bind(this);
      this.handleDialogclose = this.handleDialogclose.bind(this)
@@ -46,6 +46,18 @@ class DashboardLaoyout extends Component{
      this.uploadProPic = this.uploadProPic.bind(this)
      this.getProPicUrl = this.getProPicUrl.bind(this)
      this.postTimeline = this.postTimeline.bind(this)
+     this.isActive = this.isActive.bind(this)
+}
+
+selected(value){
+  this.setState({
+    selected: value
+  })
+}
+
+isActive(value){
+  console.log((value === this.state.selected)?'Active':'');
+  return (value === this.state.selected)?'Active':'';
 }
 
 _handleImageChange(e) {
@@ -240,103 +252,117 @@ render(){
     <FlatButton label="Update Profile" hoverColor ={lightBlue100} fullWidth={true} icon={<AddImageIcon  color={blue500}/>}/>
     <br />
 <Divider />
-  <Link to='/anouncements' width={this.state.width} style={{ textDecoration: 'none' }}>
+<div className={this.isActive('announcements')}>
+  <Link to='/anouncements'  width={this.state.width} style={{ textDecoration: 'none' }} onClick={this.selected.bind(this,"announcements")} >
     <MenuItem
     primaryText={'AnouncementsBoard'}
     leftIcon={<ActionSpeakerNotes color={blue500}/>}
     />
-  </Link>
+  </Link></div>
 <Divider/>
-    <Link to='/timeline' width={this.state.width} style={{ textDecoration: 'none' }}>
+<div className={this.isActive('timeline')}>
+    <Link to='/timeline' width={this.state.width}  style={{ textDecoration: 'none' }} onClick={this.selected.bind(this,"timeline")}>
       <MenuItem
       primaryText={'Timeline'}
       leftIcon={<ActionTimeline color={red500}/>}
       />
     </Link>
+    </div>
 <Divider/>
+<div  className={this.isActive('questionpaper')}>
     <MenuItem
     primaryText={'QuestionPaper'}
     rightIcon={<ArrowDropRight />}
     leftIcon={<ActionBook color={red500}/>}
-    menuItems={[<Link to='/questionpaper/default' width={this.state.width} style={{ textDecoration: 'none' }}>
-                <MenuItem primaryText="Current Sem" leftIcon={<AvNote style={iconStyles} color={red500} />}
+    menuItems={[<Link to='/questionpaper/default' width={this.state.width} onClick={this.selected.bind(this,"questionpaper")}>
+                <MenuItem primaryText="Current Sem" leftIcon={<AvNote style={iconStyles} color={red500}/>}
                 />
                 </Link>,
-                <Link to='/questionpaper/other' width={this.state.width} style={{ textDecoration: 'none' }}>
-                <MenuItem primaryText="Other Papers"  leftIcon={
+                <Link to='/questionpaper/other' width={this.state.width} onClick={this.selected.bind(this,"questionpaper")}>
+                <MenuItem primaryText="Other Papers" leftIcon={
                   <ContentArchive style={iconStyles} color={blue500}/>
                   }/>
                 </Link>
                 ]}
      />
+     </div>
 <Divider/>
+<div  className={this.isActive('syllabus')}>
     <MenuItem primaryText={'Syllabus'}
       leftIcon={<AvLibraryBooks color={blue500} />}
       rightIcon={<ArrowDropRight />}
       menuItems={[
-                   <Link to='/syllabus/default' width={this.state.width} style={{ textDecoration: 'none' }}>
+                   <Link to='/syllabus/default' width={this.state.width} onClick={this.selected.bind(this,"syllabus")}>
                     <MenuItem primaryText="Current Syllabus" leftIcon={<AvNote style={iconStyles} color={red500}/>}
                     />
                     </Link>,
-                    <Link to='/syllabus/other' width={this.state.width} style={{ textDecoration: 'none' }}>
-                    <MenuItem primaryText="Other Syllabus"  leftIcon={
+                    <Link to='/syllabus/other' width={this.state.width} onClick={this.selected.bind(this,"syllabus")}>
+                    <MenuItem primaryText="Other Syllabus" leftIcon={
                       <ContentArchive style={iconStyles} color={blue500}/>
                       }/>
                     </Link>
                   ]}
     />
+    </div>
 <Divider/>
+<div  className={this.isActive('assignments')}>
         <MenuItem primaryText={'Assignments'}
           leftIcon={<ActionAssignment color={red500} />}
           rightIcon={<ArrowDropRight />}
           menuItems={[
-                       <Link to='/assignments/upload' width={this.state.width} style={{ textDecoration: 'none' }}>
-                        <MenuItem primaryText="Upload Assign"  leftIcon={<FileFileUpload style={iconStyles} color={red500}/>}
+                       <Link to='/assignments/upload' width={this.state.width} onClick={this.selected.bind(this,"assignments")}>
+                        <MenuItem primaryText="Upload Assign" leftIcon={<FileFileUpload style={iconStyles} color={red500}/>}
                         />
                         </Link>,
-                        <Link to='/assignments/view/list' width={this.state.width} style={{ textDecoration: 'none' }}>
-                        <MenuItem primaryText="View Assign"  leftIcon={
+                        <Link to='/assignments/view/list' width={this.state.width} onClick={this.selected.bind(this,"assignments")}>
+                        <MenuItem primaryText="View Assign" leftIcon={
                           <ActionViewList style={iconStyles} color={blue500}/>
                           }/>
                         </Link>
                       ]}
         />
+        </div>
 <Divider/>
+<div  className={this.isActive('notes')}>
         <MenuItem primaryText={'Notes'}
           leftIcon={<ImageCollectionsBookmark color={blue500} />}
           rightIcon={<ArrowDropRight />}
           menuItems={[
-                       <Link to='/notes/upload' width={this.state.width} style={{ textDecoration: 'none' }}>
-                        <MenuItem primaryText="Upload Notes"  leftIcon={<FileFileUpload style={iconStyles} color={red500}/>}
+                       <Link to='/notes/upload' width={this.state.width} onClick={this.selected.bind(this,"notes")}>
+                        <MenuItem primaryText="Upload Notes" leftIcon={<FileFileUpload style={iconStyles} color={red500}/>}
                         />
                         </Link>,
-                        <Link to='/notes/view/list' width={this.state.width} style={{ textDecoration: 'none' }}>
-                        <MenuItem primaryText="View Notes"  leftIcon={
+                        <Link to='/notes/view/list' width={this.state.width} onClick={this.selected.bind(this,"notes")}>
+                        <MenuItem primaryText="View Notes" leftIcon={
                           <ActionViewList style={iconStyles} color={blue500}/>
                           }/>
                         </Link>
                       ]}
         />
+</div>
 <Divider />
-        <Link to="/entertainment" width={this.state.width} style={{ textDecoration: 'none' }}>
+<div className={this.isActive('entertainment')}>
+        <Link to="/entertainment" width={this.state.width} style={{ textDecoration: 'none' }} onClick={this.selected.bind(this,"entertainment")}>
           <MenuItem primaryText={'Entertainment'}
             leftIcon={<AvMovie color={blue500} />}
           />
         </Link>
-
+</div>
 <Divider />
-        <Link to="/coachingcentres" width={this.state.width} style={{ textDecoration: 'none' }}>
+<div  className={this.isActive('coachingcentres')}>
+        <Link to="/coachingcentres" width={this.state.width} style={{ textDecoration: 'none' }} onClick={this.selected.bind(this,"coachingcentres")}>
           <MenuItem primaryText={'Coaching-Centres'}
             leftIcon={<SocialSchool color={red500} />}
           />
         </Link>
+    </div>
         <Divider />
-          <Link to='/UserQuestions' width={this.state.width}>
+      <div className={this.isActive('UserQuestions')}>    <Link to='/UserQuestions' width={this.state.width} onClick={this.selected.bind(this,"UserQuestions")} >
             <MenuItem
             primaryText={'User Questions'}
             leftIcon={<ActionSpeakerNotes color={blue500}/>}
             />
-          </Link>
+          </Link></div>
 </Drawer>
 <Dialog
       title="Change Your Avatar"

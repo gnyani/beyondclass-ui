@@ -64,3 +64,6 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .personalinfo .h4{margin-left: 2.5%;font-family: "Arial", sans-serif; font-weight: normal; color: #2196F3}
 .classdetails .h4{margin-left: 5%;font-family: "Arial", sans-serif; font-weight: normal; color: #2196F3}
 .classdetails .textfield{margin-left: 5% !important;}
+.Active{
+  background-color: #696969;
+}
