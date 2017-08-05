@@ -24,14 +24,17 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .vertical-scroll{height:92vh;overflow-y: auto; width: 100%;overflow-x: hidden;}
 ::-webkit-scrollbar { width: 0.4em;border-radius: 0.4em;}
 ::-webkit-scrollbar-thumb {background-color: darkgrey;border-radius: 0.5em; outline: 0.1em solid slategrey;}
-.QuestionPapers .DropDownMenu{ position: relative  !important;bottom: 17px !important;}
-.QuestionPapers .image{margin-left: 18%;width: 60%;}
+.QuestionPapers .image{width: 100%;height: 50vh}
 .QuestionPapers .paper{margin-left:18% !important;width: 60% !important;}
 .QuestionPapers .h4{width:100%;text-align: center;}
-.QuestionPapers .button{margin: 0 calc(39%);}
+.QuestionPapers .fetchButton{box-shadow: 1px 2px 8px 0px black;margin-right: 3% !important; border-radius: 1em !important;
+                 background-color: rgb(124,109,174) !important; color: rgb(255,255,255) !important;}
+.QuestionPapers .button{margin: 0 calc(39%) !important;box-shadow: 1px 2px 8px 0px black;margin-right: 3% !important; border-radius: 1em !important;
+                 background-color: rgb(124,109,174) !important; color: rgb(255,255,255) !important;}
 .Syllabus .paper {margin-left:18% !important; width: 60% !important;}
 .Syllabus .h4{width:100%;text-align: center;}
-.Syllabus .iframe{margin-left:18%;height: 400px ;width : 60% ;border:0;}
+.Syllabus .fetchButton{box-shadow: 1px 2px 8px 0px black;margin-right: 3% !important; border-radius: 1em !important;
+                 background-color: rgb(124,109,174) !important; color: rgb(255,255,255) !important;}
 .Syllabus .button{margin: 0 calc(39%);}
 .AssignUpload .iframe{width:60%;height: 350px;}
 .AssignUpload{text-align: center;}
@@ -50,11 +53,13 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
                            font-weight: 100;letter-spacing: 0.1em;color: rgb(1,175,173)}
 .timeline .messageStyle{   font-family: "Comic Sans MS",sans-serif;font-size:0.8em;letter-spacing: 0.08em;font-style: italic;font-weight: 50;
                              color: rgb(247,166,25)}
+.QpSyllabusDefault {margin: 0 auto;padding: 1em;width: 55%;color: #333;border-radius: 2.8em; position: relative;top: 10%;
+                               background: rgb(255,255,255);border-top: 30px solid #2196F3 ;height:30%;box-shadow: 1px 1px 1px 1px rgb(95, 87, 87);}
 .RegisterContainer {margin: 0 auto;padding: 1em;width: 50%;color: #333;border-radius: 2.8em; position: relative;top: 10%;
   background: rgb(255,255,255);border-top: 30px solid #2196F3 ;height:60vh;box-shadow: 1px 1px 1px 1px rgb(95, 87, 87);}
 .register{text-align: center;}
 .register .previousButton{  margin-right: 15% !important;color: white!important; background-color: #2196F3 !important; border-radius: 1em !important;}
-.register .nextButton {background-color: #2196F3 !important;color: white!important;border-radius: 1em!important; width: 8% !important;}
+.register .nextButton {background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
 .intro .headline{font-size: 2em;font-family: "Comic Sans MS",sans-serif;font-weight: bold;text-align: center;
                  letter-spacing: 0.07em;color: rgb(51,138,150)}
 .intro .subheading{text-align: center;font-family: "Comic Sans MS",sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: italic;

@@ -56,7 +56,6 @@ selected(value){
 }
 
 isActive(value){
-  console.log((value === this.state.selected)?'Active':'');
   return (value === this.state.selected)?'Active':'';
 }
 
