@@ -15,6 +15,7 @@
     "react-dropzone-component": "^2.0.0",
     "react-horizontal-timeline": "^1.1.1",
     "react-image": "^1.0.1",
+    "react-image-lightbox": "^4.1.0",
     "react-inline-grid": "^0.5.3",
     "react-loading": "^0.1.2",
     "react-notify-toast": "^0.3.0",

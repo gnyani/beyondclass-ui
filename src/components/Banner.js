@@ -7,8 +7,8 @@ import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
-
 import CustomAvatar from '../styledcomponents/CustomAvatar.js'
+var properties = require('./properties.json')
 
 class Banner extends Component {
 
@@ -30,7 +30,7 @@ class Banner extends Component {
   }
 
   isUserLoggedIn(){
-  fetch('http://localhost:8080/user/isloggedin', {
+  fetch('http://'+properties.getHostName+':8080/user/isloggedin', {
            credentials: 'include',
            method: 'GET'
         }).then(response => {
@@ -45,7 +45,7 @@ class Banner extends Component {
 
 
   handleLogout(){
-    fetch('http://localhost:8080/user/logout', {
+    fetch('http://'+properties.getHostName+':8080/user/logout', {
              credentials: 'include',
              method: 'GET'
           }).then(response => {
@@ -64,6 +64,7 @@ class Banner extends Component {
     }
 
 loginToolbar(){
+  var loginUrl = 'http://'+properties.getHostName+':8080/google/login'
   return(
 <Paper zDepth={2}>
 <div>
@@ -81,7 +82,7 @@ loginToolbar(){
         <ToolbarTitle text="StudentAdda" style={{color:'#ffffff'}}/>
       </ToolbarGroup>
       <ToolbarGroup>
-      <form action="http://35.185.140.137:8080/google/login">
+      <form action= {loginUrl}>
         <RaisedButton type="submit" label="Login/Signup" value="login" primary={true} />
       </form>
       </ToolbarGroup>

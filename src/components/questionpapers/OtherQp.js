@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
-import DropDownMenu from 'material-ui/DropDownMenu';
-import RaisedButton from 'material-ui/RaisedButton';
-import Paper from 'material-ui/Paper';
+import FlatButton from 'material-ui/FlatButton';
+import SelectField from 'material-ui/SelectField';
 import {notify} from 'react-notify-toast';
+import {lightBlue300} from 'material-ui/styles/colors';
+import {Card, CardActions, CardHeader, CardMedia} from 'material-ui/Card';
+import Lightbox from 'react-image-lightbox';
+import {FileFileDownload,NavigationFullscreen,NavigationArrowBack,NavigationArrowForward} from '../../styledcomponents/SvgIcons.js';
 import MenuItem from 'material-ui/MenuItem';
-import Divider from 'material-ui/Divider';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import '../../styles/student-adda.css';
-import styled from 'styled-components'
+import Slider from 'react-slick';
+import "../../../node_modules/slick-carousel/slick/slick.css";
+import "../../../node_modules/slick-carousel/slick/slick-theme.css";
+import styled from 'styled-components';
 var properties = require('../properties.json');
 
 const StayVisible = styled.div`
@@ -29,10 +34,18 @@ class OtherQp extends Component{
        subject : 1,
        qpyear : 1,
        response : '',
-       isLoaded : ''
+       isLoaded : '',
+       image: [],
+       photoIndex: 0,
+       currentSlide: 0,
+       isOpen: false
      }
      this.validateAndFetch = this.validateAndFetch.bind(this);
      this.image = this.image.bind(this);
+     this.next = this.next.bind(this)
+     this.previous = this.previous.bind(this)
+     this.previousButton = this.previousButton.bind(this);
+     this.nextButton = this.nextButton.bind(this);
    }
 
    validateAndFetch(){
@@ -43,7 +56,6 @@ class OtherQp extends Component{
      }
      else{
        this.fetchQp();
-       notify.show("Retrieval successful","success");
      }
    }
    fetchQp(){
@@ -77,6 +89,8 @@ class OtherQp extends Component{
           this.setState({
             response : response,
             isLoaded : true
+          },function(){
+            this.image()
           })
         })
    }
@@ -92,126 +106,239 @@ class OtherQp extends Component{
    handleQpyearChange = (event, index, qpyear) => this.setState({qpyear});
    image(){
      if(this.state.response){
-       return(<img alt="loading" src = {this.state.response} className="image" />);
+       var x = []
+       var obj = new Image();
+         obj.src = this.state.response
+         obj.onerror = () => {
+           x.push(<p key={new Date()}>Sorry no records found for this subject</p>)
+          notify.show("No Records found for this subject","warning")
+           this.setState({
+             image: x.slice(),
+           })
+         }
+
+         obj.onload = () => {
+           x.push(
+             <Cell is="7 tablet-7" key={new Date()}><div>
+               <Card
+               style={{borderRadius:"1.5em"}}
+               >
+                 <CardHeader
+                   title={this.state.subject}
+                   subtitle="Question Paper"
+                 />
+                 <CardMedia>
+                    <img alt="loading" src ={obj.src} className="image" />
+                 </CardMedia>
+                 <CardActions>
+                   <div >
+                   <Grid>
+                   <Row is="start">
+                   <Cell is="stretch 6 tablet-6"><div>
+                   <form method="post" action={obj.src+"/download"}>
+                   <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color={lightBlue300} />}/>
+                   </form>
+                   </div></Cell>
+                   <Cell is="stretch 6 tablet-6"><div>
+                   <FlatButton type="submit" label="Full View" fullWidth={true}  onClick={() => this.setState({ isOpen: true })} icon={<NavigationFullscreen color={lightBlue300} />}/>
+                   </div></Cell>
+                   </Row>
+                   </Grid>
+                   </div>
+                 </CardActions>
+               </Card>
+               </div></Cell>
+             )
+           this.setState({
+             image: x.slice(),
+           })
+                  notify.show("Retrieval successful","success");
+         }
+      }
+   }
+
+   next() {
+      this.slider.slickNext()
+    }
+    previous() {
+
+      this.slider.slickPrev()
+    }
+   previousButton(){
+   var buffer=[];
+     if(this.state.currentSlide === 0)
+     {
+       buffer = [];
+     }else{
+       buffer.push(<FlatButton key={new Date()} label="Previous" labelStyle={{textTransform: "none"}} icon={<NavigationArrowBack color="white"/>}
+                  className="previousButton" onClick={this.previous} />);
      }
+     return buffer;
+    }
+   nextButton(){
+    var buffer=[];
+   if(this.state.currentSlide === 1)
+   {
+     buffer.push(  <FlatButton key={new Date()} label="Fetch" value="Fetch" primary={true} labelStyle={{textTransform: "none"}} labelPosition="before" onTouchTap={this.validateAndFetch} className="nextButton" icon={<NavigationArrowForward color="white"/>}/>)
+   }
+   else{
+     buffer.push(  <FlatButton key={new Date()} label="Next" labelStyle={{textTransform: "none"}} labelPosition="before" icon={<NavigationArrowForward color="white"/>}
+                 className="nextButton" onClick={this.next} />)
+   }
+   return buffer;
    }
 
    render(){
+
+     var settings = {
+       dots: true,
+       infinite: false,
+       arrows: false,
+     };
+   const {
+           photoIndex,
+           isOpen,
+       } = this.state;
+
+   const images = [
+     this.state.response
+   ]
      return(
     <StayVisible
     {...this.props}
-    >
-      <div >
-        <div className="QuestionPapers">
-        <br />
-        <br />
-        <br />
-       <Paper zDepth={2} className="paper"  >
-        <br />
-        <h4 className="h4"> Choose a Question Paper for retrieval </h4>
+   >
+   <br /><br />
+    <div className="QpSyllabusDefault">
+    <Slider ref={c => this.slider = c } {...settings} afterChange={(currentSlide) => {
+        this.setState({ currentSlide: currentSlide  })
+      }}>
+    <div className="QuestionPapers">
        <Grid>
        <Row is="start">
-       <Cell is="middle 4 tablet-2 phone-2"><div>
-        <DropDownMenu
+       <Cell is="top 6 tablet-6 phone-6"><div>
+        <SelectField
+          floatingLabelText="University*"
           value={this.state.university}
           onChange={this.handleChange}
-          autoWidth={true}
+          style={{width:"80%"}}
         >
-          <MenuItem value={1} primaryText="University*" />
+          <MenuItem value={1} primaryText="Select" />
           <MenuItem value={'OU'} label="OU" primaryText="Osmania University" />
           <MenuItem value={'JNTU'} label="JNTU" primaryText="JNTU" />
-        </DropDownMenu>
+        </SelectField>
         </div></Cell>
-        <Cell is="4 tablet-2 phone-2"><div>
-         <DropDownMenu
+        <Cell is="6 tablet-6 phone-6"><div>
+         <SelectField
+         floatingLabelText="College*"
            value={this.state.college}
            onChange={this.handleCollegeChange}
-           autoWidth={true}
+           style={{width:"80%"}}
          >
-           <MenuItem value={1} primaryText="College*" />
+           <MenuItem value={1} primaryText="Select" />
            <MenuItem value={'VASV'} label="VASV" primaryText="Vasavi College of Engineering" />
            <MenuItem value={'CBIT'} label="CBIT" primaryText="Chaitanya Bharathi Institute of Technology" />
-         </DropDownMenu>
+         </SelectField>
          </div></Cell>
-         <Cell is="4 tablet-2 phone-2"><div>
-          <DropDownMenu
-            value={this.state.branch}
-            onChange={this.handleBranchChange}
-            autoWidth={true}
-          >
-            <MenuItem value={1} primaryText="Branch*" />
-            <MenuItem value={'CSE'} label="CSE" primaryText="Computer Science and Engineering" />
-            <MenuItem value={'ECE'} label="ECE" primaryText="Electricals and Electronics Communication" />
-          </DropDownMenu>
-          </div></Cell>
-        </Row>
-        </Grid>
-<Divider />
-      <Grid>
-      <Row is="start">
-      <Cell is="middle 4 tablet-2 phone-2"><div>
-       <DropDownMenu
-         value={this.state.year}
-         onChange={this.handleYearChange}
-         autoWidth={true}
-       >
-         <MenuItem value={0} primaryText="Year*" />
-         <MenuItem value={1} label="1" primaryText="1st Year" />
-         <MenuItem value={2} label="2" primaryText="2nd Year" />
-         <MenuItem value={3} label="3" primaryText="3rd Year" />
-         <MenuItem value={4} label="4" primaryText="4th Year" />
-       </DropDownMenu>
-       </div></Cell>
+         </Row>
+         </Grid>
+         <Grid>
+         <Row>
+          <Cell is="6 tablet-6 phone-6"><div>
+           <SelectField
+            floatingLabelText = "Branch*"
+             value={this.state.branch}
+             onChange={this.handleBranchChange}
+             style={{width:"80%"}}
+           >
+             <MenuItem value={1} primaryText="Select" />
+             <MenuItem value={'CSE'} label="CSE" primaryText="Computer Science and Engineering" />
+             <MenuItem value={'ECE'} label="ECE" primaryText="Electricals and Electronics Communication" />
+           </SelectField>
+           </div></Cell>
+           <Cell is="middle 6 tablet-6 phone-6"><div>
+            <SelectField
+            floatingLabelText="Year *"
+              value={this.state.year}
+              onChange={this.handleYearChange}
+              style={{width:"80%"}}
+            >
+              <MenuItem value={0} primaryText="Select" />
+              <MenuItem value={1} label="1" primaryText="1st Year" />
+              <MenuItem value={2} label="2" primaryText="2nd Year" />
+              <MenuItem value={3} label="3" primaryText="3rd Year" />
+              <MenuItem value={4} label="4" primaryText="4th Year" />
+            </SelectField>
+            </div></Cell>
+            </Row>
+            </Grid>
+            </div>
+            <div className="QuestionPapers">
+            <Grid>
+            <Row is="start">
+              <Cell is="6 tablet-6 phone-6"><div>
+              <SelectField
+              floatingLabelText="Semester*"
+               value={this.state.sem}
+               onChange={this.handleSemChange}
+               style={{width:"80%"}}
+              >
+               <MenuItem value={0} primaryText="Select" />
+               <MenuItem value={1} label="Sem-1" primaryText="Sem-1" />
+               <MenuItem value={2} label="Sem-2" primaryText="Sem-2" />
+              </SelectField>
+              </div></Cell>
+              <Cell is="6 tablet-6 phone-6"><div>
+              <SelectField
+              floatingLabelText="Subject*"
+                value={this.state.subject}
+                onChange={this.handleSubjectChange}
+                style={{width:"80%"}}
+              >
+                <MenuItem value={1} primaryText="Select" />
+                <MenuItem value={'OS'} label="OS" primaryText="OS" />
+                <MenuItem value={'DM'} label="DM" primaryText="DM" />
+              </SelectField>
+              </div></Cell>
+              </Row>
+              </Grid>
+              <Grid>
+               <Row is="start">
+               <Cell is="6 tablet-6 phone-6"><div>
+               <SelectField
+               floatingLabelText="QuestionPaperYear*"
+                value={this.state.qpyear}
+                onChange={this.handleQpyearChange}
+                style={{width:"80%"}}
+               >
+                <MenuItem value={1} primaryText="Select" />
+                <MenuItem value={'2015'} label="2015" primaryText="2015" />
+                <MenuItem value={'2016'} label="2016" primaryText="2016" />
+               </SelectField>
+               </div></Cell>
+               </Row>
+               </Grid>
+              </div>
+      </Slider>
+      <div className="register" >
+      {this.previousButton()}
+       {this.nextButton()}
+       </div>
+      </div>
 
-      <Cell is="4 tablet-2 phone-2"><div>
-      <DropDownMenu
-       value={this.state.sem}
-       onChange={this.handleSemChange}
-       autoWidth={true}
-      >
-       <MenuItem value={0} primaryText="Semester*" />
-       <MenuItem value={1} label="Sem-1" primaryText="Sem-1" />
-       <MenuItem value={2} label="Sem-2" primaryText="Sem-2" />
-      </DropDownMenu>
-      </div></Cell>
-      <Cell is="4 tablet-2 phone-2"><div>
-      <DropDownMenu
-        value={this.state.subject}
-        onChange={this.handleSubjectChange}
-        autoWidth={true}
-      >
-        <MenuItem value={1} primaryText="Subject*" />
-        <MenuItem value={'OS'} label="OS" primaryText="OS" />
-        <MenuItem value={'DM'} label="DM" primaryText="DM" />
-      </DropDownMenu>
-      </div></Cell>
-      </Row>
-      </Grid>
-<Divider />
+     <div>
 
-       <Grid>
-        <Row is="center">
-        <Cell is="4 tablet-2 phone-2"><div>
-        <DropDownMenu
-         value={this.state.qpyear}
-         onChange={this.handleQpyearChange}
-         autoWidth={true}
-        >
-         <MenuItem value={1} primaryText="QPyear*" />
-         <MenuItem value={'2015'} label="2015" primaryText="2015" />
-         <MenuItem value={'2016'} label="2016" primaryText="2016" />
-        </DropDownMenu>
-        </div></Cell>
-        </Row>
-        </Grid>
-<Divider />
-        <RaisedButton label="Fetch" value="Fetch" primary={true} onTouchTap={this.validateAndFetch} className="button" />
-        <br />
-
-        </Paper>
-        </div>
-         <br /> <br /> <br /> <br />
-        {this.image()}
+         <br />
+         <Grid>
+         <Row is="center">
+         {this.state.image}
+         </Row>
+         </Grid>
+         {isOpen &&
+                     <Lightbox
+                         mainSrc={images[photoIndex]}
+                          onCloseRequest={() => this.setState({ isOpen: false })}
+                     />
+                 }
 
      </div>
   </StayVisible>

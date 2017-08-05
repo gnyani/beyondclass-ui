@@ -107,8 +107,6 @@ export default class HorizontalTimelineContent extends React.Component {
     if(file)
     {
     reader.readAsDataURL(file)
-  }else{
-    reader.readAsText('blobing')
   }
   }
   Enter(event){
@@ -200,7 +198,7 @@ if(this.state.postUrls.length!==0)
     {
       if(this.state.isprofilepicchange[i] === true){
         buffer.push(
-            <Cell is="7 tablet-2" key={i}><div>
+            <Cell is="7 tablet-7" key={i}><div>
               <Card
               onExpandChange={this.deletePostConfirm.bind(this,i)}
               style={{borderRadius:"1.5em"}}
@@ -223,12 +221,12 @@ if(this.state.postUrls.length!==0)
                   <div >
                   <Grid>
                   <Row is="start">
-                  <Cell is="stretch 7 tablet-2"><div>
+                  <Cell is="stretch 7 tablet-7"><div>
                   <div style={{marginLeft:'36%'}}>
                  <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
                   </div>
                   </div></Cell>
-                  <Cell is="stretch 5 tablet-2"><div>
+                  <Cell is="stretch 5 tablet-5"><div>
                   <div style={{marginLeft:'15%'}}>
                  <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
                   </div>
@@ -237,10 +235,10 @@ if(this.state.postUrls.length!==0)
                   </Grid>
                   <Grid>
                   <Row is="start">
-                  <Cell is="stretch 6 tablet-2"><div>
+                  <Cell is="stretch 6 tablet-6"><div>
                   <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} />}/>
                   </div></Cell>
-                  <Cell is="stretch 6 tablet-2"><div>
+                  <Cell is="stretch 6 tablet-6"><div>
                   <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} />}/>
                   </div></Cell>
                   </Row>
@@ -253,7 +251,7 @@ if(this.state.postUrls.length!==0)
       }
     else{
       buffer.push(
-        <Cell is="7 tablet-2" key={i}><div>
+        <Cell is="7 tablet-7" key={i}><div>
           <Card
           onExpandChange={this.deletePostConfirm.bind(this,i)}
           style={{borderRadius:"1.5em"}}
@@ -276,12 +274,12 @@ if(this.state.postUrls.length!==0)
               <div >
               <Grid>
               <Row is="start">
-              <Cell is="stretch 7 tablet-2"><div>
+              <Cell is="stretch 7 tablet-7"><div>
               <div style={{marginLeft:'36%'}}>
              <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
               </div>
               </div></Cell>
-              <Cell is="stretch 5 tablet-2"><div>
+              <Cell is="stretch 5 tablet-5"><div>
               <div style={{marginLeft:'15%'}}>
              <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
               </div>
@@ -290,10 +288,10 @@ if(this.state.postUrls.length!==0)
               </Grid>
               <Grid>
               <Row is="start">
-              <Cell is="stretch 6 tablet-2"><div>
+              <Cell is="stretch 6 tablet-6"><div>
               <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} />}/>
               </div></Cell>
-              <Cell is="stretch 6 tablet-2"><div>
+              <Cell is="stretch 6 tablet-6"><div>
               <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} />}/>
               </div></Cell>
               </Row>
@@ -306,7 +304,7 @@ if(this.state.postUrls.length!==0)
      )
    }}else{
      if(this.state.isprofilepicchange[i] === true){
-      buffer.push( <Cell is="7 tablet-2" key={i}><div>
+      buffer.push( <Cell is="7 tablet-7" key={i}><div>
          <Card
          style={{borderRadius:"1.5em"}}
          >
@@ -325,12 +323,12 @@ if(this.state.postUrls.length!==0)
              <div >
              <Grid>
              <Row is="start">
-             <Cell is="stretch 7 tablet-2"><div>
+             <Cell is="stretch 7 tablet-7"><div>
              <div style={{marginLeft:'36%'}}>
             <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
              </div>
              </div></Cell>
-             <Cell is="stretch 5 tablet-2"><div>
+             <Cell is="stretch 5 tablet-7"><div>
              <div style={{marginLeft:'15%'}}>
             <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
              </div>
@@ -339,10 +337,10 @@ if(this.state.postUrls.length!==0)
              </Grid>
              <Grid>
              <Row is="start">
-             <Cell is="stretch 6 tablet-2"><div>
+             <Cell is="stretch 6 tablet-6"><div>
              <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} />}/>
              </div></Cell>
-             <Cell is="stretch 6 tablet-2"><div>
+             <Cell is="stretch 6 tablet-6"><div>
              <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} />}/>
              </div></Cell>
              </Row>
@@ -354,7 +352,7 @@ if(this.state.postUrls.length!==0)
       </div></Cell>)
     }else{
      buffer.push(
-         <Cell is="7 tablet-2" key={i}><div>
+         <Cell is="7 tablet-7 phone-7" key={i}><div>
            <Card
            style={{borderRadius:"1.5em"}}
            >
@@ -373,7 +371,7 @@ if(this.state.postUrls.length!==0)
                <div >
                <Grid>
                <Row is="start">
-               <Cell is="stretch 7 tablet-2"><div>
+               <Cell is="stretch 7 tablet-7"><div>
                <div style={{marginLeft:'36%'}}>
               <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
                </div>
@@ -387,10 +385,10 @@ if(this.state.postUrls.length!==0)
                </Grid>
                <Grid>
                <Row is="start">
-               <Cell is="stretch 6 tablet-2"><div>
+               <Cell is="stretch 6 tablet-6"><div>
                <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} />}/>
                </div></Cell>
-               <Cell is="stretch 6 tablet-2"><div>
+               <Cell is="stretch 6 tablet-6"><div>
                <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} />}/>
                </div></Cell>
                </Row>
@@ -422,7 +420,8 @@ if(this.state.postUrls.length!==0)
 
     handleClose = () => {
       this.setState({Dialogopen: false,
-                     DialogCommentBox: false});
+                     DialogCommentBox: false,
+                   DialogconfirmDelete: false,});
     };
 
 showCommentBox(i){
