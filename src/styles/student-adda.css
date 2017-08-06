@@ -37,7 +37,10 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
                  background-color: rgb(124,109,174) !important; color: rgb(255,255,255) !important;}
 .Syllabus .button{margin: 0 calc(39%);}
 .AssignUpload .iframe{width:60%;height: 350px;}
-.AssignUpload{text-align: center;}
+.AssignUpload .Position{text-align: center;}
+.AssignUpload .uploadbutton{background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
+.AssignUpload .paragraph{text-align: center; font-family: "Comic Sans MS",sans-serif;font-size:1.2em;font-style: italic;font-weight: 100;
+                         color: rgb(247,166,25);letter-spacing: 0.04em;}
 .coachingcentres{}
 .coachingcentres .title{text-align: center !important;}
 .coachingcentres .card{width:80% !important;margin-left:10% !important;}
@@ -69,6 +72,9 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .personalinfo .h4{margin-left: 2.5%;font-family: "Arial", sans-serif; font-weight: normal; color: #2196F3}
 .classdetails .h4{margin-left: 5%;font-family: "Arial", sans-serif; font-weight: normal; color: #2196F3}
 .classdetails .textfield{margin-left: 5% !important;}
-.Active{
-  background-color: #696969;
-}
+.Active{  background-color: #696969;}
+.NotesUpload .uploadbutton{background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
+.NotesUpload .paragraph{text-align: center; font-family: "Comic Sans MS",sans-serif;font-size:1.2em;font-style: italic;font-weight: 100;
+                         color: rgb(247,166,25);letter-spacing: 0.04em;}
+.NotesUpload .Position{text-align: center;}
+.NotesUpload .iframe{width:60%;height: 350px;}                         

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
-import DropDownMenu from 'material-ui/DropDownMenu';
+import FlatButton from 'material-ui/FlatButton';
+import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import Divider from 'material-ui/Divider';
+import {FileFileUpload} from '../../styledcomponents/SvgIcons.js'
 import {notify} from 'react-notify-toast';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import '../../styles/student-adda.css';
@@ -102,40 +102,39 @@ class AssignUpload extends Component{
       <StayVisible
       {...this.props}
       >
-      <div className="AssignUpload">
-          <br  />
-          <p > choose subject of assignment </p>
-          <Grid>
+      <br /><br />
+      <div className="QpSyllabusDefault AssignUpload">
+        <Grid>
           <Row is="center">
-          <Cell is="middle 4 tablet-2"><div>
-          <label>  Subject: </label>
-          </div></Cell>
-          <Cell is="3 tablet-2 phone-2"><div>
-           <DropDownMenu
+          <Cell is="6 tablet-6 phone-6"><div>
+           <SelectField
+             floatingLabelText="Subject*"
              value={this.state.value}
              onChange={this.handleChange}
-             autoWidth={true}
+             style={{width:"80%"}}
            >
-             <MenuItem value={1} primaryText="Select*" />
+             <MenuItem value={1} primaryText="Select" />
              <MenuItem value={'OS'} label="OS" primaryText="Operating Systems" />
              <MenuItem value={'DM'} label="DM" primaryText="Data Mining" />
-           </DropDownMenu>
+           </SelectField>
            </div></Cell>
            </Row>
            </Grid>
-<Divider />
+          <p className="paragraph"> Please upload a pdf file </p>
           <br />
-          <p > Please upload a pdf file </p>
-          <br />
-          <form onSubmit={this._handleSubmit}>
+          <form className="Position" onSubmit={this._handleSubmit}>
           <input type="file" onChange={this._handleImageChange} />
-          <RaisedButton type="submit" label="Upload File"  disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
+          <FlatButton type="submit" label="Upload File" className="uploadbutton" icon={<FileFileUpload color="white"/>} disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
           </form>
-          <div className="AssignUpload">
-          <br />
-          <br />
-          {$imagePreview}
-          </div>
+      </div>
+      <div className="AssignUpload">
+      <br />
+      <br />
+      <div className="Position">
+      {$imagePreview}
+      </div>
+      <br />
+      <br />
       </div>
   </StayVisible>
     )
