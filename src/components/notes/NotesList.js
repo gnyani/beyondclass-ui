@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import RaisedButton from 'material-ui/RaisedButton';
-import DropDownMenu from 'material-ui/DropDownMenu';
+import FlatButton from 'material-ui/FlatButton';
+import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import Divider from 'material-ui/Divider';
 import {notify} from 'react-notify-toast';
+import {lightBlue300} from 'material-ui/styles/colors';
+import {ActionViewArray,FileFileDownload,NavigationFullscreen} from '../../styledcomponents/SvgIcons.js'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import styled from 'styled-components'
@@ -75,7 +76,7 @@ class NotesList extends Component{
             usermsg : 'No files for this subject were found',
             isLoaded: true
           })
-          notify.show("file upload successful","success")
+          notify.show("Files Retrieved successfully","success")
         })
    }
 
@@ -87,65 +88,66 @@ class NotesList extends Component{
 <StayVisible
 {...this.props}
 >
-  <div style={{textAlign:'center',marginLeft:'18%',width:'60%'}}>
-     <br  />
-     <p > choose subject of Notes </p>
+     <br  /><br />
+  <div className="QpSyllabusDefault">
      <Grid>
      <Row is="center">
-     <Cell is="middle 4 tablet-2"><div>
-     <label>  Subject: </label>
-     </div></Cell>
-     <Cell is="3 tablet-2 phone-2"><div>
-      <DropDownMenu
+     <Cell is="6 tablet-6 phone-6"><div>
+      <SelectField
+        floatingLabelText="Subject*"
         value={this.state.subject}
         onChange={this.handleChange}
-        autoWidth={true}
       >
-        <MenuItem value={1} primaryText="Select*" />
+        <MenuItem value={1} primaryText="Select" />
         <MenuItem value={'OS'} label="OS" primaryText="Operating Systems" />
         <MenuItem value={'DM'} label="DM" primaryText="Data Mining" />
-      </DropDownMenu>
+      </SelectField>
+      </div></Cell>
+      <Cell is="middle 6 tablet-6 phone-6" className="register"><div>
+      <FlatButton type="submit" label="View" disabled={this.state.buttonDisabled} icon={<ActionViewArray color="white"/>} className="nextButton" onClick={this.handleSubmit} />
       </div></Cell>
       </Row>
       </Grid>
-<Divider />
-     <br />
-       <RaisedButton type="submit" label="View" disabled={this.state.buttonDisabled} onClick={this.handleSubmit} />
-     <br />
-     <br />
-<Divider />
+      </div>
      <div>
      <Grid>
      <Row is="center">
      {this.state.links.map((src, index) => (
-       <Cell is="6 tablet-2"><div>
-           <Card >
+       <Cell is="7 tablet-7"><div>
+           <Card style={{borderRadius:"2em"}}>
              <CardHeader
                title="Uploaded By"
                subtitle={src.split('-').pop()}
              />
              <CardMedia>
-               <iframe  title="assignments" src={src} />
+               <iframe  title="Notes" src={src} />
              </CardMedia>
              <CardTitle title={this.state.loadedsubject} subtitle="Notes" />
              <CardActions>
-               <div style={{display:'flex'}}>
+             <Grid>
+             <Row is="start">
+             <Cell is="6 tablet-6 phone-6"><div>
                <form method="post" action={src+"/download"}>
-               <RaisedButton type="submit" label="Download" />
+               <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color={lightBlue300} />}/>
                </form>
+              </div></Cell>
+             <Cell is="6 tablet-6 phone-6"><div>
                <form method="post" action={src}>
-               <RaisedButton type="submit" label="View" style={{marginLeft:'120%'}}/>
+               <FlatButton type="submit" label="View" fullWidth={true} icon={<NavigationFullscreen color={lightBlue300} />}/>
                </form>
-               </div>
+               </div></Cell>
+               </Row>
+               </Grid>
              </CardActions>
            </Card>
         </div></Cell>
     ))}
     </Row>
     </Grid>
+    <p style={{textAlign:"center"}}>
     {this.state.usermsg}
+    </p>
     </div>
-   </div>
 </StayVisible>
    )
   }
