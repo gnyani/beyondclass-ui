@@ -1,5 +1,4 @@
 import React,{Component} from 'react'
-import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
@@ -30,15 +29,12 @@ getUser(){
            credentials: 'include',
            method: 'GET'
         }).then(response => {
-          return response.text()
+          return response.json()
         }).then(response => {
           this.setState({
-              username: response
+              username: response.firstName
           })
-        }).catch(response => {
-        notify.show("Please login before viewing dashboard");
-        this.context.router.history.push('/');
-       });
+        })
 }
 render(){
     return(

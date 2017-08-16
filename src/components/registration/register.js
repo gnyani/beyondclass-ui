@@ -1,10 +1,8 @@
 import React,{Component} from 'react'
-//import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import FlatButton from 'material-ui/FlatButton'
 import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
-//import { Grid, Row, Cell } from 'react-inline-grid';
 import Intro from './intro.js';
 import PersonalInfo from './personalinfo.js';
 import ClassDetails from './classdetails.js'
@@ -31,10 +29,12 @@ class Register extends Component{
         firstName : ' ',
         lastName : ' ',
         rollno : ' ',
+        userrole: "student",
         hostel : 'No',
         mobilenumber : ' ',
         controlledDate: null,
         currentSlide: 0,
+        Values: [],
       }
       this.validateDetails = this.validateDetails.bind(this);
       this.getUserDetails = this.getUserDetails.bind(this);
@@ -49,57 +49,28 @@ class Register extends Component{
   }
 
  getUserDetails(){
-   fetch('http://'+properties.getHostName+':8080/user/name', {
+   fetch('http://'+properties.getHostName+':8080/user/google/auth', {
             credentials: 'include',
             method: 'GET'
          }).then(response => {
-           return response.text()
+           return response.json()
          }).then(response => {
            this.setState({
-             username : response,
+             username : response.userAuthentication.details.name,
+             lastName : response.userAuthentication.details.family_name,
+             propiclink: response.userAuthentication.details.picture,
+             firstName: response.userAuthentication.details.given_name,
              isLoaded : 'true'
            })
          }).catch(response => {
          notify.show("Please Authenticate with Google before registering","warning");
          this.context.router.history.push('/');
         });
-
-     fetch('http://'+properties.getHostName+':8080/user/lastname', {
-              credentials: 'include',
-              method: 'GET'
-              }).then(response => {
-              return response.text();
-              }).then(response => {
-              this.setState({
-              lastName : response,
-              isLoaded : 'true'
-              })
-              })
-
-    fetch('http://'+properties.getHostName+':8080/user/propic', {
-             credentials: 'include',
-             method: 'GET'
-             }).then(response => {
-             return response.text()
-             }).then(response => {
-             this.setState({
-             propiclink : response,
-             })
-             })
-   fetch('http://'+properties.getHostName+':8080/user/firstname', {
-            credentials: 'include',
-            method: 'GET'
-            }).then(response => {
-            return response.text();
-            }).then(response => {
-            this.setState({
-            firstName : response,
-            })
-            })
      }
 
  registerUser(){
-   fetch('http://'+properties.getHostName+':8080/users/registration', {
+   if(this.state.userrole === "student")
+  {  fetch('http://'+properties.getHostName+':8080/users/registration', {
           credentials: 'include',
           method: 'POST',
           headers: {
@@ -119,21 +90,59 @@ class Register extends Component{
           hostel: this.state.hostel,
           mobilenumber: this.state.mobilenumber,
           dob: this.state.controlledDate,
+          userrole: this.state.userrole,
         })
       }).then(response => {
         return response.text();
       }).then(response => {
         if(response === 'User registration successful')
         {
-        notify.show("User registration successful for"+this.state.username,"success")
+        notify.show("User registration successful for "+this.state.username,"success")
         this.context.router.history.push('/dashboard');
       }
         else{
           notify.show(response,"error")
         }
       })
+ }else{
+   fetch('http://'+properties.getHostName+':8080/users/registration', {
+           credentials: 'include',
+           method: 'POST',
+           headers: {
+                 'mode': 'cors',
+                 'Content-Type': 'application/json'
+             },
+           body: JSON.stringify({
+           firstName: this.state.firstName,
+           lastName : this.state.lastName,
+           university: this.state.UniversityValue,
+           college: this.state.CollegeValue,
+           branch: this.state.BranchValue,
+           classes: this.state.Values.slice(),
+           mobilenumber: this.state.mobilenumber,
+           dob: this.state.controlledDate,
+           userrole: this.state.userrole,
+         })
+       }).then(response => {
+         return response.text();
+       }).then(response => {
+         if(response === 'User registration successful')
+         {
+         notify.show("User registration successful for "+this.state.username,"success")
+         this.context.router.history.push('/dashboard');
+       }
+         else{
+           notify.show(response,"error")
+         }
+       })
+ }
  }
 
+ handleValuesChange = (event, index, Values) =>  this.setState({Values});
+
+ handleRadioButtonChange =(event,newValue) =>{
+  this.setState({ userrole : newValue })
+ }
  handleMobileChange =(event, newValue) => {
    this.setState({
     mobilenumber : newValue,
@@ -170,9 +179,12 @@ handleRollChange=(event, newValue) =>{
 }
 
 validateDetails(){
- if(this.state.UniversityValue === 1 || this.state.CollegeValue === 1 || this.state.YearValue === 0 ||
-    this.state.SemesterValue === 0 || this.state.BranchValue === 1 || this.state.SectionValue === 1)
+ if((this.state.userrole==="student") && (this.state.UniversityValue === 1 || this.state.CollegeValue === 1 || this.state.YearValue === 0 ||
+    this.state.SemesterValue === 0 || this.state.BranchValue === 1 || this.state.SectionValue === 1))
  notify.show("please fill in all the mandatory fields which are followed by *","error");
+ else if((this.state.userrole === "teacher") && (this.state.UniversityValue === 1 || this.state.CollegeValue === 1 ||
+       this.state.BranchValue === 1 || this.state.Values.length === 0 ))
+notify.show("please fill in all the mandatory fields which are followed by *","error");
  else{
    this.registerUser();
  }
@@ -216,11 +228,11 @@ nextButton(){
  var buffer=[];
 if(this.state.currentSlide === 2)
 {
-  buffer.push(  <FlatButton key={this.state.nextValue} label="Register" labelStyle={{textTransform: "none"}} labelPosition="before" icon={<NavigationArrowForward color="white"/>}
+  buffer.push(  <FlatButton key={new Date()} label="Register" labelStyle={{textTransform: "none"}} labelPosition="before" icon={<NavigationArrowForward color="white"/>}
               className="nextButton" onClick={this.validateDetails} />)
 }
 else{
-  buffer.push(  <FlatButton key={this.state.nextValue} label="Next" labelStyle={{textTransform: "none"}} labelPosition="before" icon={<NavigationArrowForward color="white"/>}
+  buffer.push(  <FlatButton key={new Date()} label="Next" labelStyle={{textTransform: "none"}} labelPosition="before" icon={<NavigationArrowForward color="white"/>}
               className="nextButton" onClick={this.next} />)
 }
 return buffer;
@@ -232,29 +244,33 @@ return buffer;
       dots: true,
       infinite: false,
       arrows: false,
+      adaptiveHeight: false,
     };
     return(
-      <div style={{backgroundColor:"rgb(244,244,244)",height: "100vh"}}>
+      <div style={{backgroundColor:"rgb(244,244,244)",height:"135%"}}>
     <div className="RegisterContainer">
       	<Slider ref={c => this.slider = c } {...settings} afterChange={(currentSlide) => {
             this.setState({ currentSlide: currentSlide  })
           }}>
-        <div><Intro propiclink={this.state.propiclink} userName={this.state.username}/></div>
+        <div className="intro"><Intro propiclink={this.state.propiclink} userName={this.state.username} /></div>
         <div><PersonalInfo firstName={this.state.firstName} lastName={this.state.lastName}
              handleMobileChange={this.handleMobileChange} handleDateChange={this.handleDateChange}
-             handleDateDismiss={this.handleDateDismiss} controlledDate={this.state.controlledDate}/>
+             handleDateDismiss={this.handleDateDismiss} controlledDate={this.state.controlledDate}
+             handleRadioButtonChange={this.handleRadioButtonChange}/>
         </div>
         <div><ClassDetails UniversityValue={this.state.UniversityValue} CollegeValue={this.state.CollegeValue}
             YearValue={this.state.YearValue} SemesterValue={this.state.SemesterValue} BranchValue={this.state.BranchValue}
             SectionValue={this.state.SectionValue}  handleUniversityChange={this.handleUniversityChange}
             handleCollegeChange={this.handleCollegeChange} handleYearChange={this.handleYearChange}
             handleSemChange={this.handleSemChange} handleBranchChange={this.handleBranchChange}
-            handleSectionChange={this.handleSectionChange}/></div>
+            handleSectionChange={this.handleSectionChange} userrole={this.state.userrole} Values={this.state.Values}
+            handleValuesChange={this.handleValuesChange}/></div>
         </Slider>
-      </div>
-      <div className="register" >
-        {this.previousButton()}
-        {this.nextButton()}
+        <br /> <br /> <br />
+        <div className="register" >
+          {this.previousButton()}
+          {this.nextButton()}
+        </div>
       </div>
     </div>
     )

@@ -7,7 +7,10 @@ import {lightBlue300} from 'material-ui/styles/colors';
 import {ActionViewArray,FileFileDownload,NavigationFullscreen} from '../../styledcomponents/SvgIcons.js'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
 import { Grid, Row, Cell } from 'react-inline-grid';
+import '../../styles/student-adda.css';
 import styled from 'styled-components'
+import UnauthorizedPage from '../UnauthorizedPage.js'
+
 var properties = require('../properties.json');
 
 const StayVisible = styled.div`
@@ -82,7 +85,8 @@ class AssignList extends Component{
  }
  handleChange = (event, index, subject) => this.setState({subject});
   render(){
-
+if(this.state.userrole==="student")
+{
    return(
 <StayVisible
 {...this.props}
@@ -149,5 +153,9 @@ class AssignList extends Component{
   </StayVisible>
    )
   }
+  else{
+    return(<UnauthorizedPage />)
+  }
+}
 }
 export default AssignList;

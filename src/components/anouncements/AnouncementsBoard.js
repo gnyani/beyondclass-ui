@@ -9,6 +9,7 @@ import Pagination from 'material-ui-pagination';
 import Dialog from 'material-ui/Dialog';
 import{Row,Grid,Cell} from 'react-inline-grid';
 import '../../styles/student-adda.css';
+import UnauthorizedPage from '../UnauthorizedPage.js'
 var properties = require('../properties.json');
 
 const StayVisible = styled.div`
@@ -93,9 +94,18 @@ list(buffer){
   for (i=0;i<this.state.users.length;i++){
   if(this.state.useremails[i] === this.props.loggedinuser)
   {
-  buffer.push(<li key={i}>
+  buffer.push( <Grid key={i}>
+               <Row is="start">
+               <Cell is="10 tablet-10 phone-10"><div>
+               <li >
                 <p className="name"> <span className="fontStyle">{this.state.users[i]} </span>: <span className="messageStyle">{this.state.messages[i]}</span>
-                <span className="deleteSpan"><IconButton onClick = {this.handleDialogOpen.bind(this,i)}><NavigationClose color="red"/></IconButton></span> </p></li>
+                </p></li>
+                </div></Cell>
+               <Cell is="middle 2 tablet-2 phone-2"><div>
+                <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><NavigationClose color="red"/></IconButton>
+              </div></Cell>
+              </Row>
+              </Grid>
              )
   }
 else{
@@ -193,6 +203,8 @@ const actions = [
     primary={true}
     onTouchTap={this.handleClose}
   />]
+if(this.props.userrole==="student")
+{
 return(
 
 <StayVisible
@@ -244,7 +256,10 @@ return(
 </div>
 </StayVisible>
 );
-
+}
+else{
+  return(<UnauthorizedPage />)
+}
 }
 }
 

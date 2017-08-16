@@ -7,6 +7,8 @@ import {notify} from 'react-notify-toast';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import '../../styles/student-adda.css';
 import styled from 'styled-components'
+import UnauthorizedPage from '../UnauthorizedPage.js'
+
 var properties = require('../properties.json');
 
 const StayVisible = styled.div`
@@ -97,7 +99,8 @@ class AssignUpload extends Component{
     if (imagePreviewUrl) {
       $imagePreview = (<iframe  title="preview pdf "src={imagePreviewUrl} className="iframe"/>);
     }
-
+ if(this.props.userrole==="student")
+ {
     return (
       <StayVisible
       {...this.props}
@@ -139,6 +142,9 @@ class AssignUpload extends Component{
   </StayVisible>
     )
   }
-
+  else{
+    return(<UnauthorizedPage />)
+  }
+}
 }
 export default AssignUpload;

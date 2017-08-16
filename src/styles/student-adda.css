@@ -1,5 +1,5 @@
 .StudentAdda{ margin: 0;padding: 0;border: 0;font-size: 15px;vertical-align: baseline;background: transparent;}
-body {height: 100vh;width: 100%;overflow: hidden;margin: 0;outline: 0;margin: 0;padding: 0;}
+body,html {height: 100%;width:100%;overflow: hidden;margin: 0;outline: 0;margin: 0;padding: 0;min-width:initial;}
 body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
                font-size: 2em;letter-spacing: 0.07em;color: rgb(162,35,142)}
 body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 0px rgb(95, 87, 87);border-radius: 1.5em}
@@ -14,14 +14,19 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .announcements .fontStyle{  font-size: 1em;font-style: italic;
                             font-weight: 100;letter-spacing: 0.05em;color: rgb(1,175,173)}
 .announcements .messageStyle{   font-family: "Comic Sans MS",sans-serif;font-size:0.8em;font-style: italic;font-weight: 50;
-                               color: rgb(247,166,25);letter-spacing: 0.04em;}
+                               color: rgb(247,166,25);text-transform: capitalize;letter-spacing: 0.04em;}
 .announcements .image{width: 4em;height: 4em ;border-radius: 50% }
+
+.announcements .imagepreview{width: 40%;height: 40%;}
+
+.announcements .paragraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
+               font-size: 1.3em;letter-spacing: 0.03em;color: rgb(162,35,142)}
 
 .announcements .deleteSpan{float:right; margin-right: 1.5em;}
 .input{ float: left !important;margin-left: 10%;width: 65% !important;border: 0px !important;padding: 5px 0px !important;margin-bottom: 20px !important;}
 .AnnounceButton{ box-shadow: 1px 2px 8px 0px black;margin-right: 3% !important; border-radius: 1em !important;
                  background-color: rgb(162,35,142) !important; color: rgb(255,255,255) !important;}
-.vertical-scroll{height:92vh;overflow-y: auto; width: 100%;overflow-x: hidden;}
+.vertical-scroll{height:97vh;overflow-y: auto; width: 100%;overflow-x: hidden;}
 ::-webkit-scrollbar { width: 0.4em;border-radius: 0.4em;}
 ::-webkit-scrollbar-thumb {background-color: darkgrey;border-radius: 0.5em; outline: 0.1em solid slategrey;}
 .QuestionPapers .image{width: 100%;height: 50vh}
@@ -59,7 +64,7 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .QpSyllabusDefault {margin: 0 auto;padding: 1em;width: 55%;color: #333;border-radius: 2.8em; position: relative;top: 10%;
                                background: rgb(255,255,255);border-top: 30px solid #2196F3 ;height:30%;box-shadow: 1px 1px 1px 1px rgb(95, 87, 87);}
 .RegisterContainer {margin: 0 auto;padding: 1em;width: 50%;color: #333;border-radius: 2.8em; position: relative;top: 10%;
-  background: rgb(255,255,255);border-top: 30px solid #2196F3 ;height:60vh;box-shadow: 1px 1px 1px 1px rgb(95, 87, 87);}
+  background: rgb(255,255,255);border-top: 30px solid #2196F3 ;box-shadow: 1px 1px 1px 1px rgb(95, 87, 87);}
 .register{text-align: center;}
 .register .previousButton{  margin-right: 15% !important;color: white!important; background-color: #2196F3 !important; border-radius: 1em !important;}
 .register .nextButton {background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
@@ -70,6 +75,8 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .intro .h4{text-align: center;font-family: "Chalkduster", fantasy,sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: normal;}
 .intro .image{overflow: hidden; margin-bottom: 6%;border-radius: 20%;height: 16%;   width : 16%;margin-left: 40%}
 .personalinfo .h4{margin-left: 2.5%;font-family: "Arial", sans-serif; font-weight: normal; color: #2196F3}
+.personalinfo .RadioButtonGroup{margin-left: 2% !important; display: flex !important; flex-direction: row !important;}
+.personalinfo .RadioButton{display: inline-block !important;}
 .classdetails .h4{margin-left: 5%;font-family: "Arial", sans-serif; font-weight: normal; color: #2196F3}
 .classdetails .textfield{margin-left: 5% !important;}
 .Active{  background-color: #696969;}
@@ -77,4 +84,6 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .NotesUpload .paragraph{text-align: center; font-family: "Comic Sans MS",sans-serif;font-size:1.2em;font-style: italic;font-weight: 100;
                          color: rgb(247,166,25);letter-spacing: 0.04em;}
 .NotesUpload .Position{text-align: center;}
-.NotesUpload .iframe{width:60%;height: 350px;}                         
+.NotesUpload .iframe{width:60%;height: 350px;}
+.Unauthorized {margin-top: 5%;text-align: center;text-align: center;font-family: "Chalkduster", fantasy,sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: normal;}
+.Unauthorized .backHome {color: white!important; background-color: #2196F3 !important; border-radius: 1em !important;}

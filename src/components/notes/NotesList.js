@@ -8,6 +8,8 @@ import {ActionViewArray,FileFileDownload,NavigationFullscreen} from '../../style
 import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import styled from 'styled-components'
+import UnauthorizedPage from '../UnauthorizedPage.js'
+
 var properties = require('../properties.json');
 
 const StayVisible = styled.div`
@@ -83,7 +85,7 @@ class NotesList extends Component{
  }
  handleChange = (event, index, subject) => this.setState({subject});
   render(){
-
+if(this.props.userrole==="student"){
    return(
 <StayVisible
 {...this.props}
@@ -150,7 +152,10 @@ class NotesList extends Component{
     </div>
 </StayVisible>
    )
-  }
+ }else{
+   return(<UnauthorizedPage />)
+ }
+}
 }
 
 export default NotesList;
