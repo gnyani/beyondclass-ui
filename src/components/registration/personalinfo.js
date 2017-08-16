@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import { Grid, Row, Cell } from 'react-inline-grid';
+import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import '../../styles/student-adda.css';
 
 
@@ -31,6 +32,16 @@ class PersonalInfo extends Component{
     </div></Cell>
     </Row>
     </Grid>
+    <br />
+  <RadioButtonGroup
+     name="userroles"
+     className="RadioButtonGroup"
+     defaultSelected="student"
+     onChange={this.props.handleRadioButtonChange}
+   >
+    <RadioButton value="student" label="Student" className="RadioButton" />
+    <RadioButton value="teacher" label="Teacher" className="RadioButton" />
+  </RadioButtonGroup>
     </div>
     )
   }

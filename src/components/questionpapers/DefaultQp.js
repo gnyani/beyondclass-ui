@@ -11,6 +11,7 @@ import '../../styles/student-adda.css';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import Lightbox from 'react-image-lightbox';
 import styled from 'styled-components'
+import UnauthorizedPage from '../UnauthorizedPage.js'
 var properties = require('../properties.json');
 
 const StayVisible = styled.div`
@@ -141,6 +142,8 @@ image(){
     const images = [
       this.state.response
     ]
+    if(this.props.userrole==="student")
+    {
     return(
     <StayVisible
     {...this.props}
@@ -198,6 +201,10 @@ image(){
     </StayVisible>
     )
   }
+else{
+  return(<UnauthorizedPage />)
+}
+}
 }
 
 export default DefaultQp;

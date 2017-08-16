@@ -2,7 +2,7 @@ import React from 'react';
 import HorizontalTimelineContent from './HorizontalTimelineContent';
 import GameInfo from './dates.js';
 import styled from 'styled-components';
-
+import UnauthorizedPage from '../UnauthorizedPage.js'
 const StayVisible = styled.div`
   position: relative;
   margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
@@ -24,6 +24,8 @@ class TimeLine extends React.Component {
   }
 
   render() {
+  if(this.props.userrole==="student")
+  {
     return (
       <StayVisible
         {...this.props}
@@ -32,7 +34,10 @@ class TimeLine extends React.Component {
         content={this.data} loggedinuser={this.props.loggedinuser}/>
     </StayVisible>
     );
+  }else{
+    return(<UnauthorizedPage />)
   }
+}
 }
 
 export default TimeLine

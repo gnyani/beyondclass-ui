@@ -2,25 +2,23 @@ import React, { Component } from 'react';
 import {Body} from './main.js'
 import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
-import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
-import {Link} from 'react-router-dom';
 import {NavAppBar} from '../styledcomponents/NavAppBar.js'
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
-import {lightBlue100,blue500, red500} from 'material-ui/styles/colors';
 import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
+import {lightBlue100,blue500} from 'material-ui/styles/colors';
 import '../styles/student-adda.css';
+import CircularProgress from 'material-ui/CircularProgress';
 import PropTypes from 'prop-types';
-import {AddImageIcon,ImageCollectionsBookmark,ActionBook,AvLibraryBooks,AvNote,ContentArchive,ActionAssignment,
-       FileFileUpload,ActionViewList,ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool} from '../styledcomponents/SvgIcons.js'
+import {AddImageIcon} from '../styledcomponents/SvgIcons.js'
 import AvatarEditor from 'react-avatar-editor';
 import Dialog from 'material-ui/Dialog';
 import Slider from 'material-ui/Slider';
+import StudentDashboard from './dashboard/studentdashboard.js'
+import TeacherDashboard from './dashboard/teacherdashboard.js'
+var properties = require('./properties.json')
+//import UnauthorizedPage from './UnauthorizedPage.js'
 
-const iconStyles = {
-  marginRight: 24,
-};
 
 class DashboardLaoyout extends Component{
 
@@ -37,27 +35,21 @@ class DashboardLaoyout extends Component{
       imagePreviewUrl: '',
       imageDialog: false,
       secondSlider:1,
-      selected: ''
+      userrole: '',
+      loggedinuseremail: '',
+      classes: [],
+      year: '',
+      section: '',
      }
      this.handleLogout = this.handleLogout.bind(this);
      this.handleDialogclose = this.handleDialogclose.bind(this)
      this._handleImageChange = this._handleImageChange.bind(this)
      this.saveProPictoDB = this.saveProPictoDB.bind(this)
      this.uploadProPic = this.uploadProPic.bind(this)
-     this.getProPicUrl = this.getProPicUrl.bind(this)
      this.postTimeline = this.postTimeline.bind(this)
-     this.isActive = this.isActive.bind(this)
+     this.dashboard = this.dashboard.bind(this)
 }
 
-selected(value){
-  this.setState({
-    selected: value
-  })
-}
-
-isActive(value){
-  return (value === this.state.selected)?'Active':'';
-}
 
 _handleImageChange(e) {
   e.preventDefault();
@@ -89,7 +81,7 @@ if (this.editor) {
 }
 
 uploadProPic(){
-  fetch('http://localhost:8080/user/update/profilepic', {
+  fetch('http://'+properties.getHostName+':8080/user/update/profilepic', {
          method: 'POST',
          headers: {
                'mode': 'cors',
@@ -115,10 +107,11 @@ uploadProPic(){
          imageDialog: false,
          file: '',
        },function OnstateChange(){
-         this.getProPicUrl()
+         this.postTimeline()
+         this.componentWillMount()
        })
    // posting this change to timeline
-      this.postTimeline()
+
       //  var location = this.props.location
       //  this.context.router.history.push(location)
       //This needs to be fixed reloading the entire page is not a good Idea.
@@ -126,7 +119,7 @@ uploadProPic(){
      })
 }
 postTimeline(){
-  fetch('http://localhost:8080/users/timeline/upload', {
+  fetch('http://'+properties.getHostName+':8080/users/timeline/upload', {
          method: 'POST',
          headers: {
                'mode': 'cors',
@@ -157,7 +150,7 @@ handleDialogclose(){
 }
 
 handleLogout(){
-  fetch('http://localhost:8080/user/logout', {
+  fetch('http://'+properties.getHostName+':8080/user/logout', {
            credentials: 'include',
            method: 'GET'
         }).then(response => {
@@ -174,37 +167,36 @@ handleLogout(){
           }
         })
   }
-
-getProPicUrl(){
-  fetch('http://localhost:8080/user/propic', {
-           credentials: 'include',
-           method: 'GET'
-           }).then(response => {
-           return response.text()
-           }).then(response => {
-           this.setState({
-           propiclink : response,
-           isLoaded : 'true'
-         })
-      })
+dashboard(){
+  console.log("classes are" +this.state.classes)
+  if(this.state.userrole === 'student'){
+    return(<StudentDashboard width={this.state.width}/>)
+  }else if(this.state.userrole === 'teacher'){
+    return(<TeacherDashboard width={this.state.width} classes={this.state.classes}/>)
+  }
 }
 
 componentWillMount(){
 
-  fetch('http://localhost:8080/user/loggedin', {
+  fetch('http://'+properties.getHostName+':8080/user/loggedin', {
            credentials: 'include',
            method: 'GET'
         }).then(response => {
-          return response.text()
+          return response.json()
         }).then(response => {
           this.setState({
-              username: response
+              username: response.firstName,
+              loggedinuseremail : response.email,
+              userrole: response.userrole,
+              propiclink: response.normalpicUrl || response.googlepicUrl,
+              year: response.year,
+              section: response.section,
+              classes: response.classes,
           })
         }).catch(response => {
         notify.show("Please login before viewing dashboard");
         this.context.router.history.push('/');
        });
-     this.getProPicUrl()
 }
 handleToggle = () => {
   this.setState((prevState,props) =>{
@@ -231,6 +223,11 @@ render(){
       primary={true}
       onTouchTap={this.handleDialogclose}
     />]
+if(this.state.userrole === ''){
+return(<CircularProgress size={80} thickness={7} style={{marginLeft:"48%"}}/> )
+}
+else
+{
   return(
 <div>
     <NavAppBar
@@ -251,117 +248,7 @@ render(){
     <FlatButton label="Update Profile" hoverColor ={lightBlue100} fullWidth={true} icon={<AddImageIcon  color={blue500}/>}/>
     <br />
 <Divider />
-<div className={this.isActive('announcements')}>
-  <Link to='/anouncements'  width={this.state.width} style={{ textDecoration: 'none' }} onClick={this.selected.bind(this,"announcements")} >
-    <MenuItem
-    primaryText={'AnouncementsBoard'}
-    leftIcon={<ActionSpeakerNotes color={blue500}/>}
-    />
-  </Link></div>
-<Divider/>
-<div className={this.isActive('timeline')}>
-    <Link to='/timeline' width={this.state.width}  style={{ textDecoration: 'none' }} onClick={this.selected.bind(this,"timeline")}>
-      <MenuItem
-      primaryText={'Timeline'}
-      leftIcon={<ActionTimeline color={red500}/>}
-      />
-    </Link>
-    </div>
-<Divider/>
-<div  className={this.isActive('questionpaper')}>
-    <MenuItem
-    primaryText={'QuestionPaper'}
-    rightIcon={<ArrowDropRight />}
-    leftIcon={<ActionBook color={red500}/>}
-    menuItems={[<Link to='/questionpaper/default' width={this.state.width} onClick={this.selected.bind(this,"questionpaper")}>
-                <MenuItem primaryText="Current Sem" leftIcon={<AvNote style={iconStyles} color={red500}/>}
-                />
-                </Link>,
-                <Link to='/questionpaper/other' width={this.state.width} onClick={this.selected.bind(this,"questionpaper")}>
-                <MenuItem primaryText="Other Papers" leftIcon={
-                  <ContentArchive style={iconStyles} color={blue500}/>
-                  }/>
-                </Link>
-                ]}
-     />
-     </div>
-<Divider/>
-<div  className={this.isActive('syllabus')}>
-    <MenuItem primaryText={'Syllabus'}
-      leftIcon={<AvLibraryBooks color={blue500} />}
-      rightIcon={<ArrowDropRight />}
-      menuItems={[
-                   <Link to='/syllabus/default' width={this.state.width} onClick={this.selected.bind(this,"syllabus")}>
-                    <MenuItem primaryText="Current Syllabus" leftIcon={<AvNote style={iconStyles} color={red500}/>}
-                    />
-                    </Link>,
-                    <Link to='/syllabus/other' width={this.state.width} onClick={this.selected.bind(this,"syllabus")}>
-                    <MenuItem primaryText="Other Syllabus" leftIcon={
-                      <ContentArchive style={iconStyles} color={blue500}/>
-                      }/>
-                    </Link>
-                  ]}
-    />
-    </div>
-<Divider/>
-<div  className={this.isActive('assignments')}>
-        <MenuItem primaryText={'Assignments'}
-          leftIcon={<ActionAssignment color={red500} />}
-          rightIcon={<ArrowDropRight />}
-          menuItems={[
-                       <Link to='/assignments/upload' width={this.state.width} onClick={this.selected.bind(this,"assignments")}>
-                        <MenuItem primaryText="Upload Assign" leftIcon={<FileFileUpload style={iconStyles} color={red500}/>}
-                        />
-                        </Link>,
-                        <Link to='/assignments/view/list' width={this.state.width} onClick={this.selected.bind(this,"assignments")}>
-                        <MenuItem primaryText="View Assign" leftIcon={
-                          <ActionViewList style={iconStyles} color={blue500}/>
-                          }/>
-                        </Link>
-                      ]}
-        />
-        </div>
-<Divider/>
-<div  className={this.isActive('notes')}>
-        <MenuItem primaryText={'Notes'}
-          leftIcon={<ImageCollectionsBookmark color={blue500} />}
-          rightIcon={<ArrowDropRight />}
-          menuItems={[
-                       <Link to='/notes/upload' width={this.state.width} onClick={this.selected.bind(this,"notes")}>
-                        <MenuItem primaryText="Upload Notes" leftIcon={<FileFileUpload style={iconStyles} color={red500}/>}
-                        />
-                        </Link>,
-                        <Link to='/notes/view/list' width={this.state.width} onClick={this.selected.bind(this,"notes")}>
-                        <MenuItem primaryText="View Notes" leftIcon={
-                          <ActionViewList style={iconStyles} color={blue500}/>
-                          }/>
-                        </Link>
-                      ]}
-        />
-</div>
-<Divider />
-<div className={this.isActive('entertainment')}>
-        <Link to="/entertainment" width={this.state.width} style={{ textDecoration: 'none' }} onClick={this.selected.bind(this,"entertainment")}>
-          <MenuItem primaryText={'Entertainment'}
-            leftIcon={<AvMovie color={blue500} />}
-          />
-        </Link>
-</div>
-<Divider />
-<div  className={this.isActive('coachingcentres')}>
-        <Link to="/coachingcentres" width={this.state.width} style={{ textDecoration: 'none' }} onClick={this.selected.bind(this,"coachingcentres")}>
-          <MenuItem primaryText={'Coaching-Centres'}
-            leftIcon={<SocialSchool color={red500} />}
-          />
-        </Link>
-    </div>
-        <Divider />
-      <div className={this.isActive('UserQuestions')}>    <Link to='/UserQuestions' width={this.state.width} onClick={this.selected.bind(this,"UserQuestions")} >
-            <MenuItem
-            primaryText={'User Questions'}
-            leftIcon={<ActionSpeakerNotes color={blue500}/>}
-            />
-          </Link></div>
+   {this.dashboard()}
 </Drawer>
 <Dialog
       title="Change Your Avatar"
@@ -398,10 +285,14 @@ render(){
 toggle = {this.handleToggle}
 width = {this.state.width}
 open = {this.state.open}
-loggedinuser = {this.state.username}
+userrole = {this.state.userrole}
+loggedinuser = {this.state.loggedinuseremail}
+year = {this.state.year}
+section = {this.state.section}
 />
 </div>
    )
+}
 }
 }
 DashboardLaoyout.contextTypes = {

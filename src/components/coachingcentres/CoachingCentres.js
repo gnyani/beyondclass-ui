@@ -15,6 +15,8 @@ import { Rating } from 'material-ui-rating'
 import {notify} from 'react-notify-toast';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import '../../styles/student-adda.css';
+import UnauthorizedPage from '../UnauthorizedPage.js'
+
 var properties = require('../properties.json');
 
 const StayVisible = styled.div`
@@ -359,8 +361,8 @@ populateData(){
         primary={true}
         onTouchTap={this.handleDialogclose}
       />]
-
-   return (
+if(this.props.userrole==="student")
+{   return (
      <StayVisible
      {...this.props}
      >
@@ -466,8 +468,10 @@ populateData(){
 </div>
      </StayVisible>
    )
-  }
-
+ }else{
+   return(<UnauthorizedPage />)
+ }
+}
 }
 
 export default CoachingCentres

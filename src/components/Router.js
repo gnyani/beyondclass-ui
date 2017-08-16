@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {Switch,Route} from 'react-router-dom'
 import Banner from './Banner.js';
 import DashboardLayout from './DashboardLaoyout.js'
-import Register from './registration/register.js'
+import Register from './registration/register.js';
+import '../styles/student-adda.css'
 class Router extends Component {
   render(){
     return(
@@ -22,6 +23,8 @@ class Router extends Component {
     <Route path='/timeline' component={DashboardLayout} />
     <Route path='/coachingcentres' component={DashboardLayout} />
     <Route path='/UserQuestions' component={DashboardLayout} />
+    <Route path='/teacher/:class' component={DashboardLayout} />
+    <Route path='/teacherstudentspace' component={DashboardLayout} />
   </Switch>
     );
   }
