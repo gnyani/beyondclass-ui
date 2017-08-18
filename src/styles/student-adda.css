@@ -87,3 +87,7 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .NotesUpload .iframe{width:60%;height: 350px;}
 .Unauthorized {margin-top: 5%;text-align: center;text-align: center;font-family: "Chalkduster", fantasy,sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: normal;}
 .Unauthorized .backHome {color: white!important; background-color: #2196F3 !important; border-radius: 1em !important;}
+.userQuestion{text-align: center;}
+.question{color:red;background-color: blue;}
+.answer{color:green;background-color: pink;}
+.NotesUpload .iframe{width:60%;height: 350px;}

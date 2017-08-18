@@ -1,5 +1,5 @@
 import React from 'react';
-import HorizontalTimelineContent from './HorizontalTimelineContent';
+import HorizontalTimelineContent from './userQuestions';
 import GameInfo from './dates.js';
 import styled from 'styled-components';
 
