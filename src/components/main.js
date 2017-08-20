@@ -16,6 +16,7 @@ import CoachingCentres from './coachingcentres/CoachingCentres.js'
 import UserQuestions from './user-questions/TimeLine.js'
 import TeacherComponent from './teacher/TeacherComponent.js'
 import TeacherStudentSpace from './teacherstudent/TeacherStudentSpace.js'
+import Notifications from './notifications/Notifications.js'
 
 export const Body =(props) => {
     return(
@@ -31,12 +32,13 @@ export const Body =(props) => {
     <Route path='/assignments/view/list' render={()=>(<AssignList {...props} /> )} />
     <Route path='/notes/upload' render={()=>(<NotesUpload {...props} /> )} />
     <Route path='/notes/view/list' render={()=>(<NotesList {...props} /> )} />
-    <Route path='/anouncements' render={()=>(<AnouncementsBoard {...props}/>)} />
+    <Route path='/announcements' render={()=>(<AnouncementsBoard {...props}/>)} />
     <Route path='/timeline' render={()=>(<TimeLine {...props}/>)} />
     <Route path='/coachingcentres' render={() =>(<CoachingCentres {...props} />)} />
     <Route path='/UserQuestions' render={() =>(<UserQuestions {...props} />)} />
     <Route path='/teacher/:class' render={({match}) =>(<TeacherComponent {...props} class={match.params.class}/>)} />
     <Route path='/teacherstudentspace' render={() =>(<TeacherStudentSpace {...props} />)} />
+    <Route path='/notifications' render={() => (<Notifications {...props} />)} />
   </Switch>
 </main>
     );

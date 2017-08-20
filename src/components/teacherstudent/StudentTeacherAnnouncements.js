@@ -15,6 +15,9 @@ class StudentTeacherAnnouncements extends Component{
   }
 
   list(buffer){
+    if(this.state.announcements.length === 0)
+    buffer.push(<p className="messageStyle" style={{textAlign:"center"}}>You are all caught up, you don't have any announcements yet</p>)
+    else{
     for (let i=0;i<this.state.announcements.length;i++){
       buffer.push(
                     <Grid key={i} className="announcements">
@@ -32,6 +35,7 @@ class StudentTeacherAnnouncements extends Component{
 
                  )
   }
+}
   return buffer;
   }
 
@@ -66,7 +70,7 @@ class StudentTeacherAnnouncements extends Component{
     var buffer = [];
     return(
       <div className="announcements">
-      <h2 className="heading">Announcements from your teachers</h2>
+      <h2 className="paragraph">Announcements from your teachers</h2>
       <div  className="container page">
          <ul>{this.list(buffer)}</ul>
        </div>
