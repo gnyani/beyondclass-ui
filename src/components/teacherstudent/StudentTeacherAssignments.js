@@ -86,7 +86,6 @@ list(buffer){
       <div className="announcements">
         <p className="paragraph"> Your Assignments List </p>
         <div>
-        <br />
         <Grid>
         <Row is="center">
         {this.list(buffer)}

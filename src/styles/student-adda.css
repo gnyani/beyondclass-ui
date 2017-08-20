@@ -91,3 +91,4 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .question{color:red;background-color: blue;}
 .answer{color:green;background-color: pink;}
 .NotesUpload .iframe{width:60%;height: 350px;}
+.Notifications {width:70%;margin-left:15%;}

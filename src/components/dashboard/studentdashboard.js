@@ -32,7 +32,7 @@ isActive(value){
     return(
       <div>
       <div className={this.isActive('announcements')}>
-        <Link to='/anouncements'  width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"announcements")} >
+        <Link to='/announcements'  width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"announcements")} >
           <MenuItem
           primaryText={'AnouncementsBoard'}
           leftIcon={<ActionSpeakerNotes color={blue500}/>}

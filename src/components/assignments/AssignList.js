@@ -85,7 +85,7 @@ class AssignList extends Component{
  }
  handleChange = (event, index, subject) => this.setState({subject});
   render(){
-if(this.state.userrole==="student")
+if(this.props.userrole === "student")
 {
    return(
 <StayVisible
