@@ -8,6 +8,10 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import CustomAvatar from '../styledcomponents/CustomAvatar.js'
+import Badge from 'material-ui/Badge';
+import IconButton from 'material-ui/IconButton';
+import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
+
 var properties = require('./properties.json')
 
 class Banner extends Component {
@@ -109,6 +113,15 @@ logoutToolbar(){
        <ToolbarTitle text="StudentAdda" style={{color:'#ffffff'}}/>
      </ToolbarGroup>
      <ToolbarGroup>
+     <Badge
+      badgeContent={10}
+      secondary={true}
+      badgeStyle={{top: 18, right: 12}}
+     >
+     <IconButton tooltip="Notifications">
+       <NotificationsIcon />
+     </IconButton>
+   </Badge>
      <RaisedButton  label="Logout" value="logout" primary={true} onTouchTap={this.handleLogout}/>
      </ToolbarGroup>
    </Toolbar>

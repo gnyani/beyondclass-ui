@@ -19,12 +19,13 @@ class Router extends Component {
     <Route path='/assignments/view/list' component={DashboardLayout} />
     <Route path='/notes/upload' component={DashboardLayout} />
     <Route path='/notes/view/list' component={DashboardLayout} />
-    <Route path='/anouncements' component={DashboardLayout} />
+    <Route path='/announcements' component={DashboardLayout} />
     <Route path='/timeline' component={DashboardLayout} />
     <Route path='/coachingcentres' component={DashboardLayout} />
     <Route path='/UserQuestions' component={DashboardLayout} />
     <Route path='/teacher/:class' component={DashboardLayout} />
     <Route path='/teacherstudentspace' component={DashboardLayout} />
+    <Route path='/notifications' component={DashboardLayout} key={new Date().getTime()}/>
   </Switch>
     );
   }

@@ -40,6 +40,7 @@ class DashboardLaoyout extends Component{
       classes: [],
       year: '',
       section: '',
+      notificationsCount: 0,
      }
      this.handleLogout = this.handleLogout.bind(this);
      this.handleDialogclose = this.handleDialogclose.bind(this)
@@ -108,14 +109,12 @@ uploadProPic(){
          file: '',
        },function OnstateChange(){
          this.postTimeline()
-         this.componentWillMount()
        })
    // posting this change to timeline
 
       //  var location = this.props.location
       //  this.context.router.history.push(location)
-      //This needs to be fixed reloading the entire page is not a good Idea.
-       window.location.reload()
+      //This needs to be fixed reloading the entire page is not a good Idea
      })
 }
 postTimeline(){
@@ -140,6 +139,7 @@ postTimeline(){
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
          notify.show("sorry something went wrong","custom",5000,myColor)
        }
+       window.location.reload()
      })
 }
 
@@ -168,7 +168,6 @@ handleLogout(){
         })
   }
 dashboard(){
-  console.log("classes are" +this.state.classes)
   if(this.state.userrole === 'student'){
     return(<StudentDashboard width={this.state.width}/>)
   }else if(this.state.userrole === 'teacher'){
@@ -197,6 +196,18 @@ componentWillMount(){
         notify.show("Please login before viewing dashboard");
         this.context.router.history.push('/');
        });
+
+ fetch('http://'+properties.getHostName+':8080/user/notifications/unread',{
+         credentials: 'include',
+         method: 'GET'
+       }).then(response =>{
+           return response.text()
+       }).then(response =>{
+         this.setState({
+           notificationsCount: response
+         })
+       })
+
 }
 handleToggle = () => {
   this.setState((prevState,props) =>{
@@ -235,6 +246,8 @@ else
      width = {this.state.width}
      open = {this.state.open}
      logout = {this.handleLogout}
+     userrole = {this.state.userrole}
+     notificationsCount = {this.state.notificationsCount}
      />
     <Drawer open={this.state.open} width = {this.state.width}>
     <div className="image-upload UserImageContainer">
@@ -252,7 +265,7 @@ else
 </Drawer>
 <Dialog
       title="Change Your Avatar"
-      modal={false}
+      modal={true}
       actions={actions}
       open={this.state.imageDialog}
       autoScrollBodyContent={true}
@@ -289,6 +302,7 @@ userrole = {this.state.userrole}
 loggedinuser = {this.state.loggedinuseremail}
 year = {this.state.year}
 section = {this.state.section}
+notificationsCount = {this.state.notificationsCount}
 />
 </div>
    )

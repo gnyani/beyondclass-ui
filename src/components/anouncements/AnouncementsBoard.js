@@ -109,8 +109,15 @@ list(buffer){
              )
   }
 else{
-  buffer.push(<li key={i}>
-                <p className="name"> <span className="fontStyle">{this.state.users[i]} </span>: <span className="messageStyle">{this.state.messages[i]}</span> </p></li>
+  buffer.push(<Grid key={i}>
+               <Row is="start">
+               <Cell is="12 tablet-12 phone-12"><div>
+               <li>
+                <p className="name"> <span className="fontStyle">{this.state.users[i]} </span>: <span className="messageStyle">{this.state.messages[i]}</span> </p>
+                </li>
+                </div></Cell>
+                </Row>
+                </Grid>
              )
 }
 }
