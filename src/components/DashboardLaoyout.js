@@ -14,6 +14,7 @@ import {AddImageIcon} from '../styledcomponents/SvgIcons.js'
 import AvatarEditor from 'react-avatar-editor';
 import Dialog from 'material-ui/Dialog';
 import Slider from 'material-ui/Slider';
+import {Link} from 'react-router-dom';
 import StudentDashboard from './dashboard/studentdashboard.js'
 import TeacherDashboard from './dashboard/teacherdashboard.js'
 var properties = require('./properties.json')
@@ -38,9 +39,12 @@ class DashboardLaoyout extends Component{
       userrole: '',
       loggedinuseremail: '',
       classes: [],
-      year: '',
+      year: 0,
       section: '',
       notificationsCount: 0,
+      lastName: '',
+      sem: 0,
+      dob:'',
      }
      this.handleLogout = this.handleLogout.bind(this);
      this.handleDialogclose = this.handleDialogclose.bind(this)
@@ -186,9 +190,12 @@ componentWillMount(){
           this.setState({
               username: response.firstName,
               loggedinuseremail : response.email,
+              lastName: response.lastName,
               userrole: response.userrole,
               propiclink: response.normalpicUrl || response.googlepicUrl,
               year: response.year,
+              sem: response.sem,
+              dob: response.dob,
               section: response.section,
               classes: response.classes,
           })
@@ -258,7 +265,9 @@ else
    </div>
     <br />
     <br />
+    <Link to='/updateprofile'>
     <FlatButton label="Update Profile" hoverColor ={lightBlue100} fullWidth={true} icon={<AddImageIcon  color={blue500}/>}/>
+    </Link>
     <br />
 <Divider />
    {this.dashboard()}
@@ -301,8 +310,12 @@ open = {this.state.open}
 userrole = {this.state.userrole}
 loggedinuser = {this.state.loggedinuseremail}
 year = {this.state.year}
+sem ={this.state.sem}
 section = {this.state.section}
 notificationsCount = {this.state.notificationsCount}
+lastName = {this.state.lastName}
+username={this.state.username}
+dob={this.state.dob}
 />
 </div>
    )

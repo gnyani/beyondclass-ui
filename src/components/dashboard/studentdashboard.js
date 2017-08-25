@@ -1,15 +1,11 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
-import ArrowDropRight from 'material-ui/svg-icons/navigation-arrow-drop-right';
 import {blue500, red500} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import {ImageCollectionsBookmark,ActionBook,AvLibraryBooks,AvNote,ContentArchive,ActionAssignment,
-       FileFileUpload,ActionViewList,ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool,DeveloperBoard} from '../../styledcomponents/SvgIcons.js'
+       ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool,DeveloperBoard} from '../../styledcomponents/SvgIcons.js'
 
- const iconStyles = {
-         marginRight: 24,
-       };
 
 class StudentDashboard extends Component{
 
@@ -57,75 +53,36 @@ isActive(value){
           </div>
       <Divider/>
       <div  className={this.isActive('questionpaper')}>
+      <Link to='/questionpaper' width={this.props.width} onClick={this.onChangeSelected.bind(this,"questionpaper")}>
           <MenuItem
           primaryText={'QuestionPaper'}
-          rightIcon={<ArrowDropRight />}
           leftIcon={<ActionBook color={red500}/>}
-          menuItems={[<Link to='/questionpaper/default' width={this.props.width} onClick={this.onChangeSelected.bind(this,"questionpaper")}>
-                      <MenuItem primaryText="Current Sem" leftIcon={<AvNote style={iconStyles} color={red500}/>}
-                      />
-                      </Link>,
-                      <Link to='/questionpaper/other' width={this.props.width} onClick={this.onChangeSelected.bind(this,"questionpaper")}>
-                      <MenuItem primaryText="Other Papers" leftIcon={
-                        <ContentArchive style={iconStyles} color={blue500}/>
-                        }/>
-                      </Link>
-                      ]}
-           />
-           </div>
+          />
+        </Link>
+      </div>
       <Divider/>
       <div  className={this.isActive('syllabus')}>
+      <Link to='/syllabus' width={this.props.width} onClick={this.onChangeSelected.bind(this,"syllabus")}>
           <MenuItem primaryText={'Syllabus'}
             leftIcon={<AvLibraryBooks color={blue500} />}
-            rightIcon={<ArrowDropRight />}
-            menuItems={[
-                         <Link to='/syllabus/default' width={this.props.width} onClick={this.onChangeSelected.bind(this,"syllabus")}>
-                          <MenuItem primaryText="Current Syllabus" leftIcon={<AvNote style={iconStyles} color={red500}/>}
-                          />
-                          </Link>,
-                          <Link to='/syllabus/other' width={this.props.width} onClick={this.onChangeSelected.bind(this,"syllabus")}>
-                          <MenuItem primaryText="Other Syllabus" leftIcon={
-                            <ContentArchive style={iconStyles} color={blue500}/>
-                            }/>
-                          </Link>
-                        ]}
           />
+          </Link>
           </div>
       <Divider/>
       <div  className={this.isActive('assignments')}>
+      <Link to='/assignments' width={this.props.width} onClick={this.onChangeSelected.bind(this,"assignments")}>
               <MenuItem primaryText={'Assignments'}
                 leftIcon={<ActionAssignment color={red500} />}
-                rightIcon={<ArrowDropRight />}
-                menuItems={[
-                             <Link to='/assignments/upload' width={this.props.width} onClick={this.onChangeSelected.bind(this,"assignments")}>
-                              <MenuItem primaryText="Upload Assign" leftIcon={<FileFileUpload style={iconStyles} color={red500}/>}
-                              />
-                              </Link>,
-                              <Link to='/assignments/view/list' width={this.props.width} onClick={this.onChangeSelected.bind(this,"assignments")}>
-                              <MenuItem primaryText="View Assign" leftIcon={
-                                <ActionViewList style={iconStyles} color={blue500}/>
-                                }/>
-                              </Link>
-                            ]}
               />
+          </Link>
               </div>
       <Divider/>
       <div  className={this.isActive('notes')}>
+      <Link to='/notes' width={this.props.width} onClick={this.onChangeSelected.bind(this,"notes")}>
               <MenuItem primaryText={'Notes'}
                 leftIcon={<ImageCollectionsBookmark color={blue500} />}
-                rightIcon={<ArrowDropRight />}
-                menuItems={[
-                             <Link to='/notes/upload' width={this.props.width} onClick={this.onChangeSelected.bind(this,"notes")}>
-                              <MenuItem primaryText="Upload Notes" leftIcon={<FileFileUpload style={iconStyles} color={red500}/>}
-                              />
-                              </Link>,
-                              <Link to='/notes/view/list' width={this.props.width} onClick={this.onChangeSelected.bind(this,"notes")}>
-                              <MenuItem primaryText="View Notes" leftIcon={
-                                <ActionViewList style={iconStyles} color={blue500}/>
-                                }/>
-                              </Link>
-                            ]}
               />
+        </Link>
       </div>
       <Divider />
       <div className={this.isActive('entertainment')}>

@@ -38,9 +38,9 @@ class AssignUpload extends Component{
 
   _handleSubmit(e) {
     e.preventDefault();
-    if(this.state.value === 1)
+    if(this.state.value === 1 || this.state.file === '')
     {
-    notify.show("please select a subject")
+    notify.show("please select a subject and choose a file","error")
     }
     else{
       this.setState({ buttonDisabled: true });

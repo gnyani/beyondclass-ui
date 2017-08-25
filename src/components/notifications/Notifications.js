@@ -16,6 +16,7 @@ import {grey400} from 'material-ui/styles/colors';
 import PropTypes from 'prop-types';
 import {Grid,Row,Cell} from 'react-inline-grid';
 import {notify} from 'react-notify-toast';
+import CircularProgress from 'material-ui/CircularProgress'
 
 var properties = require('../properties.json')
 
@@ -107,7 +108,7 @@ handleNotificationDelete(index){
 }
 list(buffer){
   if(this.state.notificationMessages.length === 0)
-  buffer.push(<div ><NotificationsNone style={{marginLeft:"27%",height:'300px',width:'45%'}}/><p className="announcements messageStyle">You are all caught up </p></div>)
+  buffer.push(<div key={1}><NotificationsNone style={{marginLeft:"27%",height:'300px',width:'45%'}}/><p className="announcements messageStyle">You are all caught up </p></div>)
   else{
   for(let index=0;index<this.state.notificationMessages.length;index++)
   {
@@ -146,9 +147,12 @@ list(buffer){
   return buffer;
 }
   render(){
-  var buffer = []
-
-    if(this.props.userrole==="student")
+   var buffer = []
+   if(this.state.notificationMessages[0] === undefined)
+   {
+   return(<CircularProgress size={80} thickness={7} style={{marginLeft:"48%"}}/> )
+   }
+    else if(this.props.userrole==="student")
     {
     return(
       <StayVisible

@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
 import { Grid, Row, Cell } from 'react-inline-grid';
+import Phone from 'react-phone-number-input';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import '../../styles/student-adda.css';
 
@@ -29,6 +30,11 @@ class PersonalInfo extends Component{
     </div></Cell>
     <Cell is="6 tablet-8"><div>
     <TextField  floatingLabelText="Mobile"  onChange={this.props.handleMobileChange}/>
+    <Phone
+	   country="IN"
+   	 placeholder="Ваш телефон"
+	   value={ this.props.mobilenumber}
+	   onChange={ value => this.props.handleMobileChange({ value })}/>
     </div></Cell>
     </Row>
     </Grid>

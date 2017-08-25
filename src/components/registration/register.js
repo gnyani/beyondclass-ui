@@ -11,6 +11,7 @@ import '../../styles/student-adda.css';
 import Slider from 'react-slick';
 import "../../../node_modules/slick-carousel/slick/slick.css";
 import "../../../node_modules/slick-carousel/slick/slick-theme.css";
+
 var properties = require('../properties.json');
 
 class Register extends Component{
@@ -31,7 +32,7 @@ class Register extends Component{
         rollno : ' ',
         userrole: "student",
         hostel : 'No',
-        mobilenumber : ' ',
+        mobilenumber : '',
         controlledDate: null,
         currentSlide: 0,
         Values: [],
@@ -42,6 +43,7 @@ class Register extends Component{
       this.previous = this.previous.bind(this)
       this.previousButton = this.previousButton.bind(this);
       this.nextButton = this.nextButton.bind(this);
+      this.handleMobileChange = this.handleMobileChange.bind(this)
   }
 
   componentWillMount(){
@@ -143,7 +145,7 @@ class Register extends Component{
  handleRadioButtonChange =(event,newValue) =>{
   this.setState({ userrole : newValue })
  }
- handleMobileChange =(event, newValue) => {
+ handleMobileChange(newValue){
    this.setState({
     mobilenumber : newValue,
    })
@@ -253,7 +255,7 @@ return buffer;
             this.setState({ currentSlide: currentSlide  })
           }}>
         <div className="intro"><Intro propiclink={this.state.propiclink} userName={this.state.username} /></div>
-        <div><PersonalInfo firstName={this.state.firstName} lastName={this.state.lastName}
+        <div><PersonalInfo firstName={this.state.firstName} lastName={this.state.lastName} mobilenumber={this.state.mobilenumber}
              handleMobileChange={this.handleMobileChange} handleDateChange={this.handleDateChange}
              handleDateDismiss={this.handleDateDismiss} controlledDate={this.state.controlledDate}
              handleRadioButtonChange={this.handleRadioButtonChange}/>

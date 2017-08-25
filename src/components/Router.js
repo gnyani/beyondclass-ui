@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Switch,Route} from 'react-router-dom'
 import Banner from './Banner.js';
+import HomePage from './HomePage.js'
 import DashboardLayout from './DashboardLaoyout.js'
 import Register from './registration/register.js';
 import '../styles/student-adda.css'
@@ -11,20 +12,17 @@ class Router extends Component {
     <Route exact path='/' component={Banner}/>
     <Route path='/register' component={Register}/>
     <Route path='/dashboard' component={DashboardLayout}/>
-    <Route path='/questionpaper/default' component={DashboardLayout} />
-    <Route path='/questionpaper/other' component={DashboardLayout} />
-    <Route path='/syllabus/default' component={DashboardLayout} />
-    <Route path='/syllabus/other' component={DashboardLayout} />
-    <Route path='/assignments/upload' component={DashboardLayout} />
-    <Route path='/assignments/view/list' component={DashboardLayout} />
-    <Route path='/notes/upload' component={DashboardLayout} />
-    <Route path='/notes/view/list' component={DashboardLayout} />
+    <Route path='/questionpaper' component={DashboardLayout} />
+    <Route path='/syllabus' component={DashboardLayout} />
+    <Route path='/assignments' component={DashboardLayout} />
+    <Route path='/notes' component={DashboardLayout} />
     <Route path='/announcements' component={DashboardLayout} />
     <Route path='/timeline' component={DashboardLayout} />
     <Route path='/coachingcentres' component={DashboardLayout} />
     <Route path='/UserQuestions' component={DashboardLayout} />
     <Route path='/teacher/:class' component={DashboardLayout} />
     <Route path='/teacherstudentspace' component={DashboardLayout} />
+    <Route path='/updateprofile' component={DashboardLayout} />
     <Route path='/notifications' component={DashboardLayout} key={new Date().getTime()}/>
   </Switch>
     );
