@@ -115,11 +115,11 @@ if(this.props.userrole === "student")
    <Grid>
    <Row is="center">
    {this.state.links.map((src, index) => (
-     <Cell is="7 tablet-7"><div>
+     <Cell is="7 tablet-7" key={index}><div>
          <Card style={{borderRadius:"2em"}}>
            <CardHeader
              title="Uploaded By"
-             subtitle={src.split('-').pop()}
+             subtitle={src.split('-')[7]}
            />
            <CardMedia>
              <iframe  title="assignments" src={src} className="iframe"/>

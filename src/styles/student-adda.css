@@ -26,7 +26,7 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .input{ float: left !important;margin-left: 10%;width: 65% !important;border: 0px !important;padding: 5px 0px !important;margin-bottom: 20px !important;}
 .AnnounceButton{ box-shadow: 1px 2px 8px 0px black;margin-right: 3% !important; border-radius: 1em !important;
                  background-color: rgb(162,35,142) !important; color: rgb(255,255,255) !important;}
-.vertical-scroll{height:97vh;overflow-y: auto; width: 100%;overflow-x: hidden;}
+.vertical-scroll{height:101vh;overflow-y: auto; width: 100%;overflow-x: hidden;}
 ::-webkit-scrollbar { width: 0.4em;border-radius: 0.4em;}
 ::-webkit-scrollbar-thumb {background-color: darkgrey;border-radius: 0.5em; outline: 0.1em solid slategrey;}
 .QuestionPapers .image{width: 100%;height: 50vh}
@@ -88,3 +88,8 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .Unauthorized {margin-top: 5%;text-align: center;text-align: center;font-family: "Chalkduster", fantasy,sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: normal;}
 .Unauthorized .backHome {color: white!important; background-color: #2196F3 !important; border-radius: 1em !important;}
 .Notifications {width:70%;margin-left:15%;}
+.HomePage {background: url("../styledcomponents/images/bgimage.jpg")no-repeat center center fixed;  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;}
+.UpdateProfile .button {margin-left: 40% !important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
