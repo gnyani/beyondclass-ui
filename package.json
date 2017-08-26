@@ -19,6 +19,7 @@
     "react-inline-grid": "^0.5.3",
     "react-loading": "^0.1.2",
     "react-notify-toast": "^0.3.0",
+    "react-phone-number-input": "^0.12.7",
     "react-router-dom": "^4.1.1",
     "react-slick": "^0.14.11",
     "react-spinner": "^0.2.7",

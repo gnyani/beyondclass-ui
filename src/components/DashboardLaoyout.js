@@ -258,6 +258,7 @@ else
      />
     <Drawer open={this.state.open} width = {this.state.width}>
     <div className="image-upload UserImageContainer">
+    <div></div>
     <label htmlFor="file-input">
       <img src={this.state.propiclink}  alt="loading" className="ProfilePic"/>
     </label>
