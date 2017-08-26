@@ -183,7 +183,7 @@ image(){
         </Row>
        </Grid>
        </div>
-<Divider/>
+       <Divider/>
         <br /> <br />
         <Grid>
         <Row is="center">

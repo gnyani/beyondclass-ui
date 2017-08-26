@@ -4,6 +4,7 @@ body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic
                font-size: 2em;letter-spacing: 0.07em;color: rgb(162,35,142)}
 body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 0px rgb(95, 87, 87);border-radius: 1.5em}
 .UserImageContainer .ProfilePic{width: 40%;height: 40% ;color: rgb(33, 150, 243);margin-top: 15%;margin-left: 27%;border-radius: 50%;}
+.UserImageContainer .ProfilePic :hover{width: 40%;height: 40% ;color: rgb(33, 150, 243);margin-top: 15%;margin-left: 27%;border-radius: 50%;}
 .image-upload > input{    display: none;}
 .image-upload img{cursor: pointer;}
 .announcements{ font-size: 20px;text-align: center;}
@@ -88,12 +89,11 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .Unauthorized {margin-top: 5%;text-align: center;text-align: center;font-family: "Chalkduster", fantasy,sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: normal;}
 .Unauthorized .backHome {color: white!important; background-color: #2196F3 !important; border-radius: 1em !important;}
 .userQuestion{text-align: center;}
-.question{color:red;background-color: blue;}
-.answer{color:green;background-color: pink;}
 .NotesUpload .iframe{width:60%;height: 350px;}
 .Notifications {width:70%;margin-left:15%;}
 .HomePage {background: url("../styledcomponents/images/bgimage.jpg")no-repeat center center fixed;  -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;}
+.question{font-weight: bolder;}
 .UpdateProfile .button {margin-left: 40% !important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
