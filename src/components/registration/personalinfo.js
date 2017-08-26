@@ -30,7 +30,7 @@ class PersonalInfo extends Component{
     <Grid>
     <Row is="start">
     <Cell is="6 tablet-8"><div>
-    <DatePicker floatingLabelText="Date of Birth"  value={this.props.controlledDate} onChange={this.props.handleDateChange} onDismiss={this.props.handleDateDismiss}/>
+    <DatePicker floatingLabelText="Date of Birth" hintText="Date of Birth" openToYearSelection={true} value={this.props.controlledDate} onChange={this.props.handleDateChange} onDismiss={this.props.handleDateDismiss}/>
     </div></Cell>
     <Cell is="middle 5 tablet-8"><div>
     <Phone
