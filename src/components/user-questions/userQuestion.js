@@ -42,6 +42,8 @@ class Hello extends React.Component {
                 avatar={this.state.users[i].normalpicUrl||this.state.users[i].googlepicUrl}
                 name={this.state.users[i].firstName}
                 date={this.state.dates[i]}
+                questionId={this.state.QuestionIds[i]}
+                component={this.componentWillMount}
                  key={new Date()}/>
         </Cell>
       )
@@ -70,7 +72,7 @@ class Hello extends React.Component {
                newanswers.push(response[i].answer)
                newusers.push(response[i].op)
                newuseremails.push(response[i].op.email)
-               newQuestionIds.push(response[i].questionId)
+               newQuestionIds.push(response[i].questionPaperId)
             }
              this.setState({
                dates: newDates,
@@ -91,6 +93,8 @@ class Hello extends React.Component {
        buttonDisabled: true
      })
      var trimmedQuestion = this.state.question.replace(/\s/g,'')
+     var answersList = [];
+     answersList.push(this.state.answer)
      if(trimmedQuestion===''){
       notify.show("Question catnnot be null","error");
      }else{
@@ -103,7 +107,7 @@ class Hello extends React.Component {
          credentials: 'include',
          body: JSON.stringify({
            question: this.state.question,
-           answer: this.state.answer
+           answer: answersList
         })
        }).then(response => {
          if(response.status === 200)

@@ -5,6 +5,9 @@ import Toggle from 'material-ui/Toggle';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
+import {notify} from 'react-notify-toast';
+var properties = require('../properties.json');
+
 
 export default class QuestionCard extends React.Component {
 
@@ -15,8 +18,65 @@ export default class QuestionCard extends React.Component {
       question: props.question,
       avatar: props.avatar,
       firstName:props.name,
+      questionId:props.questionId,
+      component: props.component,
       open: false
     };
+    this.addAnswer = this.addAnswer.bind(this);
+    this.handleAnswerChange = this.handleAnswerChange.bind(this);
+    this.handleQuestionChange = this.handleQuestionChange.bind(this);
+  }
+  handleQuestionChange(){
+    notify.show("Question catnnot be changed","error");
+  }
+  addAnswer(){
+     this.setState({
+       buttonDisabled: true
+     })
+     var detailsMap = [];
+     detailsMap.push(this.state.questionId);
+     detailsMap.push(this.state.answer);
+     var trimmedQuestion = this.state.question.replace(/\s/g,'')
+     if(trimmedQuestion===''){
+      notify.show("Question catnnot be null","error");
+     }else{
+    fetch('http://'+properties.getHostName+':8080/user/questions/addAnswer', {
+           method: 'POST',
+           headers: {
+                 'mode': 'cors',
+                 'Content-Type': 'application/json'
+             },
+         credentials: 'include',
+         body:
+         JSON.stringify({
+          detailsMap
+        })
+       }).then(response => {
+         if(response.status === 200)
+         {
+           this.setState({
+              buttonDisabled: false,
+              question:'',
+              answer:''
+            })
+            return response.text();
+         }
+         else{
+           let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
+           notify.show("sorry something went wrong","custom",5000,myColor)
+         }
+       }).then(response => {
+         this.setState({
+           response : response,
+           number : 1,
+           message: '',
+         })
+         notify.show("Question uploaded successfully","success")
+       })}
+  }
+
+  handleAnswerChange(e){
+    this.setState({answer:e.target.value});
   }
 
   handleExpandChange = (expanded) => {
@@ -31,6 +91,14 @@ export default class QuestionCard extends React.Component {
     this.setState({expanded: true});
   };
 
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleClose = () => {
+    this.setState({open: false});
+  };
+
   handleReduce = () => {
     this.setState({expanded: false,
       open:true
@@ -38,17 +106,27 @@ export default class QuestionCard extends React.Component {
   };
 
   render() {
+    var i=0;
+    var answers =[];
+    for (i=0;i<this.state.answer.length;i++){
+      answers.push(
+        <CardText expandable={true}>
+        <p>{this.state.answer[i]}</p>
+        </CardText>
+      )
+    }
     const actions = [
       <FlatButton
         label="Cancel"
         primary={true}
-        onClick={this.handleSubmit}
+        onClick={this.handleClose}
       />,
       <FlatButton
         label="Submit"
         primary={true}
         keyboardFocused={true}
-        onClick={()=>{this.handleSubmit();
+        onClick={()=>{this.addAnswer();
+          this.handleClose();
         }}
       />,
     ];
@@ -64,9 +142,7 @@ export default class QuestionCard extends React.Component {
         <CardText>
         <p onClick={this.handleExpand} className="question">{this.state.question}?</p>
         </CardText>
-        <CardText expandable={true}>
-        <p>{this.state.answer}</p>
-        </CardText>
+        {answers}
         <CardActions>
           <FlatButton label="Add Answer" onClick={this.handleReduce} />
           <Dialog
@@ -86,7 +162,8 @@ export default class QuestionCard extends React.Component {
                    floatingLabelText="QUESTION"
                    multiLine={true}
                    rows={3}
-                   onChange={this.props.questionChange}
+                   onChange={this.questionChange}
+                   value={this.state.question}
                  />
                </Cell>
              </Row>
@@ -100,7 +177,7 @@ export default class QuestionCard extends React.Component {
                     floatingLabelText="ANSWER"
                     multiLine={true}
                     rows={3}
-                    onChange={this.props.answerChange}
+                    onChange={this.handleAnswerChange}
                   />
                 </Cell>
               </Row>
