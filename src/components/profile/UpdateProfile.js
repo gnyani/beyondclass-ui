@@ -184,7 +184,7 @@ updateProfile(){
       <Grid>
       <Row is="center">
       <Cell is="3 tablet-3 phone-3"><div>
-      <DatePicker hintText="Date of Birth" disabled={this.state.dobDisabled} openToYearSelection={true} defaultDate={new Date(this.state.controlledDate)}
+      <DatePicker floatingLabelText="Date of Birth" hintText="Date of Birth" disabled={this.state.dobDisabled} openToYearSelection={true} defaultDate={new Date(this.state.controlledDate)}
       onChange={this.handleDateChange}  onDismiss={this.handleDateDismiss}/>
       </div></Cell>
       <Cell is ="bottom 1 phone-1 tablet-1"><div>

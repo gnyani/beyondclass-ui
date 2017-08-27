@@ -42,7 +42,6 @@ export default class NewQuestionDialogue extends React.Component {
       <FlatButton
         label="Submit"
         primary={true}
-        keyboardFocused={true}
         onClick={()=>{this.props.handleSubmit();
         this.handleClose();}}
       />,
