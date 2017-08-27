@@ -4,6 +4,10 @@ import DatePicker from 'material-ui/DatePicker';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import Phone from 'react-phone-number-input';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+//for react-phone-number-input
+import 'react-phone-number-input/rrui.css'
+import  'react-phone-number-input/style.css'
+
 import '../../styles/student-adda.css';
 
 
@@ -28,13 +32,14 @@ class PersonalInfo extends Component{
     <Cell is="6 tablet-8"><div>
     <DatePicker floatingLabelText="Date of Birth"  value={this.props.controlledDate} onChange={this.props.handleDateChange} onDismiss={this.props.handleDateDismiss}/>
     </div></Cell>
-    <Cell is="6 tablet-8"><div>
-    <TextField  floatingLabelText="Mobile"  onChange={this.props.handleMobileChange}/>
+    <Cell is="middle 5 tablet-8"><div>
     <Phone
-	   country="IN"
-   	 placeholder="Ваш телефон"
-	   value={ this.props.mobilenumber}
-	   onChange={ value => this.props.handleMobileChange({ value })}/>
+     country="IN"
+     placeholder="Enter phone number"
+     value={ this.props.mobilenumber }
+     onChange={ this.props.handleMobileChange }
+     style={{marginTop:'7%'}}
+     />
     </div></Cell>
     </Row>
     </Grid>

@@ -37,6 +37,7 @@ class Notifications extends Component {
       notificationPictureUrls: [],
       notificationType: [],
       createdDates: [],
+      isDataLoaded: false,
     }
     this.handleNotificationRead = this.handleNotificationRead.bind(this)
   }
@@ -69,7 +70,8 @@ class Notifications extends Component {
               notificationMessages: newnotificationMessages,
               notificationPictureUrls: newnotificationPictureUrls,
               notificationType: newnotificationType,
-              createdDates: newcreatedDates
+              createdDates: newcreatedDates,
+              isDataLoaded: true
             })
           })
   }
@@ -107,11 +109,14 @@ handleNotificationDelete(index){
       })
 }
 list(buffer){
-  if(this.state.notificationMessages.length === 0)
+  if(!this.state.isDataLoaded)
+  buffer.push(<CircularProgress width={40} style={{marginTop:"45%"}}/>)
+  else if(this.state.notificationMessages.length === 0)
   buffer.push(<div key={1}><NotificationsNone style={{marginLeft:"27%",height:'300px',width:'45%'}}/><p className="announcements messageStyle">You are all caught up </p></div>)
   else{
   for(let index=0;index<this.state.notificationMessages.length;index++)
   {
+    var date= new Date(this.state.createdDates[index])
   buffer.push(<div key={index}>
     <Grid>
     <Row is="center">
@@ -120,7 +125,7 @@ list(buffer){
       leftAvatar={<Avatar src={this.state.notificationPictureUrls[index]} />}
       primaryText={this.state.notificationMessages[index]}
       onTouchTap={this.handleRoute.bind(this,this.state.notificationType[index],index)}
-      secondaryText={<p>On {new Date(this.state.createdDates[index]).toDateString()} at {new Date(this.state.createdDates[index]).getUTCHours()}hrs</p>}
+      secondaryText={<p>{date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}</p>}
     />
     <Divider inset={true}/>
     </div></Cell>
@@ -148,11 +153,7 @@ list(buffer){
 }
   render(){
    var buffer = []
-   if(this.state.notificationMessages[0] === undefined)
-   {
-   return(<CircularProgress size={80} thickness={7} style={{marginLeft:"48%"}}/> )
-   }
-    else if(this.props.userrole==="student")
+     if(this.props.userrole==="student")
     {
     return(
       <StayVisible

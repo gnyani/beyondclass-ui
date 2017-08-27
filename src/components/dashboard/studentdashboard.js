@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import {blue500, red500} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
-import {ImageCollectionsBookmark,ActionBook,AvLibraryBooks,AvNote,ContentArchive,ActionAssignment,
+import {ImageCollectionsBookmark,ActionBook,AvLibraryBooks,ActionAssignment,
        ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool,DeveloperBoard} from '../../styledcomponents/SvgIcons.js'
 
 
@@ -53,7 +53,7 @@ isActive(value){
           </div>
       <Divider/>
       <div  className={this.isActive('questionpaper')}>
-      <Link to='/questionpaper' width={this.props.width} onClick={this.onChangeSelected.bind(this,"questionpaper")}>
+      <Link to='/questionpaper' width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"questionpaper")}>
           <MenuItem
           primaryText={'QuestionPaper'}
           leftIcon={<ActionBook color={red500}/>}
@@ -62,7 +62,7 @@ isActive(value){
       </div>
       <Divider/>
       <div  className={this.isActive('syllabus')}>
-      <Link to='/syllabus' width={this.props.width} onClick={this.onChangeSelected.bind(this,"syllabus")}>
+      <Link to='/syllabus' width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"syllabus")}>
           <MenuItem primaryText={'Syllabus'}
             leftIcon={<AvLibraryBooks color={blue500} />}
           />
@@ -70,7 +70,7 @@ isActive(value){
           </div>
       <Divider/>
       <div  className={this.isActive('assignments')}>
-      <Link to='/assignments' width={this.props.width} onClick={this.onChangeSelected.bind(this,"assignments")}>
+      <Link to='/assignments' width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"assignments")}>
               <MenuItem primaryText={'Assignments'}
                 leftIcon={<ActionAssignment color={red500} />}
               />
@@ -78,7 +78,7 @@ isActive(value){
               </div>
       <Divider/>
       <div  className={this.isActive('notes')}>
-      <Link to='/notes' width={this.props.width} onClick={this.onChangeSelected.bind(this,"notes")}>
+      <Link to='/notes' width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"notes")}>
               <MenuItem primaryText={'Notes'}
                 leftIcon={<ImageCollectionsBookmark color={blue500} />}
               />
@@ -101,7 +101,8 @@ isActive(value){
               </Link>
           </div>
               <Divider />
-            <div className={this.isActive('UserQuestions')}>    <Link to='/UserQuestions' width={this.props.width} onClick={this.onChangeSelected.bind(this,"UserQuestions")} >
+            <div className={this.isActive('UserQuestions')}>
+            <Link to='/UserQuestions' width={this.props.width} style={{ textDecoration: 'none' }}  onClick={this.onChangeSelected.bind(this,"UserQuestions")} >
                   <MenuItem
                   primaryText={'User Questions'}
                   leftIcon={<ActionSpeakerNotes color={blue500}/>}

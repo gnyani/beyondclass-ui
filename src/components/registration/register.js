@@ -4,9 +4,12 @@ import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import Intro from './intro.js';
+import Dialog from 'material-ui/Dialog'
+import TextField from 'material-ui/TextField'
 import PersonalInfo from './personalinfo.js';
 import ClassDetails from './classdetails.js'
 import {NavigationArrowForward,NavigationArrowBack} from '../../styledcomponents/SvgIcons.js'
+import {isValidPhoneNumber} from 'react-phone-number-input'
 import '../../styles/student-adda.css';
 import Slider from 'react-slick';
 import "../../../node_modules/slick-carousel/slick/slick.css";
@@ -36,6 +39,9 @@ class Register extends Component{
         controlledDate: null,
         currentSlide: 0,
         Values: [],
+        confirmDialog: false,
+        otpDialog: false,
+        otp: 0,
       }
       this.validateDetails = this.validateDetails.bind(this);
       this.getUserDetails = this.getUserDetails.bind(this);
@@ -44,6 +50,8 @@ class Register extends Component{
       this.previousButton = this.previousButton.bind(this);
       this.nextButton = this.nextButton.bind(this);
       this.handleMobileChange = this.handleMobileChange.bind(this)
+      this.validateOtp = this.validateOtp.bind(this)
+      this.generateOtp = this.generateOtp.bind(this)
   }
 
   componentWillMount(){
@@ -69,6 +77,27 @@ class Register extends Component{
          this.context.router.history.push('/');
         });
      }
+
+validateOtp(){
+  fetch('http://'+properties.getHostName+':8080/user/validate/otp', {
+          credentials: 'include',
+          method: 'POST',
+          headers: {
+                'mode': 'cors',
+                'Content-Type': 'application/json'
+            },
+          body: this.state.otp
+      }).then(response => {
+        return response.text();
+      }).then(response =>{
+      if(response === 'success')
+      this.registerUser()
+      else {
+      notify.show("please enter a valid Otp","error")
+      }
+  })
+
+}
 
  registerUser(){
    if(this.state.userrole === "student")
@@ -149,8 +178,7 @@ class Register extends Component{
    this.setState({
     mobilenumber : newValue,
    })
- }
-
+}
  handleDateChange = (event, date) => {
    this.setState({
      controlledDate: date,
@@ -161,6 +189,11 @@ class Register extends Component{
      controlledDate: null,
    });
  }
+ handleOtp = (event) => {
+  this.setState({
+    otp: event.target.value,
+  });
+};
  handleUniversityChange = (event, index, UniversityValue) => this.setState({UniversityValue});
  handleCollegeChange = (event, index, CollegeValue) => this.setState({CollegeValue});
  handleYearChange = (event, index, YearValue) => this.setState({YearValue});
@@ -179,16 +212,25 @@ handleRollChange=(event, newValue) =>{
     isLoaded:'true'
   })
 }
+handleConfirmClassDialog(){
+  this.setState({
+    confirmDialog: true,
+  })
+}
 
 validateDetails(){
- if((this.state.userrole==="student") && (this.state.UniversityValue === 1 || this.state.CollegeValue === 1 || this.state.YearValue === 0 ||
+  if(isValidPhoneNumber(this.state.mobilenumber) === false)
+  {
+   notify.show("please enter a valid mobilenumber","error")
+ }
+ else if((this.state.userrole==="student") && (this.state.UniversityValue === 1 || this.state.CollegeValue === 1 || this.state.YearValue === 0 ||
     this.state.SemesterValue === 0 || this.state.BranchValue === 1 || this.state.SectionValue === 1))
  notify.show("please fill in all the mandatory fields which are followed by *","error");
  else if((this.state.userrole === "teacher") && (this.state.UniversityValue === 1 || this.state.CollegeValue === 1 ||
        this.state.BranchValue === 1 || this.state.Values.length === 0 ))
 notify.show("please fill in all the mandatory fields which are followed by *","error");
  else{
-   this.registerUser();
+   this.handleConfirmClassDialog()
  }
 }
 
@@ -239,9 +281,55 @@ else{
 }
 return buffer;
 }
+handleClose = () => {
+  this.setState({confirmDialog: false,otpDialog: false});
+};
+
+generateOtp(){
+  fetch('http://'+properties.getHostName+':8080/user/generate/otp', {
+         credentials: 'include',
+         method: 'POST',
+         headers: {
+            'mode': 'cors',
+            'Content-Type': 'application/json'
+          },
+         body: this.state.mobilenumber
+        }).then(response => {
+          return response.text()
+        }).then(response =>{
+          if(response !== 'success')
+          notify.show("Could not generate OTP please try again","error")
+          else {
+            this.setState({confirmDialog: false,otpDialog: true})
+          }
+        })
+}
 
   render(){
-
+    const actions1 = [
+      <FlatButton
+        label="Confirm"
+        primary={true}
+        onTouchTap={this.generateOtp}
+      />,
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />
+    ]
+    const actions = [
+      <FlatButton
+        label="Go Back"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Submit"
+        primary={true}
+        onTouchTap={this.validateOtp}
+      />
+    ]
     var settings = {
       dots: true,
       infinite: false,
@@ -274,6 +362,35 @@ return buffer;
           {this.nextButton()}
         </div>
       </div>
+      <Dialog
+            title="Are you sure you belong to this class ?"
+            modal={true}
+            actions={actions1}
+            open={this.state.confirmDialog}
+            autoScrollBodyContent={true}
+            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            onRequestClose={this.handleClose}
+          >
+          <div style={{textAlign:"center"}}>
+          <p>University : {this.state.UniversityValue}</p>
+          <p>College: {this.state.CollegeValue} </p>
+          <p> Year: {this.state.YearValue} </p>
+          <p> Sem: {this.state.SemesterValue} </p>
+          <p> Branch: {this.state.BranchValue} </p>
+          <p> Section: {this.state.SectionValue} </p>
+          </div>
+      </Dialog>
+      <Dialog
+      title="Please Enter 6 digit Otp sent to your mobilenumber"
+      modal={true}
+      actions={actions}
+      open={this.state.otpDialog}
+      autoScrollBodyContent={true}
+      titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+      onRequestClose={this.handleClose}
+      >
+      <TextField floatingLabelText="OTP" hintText="enter OTP" onChange={this.handleOtp} style={{marginLeft:"25%"}} />
+      </Dialog>
     </div>
     )
   }
