@@ -76,18 +76,21 @@ loginToolbar(){
       backgroundColor:'#2962ff',
       noGutter: true
   }}>
-      <ToolbarGroup firstChild={true}>
-        <ListItem
-          disabled={true}
-          leftAvatar={
+      <div className="bannerFirstChild">
+        <div className="studentAddaLogoContainer">
             <CustomAvatar />
-          }
-        ></ListItem>
-        <ToolbarTitle text="StudentAdda" style={{color:'#ffffff'}}/>
-      </ToolbarGroup>
+        </div>
+        <p className="bannerCompanyName">StudentAdda</p>
+        </div>
       <ToolbarGroup>
       <form action= {loginUrl}>
-        <RaisedButton type="submit" label="Login/Signup" value="login" primary={true} />
+      <div className="signupButtonDiv">
+        <button className="signUpButton">
+        <div className="signupButtonDiv2">
+        <span className="signupButtonText">Signup/SignIn</span>
+        </div>
+        </button>
+        </div>
       </form>
       </ToolbarGroup>
     </Toolbar>
