@@ -8,13 +8,9 @@ import {
 class CustomAvatar extends Component{
 render(){
   return(
-    <Avatar
-      color={orange700}
-      backgroundColor={indigo900}
-      size={40}
-    >
-      SA
-    </Avatar>
+      <div className="studentAddaLogo">
+        SA
+      </div>
   )
 }
 }
