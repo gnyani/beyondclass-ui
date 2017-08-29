@@ -10,6 +10,10 @@ import  'react-phone-number-input/style.css'
 
 import '../../styles/student-adda.css';
 
+const maxDate = new Date();
+maxDate.setFullYear(maxDate.getFullYear() - 15);
+maxDate.setHours(0, 0, 0, 0);
+
 
 class PersonalInfo extends Component{
 
@@ -30,7 +34,8 @@ class PersonalInfo extends Component{
     <Grid>
     <Row is="start">
     <Cell is="6 tablet-8"><div>
-    <DatePicker floatingLabelText="Date of Birth" hintText="Date of Birth" openToYearSelection={true} value={this.props.controlledDate} onChange={this.props.handleDateChange} onDismiss={this.props.handleDateDismiss}/>
+    <DatePicker floatingLabelText="Date of Birth" hintText="Date of Birth" openToYearSelection={true} maxDate={maxDate}
+    value={this.props.controlledDate} onChange={this.props.handleDateChange} onDismiss={this.props.handleDateDismiss}/>
     </div></Cell>
     <Cell is="middle 5 tablet-8"><div>
     <Phone
