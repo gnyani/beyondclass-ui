@@ -77,8 +77,7 @@ handleSubmit(){
          response : response,
          number : 1,
          message: '',
-       })
-       this.componentWillMount()
+       },function(){this.componentWillMount()})
        notify.show("Anouncement uploaded successfully","success")
      })}
 }
