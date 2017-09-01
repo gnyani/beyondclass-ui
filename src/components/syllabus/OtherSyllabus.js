@@ -6,7 +6,6 @@ import MenuItem from 'material-ui/MenuItem';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import {lightBlue300} from 'material-ui/styles/colors';
 import {Card, CardActions, CardHeader, CardMedia} from 'material-ui/Card';
-import Lightbox from 'react-image-lightbox';
 import {FileFileDownload,NavigationFullscreen,NavigationArrowBack,NavigationArrowForward} from '../../styledcomponents/SvgIcons.js';
 import '../../styles/student-adda.css';
 import Slider from 'react-slick';
@@ -189,14 +188,7 @@ class OtherSyllabus extends Component{
        infinite: false,
        arrows: false,
      };
-     const {
-             photoIndex,
-             isOpen,
-         } = this.state;
 
-     const images = [
-       this.state.response
-     ]
      if(this.props.userrole==="student")
      {
      return(
@@ -313,13 +305,6 @@ class OtherSyllabus extends Component{
          {this.state.image}
          </Row>
          </Grid>
-         {isOpen &&
-                     <Lightbox
-                         mainSrc={images[photoIndex]}
-                          onCloseRequest={() => this.setState({ isOpen: false })}
-                     />
-                 }
-
      </StayVisible>
      )
    }
