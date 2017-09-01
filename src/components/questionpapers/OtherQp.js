@@ -4,7 +4,6 @@ import SelectField from 'material-ui/SelectField';
 import {notify} from 'react-notify-toast';
 import {lightBlue300} from 'material-ui/styles/colors';
 import {Card, CardActions, CardHeader, CardMedia} from 'material-ui/Card';
-import Lightbox from 'react-image-lightbox';
 import {FileFileDownload,NavigationFullscreen,NavigationArrowBack,NavigationArrowForward} from '../../styledcomponents/SvgIcons.js';
 import MenuItem from 'material-ui/MenuItem';
 import { Grid, Row, Cell } from 'react-inline-grid';
@@ -197,14 +196,7 @@ class OtherQp extends Component{
        infinite: false,
        arrows: false,
      };
-   const {
-           photoIndex,
-           isOpen,
-       } = this.state;
 
-   const images = [
-     this.state.response
-   ]
    if(this.props.userrole==="student")
    {
      return(
@@ -337,13 +329,6 @@ class OtherQp extends Component{
          {this.state.image}
          </Row>
          </Grid>
-         {isOpen &&
-                     <Lightbox
-                         mainSrc={images[photoIndex]}
-                          onCloseRequest={() => this.setState({ isOpen: false })}
-                     />
-                 }
-
      </div>
   </StayVisible>
      )

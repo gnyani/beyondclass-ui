@@ -2,8 +2,6 @@ import React from 'react';
 import { Grid, Row, Cell } from 'react-inline-grid';
 import '../../styles/student-adda.css';
 import Divider from 'material-ui/Divider';
-import TextField from 'material-ui/TextField';
-import FlatButton from 'material-ui/FlatButton';
 import {notify} from 'react-notify-toast';
 import QuestionCard from './questionCard'
 import NewQuestionDialogue from './newQuestionDialogue'

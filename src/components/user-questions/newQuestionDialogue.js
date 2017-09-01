@@ -2,7 +2,7 @@ import React from 'react';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import {RadioButton} from 'material-ui/RadioButton';
 import TextField from 'material-ui/TextField';
 import { Grid, Row, Cell } from 'react-inline-grid';
 

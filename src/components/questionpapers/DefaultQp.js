@@ -9,7 +9,6 @@ import FlatButton from 'material-ui/FlatButton';
 import {FileFileDownload,NavigationFullscreen} from '../../styledcomponents/SvgIcons.js';
 import '../../styles/student-adda.css';
 import { Grid, Row, Cell } from 'react-inline-grid';
-import Lightbox from 'react-image-lightbox';
 import styled from 'styled-components'
 import UnauthorizedPage from '../UnauthorizedPage.js'
 var properties = require('../properties.json');
@@ -134,14 +133,6 @@ image(){
    }
 }
   render(){
-    const {
-            photoIndex,
-            isOpen,
-        } = this.state;
-
-    const images = [
-      this.state.response
-    ]
     if(this.props.userrole==="student")
     {
     return(
@@ -190,12 +181,6 @@ image(){
         {this.state.image}
         </Row>
         </Grid>
-        {isOpen &&
-                    <Lightbox
-                        mainSrc={images[photoIndex]}
-                         onCloseRequest={() => this.setState({ isOpen: false })}
-                    />
-                }
     </div>
 
     </StayVisible>
