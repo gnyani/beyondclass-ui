@@ -38,7 +38,6 @@ class PersonalInfo extends Component{
      </Col>
      </Row>
     </Grid>
-
     <Grid fluid>
     <Row bottom="xs" between="xs">
     <Col xs={12} md={8} lg={5}>
@@ -46,7 +45,7 @@ class PersonalInfo extends Component{
     value={this.props.controlledDate} onChange={this.props.handleDateChange} onDismiss={this.props.handleDateDismiss}/>
     </Col>
     <Col xs={12} md={8} lg={5}>
-    <div style={{width:"85%"}}><Phone
+    <div style={{width:"85%",marginTop:"10%"}}><Phone
      country="IN"
      placeholder="Enter phone number"
      value={ this.props.mobilenumber }
