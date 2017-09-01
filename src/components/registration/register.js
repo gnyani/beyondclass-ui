@@ -10,10 +10,12 @@ import PersonalInfo from './personalinfo.js';
 import ClassDetails from './classdetails.js'
 import {NavigationArrowForward,NavigationArrowBack} from '../../styledcomponents/SvgIcons.js'
 import {isValidPhoneNumber} from 'react-phone-number-input'
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import '../../styles/student-adda.css';
 import Slider from 'react-slick';
 import "../../../node_modules/slick-carousel/slick/slick.css";
 import "../../../node_modules/slick-carousel/slick/slick-theme.css";
+
 
 var properties = require('../properties.json');
 
@@ -272,12 +274,16 @@ nextButton(){
  var buffer=[];
 if(this.state.currentSlide === 2)
 {
-  buffer.push(  <FlatButton key={new Date()} label="Register" labelStyle={{textTransform: "none"}} labelPosition="before" icon={<NavigationArrowForward color="white"/>}
+  buffer.push(  <FlatButton key={new Date()} label="Register" labelStyle={{textTransform: "none"}}  icon={<NavigationArrowForward color="white"/>}
               className="nextButton" onClick={this.validateDetails} />)
 }
-else{
-  buffer.push(  <FlatButton key={new Date()} label="Next" labelStyle={{textTransform: "none"}} labelPosition="before" icon={<NavigationArrowForward color="white"/>}
+else if(this.state.currentSlide === 1){
+  buffer.push(  <FlatButton key={new Date()} label="Next" labelStyle={{textTransform: "none"}}  icon={<NavigationArrowForward color="white"/>}
               className="nextButton" onClick={this.next} />)
+}
+else{
+  buffer.push(  <FlatButton key={new Date()} label="Next" labelStyle={{textTransform: "none"}}  icon={<NavigationArrowForward color="white"/>}
+              style={{position:"relative",right:"50%"}}  className="nextButton" onClick={this.next} />)
 }
 return buffer;
 }
@@ -334,10 +340,13 @@ generateOtp(){
       dots: true,
       infinite: false,
       arrows: false,
-      adaptiveHeight: false,
+      adaptiveHeight: true,
     };
     return(
-      <div style={{backgroundColor:"rgb(244,244,244)",height:"135%"}}>
+  <div style={{backgroundColor:"rgb(244,244,244)",height:"120vh"}}>
+    <Grid fluid>
+    <Row around="xs">
+    <Col xs={12} md={10} lg={8}>
     <div className="RegisterContainer">
       	<Slider ref={c => this.slider = c } {...settings} afterChange={(currentSlide) => {
             this.setState({ currentSlide: currentSlide  })
@@ -357,11 +366,20 @@ generateOtp(){
             handleValuesChange={this.handleValuesChange}/></div>
         </Slider>
         <br /> <br /> <br />
-        <div className="register" >
+        <Grid fluid>
+        <Row center="xs" className="register">
+        <Col xs>
           {this.previousButton()}
+         </Col>
+         <Col xs>
           {this.nextButton()}
-        </div>
+        </Col>
+        </Row>
+        </Grid>
       </div>
+      </Col>
+      </Row>
+      </Grid>
       <Dialog
             title="Are you sure you belong to this class ?"
             modal={true}

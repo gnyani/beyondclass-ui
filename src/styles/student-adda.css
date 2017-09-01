@@ -64,21 +64,21 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
                              color: rgb(247,166,25)}
 .QpSyllabusDefault {margin: 0 auto;padding: 1em;width: 55%;color: #333;border-radius: 2.8em; position: relative;top: 10%;
                                background: rgb(255,255,255);border-top: 30px solid #2196F3 ;height:30%;box-shadow: 1px 1px 1px 1px rgb(95, 87, 87);}
-.RegisterContainer {margin: 0 auto;padding: 1em;width: 50%;color: #333;border-radius: 2.8em; position: relative;top: 10%;
+.RegisterContainer {margin: 0 auto;padding: 1em;color: #333;border-radius: 2.8em; position: relative;top: 15%;
   background: rgb(255,255,255);border-top: 30px solid #2196F3 ;box-shadow: 1px 1px 1px 1px rgb(95, 87, 87);}
 .register{text-align: center;}
-.register .previousButton{  margin-right: 15% !important;color: white!important; background-color: #2196F3 !important; border-radius: 1em !important;}
-.register .nextButton {background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
+.register .previousButton{ width: 40%;color: white!important; background-color: #2196F3 !important; border-radius: 1em !important;}
+.register .nextButton {width: 40%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
 .intro .headline{font-size: 2em;font-family: "Comic Sans MS",sans-serif;font-weight: bold;text-align: center;
                  letter-spacing: 0.07em;color: rgb(51,138,150)}
 .intro .subheading{text-align: center;font-family: "Comic Sans MS",sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: italic;
                    color:rgb(221,93,93);position: relative; bottom: 1.3em}
 .intro .h4{text-align: center;font-family: "Chalkduster", fantasy,sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: normal;}
-.intro .image{overflow: hidden; margin-bottom: 6%;border-radius: 20%;height: 16%;   width : 16%;margin-left: 40%}
-.personalinfo .h4{margin-left: 2.5%;font-family: "Arial", sans-serif; font-weight: normal; color: #2196F3}
-.personalinfo .RadioButtonGroup{margin-left: 2% !important; display: flex !important; flex-direction: row !important;}
-.personalinfo .RadioButton{display: inline-block !important;}
-.classdetails .h4{margin-left: 5%;font-family: "Arial", sans-serif; font-weight: normal; color: #2196F3}
+.intro .image{overflow: hidden; border-radius: 20%;height: 28%;   width : 20%;margin-left: 40%}
+.personalinfo .h4{font-family: "Arial", sans-serif; font-weight: normal; color: #2196F3}
+/*.personalinfo .RadioButtonGroup{margin-left: 40% !important; }*/
+/*.personalinfo .RadioButton{display: inline-block !important;}*/
+.classdetails .h4{font-family: "Arial", sans-serif; font-weight: normal; color: #2196F3}
 .classdetails .textfield{margin-left: 5% !important;}
 .Active{  background-color: #696969;}
 .NotesUpload .uploadbutton{background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
