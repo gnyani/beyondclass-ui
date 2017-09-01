@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ListItem from 'material-ui/List/ListItem';
 import RaisedButton from 'material-ui/RaisedButton';
-import LoadingComponent from './loading.js'
+import CircularProgress from 'material-ui/CircularProgress'
 import Paper from 'material-ui/Paper';
 import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
@@ -133,7 +133,7 @@ logoutToolbar(){
 }
 render() {
 if(!this.state.isLoaded){
-  return <LoadingComponent />;
+  return <CircularProgress />;
 }
 else if(this.state.isLoggedIn === 'true'){
 return(
