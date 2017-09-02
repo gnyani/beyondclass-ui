@@ -3,10 +3,15 @@ import HorizontalTimelineContent from './HorizontalTimelineContent';
 import GameInfo from './dates.js';
 import styled from 'styled-components';
 import UnauthorizedPage from '../UnauthorizedPage.js'
+import {Media} from '../utils/Media'
+
 const StayVisible = styled.div`
   position: relative;
   margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
   transition: margin .1s;
+  ${Media.handheld`
+    margin-left: 0px;
+  `}
 `
 
 class TimeLine extends React.Component {

@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import styled from 'styled-components'
 import '../../styles/student-adda.css'
-import {Grid,Row,Cell} from 'react-inline-grid'
+import {Grid,Row,Col} from 'react-flexbox-grid'
 import TextField from 'material-ui/TextField'
 import {Edit} from '../../styledcomponents/SvgIcons.js'
 import IconButton from 'material-ui/IconButton';
@@ -11,6 +11,7 @@ import FlatButton from 'material-ui/FlatButton'
 import {notify} from 'react-notify-toast';
 import {NavigationArrowForward} from '../../styledcomponents/SvgIcons.js';
 import MenuItem from 'material-ui/MenuItem'
+import {Media} from '../utils/Media'
 
 var properties = require('../properties.json');
 
@@ -18,6 +19,9 @@ const StayVisible = styled.div`
   position: relative;
   margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
   transition: margin .1s;
+  ${Media.handheld`
+    margin-left: 0px;
+  `}
 `
 
 class UpdateProfile extends Component{
@@ -125,34 +129,38 @@ updateProfile(){
       <StayVisible
       {...this.props}
       >
+      <Grid fluid>
+      <Row around="xs">
+      <Col xs={12} sm={12} md={10} lg={7}>
       <div>
       <div className="announcements ">
       <p className="paragraph">Edit your profile</p>
       </div>
-      <Grid>
-      <Row is="center">
-      <Cell is ="3 phone-3 tablet-3"><div>
-      <TextField floatingLabelText="First Name" disabled={this.state.firstNameDisabled} value={this.state.firstName} onChange={this.handleFirstNameChange}/>
-      </div></Cell>
-      <Cell is ="bottom 1 phone-1 tablet-1"><div>
-      <IconButton onClick={this.handleFirstNameDisable}> <Edit color="red"/> </IconButton>
-      </div></Cell>
-      <Cell is ="3 phone-3 tablet-3"><div>
-      <TextField floatingLabelText="Last Name"  disabled={this.state.lastNameDisabled} value={this.state.lastName} onChange={this.handleLastNameChange}/>
-      </div></Cell>
-      <Cell is ="bottom 1 phone-1 tablet-1"><div>
-      <IconButton onClick={this.handleLastNameDisable}> <Edit color="red"/> </IconButton>
-      </div></Cell>
+      <Grid fluid>
+      <Row start="xs" bottom="xs">
+      <Col xs={4} sm={4} md={4} lg={5}>
+      <TextField floatingLabelText="First Name" style={{width:"100%"}} disabled={this.state.firstNameDisabled} value={this.state.firstName} onChange={this.handleFirstNameChange}/>
+      </Col>
+      <Col xs={2} sm={2} md={2} lg={1}>
+      <IconButton onClick={this.handleFirstNameDisable}> <Edit color="red" viewBox='0 0 30 30'/> </IconButton>
+      </Col>
+      <Col xs={4} sm={4} md={4} lg={5}>
+      <TextField floatingLabelText="Last Name" style={{width:"100%"}} disabled={this.state.lastNameDisabled} value={this.state.lastName} onChange={this.handleLastNameChange}/>
+      </Col>
+      <Col xs={2} sm={2} md={2} lg={1}>
+      <IconButton onClick={this.handleLastNameDisable}> <Edit color="red" viewBox='0 0 30 30'/> </IconButton>
+      </Col>
       </Row>
       </Grid>
-      <Grid>
-      <Row is="center">
-      <Cell is ="3 phone-3 tablet-3"><div>
+      <Grid fluid>
+      <Row start="xs" bottom="xs">
+      <Col xs={4} sm={4} md={4} lg={5}>
       <SelectField
        floatingLabelText="Year"
         value={this.state.year}
         onChange={this.handleYearChange}
         disabled={this.state.yearDisabled}
+        style={{width:"100%"}}
       >
         <MenuItem value={0} primaryText="Select" />
         <MenuItem value={1} primaryText="One" />
@@ -160,36 +168,37 @@ updateProfile(){
         <MenuItem value={3} primaryText="Three" />
         <MenuItem value={4} primaryText="Four" />
       </SelectField>
-      </div></Cell>
-      <Cell is ="bottom 1 phone-1 tablet-1"><div>
-      <IconButton onClick={this.handleYearDisable}> <Edit color="red"/> </IconButton>
-      </div></Cell>
-      <Cell is ="3 phone-3 tablet-3"><div>
+      </Col>
+      <Col xs={2} sm={2} md={2} lg={1}>
+      <IconButton onClick={this.handleYearDisable}> <Edit color="red" viewBox='0 0 30 30'/> </IconButton>
+      </Col>
+      <Col xs={4} sm={4} md={4} lg={5}>
       <SelectField
        floatingLabelText="Semester"
         value={this.state.sem}
         onChange={this.handleSemChange}
         disabled={this.state.semDisabled}
+        style={{width:"100%"}}
       >
         <MenuItem value={0} primaryText="Select" />
         <MenuItem value={1} primaryText="One" />
         <MenuItem value={2} primaryText="Two" />
       </SelectField>
-      </div></Cell>
-      <Cell is ="bottom 1 phone-1 tablet-1"><div>
-      <IconButton onClick={this.handleSemDisable}> <Edit color="red"/> </IconButton>
-      </div></Cell>
+      </Col>
+      <Col xs={1} sm={1} md={1} lg={1}>
+      <IconButton onClick={this.handleSemDisable}> <Edit color="red" viewBox='0 0 30 30'/> </IconButton>
+      </Col>
       </Row>
       </Grid>
-      <Grid>
-      <Row is="center">
-      <Cell is="3 tablet-3 phone-3"><div>
+      <Grid fluid>
+      <Row around="xs" bottom="xs">
+      <Col xs={4} sm={4} md={4} lg={3}>
       <DatePicker floatingLabelText="Date of Birth" hintText="Date of Birth" disabled={this.state.dobDisabled} openToYearSelection={true} defaultDate={new Date(this.state.controlledDate)}
-      onChange={this.handleDateChange}  onDismiss={this.handleDateDismiss}/>
-      </div></Cell>
-      <Cell is ="bottom 1 phone-1 tablet-1"><div>
-      <IconButton onClick={this.handleDobDisable}> <Edit color="red"/> </IconButton>
-      </div></Cell>
+      onChange={this.handleDateChange} style={{width:"100%"}} onDismiss={this.handleDateDismiss}/>
+      </Col>
+      <Col is ="bottom 1 phone-1 tablet-1">
+      <IconButton onClick={this.handleDobDisable}> <Edit color="red" viewBox='0 0 30 30'/> </IconButton>
+      </Col>
       </Row>
       </Grid>
       <div className="UpdateProfile">
@@ -197,6 +206,9 @@ updateProfile(){
                  className="button" onClick={this.updateProfile} />
       </div>
       </div>
+      </Col>
+      </Row>
+      </Grid>
       </StayVisible>
     )
   }

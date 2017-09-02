@@ -3,7 +3,7 @@ import {notify} from 'react-notify-toast'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/Card'
 import {lightBlue300} from 'material-ui/styles/colors'
 import {FileFileDownload} from '../../styledcomponents/SvgIcons.js'
-import { Grid, Row, Cell } from 'react-inline-grid'
+import { Grid, Row, Col } from 'react-flexbox-grid'
 import FlatButton from 'material-ui/FlatButton'
 
 var properties = require('../properties.json');
@@ -53,10 +53,10 @@ getAssignments(){
 }
 list(buffer){
   if(this.state.links.length === 0)
-  buffer.push(<p>No Assignments found</p>)
+  buffer.push(<p key={new Date()} >No Assignments found</p>)
   else{
   for(let i=0; i<this.state.links.length; i++){
-    buffer.push( <Cell is="7 tablet-7" key={i}><div>
+    buffer.push( <Col xs={11} sm={11} md={9} lg={8} key={i}>
          <Card
          style={{borderRadius:"2em"}}
          >
@@ -74,7 +74,7 @@ list(buffer){
              </form>
            </CardActions>
          </Card>
-      </div></Cell>
+      </Col>
   )
   }
 }
@@ -86,8 +86,8 @@ list(buffer){
       <div className="announcements">
         <p className="paragraph"> Your Assignments List </p>
         <div>
-        <Grid>
-        <Row is="center">
+        <Grid fluid>
+        <Row center="xs">
         {this.list(buffer)}
         </Row>
         </Grid>

@@ -11,16 +11,9 @@ import '../../styles/student-adda.css';
 import Slider from 'react-slick';
 import "../../../node_modules/slick-carousel/slick/slick.css";
 import "../../../node_modules/slick-carousel/slick/slick-theme.css";
-import styled from 'styled-components';
 import UnauthorizedPage from '../UnauthorizedPage.js';
 
 var properties = require('../properties.json');
-
-const StayVisible = styled.div`
-  position: relative;
-  margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
-  transition: margin .1s;
-`
 
 class OtherQp extends Component{
 
@@ -200,9 +193,7 @@ class OtherQp extends Component{
    if(this.props.userrole==="student")
    {
      return(
-    <StayVisible
-    {...this.props}
-   >
+    <div>
    <br /><br />
     <div className="QpSyllabusDefault">
     <Slider ref={c => this.slider = c } {...settings} afterChange={(currentSlide) => {
@@ -330,7 +321,7 @@ class OtherQp extends Component{
          </Row>
          </Grid>
      </div>
-  </StayVisible>
+  </div>
      )
    }
    else{

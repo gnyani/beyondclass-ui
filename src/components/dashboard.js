@@ -3,12 +3,16 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import styled from 'styled-components'
 import '../styles/student-adda.css'
+import {Media} from './utils/Media'
 var properties = require('./properties.json');
 
 const StayVisible = styled.div`
   position: relative;
   margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
   transition: margin .1s;
+  ${Media.handheld`
+    margin-left: 0px;
+  `}
 `
 class Dashboard extends Component{
   constructor(props) {

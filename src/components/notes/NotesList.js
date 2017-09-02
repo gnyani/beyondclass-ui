@@ -6,18 +6,10 @@ import {notify} from 'react-notify-toast';
 import {lightBlue300} from 'material-ui/styles/colors';
 import {ActionViewArray,FileFileDownload,NavigationFullscreen} from '../../styledcomponents/SvgIcons.js'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
-import { Grid, Row, Cell } from 'react-inline-grid';
-import styled from 'styled-components'
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import UnauthorizedPage from '../UnauthorizedPage.js'
 
 var properties = require('../properties.json');
-
-const StayVisible = styled.div`
-  position: relative;
-  margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
-  transition: margin .1s;
-`
-
 
 class NotesList extends Component{
 
@@ -87,35 +79,38 @@ class NotesList extends Component{
   render(){
 if(this.props.userrole==="student"){
    return(
-<StayVisible
-{...this.props}
->
+     <Grid fluid>
+     <Row around="xs">
+     <Col xs={12} sm={12} md={10} lg={7}>
+     <div>
      <br  /><br />
   <div className="QpSyllabusDefault">
-     <Grid>
-     <Row is="center">
-     <Cell is="6 tablet-6 phone-6"><div>
+     <Grid fluid>
+     <Row around="xs" middle="xs">
+     <Col xs={6} sm={6} md={6} lg={6}>
       <SelectField
         floatingLabelText="Subject*"
         value={this.state.subject}
         onChange={this.handleChange}
+        style={{width:"100%"}}
       >
         <MenuItem value={1} primaryText="Select" />
         <MenuItem value={'OS'} label="OS" primaryText="Operating Systems" />
         <MenuItem value={'DM'} label="DM" primaryText="Data Mining" />
       </SelectField>
-      </div></Cell>
-      <Cell is="middle 6 tablet-6 phone-6" className="register"><div>
+      </Col>
+      <Col xs={6} sm={6} md={6} lg={6} className="register">
       <FlatButton type="submit" label="View" disabled={this.state.buttonDisabled} icon={<ActionViewArray color="white"/>} className="nextButton" onClick={this.handleSubmit} />
-      </div></Cell>
+      </Col>
       </Row>
       </Grid>
       </div>
      <div>
-     <Grid>
-     <Row is="center">
+     <Grid fluid>
+     <Row around="xs">
      {this.state.links.map((src, index) => (
-       <Cell is="7 tablet-7"><div>
+     <Col xs={12} sm={12} md={9} lg={8} key={index}>
+     <br />
            <Card style={{borderRadius:"2em"}}>
              <CardHeader
                title="Uploaded By"
@@ -126,23 +121,24 @@ if(this.props.userrole==="student"){
              </CardMedia>
              <CardTitle title={this.state.loadedsubject} subtitle="Notes" />
              <CardActions>
-             <Grid>
-             <Row is="start">
-             <Cell is="6 tablet-6 phone-6"><div>
+             <Grid fluid>
+             <Row center="xs">
+             <Col xs>
                <form method="post" action={src+"/download"}>
                <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color={lightBlue300} />}/>
                </form>
-              </div></Cell>
-             <Cell is="6 tablet-6 phone-6"><div>
+              </Col>
+             <Col xs>
                <form method="post" action={src}>
                <FlatButton type="submit" label="View" fullWidth={true} icon={<NavigationFullscreen color={lightBlue300} />}/>
                </form>
-               </div></Cell>
+              </Col>
                </Row>
                </Grid>
              </CardActions>
            </Card>
-        </div></Cell>
+          <br /> 
+        </Col>
     ))}
     </Row>
     </Grid>
@@ -150,7 +146,10 @@ if(this.props.userrole==="student"){
     {this.state.usermsg}
     </p>
     </div>
-</StayVisible>
+</div>
+</Col>
+</Row>
+</Grid>
    )
  }else{
    return(<UnauthorizedPage />)

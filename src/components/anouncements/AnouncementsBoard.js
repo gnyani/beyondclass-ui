@@ -7,15 +7,20 @@ import IconButton from 'material-ui/IconButton';
 import {NavigationClose} from '../../styledcomponents/SvgIcons.js';
 import Pagination from 'material-ui-pagination';
 import Dialog from 'material-ui/Dialog';
-import{Row,Grid,Cell} from 'react-inline-grid';
+import{Row,Grid,Col} from 'react-flexbox-grid';
 import '../../styles/student-adda.css';
 import UnauthorizedPage from '../UnauthorizedPage.js'
+import {Media} from '../utils/Media'
+
 var properties = require('../properties.json');
 
 const StayVisible = styled.div`
   position: relative;
   margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
   transition: margin .1s;
+  ${Media.handheld`
+    margin-left: 0px;
+  `}
 `
 
 class AnouncementsBoard extends Component{
@@ -93,28 +98,28 @@ list(buffer){
   for (i=0;i<this.state.users.length;i++){
   if(this.state.useremails[i] === this.props.loggedinuser)
   {
-  buffer.push( <Grid key={i}>
-               <Row is="start">
-               <Cell is="10 tablet-10 phone-10"><div>
+  buffer.push( <Grid fluid key={i}>
+               <Row middle="xs">
+               <Col xs={10} sm={10} md={11} lg={11}>
                <li >
-                <p className="name"> <span className="fontStyle">{this.state.users[i]} </span>: <span className="messageStyle">{this.state.messages[i]}</span>
+                <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span> <span className="messageStyle">{this.state.messages[i]}</span>
                 </p></li>
-                </div></Cell>
-               <Cell is="middle 2 tablet-2 phone-2"><div>
-                <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><NavigationClose color="red"/></IconButton>
-              </div></Cell>
+                </Col>
+               <Col xs={1} md={1} sm={1}lg={1}>
+                <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><NavigationClose color="red" hoverColor="black" viewBox='0 0 30 30'/></IconButton>
+              </Col>
               </Row>
               </Grid>
              )
   }
 else{
-  buffer.push(<Grid key={i}>
-               <Row is="start">
-               <Cell is="12 tablet-12 phone-12"><div>
+  buffer.push(<Grid fluid key={i}>
+               <Row >
+               <Col xs={12} sm={12} md={12} lg={12}>
                <li>
-                <p className="name"> <span className="fontStyle">{this.state.users[i]} </span>: <span className="messageStyle">{this.state.messages[i]}</span> </p>
+                <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span> <span className="messageStyle">{this.state.messages[i]}</span> </p>
                 </li>
-                </div></Cell>
+                </Col>
                 </Row>
                 </Grid>
              )
@@ -216,15 +221,18 @@ return(
 <StayVisible
   {...this.props}
 >
+<Grid fluid>
+<Row around="xs">
+<Col xs={12} sm={12} md={12} lg={12}>
 <div className="announcements ">
-    <Grid>
-    <Row is="center">
-    <Cell is="middle 1 tablet-1"><div>
-    <img  className="image" src={require('../../styledcomponents/images/announcements.jpeg')} alt="Problem loading"/>
-    </div></Cell>
-    <Cell is="6 tablet-5"><div>
+    <Grid fluid>
+    <Row center="xs" middle="xs">
+    <Col xs={2} sm={2} md={2} lg={1}>
+    <img  className="image" src={require('../../styledcomponents/images/announcements.jpeg')} alt=""/>
+    </Col>
+    <Col xs={8} sm={8} md={8} lg={6}>
     <h2 className="heading"> Latest Announcements</h2>
-    </div></Cell>
+    </Col>
     </Row>
     </Grid>
    <div  className="container page">
@@ -248,7 +256,6 @@ return(
 
     <FlatButton label="Announce" type="submit"  disabled={this.state.buttonDisabled}
      className="AnnounceButton" onTouchTap={this.handleSubmit}/>
-
      <Dialog
            title="Are you sure you want to Delte this anouncement"
            modal={false}
@@ -260,6 +267,9 @@ return(
          >
      </Dialog>
 </div>
+</Col>
+</Row>
+</Grid>
 </StayVisible>
 );
 }

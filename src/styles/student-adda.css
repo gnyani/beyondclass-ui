@@ -1,5 +1,5 @@
 .StudentAdda{ margin: 0;padding: 0;border: 0;font-size: 15px;vertical-align: baseline;background: transparent;}
-body,html {height: 100%;width:100%;overflow: hidden;margin: 0;outline: 0;margin: 0;padding: 0;min-width:initial;}
+body,html {height: 100%;width:100%;overflow: hidden;margin: 0;outline: 0;margin: 0;padding: 0;min-width:initial;background: rgb(244,244,244)}
 body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
                font-size: 2em;letter-spacing: 0.07em;color: rgb(162,35,142)}
 body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 0px rgb(95, 87, 87);border-radius: 1.5em}
@@ -9,19 +9,19 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .image-upload img{cursor: pointer;}
 .announcements{ font-size: 20px;text-align: center;}
 .announcements .container li .name{ text-align: left;text-transform: capitalize;font-family:"Comic Sans MS",sans-serif ;
-              padding: 18px 0px;margin: 0px;}
+              padding: 18px 0px;margin: 0px;min-width:initial;}
 .announcements .heading{text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
-               font-size: 2em;letter-spacing: 0.07em;color: rgb(162,35,142)}
-.announcements .fontStyle{  font-size: 1em;font-style: italic;
-                            font-weight: 100;letter-spacing: 0.05em;color: rgb(1,175,173)}
-.announcements .messageStyle{   font-family: "Comic Sans MS",sans-serif;font-size:0.8em;font-style: italic;font-weight: 50;
-                               color: rgb(247,166,25);text-transform: capitalize;letter-spacing: 0.04em;}
-.announcements .image{width: 4em;height: 4em ;border-radius: 50% }
+               font-size: 4vmin;letter-spacing: 0.08vmin;color: rgb(162,35,142)}
+.announcements .fontStyle{  font-size: 3.5vmin;font-style: italic;
+                            font-weight: 100;letter-spacing: 0.08vmin;color: rgb(1,175,173)}
+.announcements .messageStyle{   font-family: "Comic Sans MS",sans-serif;font-size:3vmin;font-style: italic;font-weight: 50;
+                               color: rgb(247,166,25);text-transform: capitalize;letter-spacing: 0.06vmin;}
+.announcements .image{width: 4vmax;height: 4vmax ;border-radius: 50% }
 
 .announcements .imagepreview{width: 40%;height: 40%;}
 
 .announcements .paragraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
-               font-size: 1.3em;letter-spacing: 0.03em;color: rgb(162,35,142)}
+               font-size: 4vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
 
 .announcements .deleteSpan{float:right; margin-right: 1.5em;}
 .input{ float: left !important;margin-left: 10%;width: 65% !important;border: 0px !important;padding: 5px 0px !important;margin-bottom: 20px !important;}
@@ -62,9 +62,9 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
                            font-weight: 100;letter-spacing: 0.1em;color: rgb(1,175,173)}
 .timeline .messageStyle{   font-family: "Comic Sans MS",sans-serif;font-size:0.8em;letter-spacing: 0.08em;font-style: italic;font-weight: 50;
                              color: rgb(247,166,25)}
-.QpSyllabusDefault {margin: 0 auto;padding: 1em;width: 55%;color: #333;border-radius: 2.8em; position: relative;top: 10%;
+.QpSyllabusDefault {margin: 0 auto;padding: 1em;color: #333;border-radius: 2.8em; position: relative;top: 10%;
                                background: rgb(255,255,255);border-top: 30px solid #2196F3 ;height:30%;box-shadow: 1px 1px 1px 1px rgb(95, 87, 87);}
-.RegisterContainer {margin: 0 auto;padding: 1em;color: #333;border-radius: 2.8em; position: relative;top: 15%;
+.RegisterContainer {margin: 0 auto;padding: 1em;color: #333;border-radius: 2.8em;
   background: rgb(255,255,255);border-top: 30px solid #2196F3 ;box-shadow: 1px 1px 1px 1px rgb(95, 87, 87);}
 .register{text-align: center;}
 .register .previousButton{ width: 40%;color: white!important; background-color: #2196F3 !important; border-radius: 1em !important;}
@@ -91,6 +91,9 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .userQuestion{text-align: center;}
 .NotesUpload .iframe{width:60%;height: 350px;}
 .Notifications {width:70%;margin-left:15%;}
+#notification-wrapper span {
+  display: inline-block !important;
+}
 .HomePage {background: url("../styledcomponents/images/bgimage.jpg")no-repeat center center fixed;  -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -119,7 +122,4 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .signupButtonText{position: relative;opacity: 1;font-size: 14px;letter-spacing: 0px;text-transform: uppercase;font-weight: 500;margin: 0px;user-select: none;padding-left: 16px;padding-right: 16px;color: rgb(255, 255, 255);}
 .body{font-size: 12px;}
 .html{font-size: 12px;}
-
-
-
 }

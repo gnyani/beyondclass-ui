@@ -31,6 +31,7 @@ class TeacherDashboard extends Component{
           <MenuItem
           primaryText={'Class  '+this.props.classes[index]}
           leftIcon={<LocationCity color={red500}/>}
+          onClick={this.props.handleMobileToggle}
            />
            </Link>
            </div>

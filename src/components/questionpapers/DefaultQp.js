@@ -9,15 +9,9 @@ import FlatButton from 'material-ui/FlatButton';
 import {FileFileDownload,NavigationFullscreen} from '../../styledcomponents/SvgIcons.js';
 import '../../styles/student-adda.css';
 import { Grid, Row, Cell } from 'react-inline-grid';
-import styled from 'styled-components'
 import UnauthorizedPage from '../UnauthorizedPage.js'
 var properties = require('../properties.json');
 
-const StayVisible = styled.div`
-  position: relative;
-  margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
-  transition: margin .1s;
-`
 
 class DefaultQp extends Component{
 
@@ -136,9 +130,7 @@ image(){
     if(this.props.userrole==="student")
     {
     return(
-    <StayVisible
-    {...this.props}
-    >
+    <div>
      <div className="QuestionPapers">
        <div >
        <br />
@@ -183,7 +175,7 @@ image(){
         </Grid>
     </div>
 
-    </StayVisible>
+    </div>
     )
   }
 else{

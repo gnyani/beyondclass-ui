@@ -343,7 +343,8 @@ generateOtp(){
       adaptiveHeight: true,
     };
     return(
-  <div style={{backgroundColor:"rgb(244,244,244)",height:"120vh"}}>
+  <div style={{overflow:"auto"}}>
+  <br /><br /><br /><br /><br /><br />
     <Grid fluid>
     <Row around="xs">
     <Col xs={12} md={10} lg={8}>
@@ -380,6 +381,7 @@ generateOtp(){
       </Col>
       </Row>
       </Grid>
+      <br />
       <Dialog
             title="Are you sure you belong to this class ?"
             modal={true}

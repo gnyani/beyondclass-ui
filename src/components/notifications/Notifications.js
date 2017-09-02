@@ -14,9 +14,10 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import {grey400} from 'material-ui/styles/colors';
 import PropTypes from 'prop-types';
-import {Grid,Row,Cell} from 'react-inline-grid';
+import {Grid,Row,Col} from 'react-flexbox-grid';
 import {notify} from 'react-notify-toast';
 import CircularProgress from 'material-ui/CircularProgress'
+import {Media} from '../utils/Media'
 
 var properties = require('../properties.json')
 
@@ -24,6 +25,9 @@ const StayVisible = styled.div`
   position: relative;
   margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
   transition: margin .1s;
+  ${Media.handheld`
+    margin-left: 0px;
+  `}
 `
 
 class Notifications extends Component {
@@ -118,9 +122,9 @@ list(buffer){
   {
     var date= new Date(this.state.createdDates[index])
   buffer.push(<div key={index}>
-    <Grid>
-    <Row is="center">
-    <Cell is="5 tablet-5 phone-5"><div>
+    <Grid fluid>
+    <Row around="xs" middle="xs">
+    <Col xs={11} sm={11} md={11} lg={11}>
     <ListItem
       leftAvatar={<Avatar src={this.state.notificationPictureUrls[index]} />}
       primaryText={this.state.notificationMessages[index]}
@@ -128,8 +132,8 @@ list(buffer){
       secondaryText={<p>{date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}</p>}
     />
     <Divider inset={true}/>
-    </div></Cell>
-    <Cell is="bottom 1 phone-1 tablet-1"><div>
+    </Col>
+    <Col xs={1} sm={1} md={1} lg={1}>
     <IconMenu iconButtonElement={
                   <IconButton
                     touch={true}
@@ -142,7 +146,7 @@ list(buffer){
               <MenuItem onTouchTap={this.handleNotificationRead.bind(this,index)} leftIcon={<RemoveRedEye color="green"/>}>Mark as Read</MenuItem>
                 <MenuItem onTouchTap={this.handleNotificationDelete.bind(this,index)} leftIcon={<Delete color="red"/>}>Delete</MenuItem>
                 </IconMenu>
-    </div></Cell>
+    </Col>
     </Row>
     </Grid>
 
@@ -159,12 +163,18 @@ list(buffer){
       <StayVisible
       {...this.props}
       >
+      <Grid fluid>
+      <Row around="xs">
+      <Col xs={12} sm={12} md={10} lg={9}>
       <br /> <br />
     <div>
       <List>
        {this.list(buffer)}
       </List>
     </div>
+    </Col>
+    </Row>
+    </Grid>
       </StayVisible>
     )
   }else{

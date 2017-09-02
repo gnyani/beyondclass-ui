@@ -4,13 +4,16 @@ import {Tabs, Tab} from 'material-ui/Tabs'
 import DefaultQp from './DefaultQp.js'
 import OtherQp from './OtherQp.js'
 import {ContentArchive,AvNote} from '../../styledcomponents/SvgIcons.js';
-
+import {Media} from '../utils/Media'
 
 
 const StayVisible = styled.div`
   position: relative;
   margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
   transition: margin .1s;
+  ${Media.handheld`
+    margin-left: 0px;
+  `}
 `
 
 class QpLayout extends Component{

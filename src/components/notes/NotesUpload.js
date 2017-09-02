@@ -3,17 +3,10 @@ import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {notify} from 'react-notify-toast';
-import { Grid, Row, Cell } from 'react-inline-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import {FileFileUpload} from '../../styledcomponents/SvgIcons.js'
-import styled from 'styled-components'
 import UnauthorizedPage from '../UnauthorizedPage.js'
 var properties = require('../properties.json');
-
-const StayVisible = styled.div`
-  position: relative;
-  margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
-  transition: margin .1s;
-`
 
 class NotesUpload extends Component{
 
@@ -100,14 +93,15 @@ class NotesUpload extends Component{
     if(this.props.userrole==="student")
     {
     return (
-    <StayVisible
-    {...this.props}
-    >
+      <Grid fluid>
+      <Row around="xs">
+      <Col xs={12} sm={12} md={10} lg={7}>
+    <div>
     <br  />
       <div className="QpSyllabusDefault NotesUpload">
-          <Grid>
-          <Row is="center">
-          <Cell is="6 tablet-6 phone-6"><div>
+      <Grid fluid>
+        <Row around="xs">
+        <Col xs={6} sm={6} md={6} lg={6}>
            <SelectField
            floatingLabelText="Subject*"
              value={this.state.value}
@@ -118,7 +112,7 @@ class NotesUpload extends Component{
              <MenuItem value={'OS'} label="OS" primaryText="Operating Systems" />
              <MenuItem value={'DM'} label="DM" primaryText="Data Mining" />
            </SelectField>
-           </div></Cell>
+           </Col>
            </Row>
            </Grid>
           <p className="paragraph"> Please upload a pdf file </p>
@@ -136,7 +130,10 @@ class NotesUpload extends Component{
       <br />
       <br />
       </div>
-  </StayVisible>
+  </div>
+  </Col>
+  </Row>
+  </Grid>
     )
   }else{
     return(<UnauthorizedPage />)

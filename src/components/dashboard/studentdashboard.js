@@ -32,6 +32,7 @@ isActive(value){
           <MenuItem
           primaryText={'AnouncementsBoard'}
           leftIcon={<ActionSpeakerNotes color={blue500}/>}
+          onClick={this.props.handleMobileToggle}
           />
         </Link></div>
       <Divider/>
@@ -40,6 +41,7 @@ isActive(value){
           <MenuItem
           primaryText={'TeacherStudentSpace'}
           leftIcon={<DeveloperBoard color={red500}/>}
+          onClick={this.props.handleMobileToggle}
           />
         </Link></div>
       <Divider/>
@@ -48,6 +50,7 @@ isActive(value){
             <MenuItem
             primaryText={'Timeline'}
             leftIcon={<ActionTimeline color={blue500}/>}
+            onClick={this.props.handleMobileToggle}
             />
           </Link>
           </div>
@@ -57,6 +60,7 @@ isActive(value){
           <MenuItem
           primaryText={'QuestionPaper'}
           leftIcon={<ActionBook color={red500}/>}
+          onClick={this.props.handleMobileToggle}
           />
         </Link>
       </div>
@@ -65,6 +69,7 @@ isActive(value){
       <Link to='/syllabus' width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"syllabus")}>
           <MenuItem primaryText={'Syllabus'}
             leftIcon={<AvLibraryBooks color={blue500} />}
+            onClick={this.props.handleMobileToggle}
           />
           </Link>
           </div>
@@ -73,6 +78,7 @@ isActive(value){
       <Link to='/assignments' width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"assignments")}>
               <MenuItem primaryText={'Assignments'}
                 leftIcon={<ActionAssignment color={red500} />}
+                onClick={this.props.handleMobileToggle}
               />
           </Link>
               </div>
@@ -81,6 +87,7 @@ isActive(value){
       <Link to='/notes' width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"notes")}>
               <MenuItem primaryText={'Notes'}
                 leftIcon={<ImageCollectionsBookmark color={blue500} />}
+                onClick={this.props.handleMobileToggle}
               />
         </Link>
       </div>
@@ -89,6 +96,7 @@ isActive(value){
               <Link to="/entertainment" width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"entertainment")}>
                 <MenuItem primaryText={'Entertainment'}
                   leftIcon={<AvMovie color={blue500} />}
+                  onClick={this.props.handleMobileToggle}
                 />
               </Link>
       </div>
@@ -97,6 +105,7 @@ isActive(value){
               <Link to="/coachingcentres" width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"coachingcentres")}>
                 <MenuItem primaryText={'Coaching-Centres'}
                   leftIcon={<SocialSchool color={red500} />}
+                  onClick={this.props.handleMobileToggle}
                 />
               </Link>
           </div>
@@ -106,6 +115,7 @@ isActive(value){
                   <MenuItem
                   primaryText={'User Questions'}
                   leftIcon={<ActionSpeakerNotes color={blue500}/>}
+                  onClick={this.props.handleMobileToggle}
                   />
                 </Link></div>
       </div>

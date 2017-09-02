@@ -6,7 +6,7 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
-import { Grid, Row, Cell } from 'react-inline-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import Dialog from 'material-ui/Dialog';
 import {Card, CardActions, CardHeader,CardText} from 'material-ui/Card';
 import {blue500,lightBlue300} from 'material-ui/styles/colors';
@@ -16,6 +16,7 @@ import {notify} from 'react-notify-toast';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import '../../styles/student-adda.css';
 import UnauthorizedPage from '../UnauthorizedPage.js'
+import {Media} from '../utils/Media'
 
 var properties = require('../properties.json');
 
@@ -23,6 +24,9 @@ const StayVisible = styled.div`
   position: relative;
   margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
   transition: margin .1s;
+  ${Media.handheld`
+    margin-left: 0px;
+  `}
 `
 const fontStyle={
   fontFamily: "'Comic Sans MS',sans-serif",
@@ -111,27 +115,27 @@ if(this.state.coachingcentreId.length!==0)
             readOnly
             />
             </div>
-            <Grid>
-            <Row is="start">
-            <Cell is="stretch 9 tablet-2"><div>
+            <Grid fluid>
+            <Row between="xs">
+            <Col xs>
             <a  className="link" onClick={this.handleReviewBoxOpen.bind(this,i)}> View Reviews</a>
-            </div></Cell>
-            <Cell is="stretch 2 tablet-2"><div>
+            </Col>
+            <Col xs>
             <a  className="link" onClick={this.handleShowFeeDetails.bind(this,i)}>Fee Details</a>
-            </div></Cell>
+            </Col>
             </Row>
             </Grid>
-            <Grid>
-            <Row is="start">
-            <Cell is="stretch 4 tablet-2"><div>
+            <Grid fluid>
+            <Row >
+            <Col xs>
             <FlatButton type="button" label="Review&Rating" fullWidth={true} icon={<MapsRateReview color={lightBlue300} />} onClick={this.showReviewBox.bind(this,i)}/>
-            </div></Cell>
-            <Cell is="stretch 4 tablet-2"><div>
+            </Col>
+            <Col xs>
             <FlatButton type="button" label="Contact" fullWidth={true} icon={<CommunicationContacts color={lightBlue300} />} onClick={this.showContactbox.bind(this,i)} />
-            </div></Cell>
-            <Cell is="stretch 4 tablet-2"><div>
+            </Col>
+            <Col xs>
             <FlatButton type="button" label="Location" fullWidth={true} icon={<CommunicationLocationOn color={lightBlue300} />} onClick={this.showContactbox.bind(this,i)} />
-            </div></Cell>
+            </Col>
             </Row>
             </Grid>
             </div>
@@ -366,11 +370,15 @@ if(this.props.userrole==="student")
      <StayVisible
      {...this.props}
      >
+     <br /><br />
+    <Grid fluid>
+    <Row around="xs">
+    <Col xs={12} sm={12} md={10} lg={8}>
     <div className="coachingcentres">
      <div className="div">
-     <Grid>
-     <Row is="start">
-     <Cell is="3 tablet-2 phone-2"><div>
+     <Grid fluid>
+     <Row middle="xs">
+     <Col xs>
      <DropDownMenu
        value={this.state.coachingType}
        onChange={this.handleCoachingChange}
@@ -380,9 +388,9 @@ if(this.props.userrole==="student")
        <MenuItem value={'GRE'} label="GRE" primaryText="GRE" />
        <MenuItem value={'GMAT'} label="GMAT" primaryText="GMAT" />
      </DropDownMenu>
-     </div></Cell>
+     </Col>
 
-     <Cell is="2 tablet-2 phone-2"><div>
+     <Col xs>
      <DropDownMenu
        value={this.state.city}
        onChange={this.handleCityChange}
@@ -391,8 +399,8 @@ if(this.props.userrole==="student")
        <MenuItem value={1} primaryText="City*" />
        <MenuItem value={'HYD'} label="HYD" primaryText="Hyderabad" />
      </DropDownMenu>
-     </div></Cell>
-     <Cell is="3 tablet-2 phone-2"><div>
+     </Col>
+     <Col xs>
      <DropDownMenu
        value={this.state.area}
        onChange={this.handleAreaChange}
@@ -402,10 +410,10 @@ if(this.props.userrole==="student")
        <MenuItem value={"HYMN"}  label="HYMN" primaryText="HimayatNagar" />
        <MenuItem value={"AMP"} label="AMP" primaryText="Ameerpet" />
      </DropDownMenu>
-     </div></Cell>
-     <Cell is="1 tablet-2 phone-2"><div>
+     </Col>
+     <Col xs>
      <RaisedButton label="Go" disabled={this.state.buttonDisabled} onClick={this.populateData.bind(this)}/>
-     </div></Cell>
+     </Col>
      </Row>
      </Grid>
     </div>
@@ -466,6 +474,9 @@ if(this.props.userrole==="student")
           </Tabs>
 </Dialog>
 </div>
+</Col>
+</Row>
+</Grid>
      </StayVisible>
    )
  }else{

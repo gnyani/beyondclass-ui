@@ -31,10 +31,10 @@ class PersonalInfo extends Component{
     <Grid fluid>
     <Row between="xs">
     <Col xs={12} md={8} lg={5}>
-       <TextField floatingLabelText="First Name"  value={this.props.firstName} />
+       <TextField floatingLabelText="First Name"  value={this.props.firstName} style={{width:"80%"}}/>
     </Col>
     <Col xs={12} md={8} lg={5}>
-       <TextField floatingLabelText="Last Name"  value={this.props.lastName} />
+       <TextField floatingLabelText="Last Name"  value={this.props.lastName} style={{width:"80%"}}/>
      </Col>
      </Row>
     </Grid>
@@ -42,7 +42,7 @@ class PersonalInfo extends Component{
     <Row bottom="xs" between="xs">
     <Col xs={12} md={8} lg={5}>
     <DatePicker floatingLabelText="Date of Birth" hintText="Date of Birth" openToYearSelection={true} maxDate={maxDate}
-    value={this.props.controlledDate} onChange={this.props.handleDateChange} onDismiss={this.props.handleDateDismiss}/>
+    style={{width:"80%"}} value={this.props.controlledDate} onChange={this.props.handleDateChange} onDismiss={this.props.handleDateDismiss}/>
     </Col>
     <Col xs={12} md={8} lg={5}>
     <div style={{width:"85%",marginTop:"10%"}}><Phone

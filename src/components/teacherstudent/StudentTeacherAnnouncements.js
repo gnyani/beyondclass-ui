@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {Grid,Row,Cell} from 'react-inline-grid'
+import {Grid,Row,Col} from 'react-flexbox-grid'
 
 
 var properties = require('../properties.json');
@@ -16,20 +16,17 @@ class StudentTeacherAnnouncements extends Component{
 
   list(buffer){
     if(this.state.announcements.length === 0)
-    buffer.push(<p className="messageStyle" style={{textAlign:"center"}}>You are all caught up, you don't have any announcements yet</p>)
+    buffer.push(<p key={new Date()} className="messageStyle" style={{textAlign:"center"}}>You are all caught up, you don't have any announcements yet</p>)
     else{
     for (let i=0;i<this.state.announcements.length;i++){
       buffer.push(
-                    <Grid key={i} className="announcements">
-                    <Row is="start">
-                    <Cell is="4 tablet-4 phone-4"><div>
+                    <Grid fluid key={i} className="announcements">
+                    <Row >
+                    <Col xs={12} sm={12} md={12} lg={12}>
                     <li >
-                    <p className="fontStyle">{this.state.teachernames[i]}:</p>
+                    <p className="name"> <span className="fontStyle">{this.state.teachernames[i]} </span>: <span className="messageStyle">{this.state.announcements[i]}</span> </p>
                     </li>
-                    </div></Cell>
-                    <Cell is="7 tablet-7 phone-7"><div>
-                    <p className="messageStyle" style={{float:"left"}}>{this.state.announcements[i]} </p>
-                    </div></Cell>
+                    </Col>
                     </Row>
                     </Grid>
 

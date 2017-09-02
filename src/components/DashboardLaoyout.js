@@ -27,6 +27,7 @@ class DashboardLaoyout extends Component{
     super();
     this.state = {
       open : true,
+      docked: true,
       width : 250,
       propiclink : '',
       username : '',
@@ -53,6 +54,7 @@ class DashboardLaoyout extends Component{
      this.uploadProPic = this.uploadProPic.bind(this)
      this.postTimeline = this.postTimeline.bind(this)
      this.dashboard = this.dashboard.bind(this)
+     this.handleToggle = this.handleToggle.bind(this)
 }
 
 
@@ -173,14 +175,21 @@ handleLogout(){
   }
 dashboard(){
   if(this.state.userrole === 'student'){
-    return(<StudentDashboard width={this.state.width}/>)
+    return(<StudentDashboard width={this.state.width} handleMobileToggle={this.handleMobileToggle}/>)
   }else if(this.state.userrole === 'teacher'){
-    return(<TeacherDashboard width={this.state.width} classes={this.state.classes}/>)
+    return(<TeacherDashboard width={this.state.width} classes={this.state.classes} handleMobileToggle={this.handleMobileToggle}/>)
   }
 }
 
 componentWillMount(){
 
+  let width= window.innerWidth
+  if(width<700){
+    this.setState({
+      open: false,
+      docked: false,
+    })
+  }
   fetch('http://'+properties.getHostName+':8080/user/loggedin', {
            credentials: 'include',
            method: 'GET'
@@ -216,13 +225,24 @@ componentWillMount(){
        })
 
 }
-handleToggle = () => {
+handleMobileToggle =() => {
+  if(!this.state.docked){
+    this.setState((prevState,props) =>{
+      return {
+        open : !prevState.open
+      }
+    })
+  }
+}
+
+handleToggle(){
   this.setState((prevState,props) =>{
     return {
       open : !prevState.open
     }
   })
 }
+
 handleSecondSlider = (event, value) => {
   this.setState({secondSlider: value});
 };
@@ -256,7 +276,7 @@ else
      userrole = {this.state.userrole}
      notificationsCount = {this.state.notificationsCount}
      />
-    <Drawer open={this.state.open} width = {this.state.width}>
+    <Drawer open={this.state.open} docked={this.state.docked} disableSwipeToOpen={true} width = {this.state.width} onRequestChange={(open) => this.setState({open})}>
     <div className="image-upload UserImageContainer">
     <div></div>
     <label htmlFor="file-input">
@@ -267,7 +287,7 @@ else
     <br />
     <br />
     <Link to='/updateprofile'>
-    <FlatButton label="Update Profile" hoverColor ={lightBlue100} fullWidth={true} icon={<AddImageIcon  color={blue500}/>}/>
+    <FlatButton label="Update Profile" onClick={this.handleMobileToggle}hoverColor ={lightBlue100} fullWidth={true} icon={<AddImageIcon  color={blue500}/>}/>
     </Link>
     <br />
 <Divider />

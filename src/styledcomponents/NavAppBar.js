@@ -9,11 +9,15 @@ import {Link} from 'react-router-dom';
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import Paper from 'material-ui/Paper';
 import CustomAvatar from '../styledcomponents/CustomAvatar.js'
+import {Media} from '../components/utils/Media'
 
 const StayVisible = styled.div`
   position: relative;
   margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
   transition: margin .1s;
+  ${Media.handheld`
+    margin-left: 0px;
+  `}
 `
 
 export const NavAppBar = (props) => {
@@ -30,7 +34,7 @@ export const NavAppBar = (props) => {
        }}
         >
            <ToolbarGroup firstChild={true}>
-           <IconButton onTouchTap={props.toggle}> <NavigationMenu color="#ffffff" /> </IconButton>
+           <IconButton onClick={props.toggle}> <NavigationMenu color="#ffffff" /> </IconButton>
                  <CustomAvatar />
              <ToolbarTitle text="StudentAdda" style={{marginLeft:"0.3em",color:'#ffffff'}}/>
            </ToolbarGroup>
