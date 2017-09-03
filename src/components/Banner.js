@@ -11,6 +11,8 @@ import CustomAvatar from '../styledcomponents/CustomAvatar.js'
 import Badge from 'material-ui/Badge';
 import IconButton from 'material-ui/IconButton';
 import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+
 
 var properties = require('./properties.json')
 
@@ -69,33 +71,43 @@ class Banner extends Component {
 
 loginToolbar(){
   var loginUrl = 'http://'+properties.getHostName+':8080/google/login'
-  return(
-<Paper zDepth={2}>
-<div>
-   <Toolbar  style={{
-      backgroundColor:'#2962ff',
-      noGutter: true
-  }}>
-      <div className="bannerFirstChild">
-        <div className="studentAddaLogoContainer">
-            <CustomAvatar />
-        </div>
-        <p className="bannerCompanyName">StudentAdda</p>
-        </div>
-      <ToolbarGroup>
-      <form action= {loginUrl}>
-      <div className="signupButtonDiv">
-        <button className="signUpButton">
-        <div className="signupButtonDiv2">
-        <span className="signupButtonText">Signup/SignIn</span>
-        </div>
-        </button>
-        </div>
-      </form>
-      </ToolbarGroup>
-    </Toolbar>
-</div>
-</Paper>
+  return(<div className="backgroundHome">
+      <Grid fluid className="h-100">
+        <Row className="h-100">
+          <Col xs={12} sm={6} md={4} mdOffset={4} smOffset={3}>
+              <Grid fluid className="signUpForm">
+                <Row>
+                    <Col xs={4} sm={6} md={3} mdOffset={5} smOffset={3} xsOffset={4}>
+                    <div className="bannerFirstChild">
+                      <div className="studentAddaLogoContainer">
+                          <CustomAvatar />
+                      </div>
+                      </div>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={12} md={12}>
+                    <h2 className="text">SignIn to StudenhtAdda<br></br><span>Your Virtual Class room</span></h2>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col xs={6} md={4} mdOffset={4} xsOffset={2} className="text">
+                <form action= {loginUrl}>
+                <div className="signupButtonDiv">
+                  <button className="signUpButton">
+                  <div className="signupButtonDiv2">
+                  <span className="signupButtonText">Signup/SignIn</span>
+                  </div>
+                  </button>
+                  </div>
+                </form>
+                </Col>
+            </Row>
+              </Grid>
+          </Col>
+        </Row>
+      </Grid>
+      </div>
   )
 }
 

@@ -15,7 +15,6 @@ ReactDOM.render(
   <MuiThemeProvider>
   <div className="vertical-scroll">
     <Notifications options={{zIndex: 5000}}/>
-    <Router className="StudentAdda"/>
-  </div>
+    <Router className="StudentAdda"/></div>
   </MuiThemeProvider>
 </HashRouter>, document.getElementById('router'));
