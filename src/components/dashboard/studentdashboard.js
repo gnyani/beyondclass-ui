@@ -4,7 +4,7 @@ import {blue500, red500} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import {ImageCollectionsBookmark,ActionBook,AvLibraryBooks,ActionAssignment,
-       ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool,DeveloperBoard} from '../../styledcomponents/SvgIcons.js'
+       ActionSpeakerNotes,ActionTimeline,SocialSchool,DeveloperBoard} from '../../styledcomponents/SvgIcons.js'
 
 
 class StudentDashboard extends Component{
@@ -92,7 +92,7 @@ isActive(value){
         </Link>
       </div>
       <Divider />
-      <div className={this.isActive('entertainment')}>
+  {/*    <div className={this.isActive('entertainment')}>
               <Link to="/entertainment" width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"entertainment")}>
                 <MenuItem primaryText={'Entertainment'}
                   leftIcon={<AvMovie color={blue500} />}
@@ -100,7 +100,7 @@ isActive(value){
                 />
               </Link>
       </div>
-      <Divider />
+      <Divider />*/}
       <div  className={this.isActive('coachingcentres')}>
               <Link to="/coachingcentres" width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"coachingcentres")}>
                 <MenuItem primaryText={'Coaching-Centres'}
