@@ -1,7 +1,7 @@
 import React from 'react';
 import {Card, CardActions, CardHeader, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-import { Grid, Row, Cell } from 'react-inline-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import {notify} from 'react-notify-toast';
@@ -152,9 +152,9 @@ export default class QuestionCard extends React.Component {
             onRequestClose={this.handleClose}
             autoScrollBodyContent={true}
           >
-          <Grid className="question">
-            <Row is="center">
-              <Cell is="8 tablet-4 phone-4">
+          <Grid fluid className="question">
+            <Row>
+              <Col xs={12} sm={12} md={10} lg={9}>
                 <TextField
                    hintText="What is your question"
                    fullWidth={true}
@@ -164,12 +164,12 @@ export default class QuestionCard extends React.Component {
                    onChange={this.questionChange}
                    value={this.state.question}
                  />
-               </Cell>
+               </Col>
              </Row>
            </Grid>
-           <Grid className="question">
-             <Row is="center">
-               <Cell is="8 tablet-4 phone-4">
+           <Grid fluid className="question">
+             <Row >
+               <Col xs={12} sm={12} md={10} lg={9}>
                  <TextField
                     hintText="Answer the Question"
                     fullWidth={true}
@@ -178,7 +178,7 @@ export default class QuestionCard extends React.Component {
                     rows={3}
                     onChange={this.handleAnswerChange}
                   />
-                </Cell>
+                </Col>
               </Row>
             </Grid>
           </Dialog>

@@ -4,7 +4,7 @@ import Divider from 'material-ui/Divider';
 import {lightBlue300,redA700} from 'material-ui/styles/colors';
 import HorizontalTimeline from 'react-horizontal-timeline';
 import {Card, CardActions, CardHeader, CardMedia,CardText} from 'material-ui/Card';
-import { Grid, Row, Cell } from 'react-inline-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import FlatButton from 'material-ui/FlatButton';
 import {ActionThumbUp,CommunicationComment,NavigationClose} from '../../styledcomponents/SvgIcons.js';
 import {notify} from 'react-notify-toast';
@@ -198,7 +198,7 @@ if(this.state.postUrls.length!==0)
     {
       if(this.state.isprofilepicchange[i] === true){
         buffer.push(
-            <Cell is="7 tablet-7" key={i}><div>
+            <Col xs={12} sm={12} md={10} lg={10} key={i}>
               <Card
               onExpandChange={this.deletePostConfirm.bind(this,i)}
               style={{borderRadius:"1.5em"}}
@@ -208,8 +208,8 @@ if(this.state.postUrls.length!==0)
                   subtitle="Changed his profile picture"
                   avatar={this.state.postOwnerPics[i]}
                   showExpandableButton={true}
-                  closeIcon={<NavigationClose color={redA700}/>}
-                  openIcon={<NavigationClose color={redA700}/>}
+                  closeIcon={<NavigationClose color={redA700} viewBox="0 0 30 30" />}
+                  openIcon={<NavigationClose color={redA700} viewBox="0 0 30 30"/>}
                 />
                 <CardMedia>
                    {bufferImage}
@@ -219,39 +219,35 @@ if(this.state.postUrls.length!==0)
                 </CardText>
                 <CardActions>
                   <div >
-                  <Grid>
-                  <Row is="start">
-                  <Cell is="stretch 7 tablet-7"><div>
-                  <div style={{marginLeft:'36%'}}>
+                  <Grid fluid>
+                  <Row center="xs" between="xs">
+                  <Col xs>
                  <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
-                  </div>
-                  </div></Cell>
-                  <Cell is="stretch 5 tablet-5"><div>
-                  <div style={{marginLeft:'15%'}}>
+                 </Col>
+                  <Col xs>
                  <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
-                  </div>
-                  </div></Cell>
+                 </Col>
                   </Row>
                   </Grid>
                   <Grid>
-                  <Row is="start">
-                  <Cell is="stretch 6 tablet-6"><div>
-                  <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} />}/>
-                  </div></Cell>
-                  <Cell is="stretch 6 tablet-6"><div>
-                  <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} />}/>
-                  </div></Cell>
+                  <Row >
+                  <Col xs>
+                  <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} viewBox="0 0 30 30"/>}/>
+                  </Col>
+                  <Col xs>
+                  <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} viewBox="0 0 30 30"/>}/>
+                  </Col>
                   </Row>
                   </Grid>
                   </div>
                 </CardActions>
                  {this.state.commentBox[i]}
               </Card>
-           </div></Cell>)
+           </Col>)
       }
     else{
       buffer.push(
-        <Cell is="7 tablet-7" key={i}><div>
+        <Col xs={12} sm={12} md={10} lg={10} key={i}>
           <Card
           onExpandChange={this.deletePostConfirm.bind(this,i)}
           style={{borderRadius:"1.5em"}}
@@ -261,8 +257,8 @@ if(this.state.postUrls.length!==0)
               subtitle={this.state.postOwners[i]}
               avatar={this.state.postOwnerPics[i]}
               showExpandableButton={true}
-              closeIcon={<NavigationClose color={redA700}/>}
-              openIcon={<NavigationClose color={redA700}/>}
+              closeIcon={<NavigationClose color={redA700} viewBox="0 0 30 30"/>}
+              openIcon={<NavigationClose color={redA700} viewBox="0 0 30 30"/>}
             />
             <CardMedia>
                {bufferImage}
@@ -272,39 +268,35 @@ if(this.state.postUrls.length!==0)
             </CardText>
             <CardActions>
               <div >
-              <Grid>
-              <Row is="start">
-              <Cell is="stretch 7 tablet-7"><div>
-              <div style={{marginLeft:'36%'}}>
+              <Grid fluid>
+              <Row center="xs" between="xs">
+              <Col xs>
              <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
-              </div>
-              </div></Cell>
-              <Cell is="stretch 5 tablet-5"><div>
-              <div style={{marginLeft:'15%'}}>
+              </Col>
+              <Col xs>
              <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
-              </div>
-              </div></Cell>
+              </Col>
               </Row>
               </Grid>
-              <Grid>
-              <Row is="start">
-              <Cell is="stretch 6 tablet-6"><div>
-              <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} />}/>
-              </div></Cell>
-              <Cell is="stretch 6 tablet-6"><div>
-              <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} />}/>
-              </div></Cell>
+              <Grid fluid>
+              <Row >
+              <Col xs>
+              <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} viewBox="0 0 30 30" />}/>
+              </Col>
+              <Col xs>
+              <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} viewBox="0 0 30 30" />}/>
+              </Col>
               </Row>
               </Grid>
               </div>
             </CardActions>
              {this.state.commentBox[i]}
           </Card>
-       </div></Cell>
+       </Col>
      )
    }}else{
      if(this.state.isprofilepicchange[i] === true){
-      buffer.push( <Cell is="7 tablet-7" key={i}><div>
+      buffer.push( <Col xs={12} sm={12} md={10} lg={10} key={i}>
          <Card
          style={{borderRadius:"1.5em"}}
          >
@@ -321,38 +313,34 @@ if(this.state.postUrls.length!==0)
            </CardText>
            <CardActions>
              <div >
-             <Grid>
-             <Row is="start">
-             <Cell is="stretch 7 tablet-7"><div>
-             <div style={{marginLeft:'36%'}}>
+             <Grid fluid>
+             <Row center="xs" between="xs">
+             <Col xs>
             <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
-             </div>
-             </div></Cell>
-             <Cell is="stretch 5 tablet-7"><div>
-             <div style={{marginLeft:'15%'}}>
+            </Col>
+            <Col xs>
             <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
-             </div>
-             </div></Cell>
+            </Col>
              </Row>
              </Grid>
-             <Grid>
-             <Row is="start">
-             <Cell is="stretch 6 tablet-6"><div>
-             <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} />}/>
-             </div></Cell>
-             <Cell is="stretch 6 tablet-6"><div>
-             <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} />}/>
-             </div></Cell>
+             <Grid fluid>
+             <Row >
+             <Col xs>
+             <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} viewBox="0 0 30 30" />}/>
+             </Col>
+             <Col xs>
+             <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} viewBox="0 0 30 30" />}/>
+             </Col>
              </Row>
              </Grid>
              </div>
            </CardActions>
             {this.state.commentBox[i]}
          </Card>
-      </div></Cell>)
+      </Col>)
     }else{
      buffer.push(
-         <Cell is="7 tablet-7 phone-7" key={i}><div>
+         <Col xs={12} sm={12} md={10} lg={10} key={i}>
            <Card
            style={{borderRadius:"1.5em"}}
            >
@@ -369,35 +357,31 @@ if(this.state.postUrls.length!==0)
              </CardText>
              <CardActions>
                <div >
-               <Grid>
-               <Row is="start">
-               <Cell is="stretch 7 tablet-7"><div>
-               <div style={{marginLeft:'36%'}}>
+               <Grid fluid>
+               <Row center="xs" between="xs" >
+               <Col xs>
               <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
-               </div>
-               </div></Cell>
-               <Cell is="stretch 5 tablet-2"><div>
-               <div style={{marginLeft:'15%'}}>
+              </Col>
+              <Col xs>
               <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
-               </div>
-               </div></Cell>
+              </Col>
                </Row>
                </Grid>
-               <Grid>
-               <Row is="start">
-               <Cell is="stretch 6 tablet-6"><div>
-               <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} />}/>
-               </div></Cell>
-               <Cell is="stretch 6 tablet-6"><div>
-               <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} />}/>
-               </div></Cell>
+               <Grid fluid>
+               <Row >
+               <Col xs>
+               <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} viewBox="0 0 30 30"/>}/>
+               </Col>
+               <Col xs>
+               <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} viewBox="0 0 30 30"/>}/>
+               </Col>
                </Row>
                </Grid>
                </div>
              </CardActions>
               {this.state.commentBox[i]}
            </Card>
-        </div></Cell>
+        </Col>
       )
    }
  }
@@ -656,14 +640,14 @@ getLikedUsers(i){
         rowsMax={4}
         style={{width:'60%'}}
         />
-        <Grid>
-        <Row is="center">
-        <Cell is="6 tablet-6"><div>
+        <Grid fluid>
+        <Row between="xs" middle="xs">
+        <Col xs lgOffset={3}>
         <input type="file" onChange={this._handleImageChange} />
-        </div></Cell>
-        <Cell is="4 tablet-4"><div >
+       </Col>
+        <Col xs>
         <FlatButton  className="PostButton" type="submit" label="Post"  disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
-        </div></Cell>
+        </Col>
 
         </Row>
         </Grid>
@@ -727,11 +711,12 @@ getLikedUsers(i){
         </Dialog>
 
         <div>
-            <Grid>
-            <Row is="center">
+            <Grid fluid>
+            <Row around="xs">
             {this.loadTimeline(buffer)}
             </Row>
             </Grid>
+            <br /><br />
             </div>
         </div>
     );

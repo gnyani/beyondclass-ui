@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Row, Cell } from 'react-inline-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import '../../styles/student-adda.css';
 import Divider from 'material-ui/Divider';
 import {notify} from 'react-notify-toast';
@@ -33,7 +33,7 @@ class Hello extends React.Component {
     var i=0;
     for (i=0;i<this.state.users.length;i++){
       buffer.push(
-        <Cell is="8 tablet-4 phone-4">
+        <Col xs={12} sm={12} md={11} lg={10}>
           <QuestionCard
                 question={this.state.questions[i]}
                 answer={this.state.answers[i]}
@@ -43,7 +43,8 @@ class Hello extends React.Component {
                 questionId={this.state.QuestionIds[i]}
                 component={this.componentWillMount}
                  key={new Date()}/>
-        </Cell>
+                 <br />
+        </Col>
       )
     }
     return buffer;
@@ -150,11 +151,12 @@ class Hello extends React.Component {
             answerChange={this.handleAnswerChange}
             handleSubmit={this.handleSubmit}/>
         </div>
+        <br />
         <Divider />
         <div>
           <h1 className="announcements">Previous Questions</h1>
-          <Grid className="question">
-            <Row is="center">
+          <Grid fluid className="question">
+            <Row around="xs">
                 {this.list(buffer)}
             </Row>
           </Grid>

@@ -4,7 +4,7 @@ body,html {height: 100%;width:100%;overflow: hidden;margin: 0;outline: 0;margin:
 body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
                font-size: 2em;letter-spacing: 0.07em;color: rgb(162,35,142)}
 .b-100{height:100%;width:100%}
-.signUpForm{background: rgb(68, 68, 68);color: white;position: relative;top: 38%;bottom: 50%;}
+.signUpForm{background: #455A64;color: #FFCCBC;position: relative;top: 125%;border-radius: 7%}
 body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 0px rgb(95, 87, 87);border-radius: 1.5em}
 .UserImageContainer .ProfilePic{width: 40%;height: 40% ;color: rgb(33, 150, 243);margin-top: 15%;margin-left: 27%;border-radius: 50%;}
 .UserImageContainer .ProfilePic :hover{width: 40%;height: 40% ;color: rgb(33, 150, 243);margin-top: 15%;margin-left: 27%;border-radius: 50%;}
@@ -102,14 +102,8 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
   -o-background-size: cover;
   background-size: cover;}
 .question{font-weight: bolder;}
-.studentAddaLogoContainer{color: rgba(0, 0, 0, 0.87);display: block;font-size: 16px;line-height: 16px;position: relative;transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;margin-left: -14px;}
-.text{text-align: center;font-family: "Chalkduster"}
-.studentAddaLogo{margin-top: 10px;color: rgb(245, 124, 0);background-color: rgb(26, 35, 126);user-select: none;display: inline-flex;align-items: center;justify-content: center;font-size: 50px;border-radius: 50%;height: 90px;width: 90px;}
-.bannerFirstChild{position: relative;display: flex;justify-content: space-between;align-items: center;}
-.bannerCompanyName{padding-right: 16px;line-height: 56px;font-size: 20px;font-family: Roboto, sans-serif;position: relative;text-overflow: ellipsis;white-space: nowrap;overflow: hidden;color: rgb(255, 255, 255);}
-.signupButtonDiv{color: rgba(0, 0, 0, 0.87);-webkit-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;-o-transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;-webkit-box-sizing: border-box;box-sizing: border-box;font-family: Roboto, sans-serif;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);border-radius: 2px;display: inline-block;margin-bottom: 29px;min-width: 88px;}
-.signUpButton{border: 10px;box-sizing: border-box;display: inline-block;font-family: Roboto, sans-serif;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);cursor: pointer;text-decoration: none;margin: 0px;padding: 0px;outline: none;font-size: inherit;font-weight: inherit;position: relative;z-index: 1;height: 36px;line-height: 36px;width: 100%;border-radius: 2px;transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;background-color: rgb(0, 188, 212);text-align: center;}
-.signupButtonDiv2{height: 36px;border-radius: 2px;transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;top: 0px;}
-.signupButtonText{position: relative;opacity: 1;font-size: 14px;letter-spacing: 0px;text-transform: uppercase;font-weight: 500;margin: 0px;user-select: none;padding-left: 16px;padding-right: 16px;color: rgb(255, 255, 255);}
+.studentAddaLogoContainer{margin-top: 1vmin;color: rgb(245, 124, 0);background-color: rgb(26, 35, 126);user-select: none;display: inline-flex;align-items: center;justify-content: center;font-size: 3.5vmin;border-radius: 50%;height: 45px;width: 45px;}
+.text{text-align: center;font-family: "Chalkduster",fantasy,sans-serif;font-size: 3.5vmin;letter-spacing: 0.5vmin;font-weight: 100;}
+.studentAddaLogo{margin-top: 0.4vmin;color: rgb(245, 124, 0);background-color: rgb(26, 35, 126);user-select: none;display: inline-flex;align-items: center;justify-content: center;font-size: 3.5vmin;border-radius: 50%;height: 45px;width: 45px;}
+.signupButton{width: 65%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
 .UpdateProfile .button {margin-left: 40% !important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
-.h-100{height: 100vh}

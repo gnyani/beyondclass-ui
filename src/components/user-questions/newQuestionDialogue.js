@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {RadioButton} from 'material-ui/RadioButton';
 import TextField from 'material-ui/TextField';
-import { Grid, Row, Cell } from 'react-inline-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 
 
 const styles = {
@@ -61,11 +61,12 @@ export default class NewQuestionDialogue extends React.Component {
 
     return (
       <div>
-        <Grid className="question">
-          <Row is="center">
-            <Cell is="2 tablet-4 phone-4">
+      <br />
+        <Grid fluid className="question">
+          <Row center="xs">
+            <Col xs>
               <RaisedButton label="ASK QUESTION" onClick={this.handleOpen} />
-            </Cell>
+            </Col>
           </Row>
         </Grid>
         <Dialog
@@ -76,9 +77,9 @@ export default class NewQuestionDialogue extends React.Component {
           onRequestClose={this.handleClose}
           autoScrollBodyContent={true}
         >
-        <Grid className="question">
-          <Row is="center">
-            <Cell is="8 tablet-4 phone-4">
+        <Grid fluid className="question">
+          <Row >
+            <Col xs={12} sm={12} md={10} lg={9}>
               <TextField
                  hintText="What is your question"
                  fullWidth={true}
@@ -87,12 +88,12 @@ export default class NewQuestionDialogue extends React.Component {
                  rows={3}
                  onChange={this.props.questionChange}
                />
-             </Cell>
+             </Col>
            </Row>
          </Grid>
-         <Grid className="question">
-           <Row is="center">
-             <Cell is="8 tablet-4 phone-4">
+         <Grid fluid className="question">
+           <Row >
+             <Col xs={12} sm={12} md={10} lg={9}>
                <TextField
                   hintText="Answer the Question"
                   fullWidth={true}
@@ -101,7 +102,7 @@ export default class NewQuestionDialogue extends React.Component {
                   rows={3}
                   onChange={this.props.answerChange}
                 />
-              </Cell>
+              </Col>
             </Row>
           </Grid>
         </Dialog>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {Switch,Route} from 'react-router-dom'
 import Banner from './Banner.js';
-import HomePage from './HomePage.js'
 import DashboardLayout from './DashboardLaoyout.js'
 import Register from './registration/register.js';
 import '../styles/student-adda.css'

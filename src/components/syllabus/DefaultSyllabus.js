@@ -8,7 +8,7 @@ import {lightBlue300} from 'material-ui/styles/colors';
 import {Card, CardActions, CardHeader, CardMedia} from 'material-ui/Card';
 import {FileFileDownload,NavigationFullscreen} from '../../styledcomponents/SvgIcons.js';
 import '../../styles/student-adda.css';
-import { Grid, Row, Cell } from 'react-inline-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid';
 import UnauthorizedPage from '../UnauthorizedPage.js'
 
 var properties = require('../properties.json');
@@ -87,7 +87,7 @@ image(){
 
       obj.onload = () => {
         x.push(
-          <Cell is="7 tablet-7" key={new Date()}><div>
+          <Col xs={12} sm={12} md={11} lg={10} key={new Date()}>
             <Card
             style={{borderRadius:"1.5em"}}
             >
@@ -100,22 +100,22 @@ image(){
               </CardMedia>
               <CardActions>
                 <div >
-                <Grid>
-                <Row is="start">
-                <Cell is="stretch 6 tablet-6"><div>
+                <Grid fluid>
+                <Row between="xs">
+                <Col xs>
                 <form method="post" action={obj.src+"/download"}>
                 <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color={lightBlue300} />}/>
                 </form>
-                </div></Cell>
-                <Cell is="stretch 6 tablet-6"><div>
+                </Col>
+                <Col xs>
                 <FlatButton type="submit" label="Full View" fullWidth={true}  onClick={() => this.setState({ isOpen: true })} icon={<NavigationFullscreen color={lightBlue300} />}/>
-                </div></Cell>
+                </Col>
                 </Row>
                 </Grid>
                 </div>
               </CardActions>
             </Card>
-            </div></Cell>
+            </Col>
           )
         this.setState({
           image: x.slice(),
@@ -131,13 +131,16 @@ handleChange = (event, index, subject) => this.setState({subject});
   if(this.props.userrole==="student")
   {
     return(
+      <Grid fluid>
+      <Row around="xs">
+      <Col xs={12} sm={12} md={10} lg={10}>
   <div>
     <div className="Syllabus">
        <div >
        <br />
-      <Grid>
-      <Row is="center">
-      <Cell is="4 tablet-4 phone-4"><div>
+      <Grid fluid>
+      <Row around="xs" middle="xs">
+      <Col xs>
        <SelectField
         floatingLabelText="Subject*"
          value={this.state.subject}
@@ -149,22 +152,25 @@ handleChange = (event, index, subject) => this.setState({subject});
          <MenuItem value={'OS'} label="OS" primaryText="Operating Systems" />
          <MenuItem value={'DM'} label="DM" primaryText="Data Mining" />
        </SelectField>
-       </div></Cell>
-       <Cell is="middle 3 tablet-3 phone-3"><div>
+       </Col>
+       <Col xs>
        <FlatButton label="Fetch" value="Fetch" primary={true} className="fetchButton" onTouchTap={this.validateAndFetch} />
-       </div></Cell>
+       </Col>
        </Row>
        </Grid>
 <Divider />
        </div>
         <br /> <br /> <br />
-        <Grid>
-        <Row is="center">
+        <Grid fluid>
+        <Row around="xs">
         {this.state.image}
         </Row>
         </Grid>
     </div>
     </div>
+    </Col>
+    </Row>
+    </Grid>
     )
   }
   else{

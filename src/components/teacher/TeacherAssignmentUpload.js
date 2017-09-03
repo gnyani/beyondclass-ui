@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import { Grid, Row, Cell } from 'react-inline-grid'
+import { Grid, Row, Col } from 'react-flexbox-grid'
 import FlatButton from 'material-ui/FlatButton'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
@@ -86,7 +86,7 @@ deletePostConfirm(i){
 }
 list(buffer){
   for(let i=0; i<this.state.links.length; i++){
-    buffer.push( <Cell is="7 tablet-7" key={i}><div>
+    buffer.push( <Col xs={12} sm={12} md={12} lg={12} key={i}>
          <Card
          style={{borderRadius:"2em"}}
          onExpandChange={this.deletePostConfirm.bind(this,i)}
@@ -95,8 +95,8 @@ list(buffer){
              title="Uploaded By"
              subtitle={this.state.links[i].split('-')[5]}
              showExpandableButton={true}
-             closeIcon={<NavigationClose color={redA700}/>}
-             openIcon={<NavigationClose color={redA700}/>}
+             closeIcon={<NavigationClose color={redA700} viewBox="0 0 30 30"/>}
+             openIcon={<NavigationClose color={redA700} viewBox="0 0 30 30"/>}
            />
            <CardMedia>
              <img  title="assignments" alt="" src={this.state.links[i]} className="iframe"/>
@@ -108,7 +108,7 @@ list(buffer){
              </form>
            </CardActions>
          </Card>
-      </div></Cell>
+      </Col>
   )
   }
   return buffer;
@@ -206,12 +206,15 @@ handleClose = () => {
     ]
    var buffer =[];
     return(
+      <Grid fluid>
+      <Row around="xs">
+      <Col xs={12} sm={12} md={10} lg={8}>
       <div>
       <br /><br />
       <div className="QpSyllabusDefault AssignUpload">
-        <Grid>
-          <Row is="center">
-          <Cell is="6 tablet-6 phone-6"><div>
+        <Grid fluid>
+          <Row >
+          <Col xs>
            <SelectField
              floatingLabelText="Subject*"
              value={this.state.value}
@@ -222,7 +225,7 @@ handleClose = () => {
              <MenuItem value={'OS'} label="OS" primaryText="Operating Systems" />
              <MenuItem value={'DM'} label="DM" primaryText="Data Mining" />
            </SelectField>
-           </div></Cell>
+           </Col>
            </Row>
            </Grid>
           <br />
@@ -242,11 +245,12 @@ handleClose = () => {
 <Divider />
       <div className="announcements">
         <p className="paragraph"> Your uploads </p>
-        <Grid>
-        <Row is="center">
+        <Grid fluid>
+        <Row around="xs">
          {this.list(buffer)}
         </Row>
         </Grid>
+        <br /><br />
       </div>
       <Dialog
             title="Are you sure you want to delete this post"
@@ -259,6 +263,9 @@ handleClose = () => {
           >
       </Dialog>
       </div>
+      </Col>
+      </Row>
+      </Grid>
     )
   }
 }

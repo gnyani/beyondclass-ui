@@ -48,6 +48,7 @@ class SyllabusLayout extends Component{
         </Tab>
       </Tabs>
       </div>
+
       </StayVisible>
     )
   }

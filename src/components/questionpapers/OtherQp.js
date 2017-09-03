@@ -6,7 +6,7 @@ import {lightBlue300} from 'material-ui/styles/colors';
 import {Card, CardActions, CardHeader, CardMedia} from 'material-ui/Card';
 import {FileFileDownload,NavigationFullscreen,NavigationArrowBack,NavigationArrowForward} from '../../styledcomponents/SvgIcons.js';
 import MenuItem from 'material-ui/MenuItem';
-import { Grid, Row, Cell } from 'react-inline-grid';
+import { Grid, Row, Col} from 'react-flexbox-grid';
 import '../../styles/student-adda.css';
 import Slider from 'react-slick';
 import "../../../node_modules/slick-carousel/slick/slick.css";
@@ -113,7 +113,7 @@ class OtherQp extends Component{
 
          obj.onload = () => {
            x.push(
-             <Cell is="7 tablet-7" key={new Date()}><div>
+             <Col xs={12} sm={12} md={10} lg={9} key={new Date()}>
                <Card
                style={{borderRadius:"1.5em"}}
                >
@@ -126,22 +126,22 @@ class OtherQp extends Component{
                  </CardMedia>
                  <CardActions>
                    <div >
-                   <Grid>
-                   <Row is="start">
-                   <Cell is="stretch 6 tablet-6"><div>
+                   <Grid fluid>
+                   <Row between="xs">
+                   <Col xs>
                    <form method="post" action={obj.src+"/download"}>
                    <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color={lightBlue300} />}/>
                    </form>
-                   </div></Cell>
-                   <Cell is="stretch 6 tablet-6"><div>
+                   </Col>
+                   <Col xs>
                    <FlatButton type="submit" label="Full View" fullWidth={true}  onClick={() => this.setState({ isOpen: true })} icon={<NavigationFullscreen color={lightBlue300} />}/>
-                   </div></Cell>
+                   </Col>
                    </Row>
                    </Grid>
                    </div>
                  </CardActions>
                </Card>
-               </div></Cell>
+               </Col>
              )
            this.setState({
              image: x.slice(),
@@ -193,6 +193,9 @@ class OtherQp extends Component{
    if(this.props.userrole==="student")
    {
      return(
+       <Grid fluid>
+       <Row around="xs">
+       <Col xs={12} sm={12} md={12} lg={12}>
     <div>
    <br /><br />
     <div className="QpSyllabusDefault">
@@ -200,9 +203,9 @@ class OtherQp extends Component{
         this.setState({ currentSlide: currentSlide  })
       }}>
     <div className="QuestionPapers">
-       <Grid>
-       <Row is="start">
-       <Cell is="top 6 tablet-6 phone-6"><div>
+       <Grid fluid>
+       <Row between="xs">
+       <Col xs>
         <SelectField
           floatingLabelText="University*"
           value={this.state.university}
@@ -213,8 +216,8 @@ class OtherQp extends Component{
           <MenuItem value={'OU'} label="OU" primaryText="Osmania University" />
           <MenuItem value={'JNTU'} label="JNTU" primaryText="JNTU" />
         </SelectField>
-        </div></Cell>
-        <Cell is="6 tablet-6 phone-6"><div>
+        </Col>
+        <Col xs>
          <SelectField
          floatingLabelText="College*"
            value={this.state.college}
@@ -225,12 +228,12 @@ class OtherQp extends Component{
            <MenuItem value={'VASV'} label="VASV" primaryText="Vasavi College of Engineering" />
            <MenuItem value={'CBIT'} label="CBIT" primaryText="Chaitanya Bharathi Institute of Technology" />
          </SelectField>
-         </div></Cell>
+         </Col>
          </Row>
          </Grid>
-         <Grid>
-         <Row>
-          <Cell is="6 tablet-6 phone-6"><div>
+         <Grid fluid>
+         <Row between="xs">
+          <Col xs>
            <SelectField
             floatingLabelText = "Branch*"
              value={this.state.branch}
@@ -241,8 +244,8 @@ class OtherQp extends Component{
              <MenuItem value={'CSE'} label="CSE" primaryText="Computer Science and Engineering" />
              <MenuItem value={'ECE'} label="ECE" primaryText="Electricals and Electronics Communication" />
            </SelectField>
-           </div></Cell>
-           <Cell is="middle 6 tablet-6 phone-6"><div>
+           </Col>
+           <Col xs>
             <SelectField
             floatingLabelText="Year *"
               value={this.state.year}
@@ -255,14 +258,14 @@ class OtherQp extends Component{
               <MenuItem value={3} label="3" primaryText="3rd Year" />
               <MenuItem value={4} label="4" primaryText="4th Year" />
             </SelectField>
-            </div></Cell>
+            </Col>
             </Row>
             </Grid>
             </div>
             <div className="QuestionPapers">
-            <Grid>
-            <Row is="start">
-              <Cell is="6 tablet-6 phone-6"><div>
+            <Grid fluid>
+            <Row between="xs">
+              <Col xs>
               <SelectField
               floatingLabelText="Semester*"
                value={this.state.sem}
@@ -273,8 +276,8 @@ class OtherQp extends Component{
                <MenuItem value={1} label="Sem-1" primaryText="Sem-1" />
                <MenuItem value={2} label="Sem-2" primaryText="Sem-2" />
               </SelectField>
-              </div></Cell>
-              <Cell is="6 tablet-6 phone-6"><div>
+              </Col>
+              <Col xs>
               <SelectField
               floatingLabelText="Subject*"
                 value={this.state.subject}
@@ -285,12 +288,12 @@ class OtherQp extends Component{
                 <MenuItem value={'OS'} label="OS" primaryText="OS" />
                 <MenuItem value={'DM'} label="DM" primaryText="DM" />
               </SelectField>
-              </div></Cell>
+              </Col>
               </Row>
               </Grid>
-              <Grid>
-               <Row is="start">
-               <Cell is="6 tablet-6 phone-6"><div>
+              <Grid fluid>
+               <Row between="xs">
+               <Col xs>
                <SelectField
                floatingLabelText="QuestionPaperYear*"
                 value={this.state.qpyear}
@@ -301,27 +304,34 @@ class OtherQp extends Component{
                 <MenuItem value={'2015'} label="2015" primaryText="2015" />
                 <MenuItem value={'2016'} label="2016" primaryText="2016" />
                </SelectField>
-               </div></Cell>
+               </Col>
                </Row>
                </Grid>
               </div>
       </Slider>
-      <div className="register" >
+      <Grid fluid>
+      <Row around="xs">
+      <Col xs className="register">
       {this.previousButton()}
        {this.nextButton()}
-       </div>
+       </Col>
+       </Row>
+       </Grid>
       </div>
 
      <div>
 
          <br />
-         <Grid>
-         <Row is="center">
+         <Grid fluid>
+         <Row around="xs">
          {this.state.image}
          </Row>
          </Grid>
      </div>
   </div>
+  </Col>
+  </Row>
+  </Grid>
      )
    }
    else{

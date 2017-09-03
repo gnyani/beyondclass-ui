@@ -6,7 +6,7 @@ import {notify} from 'react-notify-toast';
 import IconButton from 'material-ui/IconButton';
 import {NavigationClose} from '../../styledcomponents/SvgIcons.js';
 import Dialog from 'material-ui/Dialog';
-import {Grid,Row,Cell} from 'react-inline-grid';
+import {Grid,Row,Col} from 'react-flexbox-grid';
 
 
 var properties = require('../properties.json');
@@ -80,16 +80,16 @@ class TeacherAnnouncement extends Component{
  list(buffer){
    for (let i=0;i<this.state.announcements.length;i++){
      buffer.push(
-                   <Grid key={i}>
-                   <Row is="start">
-                   <Cell is="10 tablet-10 phone-10"><div>
+                   <Grid fluid key={i}>
+                   <Row middle="xs">
+                   <Col xs={10} sm={10} md={10} lg={10}>
                    <li >
-                   <p className="name">{this.state.announcements[i]} </p>
+                   <p className="name"> <span className="fontStyle">{this.state.announcements[i]}</span> </p>
                    </li>
-                   </div></Cell>
-                   <Cell is="middle 2 tabet-2 phone-2"><div>
-                   <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><NavigationClose color="red"/></IconButton>
-                   </div></Cell>
+                   </Col>
+                   <Col xs={1} sm={1} md={1} lg={1}>
+                   <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><NavigationClose color="red" viewBox="0 0 30 30"/></IconButton>
+                   </Col>
                    </Row>
                    </Grid>
 
@@ -178,6 +178,9 @@ class TeacherAnnouncement extends Component{
         onTouchTap={this.handleClose}
       />]
     return(
+      <Grid fluid>
+      <Row around="xs">
+      <Col xs={12} sm={12} md={10} lg={10}>
       <div className="announcements">
       <h2 className="heading"> Your Announcements for class {this.props.class}</h2>
       <div  className="container page">
@@ -211,6 +214,9 @@ class TeacherAnnouncement extends Component{
             >
         </Dialog>
       </div>
+      </Col>
+      </Row>
+      </Grid>
     )
   }
 }

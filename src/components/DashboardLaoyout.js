@@ -225,6 +225,26 @@ componentWillMount(){
        })
 
 }
+componentDidMount() {
+    window.addEventListener("resize", this.updateDimensions);
+}
+componentWillUnmount() {
+    window.removeEventListener("resize", this.updateDimensions);
+}
+updateDimensions = () => {
+  let width = window.innerWidth
+  console.log("width is" +width)
+  if(width<700){
+    console.log("calling handle toggle")
+    this.setState({
+      open:false
+    })
+  }else{
+    this.setState({
+      open:true
+    })
+  }
+}
 handleMobileToggle =() => {
   if(!this.state.docked){
     this.setState((prevState,props) =>{
@@ -236,6 +256,7 @@ handleMobileToggle =() => {
 }
 
 handleToggle(){
+  console.log("this method got fired")
   this.setState((prevState,props) =>{
     return {
       open : !prevState.open

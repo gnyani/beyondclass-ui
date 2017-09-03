@@ -1,7 +1,5 @@
 import React from 'react';
 import {Switch,Route} from 'react-router-dom'
-import Banner from './Banner.js';
-import Dashboard from './dashboard.js';
 import QpLayout from './questionpapers/QpLayout.js'
 import AssignLayout from './assignments/AssignLayout.js'
 import NotesLayout from './notes/NotesLayout.js'
@@ -19,7 +17,6 @@ export const Body =(props) => {
     return(
 <main >
   <Switch>
-    <Route path='/dashboard' render={() =>(<Dashboard {...props}/>)}/>
     <Route path='/questionpaper' render={()=>(<QpLayout {...props} />)}/>
     <Route path='/syllabus' render={()=>(<SyllabusLayout {...props} />)} />
     <Route path='/assignments' render={()=>(<AssignLayout {...props} /> )} />
