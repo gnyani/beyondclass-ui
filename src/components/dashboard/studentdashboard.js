@@ -4,7 +4,7 @@ import {blue500, red500} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import {ImageCollectionsBookmark,ActionBook,AvLibraryBooks,ActionAssignment,
-       ActionSpeakerNotes,ActionTimeline,SocialSchool,DeveloperBoard} from '../../styledcomponents/SvgIcons.js'
+       ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool,DeveloperBoard} from '../../styledcomponents/SvgIcons.js'
 
 
 class StudentDashboard extends Component{
