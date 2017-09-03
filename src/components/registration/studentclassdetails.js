@@ -23,7 +23,7 @@ class StudentClassDetails extends Component{
       >
         <MenuItem value={1} primaryText="Select" />
         <MenuItem value={'OU'} label="OU" primaryText="Osmania University" />
-        <MenuItem value={'JNTU'} label="JNTU" primaryText="JNTU" />
+        {/*<MenuItem value={'JNTU'} label="JNTU" primaryText="JNTU" />*/}
       </SelectField>
       </Col>
       <Col xs={12} md={6} lg={6}>
@@ -34,7 +34,7 @@ class StudentClassDetails extends Component{
       >
         <MenuItem value={1} primaryText="Select" />
         <MenuItem value={'VASV'} label="VASV" primaryText="Vasavi College Of Engineering" />
-        <MenuItem value={'OU'} label="OU"  primaryText="Osmania University" />
+      {/* <MenuItem value={'OU'} label="OU"  primaryText="Osmania University" />*/}
       </SelectField>
      </Col>
       </Row>
@@ -49,9 +49,9 @@ class StudentClassDetails extends Component{
       >
         <MenuItem value={0} primaryText="Select" />
         <MenuItem value={1} primaryText="One" />
-        <MenuItem value={2} primaryText="Two" />
+        {/*<MenuItem value={2} primaryText="Two" />
         <MenuItem value={3} primaryText="Three" />
-        <MenuItem value={4} primaryText="Four" />
+        <MenuItem value={4} primaryText="Four" />*/}
       </SelectField>
       </Col>
       <Col xs={12} md={6} lg={6}>
@@ -62,7 +62,7 @@ class StudentClassDetails extends Component{
       >
         <MenuItem value={0} primaryText="Select" />
         <MenuItem value={1} primaryText="One" />
-        <MenuItem value={2} primaryText="Two" />
+        {/*<MenuItem value={2} primaryText="Two" />*/}
       </SelectField>
       </Col>
       </Row>
@@ -77,7 +77,7 @@ class StudentClassDetails extends Component{
       >
             <MenuItem value={1} primaryText="Select" />
             <MenuItem value={'CSE'} label="CSE" primaryText="Computer Science and Engineering" />
-            <MenuItem value={'ECE'} label="ECE" primaryText="Ellectronics and Communication Engineering" />
+            {/*<MenuItem value={'ECE'} label="ECE" primaryText="Ellectronics and Communication Engineering" />*/}
       </SelectField>
       </Col>
       <Col xs={12} md={6} lg={6}>
@@ -87,8 +87,8 @@ class StudentClassDetails extends Component{
         onChange={this.props.handleSectionChange}
       >
           <MenuItem value={1} primaryText="Select" />
-          <MenuItem value={'A'} primaryText="A" />
-          <MenuItem value={'B'} primaryText="B" />
+         <MenuItem value={'A'} primaryText="A" />
+          {/*<MenuItem value={'B'} primaryText="B" />*/}
       </SelectField>
       </Col>
       </Row>

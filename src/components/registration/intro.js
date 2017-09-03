@@ -13,7 +13,8 @@ class Intro extends Component{
         <Col xs={12} md={12} lg={12}>
         <h2 className="headline">Student-Adda</h2>
         <h3 className="subheading">your virtual classroom</h3>
-        <img className="image" src={this.props.propiclink}  alt='profile pciture'/>
+        <br />
+        <img className="image" src={this.props.propiclink}  alt=''/>
         <br />
         <h4 className="h4"> Welcome {this.props.userName}!! </h4>
         </Col>
