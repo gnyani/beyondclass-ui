@@ -93,16 +93,28 @@ export default class HorizontalTimelineContent extends React.Component {
 
   _handleImageChange(e) {
     e.preventDefault();
-
+    var c = document.getElementById('myCanvas');
+    var ctx = c.getContext('2d');
     let reader = new FileReader();
     let file = e.target.files[0];
+    var canvas = document.getElementById('myCanvas');
 
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imagePreviewUrl: reader.result,
-        filebase64: reader.result.split(',').pop()
-      });
+    reader.onload = (event) => {
+      var img = new Image();
+      img.onload = function(){
+          c.width = img.width;
+          c.height = img.height;
+          ctx.drawImage(img,0,0);
+          canvas = document.getElementById('myCanvas');
+          this.setState({
+            file: file,
+            imagePreviewUrl: reader.result,
+            filebase64:canvas.toDataURL('image/jpeg',0.1).split(',').pop(),
+            imageDialog : true,
+          });
+      }.bind(this)
+      img.src = event.target.result;
+
     }
     if(file)
     {
