@@ -18,7 +18,6 @@ import {Link} from 'react-router-dom';
 import StudentDashboard from './dashboard/studentdashboard.js'
 import TeacherDashboard from './dashboard/teacherdashboard.js'
 var properties = require('./properties.json')
-//import UnauthorizedPage from './UnauthorizedPage.js'
 
 
 class DashboardLaoyout extends Component{
@@ -60,17 +59,28 @@ class DashboardLaoyout extends Component{
 
 _handleImageChange(e) {
   e.preventDefault();
-
+  var c = document.getElementById('myCanvas');
+  var ctx = c.getContext('2d');
   let reader = new FileReader();
   let file = e.target.files[0];
+  var canvas = document.getElementById('myCanvas');
 
-  reader.onloadend = () => {
-    this.setState({
-      file: file,
-      imagePreviewUrl: reader.result,
-      fullImage:reader.result.split(',').pop(),
-      imageDialog : true,
-    });
+  reader.onload = (event) => {
+    var img = new Image();
+    img.onload = function(){
+        c.width = img.width;
+        c.height = img.height;
+        ctx.drawImage(img,0,0);
+        canvas = document.getElementById('myCanvas');
+        this.setState({
+          file: file,
+          imagePreviewUrl: reader.result,
+          fullImage:canvas.toDataURL('image/jpeg',0.1).split(',').pop(),
+          imageDialog : true,
+        });
+    }.bind(this)
+    img.src = event.target.result;
+
   }
 
   reader.readAsDataURL(file)
@@ -78,7 +88,7 @@ _handleImageChange(e) {
 saveProPictoDB(){
 if (this.editor) {
   const canvas = this.editor.getImage()
-  var data = canvas.toDataURL().split(',').pop()
+  var data = canvas.toDataURL('image/jpeg',0.0001).split(',').pop()
   this.setState({
     filebase64: data,
   },function OnstateChange(){
@@ -304,6 +314,7 @@ else
       <img src={this.state.propiclink}  alt="loading" className="ProfilePic"/>
     </label>
     <input type="file" id="file-input" onChange={this._handleImageChange}/>
+    <canvas id="myCanvas" style={{display:"none"}}></canvas>
    </div>
     <br />
     <br />
