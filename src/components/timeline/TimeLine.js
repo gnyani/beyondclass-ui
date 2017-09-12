@@ -38,7 +38,7 @@ class TimeLine extends React.Component {
       >
       <Grid fluid>
       <Row around="xs">
-      <Col xs={12} sm={12} md={11} lg={10}>
+      <Col xs={12} sm={12} md={12} lg={12}>
       <HorizontalTimelineContent
         content={this.data} loggedinuser={this.props.loggedinuser}/>
       </Col>

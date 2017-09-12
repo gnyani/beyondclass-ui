@@ -8,6 +8,7 @@ import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import {Link} from 'react-router-dom';
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import Paper from 'material-ui/Paper';
+import {Grid,Row,Col} from 'react-flexbox-grid'
 import CustomAvatar from '../styledcomponents/CustomAvatar.js'
 import {Media} from '../components/utils/Media'
 
@@ -52,6 +53,7 @@ export const NavAppBar = (props) => {
            </ToolbarGroup>
          </Toolbar>
       </Paper>
+
       </StayVisible>)
 }
 else{

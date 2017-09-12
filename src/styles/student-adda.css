@@ -10,9 +10,9 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 .UserImageContainer .ProfilePic :hover{width: 40%;height: 40% ;color: rgb(33, 150, 243);margin-top: 15%;margin-left: 27%;border-radius: 50%;}
 .image-upload > input{    display: none;}
 .image-upload img{cursor: pointer;}
-.announcements{ font-size: 20px;text-align: center;}
+.announcements{text-align: center;width: 100%;}
 .announcements .container li .name{ text-align: left;text-transform: capitalize;font-family:"Comic Sans MS",sans-serif ;
-              padding: 18px 0px;margin: 0px;min-width:initial;}
+              padding: 1vmin 0vmin;margin: 0px;}
 .announcements .heading{text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
                font-size: 4vmin;letter-spacing: 0.08vmin;color: rgb(162,35,142)}
 .announcements .fontStyle{  font-size: 3.5vmin;font-style: italic;

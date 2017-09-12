@@ -255,6 +255,7 @@ if(this.state.postUrls.length!==0)
                 </CardActions>
                  {this.state.commentBox[i]}
               </Card>
+              <br />
            </Col>)
       }
     else{
@@ -304,6 +305,7 @@ if(this.state.postUrls.length!==0)
             </CardActions>
              {this.state.commentBox[i]}
           </Card>
+          <br />
        </Col>
      )
    }}else{
@@ -349,6 +351,7 @@ if(this.state.postUrls.length!==0)
            </CardActions>
             {this.state.commentBox[i]}
          </Card>
+         <br />
       </Col>)
     }else{
      buffer.push(
@@ -393,6 +396,7 @@ if(this.state.postUrls.length!==0)
              </CardActions>
               {this.state.commentBox[i]}
            </Card>
+           <br />
         </Col>
       )
    }
@@ -400,7 +404,7 @@ if(this.state.postUrls.length!==0)
    }
  }else{
    buffer.push(
-     <div key={i}><p>No posts on this day!!! </p></div>
+     <div key={i}><p style={{textAlign:"center"}}>No posts on this day!!! </p></div>
    )
  }
    return buffer
@@ -668,7 +672,7 @@ getLikedUsers(i){
         <br />
         </div>
 <Divider />
-        <div style={{ width: '80%', height: '100px', margin: '0 auto' }}>
+        <div style={{ width: '90%', height: '100px', margin: '0 auto' }}>
           <HorizontalTimeline
             fillingMotion={{ stiffness: state.fillingMotionStiffness, damping: state.fillingMotionDamping }}
             index={this.state.value}

@@ -222,9 +222,9 @@ return(
   {...this.props}
 >
 <Grid fluid>
-<Row around="xs">
+<Row start="xs">
 <Col xs={12} sm={12} md={12} lg={12}>
-<div className="announcements ">
+<div className="announcements">
     <Grid fluid>
     <Row center="xs" middle="xs">
     <Col xs={2} sm={2} md={2} lg={1}>
@@ -235,7 +235,7 @@ return(
     </Col>
     </Row>
     </Grid>
-   <div  className="container page">
+   <div  className="container">
       <ul> {this.list(buffer)} </ul>
     </div>
     <Pagination
