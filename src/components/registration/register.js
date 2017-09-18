@@ -222,7 +222,7 @@ validateDetails(){
   {
    notify.show("please enter a valid mobilenumber","error")
  }
- if(this.state.userrole==="student"){
+ else if(this.state.userrole==="student"){
    if(this.state.UniversityValue === 1 || this.state.CollegeValue === 1 || this.state.YearValue === 0 ||
        this.state.SemesterValue === 0 || this.state.BranchValue === 1 || this.state.SectionValue === 1)
        notify.show("please fill in all the mandatory fields which are followed by *","error")
@@ -398,9 +398,11 @@ generateOtp(){
           <div style={{textAlign:"center"}}>
           <p>University : {this.state.UniversityValue}</p>
           <p>College: {this.state.CollegeValue} </p>
-          <p> StartYear: {this.state.startYearValue} </p>
+          <p> Batch: {this.state.startYearValue}-{parseInt(this.state.startYearValue,10)+4}</p>
           <p> Branch: {this.state.BranchValue} </p>
           <p> Section: {this.state.SectionValue} </p>
+          <br />
+          <p style={{color:"red"}}> Note: You cannot change your Batch later </p>
           </div>
       </Dialog>
       <Dialog

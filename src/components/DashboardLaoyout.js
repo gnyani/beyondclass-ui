@@ -190,6 +190,7 @@ dashboard(){
 }
 
 componentWillMount(){
+  console.log("this got called")
   let width= window.innerWidth
   if(width<700){
     this.setState({
@@ -218,7 +219,7 @@ componentWillMount(){
             this.getNotificationCount()
           })
         }).catch(response => {
-        notify.show("Please login before viewing dashboard");
+        notify.show("Please login before viewing dashboard","error");
         this.context.router.history.push('/');
        });
 }

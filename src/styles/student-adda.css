@@ -19,7 +19,7 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
                             font-weight: 100;letter-spacing: 0.08vmin;color: rgb(1,175,173)}
 .announcements .messageStyle{   font-family: "Comic Sans MS",sans-serif;font-size:3vmin;font-style: italic;font-weight: 50;
                                color: rgb(247,166,25);text-transform: capitalize;letter-spacing: 0.06vmin;}
-.announcements .image{width: 4vmax;height: 4vmax ;border-radius: 50% }
+.announcements .image{width: 8vmax;height: 8vmax ;border-radius: 50% }
 
 .announcements .imagepreview{width: 40%;height: 40%;}
 
@@ -96,10 +96,6 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 #notification-wrapper span {
   display: inline-block !important;
 }
-.HomePage {background: url("../styledcomponents/images/bgimage.jpg")no-repeat center center fixed;  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;}
 .question{font-weight: bolder;}
 .studentAddaLogoContainer{margin-top: 1vmin;color: rgb(245, 124, 0);background-color: rgb(26, 35, 126);user-select: none;display: inline-flex;align-items: center;justify-content: center;font-size: 3.5vmin;border-radius: 50%;height: 45px;width: 45px;}
 .text{text-align: center;font-family: "Chalkduster",fantasy,sans-serif;font-size: 3.5vmin;letter-spacing: 0.5vmin;font-weight: 100;}

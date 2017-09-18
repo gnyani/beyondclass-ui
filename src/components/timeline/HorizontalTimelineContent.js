@@ -123,7 +123,6 @@ export default class HorizontalTimelineContent extends React.Component {
   }
   Enter(event){
     if(event.key === 'Enter'){
-      console.log("hello world");
       this._handleSubmit(event);
     }
   }
@@ -562,7 +561,12 @@ getLikedUsers(i){
 
   getPosts(index){
 
-      fetch('http://'+properties.getHostName+':8080/users/timeline/posts?date='+this.dates[index].toISOString().split('T')[0],{
+      var month = ('0' + (this.dates[index].getMonth() + 1)).slice(-2);
+      var date = ('0' + this.dates[index].getDate()).slice(-2);
+      var year = this.dates[index].getFullYear();
+      var shortdate = year + "-" + month + "-" + date
+
+      fetch('http://'+properties.getHostName+':8080/users/timeline/posts?date='+shortdate,{
         credentials: 'include',
         method: 'GET'
      }).then(response => {
