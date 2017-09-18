@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import {notify} from 'react-notify-toast';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import {FileFileUpload} from '../../styledcomponents/SvgIcons.js'
 import UnauthorizedPage from '../UnauthorizedPage.js'
+import SubjectAutoCompleteForNotesAndAssign from '../utils/SubjectAutoCompleteForNotesAndAssign.js'
 var properties = require('../properties.json');
 
 class NotesUpload extends Component{
@@ -13,7 +12,7 @@ class NotesUpload extends Component{
   constructor(props) {
     super(props);
     this.state = {
-      value: 1,
+      subject: 1,
       file: '',
       filebase64: '',
       imagePreviewUrl: '',
@@ -22,9 +21,15 @@ class NotesUpload extends Component{
     };
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
+    this.handleSubjectChange = this.handleSubjectChange.bind(this);
   }
 
-  handleChange = (event, index, value) => this.setState({value});
+  handleSubjectChange(subjectValue){
+    console.log("subject value is" +subjectValue)
+    this.setState({
+      subject: subjectValue
+    })
+  }
 
 
   _handleSubmit(e) {
@@ -43,11 +48,11 @@ class NotesUpload extends Component{
                },
            credentials: 'include',
            body: JSON.stringify({
-             subject: this.state.value,
+             subject: this.state.subject,
              file : this.state.filebase64,
           })
          }).then(response => {
-           if(response.status === 200)
+           if(response.status === 201)
            {
               return response.text();
            }
@@ -101,20 +106,11 @@ class NotesUpload extends Component{
       <div className="QpSyllabusDefault NotesUpload">
       <Grid fluid>
         <Row around="xs">
-        <Col xs={6} sm={6} md={6} lg={6}>
-           <SelectField
-           floatingLabelText="Subject*"
-             value={this.state.value}
-             onChange={this.handleChange}
-             style={{width:"80%"}}
-           >
-             <MenuItem value={1} primaryText="Select" />
-             <MenuItem value={'OS'} label="OS" primaryText="Operating Systems" />
-             <MenuItem value={'DM'} label="DM" primaryText="Data Mining" />
-           </SelectField>
-           </Col>
-           </Row>
-           </Grid>
+        <Col xs={12} sm={12} md={6} lg={6}>
+         <SubjectAutoCompleteForNotesAndAssign branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} />
+        </Col>
+        </Row>
+        </Grid>
           <p className="paragraph"> Please upload a pdf file </p>
           <form className="Position" onSubmit={this._handleSubmit}>
           <input type="file" onChange={this._handleImageChange} />

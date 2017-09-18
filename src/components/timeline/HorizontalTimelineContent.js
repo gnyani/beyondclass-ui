@@ -241,7 +241,7 @@ if(this.state.postUrls.length!==0)
                  </Col>
                   </Row>
                   </Grid>
-                  <Grid>
+                  <Grid fluid>
                   <Row >
                   <Col xs>
                   <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} viewBox="0 0 30 30"/>}/>
@@ -590,7 +590,7 @@ getLikedUsers(i){
           newpostOwners.push(response[i].owner)
           newpostOwnerEmails.push(response[i].uploadeduser.email)
           newpostOwnerPics.push(response[i].propicUrl)
-          newisprofilepicchange.push(response[i].profilepicchange)
+          newisprofilepicchange.push(response[i].isprofilepicchange)
         }
         this.setState({
           fileNames:newfileNames,

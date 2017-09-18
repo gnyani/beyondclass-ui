@@ -40,11 +40,11 @@ class AssignLayout extends Component{
       >
         <Tab label="Upload Assignment" value="Upload Assignment" icon={<FileFileUpload />}>
           <div>
-            <AssignUpload userrole={this.props.userrole} />
+            <AssignUpload userrole={this.props.userrole} branch={this.props.branch} />
           </div>
         </Tab>
         <Tab label="View Assignments" value="View Assignments" icon={<ActionViewList />}>
-          <AssignList  userrole={this.props.userrole}/>
+          <AssignList  userrole={this.props.userrole} branch={this.props.branch} />
         </Tab>
       </Tabs>
       </div>

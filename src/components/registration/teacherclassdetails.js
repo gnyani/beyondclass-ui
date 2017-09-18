@@ -4,14 +4,14 @@ import MenuItem from 'material-ui/MenuItem';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
 const classes = [
-  {value: "1-A", name: '1-A'},
-  {value: "1-B", name: '1-B'},
-  {value: "2-A", name: '2-A'},
-  {value: "2-B", name: '2-B'},
-  {value: "3-A", name: '3-A'},
-  {value: "3-B", name: '3-B'},
-  {value: "4-A", name: '4-A'},
-  {value: "4-B", name: '4-B'},
+  {value: new Date().getFullYear()+"-A", name:"1-A" },
+  {value: new Date().getFullYear()+"-B", name:"1-B" },
+  {value: new Date().getFullYear()-1+"-A", name:"2-A" },
+  {value: new Date().getFullYear()-1+"-B", name:"2-B" },
+  {value: new Date().getFullYear()-2+"-A", name:"3-A"},
+  {value: new Date().getFullYear()-2+"-B", name:"3-B"},
+  {value: new Date().getFullYear()-3+"-A", name:"4-A"},
+  {value: new Date().getFullYear()-3+"-B", name:"4-B"},
 ];
 
 class TeacherClassDetails extends Component{
@@ -33,7 +33,7 @@ class TeacherClassDetails extends Component{
         <MenuItem
           key={classes.value}
           insetChildren={true}
-          checked={this.props.Values.indexOf(classes.value) > -1}
+          checked={this.props.batches.indexOf(classes.value) > -1}
           value={classes.value}
           primaryText={classes.name}
         />
@@ -95,10 +95,9 @@ class TeacherClassDetails extends Component{
       floatingLabelText="Select Classes*"
        multiple={true}
        hintText="Select Classses"
-       value={this.props.Values}
-       onChange={this.props.handleValuesChange}
+       value={this.props.batches}
+       onChange={this.props.handleBatchesChange}
        selectionRenderer={this.selectionRenderer}
-
      >
        {this.menuItems(classes)}
      </SelectField>

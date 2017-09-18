@@ -24,12 +24,12 @@ class TeacherDashboard extends Component{
       return (value === this.state.selected)?'Active':'';
   }
 
-  menuItems(classes) {
-    return classes.map((classes,index) => (
-    <div key={index}>  <div  className={this.isActive(this.props.classes[index])}>
-         <Link to={'/teacher/'+this.props.classes[index]}  width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,this.props.classes[index])} >
+  menuItems(batches) {
+    return batches.map((batches,index) => (
+    <div key={index}>  <div  className={this.isActive(this.props.batches[index])}>
+         <Link to={'/teacher/'+this.props.batches[index]}  width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,this.props.batches[index])} >
           <MenuItem
-          primaryText={'Class  '+this.props.classes[index]}
+          primaryText={'Class  '+this.props.batches[index]}
           leftIcon={<LocationCity color={red500}/>}
           onClick={this.props.handleMobileToggle}
            />
@@ -40,8 +40,9 @@ class TeacherDashboard extends Component{
     ));
   }
   render(){
+    console.log("batches is" + this.props.batches)
     return(
-      <div>{this.menuItems(this.props.classes)}</div>
+      <div>{this.menuItems(this.props.batches)}</div>
     )
   }
 }

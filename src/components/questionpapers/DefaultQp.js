@@ -10,6 +10,7 @@ import {FileFileDownload,NavigationFullscreen} from '../../styledcomponents/SvgI
 import '../../styles/student-adda.css';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import UnauthorizedPage from '../UnauthorizedPage.js'
+import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'
 var properties = require('../properties.json');
 
 
@@ -18,8 +19,9 @@ class DefaultQp extends Component{
    constructor(){
      super();
      this.state = {
-       value : 1,
+       branch : 1,
        year : 1,
+       subject : 1,
        response : '',
        image: [],
        isLoaded : false,
@@ -29,12 +31,13 @@ class DefaultQp extends Component{
      this.validateAndFetch = this.validateAndFetch.bind(this);
      this.fetchQp = this.fetchQp.bind(this);
      this.image = this.image.bind(this);
+     this.handleSubjectChange = this.handleSubjectChange.bind(this)
    }
 
 validateAndFetch(){
-  if(this.state.value === 1)
+  if(this.state.branch === 1 || this.state.year === 1 || this.state.subject === 1)
   {
-    notify.show("please fill in all the mandatory fields which are followed by *");
+    notify.show("please select Branch,Year and Subject","warning");
   }
   else{
     this.fetchQp();
@@ -51,7 +54,8 @@ fetchQp(){
            },
       credentials: 'include',
        body: JSON.stringify({
-         subject: this.state.value,
+         branch : this.state.branch,
+         subject: this.state.subject,
          qpyear : this.state.year,
       })
      }).then(response => {
@@ -71,8 +75,15 @@ fetchQp(){
      })
 }
 
-handleChange = (event, index, value) => this.setState({value});
+handleChange = (event, index, branch) => this.setState({branch});
 handleYearChange = (event, index, year) => this.setState({year});
+
+handleSubjectChange(subjectValue){
+  this.setState({
+    subject: subjectValue
+  })
+}
+
 image(){
 
   if(this.state.response){
@@ -94,7 +105,7 @@ image(){
             style={{borderRadius:"1.5em"}}
             >
               <CardHeader
-                title={this.state.value}
+                title={this.state.subject}
                 subtitle="Question Paper"
               />
               <CardMedia>
@@ -139,35 +150,45 @@ image(){
        <br />
       <Grid fluid>
       <Row around="xs">
-      <Col xs={5} sm={5} md={5} lg={5}>
+      <Col xs={12} sm={12} md={5} lg={5}>
       <SelectField
-        floatingLabelText="Subject*"
-        value={this.state.value}
+        floatingLabelText="Branch*"
+        value={this.state.branch}
         onChange={this.handleChange}
-        style={{width: "50%"}}
+        autoWidth={true}
       >
          <MenuItem value={1} primaryText="Select" />
-         <MenuItem value={'OS'} label="OS" primaryText="Operating Systems" />
-         <MenuItem value={'DM'} label="DM" primaryText="Data Mining" />
+         <MenuItem value={'CSE'} label="CSE" primaryText="CSE" />
+         <MenuItem value={'ECE'} label="ECE" primaryText="ECE" />
        </SelectField>
        </Col>
-       <Col xs={5} sm={5} md={5} lg={5}>
+       <Col xs={12} sm={12} md={5} lg={5}>
         <SelectField
          floatingLabelText="Year*"
           value={this.state.year}
           onChange={this.handleYearChange}
-          style={{width:"50%"}}
+          autoWidth={true}
         >
           <MenuItem value={1} primaryText="Select" />
           <MenuItem value={'2015'} label="2015" primaryText="2015" />
           <MenuItem value={'2016'} label="2016" primaryText="2016" />
         </SelectField>
         </Col>
-        <Col xs={2} sm={2} md={2} lg={2}>
-         <FlatButton label="Fetch" className="fetchButton" value="Fetch" primary={true} onTouchTap={this.validateAndFetch} />
-         </Col>
         </Row>
        </Grid>
+       <br />
+       <Grid fluid>
+       <Row around="xs" middle="xs">
+       <Col xs={12} sm={12} md={5} lg={5}>
+       <SubjectAutoComplete branch={this.state.branch} handleSubjectChange={this.handleSubjectChange} />
+       <br />
+       </Col>
+       <Col xs={12} sm={12} md={5} lg={5}>
+        <FlatButton label="Fetch" className="fetchButton" value="Fetch" primary={true} onTouchTap={this.validateAndFetch} />
+        </Col>
+       </Row>
+       </Grid>
+       <br />
        </div>
        <Divider/>
         <br /> <br />

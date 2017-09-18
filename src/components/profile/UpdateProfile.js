@@ -5,12 +5,10 @@ import {Grid,Row,Col} from 'react-flexbox-grid'
 import TextField from 'material-ui/TextField'
 import {Edit} from '../../styledcomponents/SvgIcons.js'
 import IconButton from 'material-ui/IconButton';
-import SelectField from 'material-ui/SelectField';
 import DatePicker from 'material-ui/DatePicker';
 import FlatButton from 'material-ui/FlatButton'
 import {notify} from 'react-notify-toast';
 import {NavigationArrowForward} from '../../styledcomponents/SvgIcons.js';
-import MenuItem from 'material-ui/MenuItem'
 import {Media} from '../utils/Media'
 
 var properties = require('../properties.json');
@@ -34,15 +32,11 @@ constructor(props){
     sem: parseInt(props.sem,10),
     firstNameDisabled: true,
     lastNameDisabled: true,
-    yearDisabled: true,
-    semDisabled: true,
     dobDisabled: true,
     controlledDate: props.dob,
   }
   this.handleFirstNameDisable = this.handleFirstNameDisable.bind(this)
   this.handleLastNameDisable = this.handleLastNameDisable.bind(this)
-  this.handleYearDisable = this.handleYearDisable.bind(this)
-  this.handleSemDisable = this.handleSemDisable.bind(this)
   this.handleDobDisable = this.handleDobDisable.bind(this)
   this.updateProfile = this.updateProfile.bind(this)
 }
@@ -56,8 +50,6 @@ handleLastNameChange =(event, newValue) => {
    lastName : newValue,
   })
 }
-handleYearChange = (event, index, year) => this.setState({year});
-handleSemChange = (event, index, sem) => this.setState({sem});
 handleDateChange = (event, date) => {
   this.setState({
     controlledDate: date,
@@ -68,19 +60,9 @@ handleDateDismiss = (event, date) => {
     controlledDate: null,
   });
 }
-handleYearDisable(){
-  this.setState({
-    yearDisabled: false,
-  })
-}
 handleDobDisable(){
   this.setState({
     dobDisabled: false,
-  })
-}
-handleSemDisable(){
-  this.setState({
-    semDisabled: false,
   })
 }
 handleFirstNameDisable(){
@@ -107,8 +89,6 @@ updateProfile(){
           body: JSON.stringify({
           firstName: this.state.firstName,
           lastName : this.state.lastName,
-          year: this.state.year,
-          sem: this.state.sem,
           dob: this.state.controlledDate,
         })
       }).then(response => {
@@ -149,44 +129,6 @@ updateProfile(){
       </Col>
       <Col xs={2} sm={2} md={2} lg={1}>
       <IconButton onClick={this.handleLastNameDisable}> <Edit color="red" viewBox='0 0 30 30'/> </IconButton>
-      </Col>
-      </Row>
-      </Grid>
-      <Grid fluid>
-      <Row start="xs" bottom="xs">
-      <Col xs={4} sm={4} md={4} lg={5}>
-      <SelectField
-       floatingLabelText="Year"
-        value={this.state.year}
-        onChange={this.handleYearChange}
-        disabled={this.state.yearDisabled}
-        style={{width:"100%"}}
-      >
-        <MenuItem value={0} primaryText="Select" />
-        <MenuItem value={1} primaryText="One" />
-        <MenuItem value={2} primaryText="Two" />
-        <MenuItem value={3} primaryText="Three" />
-        <MenuItem value={4} primaryText="Four" />
-      </SelectField>
-      </Col>
-      <Col xs={2} sm={2} md={2} lg={1}>
-      <IconButton onClick={this.handleYearDisable}> <Edit color="red" viewBox='0 0 30 30'/> </IconButton>
-      </Col>
-      <Col xs={4} sm={4} md={4} lg={5}>
-      <SelectField
-       floatingLabelText="Semester"
-        value={this.state.sem}
-        onChange={this.handleSemChange}
-        disabled={this.state.semDisabled}
-        style={{width:"100%"}}
-      >
-        <MenuItem value={0} primaryText="Select" />
-        <MenuItem value={1} primaryText="One" />
-        <MenuItem value={2} primaryText="Two" />
-      </SelectField>
-      </Col>
-      <Col xs={1} sm={1} md={1} lg={1}>
-      <IconButton onClick={this.handleSemDisable}> <Edit color="red" viewBox='0 0 30 30'/> </IconButton>
       </Col>
       </Row>
       </Grid>

@@ -74,6 +74,7 @@ list(buffer){
              </form>
            </CardActions>
          </Card>
+         <br />
       </Col>
   )
   }

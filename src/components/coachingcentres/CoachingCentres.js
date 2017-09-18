@@ -199,7 +199,6 @@ fetch('http://'+properties.getHostName+':8080/coachingcentres/get/'+this.state.c
 }
 
 showReviewBox(i){
-  console.log("reviewBox  is"+ this.state.reviewBox[i] +"is ratingDone" +this.state.ratingDone)
   var reviewBox = []
   if(typeof this.state.reviewBox[i] === "undefined" ||  this.state.ratingDone === true  )
   {
@@ -325,6 +324,7 @@ populateData(){
         }).then(response => {
           return response.json()
         }).then(response => {
+          console.log("response is" + JSON.stringify(response))
           var newcoachingcentreId = []
           var neworgname = []
           var newdescription= []
@@ -334,7 +334,7 @@ populateData(){
           var newrating = []
           for(let i=0;i<response.length;i++)
            {
-             newcoachingcentreId.push(response[i].caochingcentreId)
+             newcoachingcentreId.push(response[i].coachingcentreId)
              neworgname.push(response[i].orgname)
              newdescription.push(response[i].description)
              newemail.push(response[i].contactinfo.email)

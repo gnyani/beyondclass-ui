@@ -2,8 +2,7 @@ import React,{Component} from 'react'
 import styled from 'styled-components'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import DefaultQp from './DefaultQp.js'
-import OtherQp from './OtherQp.js'
-import {ContentArchive,AvNote} from '../../styledcomponents/SvgIcons.js';
+import {ContentArchive} from '../../styledcomponents/SvgIcons.js';
 import {Media} from '../utils/Media'
 
 
@@ -21,7 +20,7 @@ class QpLayout extends Component{
   constructor(props) {
      super(props);
      this.state = {
-       value: 'CurrentSem',
+       value: 'QuestionPaperArchive',
      };
    }
 
@@ -40,13 +39,10 @@ class QpLayout extends Component{
         value={this.state.value}
         onChange={this.handleChange}
       >
-        <Tab label="CurrentSem" value="CurrentSem" icon={<AvNote />}>
+        <Tab label="Question-Papers-Archive" value="QuestionPaperArchive" icon={<ContentArchive />}>
           <div>
             <DefaultQp userrole={this.props.userrole} />
           </div>
-        </Tab>
-        <Tab label="Others" value="Others" icon={<ContentArchive />}>
-          <OtherQp  userrole={this.props.userrole}/>
         </Tab>
       </Tabs>
       </div>

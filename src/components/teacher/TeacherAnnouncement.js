@@ -54,7 +54,7 @@ class TeacherAnnouncement extends Component{
              },
          credentials: 'include',
          body: JSON.stringify({
-           teacherclass: this.props.class,
+           batch: this.props.class,
            message: this.state.message,
         })
        }).then(response => {

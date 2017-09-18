@@ -2,8 +2,7 @@ import React,{Component} from 'react'
 import styled from 'styled-components'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import DefaultSyllabus from './DefaultSyllabus.js'
-import OtherSyllabus from './OtherSyllabus.js'
-import {ContentArchive,AvNote} from '../../styledcomponents/SvgIcons.js';
+import {ContentArchive} from '../../styledcomponents/SvgIcons.js';
 import {Media} from '../utils/Media'
 
 const StayVisible = styled.div`
@@ -19,7 +18,7 @@ class SyllabusLayout extends Component{
   constructor(props) {
      super(props);
      this.state = {
-       value: 'Current Syllabus',
+       value: 'Syllabus Archive',
      };
    }
 
@@ -38,13 +37,10 @@ class SyllabusLayout extends Component{
         value={this.state.value}
         onChange={this.handleChange}
       >
-        <Tab label="Current Syllabus" value="Current Syllabus" icon={<AvNote />}>
+        <Tab label="Syllabus-Archive" value="Syllabus Archive" icon={<ContentArchive />}>
           <div>
             <DefaultSyllabus userrole={this.props.userrole} />
           </div>
-        </Tab>
-        <Tab label="Others" value="Others" icon={<ContentArchive />}>
-          <OtherSyllabus  userrole={this.props.userrole}/>
         </Tab>
       </Tabs>
       </div>
