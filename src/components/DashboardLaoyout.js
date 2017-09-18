@@ -30,6 +30,7 @@ class DashboardLaoyout extends Component{
       width : 250,
       propiclink : '',
       username : '',
+      branch:'',
       fullImage: '',
       file: '',
       filebase64: '',
@@ -38,8 +39,8 @@ class DashboardLaoyout extends Component{
       secondSlider:1,
       userrole: '',
       loggedinuseremail: '',
-      classes: [],
-      year: 0,
+      batches: [],
+      startyear: 0,
       section: '',
       notificationsCount: 0,
       lastName: '',
@@ -54,6 +55,7 @@ class DashboardLaoyout extends Component{
      this.postTimeline = this.postTimeline.bind(this)
      this.dashboard = this.dashboard.bind(this)
      this.handleToggle = this.handleToggle.bind(this)
+     this.getNotificationCount = this.getNotificationCount.bind(this)
 }
 
 
@@ -126,11 +128,6 @@ uploadProPic(){
        },function OnstateChange(){
          this.postTimeline()
        })
-   // posting this change to timeline
-
-      //  var location = this.props.location
-      //  this.context.router.history.push(location)
-      //This needs to be fixed reloading the entire page is not a good Idea
      })
 }
 postTimeline(){
@@ -155,6 +152,7 @@ postTimeline(){
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
          notify.show("sorry something went wrong","custom",5000,myColor)
        }
+       //FIX THIS: reloading the whole page is not a good idea
        window.location.reload()
      })
 }
@@ -187,12 +185,12 @@ dashboard(){
   if(this.state.userrole === 'student'){
     return(<StudentDashboard width={this.state.width} handleMobileToggle={this.handleMobileToggle}/>)
   }else if(this.state.userrole === 'teacher'){
-    return(<TeacherDashboard width={this.state.width} classes={this.state.classes} handleMobileToggle={this.handleMobileToggle}/>)
+    return(<TeacherDashboard width={this.state.width} batches={this.state.batches} handleMobileToggle={this.handleMobileToggle}/>)
   }
 }
 
 componentWillMount(){
-
+  console.log("this got called")
   let width= window.innerWidth
   if(width<700){
     this.setState({
@@ -212,29 +210,35 @@ componentWillMount(){
               lastName: response.lastName,
               userrole: response.userrole,
               propiclink: response.normalpicUrl || response.googlepicUrl,
-              year: response.year,
-              sem: response.sem,
+              startyear: response.startYear,
+              branch: response.branch,
               dob: response.dob,
               section: response.section,
-              classes: response.classes,
+              batches: response.batches,
+          },function(){
+            this.getNotificationCount()
           })
         }).catch(response => {
-        notify.show("Please login before viewing dashboard");
+        notify.show("Please login before viewing dashboard","error");
         this.context.router.history.push('/');
        });
-
- fetch('http://'+properties.getHostName+':8080/user/notifications/unread',{
-         credentials: 'include',
-         method: 'GET'
-       }).then(response =>{
-           return response.text()
-       }).then(response =>{
-         this.setState({
-           notificationsCount: response
-         })
-       })
-
 }
+getNotificationCount(){
+  if(this.state.userrole === 'student')
+  {
+    fetch('http://'+properties.getHostName+':8080/user/notifications/unread',{
+          credentials: 'include',
+          method: 'GET'
+        }).then(response =>{
+            return response.text()
+        }).then(response =>{
+          this.setState({
+            notificationsCount: response
+          })
+        })
+  }
+}
+
 componentDidMount() {
     window.addEventListener("resize", this.updateDimensions);
 }
@@ -243,9 +247,7 @@ componentWillUnmount() {
 }
 updateDimensions = () => {
   let width = window.innerWidth
-  console.log("width is" +width)
   if(width<700){
-    console.log("calling handle toggle")
     this.setState({
       open:false
     })
@@ -266,7 +268,6 @@ handleMobileToggle =() => {
 }
 
 handleToggle(){
-  console.log("this method got fired")
   this.setState((prevState,props) =>{
     return {
       open : !prevState.open
@@ -362,12 +363,12 @@ width = {this.state.width}
 open = {this.state.open}
 userrole = {this.state.userrole}
 loggedinuser = {this.state.loggedinuseremail}
-year = {this.state.year}
-sem ={this.state.sem}
+startyear = {this.state.startyear}
 section = {this.state.section}
 notificationsCount = {this.state.notificationsCount}
 lastName = {this.state.lastName}
-username={this.state.username}
+branch = {this.state.branch}
+username = {this.state.username}
 dob={this.state.dob}
 />
 </div>

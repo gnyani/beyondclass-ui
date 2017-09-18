@@ -69,7 +69,7 @@ handleSubmit(){
          message: this.state.message,
       })
      }).then(response => {
-       if(response.status === 200)
+       if(response.status === 201 )
        {
           return response.text();
        }
@@ -144,7 +144,7 @@ populateData(pageNumber){
              newmessage.push(response.content[i].message)
              newuser.push(response.content[i].username)
              newuseremails.push(response.content[i].posteduser.email)
-             newannouncementIds.push(response.content[i].aid)
+             newannouncementIds.push(response.content[i].announcementid)
           }
            this.setState({
                users: newuser,

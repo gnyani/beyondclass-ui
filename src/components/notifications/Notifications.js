@@ -114,7 +114,7 @@ handleNotificationDelete(index){
 }
 list(buffer){
   if(!this.state.isDataLoaded)
-  buffer.push(<CircularProgress width={40} style={{marginTop:"45%"}}/>)
+  buffer.push(<CircularProgress key={1} width={40} style={{marginTop:"45%"}}/>)
   else if(this.state.notificationMessages.length === 0)
   buffer.push(<div key={1}><NotificationsNone style={{marginLeft:"27%",height:'300px',width:'45%'}}/><p className="announcements messageStyle">You are all caught up </p></div>)
   else{

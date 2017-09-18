@@ -8,7 +8,8 @@ import {lightBlue300} from 'material-ui/styles/colors';
 import {Card, CardActions, CardHeader, CardMedia} from 'material-ui/Card';
 import {FileFileDownload,NavigationFullscreen} from '../../styledcomponents/SvgIcons.js';
 import '../../styles/student-adda.css';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Grid, Row, Col } from 'react-flexbox-grid'
+import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'
 import UnauthorizedPage from '../UnauthorizedPage.js'
 
 var properties = require('../properties.json');
@@ -19,6 +20,7 @@ class DefaultSyllabus extends Component{
    constructor(){
      super();
      this.state = {
+       branch : 1,
        subject : 1,
        response : '',
        isLoaded : false,
@@ -29,6 +31,7 @@ class DefaultSyllabus extends Component{
      this.validateAndFetch = this.validateAndFetch.bind(this);
      this.fetchSyllabus = this.fetchSyllabus.bind(this);
      this.image = this.image.bind(this);
+     this.handleSubjectChange = this.handleSubjectChange.bind(this)
    }
 
 validateAndFetch(){
@@ -51,6 +54,7 @@ fetchSyllabus(){
            },
       credentials: 'include',
        body: JSON.stringify({
+         branch: this.state.branch,
          subject: this.state.subject
       })
      }).then(response => {
@@ -71,6 +75,13 @@ fetchSyllabus(){
        })
      })
 }
+
+handleSubjectChange(subjectValue){
+  this.setState({
+    subject: subjectValue
+  })
+}
+
 image(){
 
   if(this.state.response){
@@ -125,7 +136,7 @@ image(){
    }
 }
 
-handleChange = (event, index, subject) => this.setState({subject});
+handleChange = (event, index, branch) => this.setState({branch});
 
   render(){
   if(this.props.userrole==="student")
@@ -139,25 +150,33 @@ handleChange = (event, index, subject) => this.setState({subject});
        <div >
        <br />
       <Grid fluid>
-      <Row around="xs" middle="xs">
-      <Col xs>
+      <Row around="xs" bottom="xs">
+      <Col xs={12} sm={12} md={5} lg={5}>
        <SelectField
-        floatingLabelText="Subject*"
-         value={this.state.subject}
+        floatingLabelText="Branch*"
+         value={this.state.branch}
          onChange={this.handleChange}
-         style={{width: "50%"}}
+         autoWidth={true}
        >
          <MenuItem value={1} primaryText="Select*" />
-         <MenuItem value={'DS'} label="DS" primaryText="Data Structures" />
-         <MenuItem value={'OS'} label="OS" primaryText="Operating Systems" />
-         <MenuItem value={'DM'} label="DM" primaryText="Data Mining" />
+         <MenuItem value={'CSE'} label="CSE" primaryText="CSE" />
+         <MenuItem value={'ECE'} label="ECE" primaryText="ECE" />
        </SelectField>
        </Col>
-       <Col xs>
+       <Col xs={12} sm={12} md={5} lg={5}>
+       <SubjectAutoComplete branch={this.state.branch} handleSubjectChange={this.handleSubjectChange} />
+       </Col>
+       </Row>
+       </Grid>
+       <br />
+       <Grid fluid>
+       <Row around="xs" middle="xs">
+       <Col  xs={12} sm={12} md={3} lg={3}>
        <FlatButton label="Fetch" value="Fetch" primary={true} className="fetchButton" onTouchTap={this.validateAndFetch} />
        </Col>
        </Row>
        </Grid>
+       <br />
 <Divider />
        </div>
         <br /> <br /> <br />

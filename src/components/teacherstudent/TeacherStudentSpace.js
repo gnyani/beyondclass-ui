@@ -42,11 +42,11 @@ class TeacherStudentSpace extends Component{
       >
         <Tab label="Announcements" value="announcements">
           <div>
-            <StudentTeacherAnnouncements class={this.props.year+'-'+this.props.section} />
+            <StudentTeacherAnnouncements class={this.props.startyear+'-'+this.props.section} />
           </div>
         </Tab>
         <Tab label="Assignments" value="assignments">
-          <StudentTeacherAssignments class={this.props.year+'-'+this.props.section} />
+          <StudentTeacherAssignments class={this.props.startyear+'-'+this.props.section} />
         </Tab>
       </Tabs>
       </div>

@@ -37,19 +37,21 @@ class StudentTeacherAnnouncements extends Component{
   }
 
   populateData(pageNumber){
+
     fetch('http://'+properties.getHostName+':8080/teacher/student/announcements/list/'+this.props.class+'?pageNumber='+pageNumber, {
              credentials: 'include',
              method: 'GET'
           }).then(response => {
             return response.json()
           }).then(response => {
+            console.log("response is"+response.content[0])
             var newmessage = []
             var newannouncementIds =[]
             var newTeacherNames = []
             for(let i=0;i<response.content.length;i++)
              { newmessage.push(response.content[i].message)
                newannouncementIds.push(response.content[i].announcementid)
-               newTeacherNames.push(response.content[i].user.firstName+response.content[i].user.lastName)}
+               newTeacherNames.push(response.content[i].posteduser.firstName+response.content[i].posteduser.lastName)}
              this.setState({
                  announcementIds: newannouncementIds,
                  announcements: newmessage,

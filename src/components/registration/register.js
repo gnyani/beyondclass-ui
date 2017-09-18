@@ -23,8 +23,7 @@ class Register extends Component{
     constructor() {
       super();
       this.state = {
-        YearValue : 0,
-        SemesterValue : 0,
+        startYearValue : new Date().getFullYear(),
         BranchValue : 1,
         SectionValue : 1,
         CollegeValue : 1,
@@ -40,7 +39,7 @@ class Register extends Component{
         mobilenumber : '',
         controlledDate: null,
         currentSlide: 0,
-        Values: [],
+        batches: [],
         confirmDialog: false,
         otpDialog: false,
         otp: 0,
@@ -115,8 +114,7 @@ validateOtp(){
           lastName : this.state.lastName,
           university: this.state.UniversityValue,
           college: this.state.CollegeValue,
-          year: this.state.YearValue,
-          sem: this.state.SemesterValue,
+          startYear: this.state.startYearValue,
           branch: this.state.BranchValue,
           section: this.state.SectionValue,
           rollno: this.state.rollno,
@@ -131,7 +129,7 @@ validateOtp(){
         if(response === 'User registration successful')
         {
         notify.show("User registration successful for "+this.state.username,"success")
-        this.context.router.history.push('/dashboard');
+        this.context.router.history.push('/announcements');
       }
         else{
           notify.show(response,"error")
@@ -151,7 +149,7 @@ validateOtp(){
            university: this.state.UniversityValue,
            college: this.state.CollegeValue,
            branch: this.state.BranchValue,
-           classes: this.state.Values.slice(),
+           batches: this.state.batches.slice(),
            mobilenumber: this.state.mobilenumber,
            dob: this.state.controlledDate,
            userrole: this.state.userrole,
@@ -162,7 +160,7 @@ validateOtp(){
          if(response === 'User registration successful')
          {
          notify.show("User registration successful for "+this.state.username,"success")
-         this.context.router.history.push('/dashboard');
+         this.context.router.history.push('/teacher/'+this.state.batches[0]);
        }
          else{
            notify.show(response,"error")
@@ -171,7 +169,7 @@ validateOtp(){
  }
  }
 
- handleValuesChange = (event, index, Values) =>  this.setState({Values});
+ handleBatchesChange = (event, index, batches) =>  this.setState({batches});
 
  handleRadioButtonChange =(event,newValue) =>{
   this.setState({ userrole : newValue })
@@ -198,8 +196,7 @@ validateOtp(){
 };
  handleUniversityChange = (event, index, UniversityValue) => this.setState({UniversityValue});
  handleCollegeChange = (event, index, CollegeValue) => this.setState({CollegeValue});
- handleYearChange = (event, index, YearValue) => this.setState({YearValue});
- handleSemChange = (event, index, SemesterValue) => this.setState({SemesterValue })
+ handleYearChange = (event, index, startYearValue) => this.setState({startYearValue});
  handleSectionChange = (event, index, SectionValue) => this.setState({SectionValue});
  handleBranchChange = (event, index, BranchValue) => this.setState({BranchValue});
  handleHostelChange =(event) =>
@@ -225,14 +222,21 @@ validateDetails(){
   {
    notify.show("please enter a valid mobilenumber","error")
  }
- else if((this.state.userrole==="student") && (this.state.UniversityValue === 1 || this.state.CollegeValue === 1 || this.state.YearValue === 0 ||
-    this.state.SemesterValue === 0 || this.state.BranchValue === 1 || this.state.SectionValue === 1))
- notify.show("please fill in all the mandatory fields which are followed by *","error");
- else if((this.state.userrole === "teacher") && (this.state.UniversityValue === 1 || this.state.CollegeValue === 1 ||
-       this.state.BranchValue === 1 || this.state.Values.length === 0 ))
-notify.show("please fill in all the mandatory fields which are followed by *","error");
- else{
-   this.handleConfirmClassDialog()
+ else if(this.state.userrole==="student"){
+   if(this.state.UniversityValue === 1 || this.state.CollegeValue === 1 || this.state.YearValue === 0 ||
+       this.state.SemesterValue === 0 || this.state.BranchValue === 1 || this.state.SectionValue === 1)
+       notify.show("please fill in all the mandatory fields which are followed by *","error")
+    else {
+      this.handleConfirmClassDialog()
+    }
+ }
+ else if(this.state.userrole === "teacher"){
+   if(this.state.UniversityValue === 1 || this.state.CollegeValue === 1 ||
+          this.state.BranchValue === 1 || this.state.batches.length === 0)
+   notify.show("please fill in all the mandatory fields which are followed by *","error");
+   else{
+     this.generateOtp()
+   }
  }
 }
 
@@ -359,12 +363,12 @@ generateOtp(){
              handleRadioButtonChange={this.handleRadioButtonChange}/>
         </div>
         <div><ClassDetails UniversityValue={this.state.UniversityValue} CollegeValue={this.state.CollegeValue}
-            YearValue={this.state.YearValue} SemesterValue={this.state.SemesterValue} BranchValue={this.state.BranchValue}
+            startYearValue={this.state.startYearValue}  BranchValue={this.state.BranchValue}
             SectionValue={this.state.SectionValue}  handleUniversityChange={this.handleUniversityChange}
             handleCollegeChange={this.handleCollegeChange} handleYearChange={this.handleYearChange}
-            handleSemChange={this.handleSemChange} handleBranchChange={this.handleBranchChange}
-            handleSectionChange={this.handleSectionChange} userrole={this.state.userrole} Values={this.state.Values}
-            handleValuesChange={this.handleValuesChange}/></div>
+           handleBranchChange={this.handleBranchChange}
+            handleSectionChange={this.handleSectionChange} userrole={this.state.userrole} batches={this.state.batches}
+            handleBatchesChange={this.handleBatchesChange}/></div>
         </Slider>
         <br /> <br /> <br />
         <Grid fluid>
@@ -394,10 +398,11 @@ generateOtp(){
           <div style={{textAlign:"center"}}>
           <p>University : {this.state.UniversityValue}</p>
           <p>College: {this.state.CollegeValue} </p>
-          <p> Year: {this.state.YearValue} </p>
-          <p> Sem: {this.state.SemesterValue} </p>
+          <p> Batch: {this.state.startYearValue}-{parseInt(this.state.startYearValue,10)+4}</p>
           <p> Branch: {this.state.BranchValue} </p>
           <p> Section: {this.state.SectionValue} </p>
+          <br />
+          <p style={{color:"red"}}> Note: You cannot change your Batch later </p>
           </div>
       </Dialog>
       <Dialog

@@ -40,11 +40,11 @@ class NotesLayout extends Component{
       >
         <Tab label="Upload Notes" value="Upload Notes" icon={<FileFileUpload />}>
           <div>
-            <NotesUpload userrole={this.props.userrole} />
+            <NotesUpload userrole={this.props.userrole} branch={this.props.branch} />
           </div>
         </Tab>
         <Tab label="View Notes" value="View Notes" icon={<ActionViewList />}>
-          <NotesList  userrole={this.props.userrole}/>
+          <NotesList  userrole={this.props.userrole} branch={this.props.branch} />
         </Tab>
       </Tabs>
       </div>

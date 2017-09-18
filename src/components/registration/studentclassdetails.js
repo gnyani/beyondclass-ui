@@ -3,6 +3,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
+
 class StudentClassDetails extends Component{
   render(){
     return(
@@ -43,32 +44,16 @@ class StudentClassDetails extends Component{
       <Row around="xs">
       <Col xs={12} md={6} lg={6}>
       <SelectField
-       floatingLabelText="Year*"
-        value={this.props.YearValue}
+       floatingLabelText="StartYear*"
+        value={this.props.startYearValue}
         onChange={this.props.handleYearChange}
       >
-        <MenuItem value={0} primaryText="Select" />
-        <MenuItem value={1} primaryText="One" />
-        {/*<MenuItem value={2} primaryText="Two" />
-        <MenuItem value={3} primaryText="Three" />
-        <MenuItem value={4} primaryText="Four" />*/}
+        <MenuItem value={new Date().getFullYear()} primaryText={new Date().getFullYear()} />
+        <MenuItem value={new Date().getFullYear()-1} primaryText={new Date().getFullYear()-1} />
+        <MenuItem value={new Date().getFullYear()-2} primaryText={new Date().getFullYear()-2} />
+        <MenuItem value={new Date().getFullYear()-3} primaryText={new Date().getFullYear()-3} />
       </SelectField>
       </Col>
-      <Col xs={12} md={6} lg={6}>
-      <SelectField
-        floatingLabelText="Semester*"
-        value={this.props.SemesterValue}
-        onChange={this.props.handleSemChange}
-      >
-        <MenuItem value={0} primaryText="Select" />
-        <MenuItem value={1} primaryText="One" />
-        {/*<MenuItem value={2} primaryText="Two" />*/}
-      </SelectField>
-      </Col>
-      </Row>
-      </Grid>
-      <Grid fluid>
-      <Row around="xs">
       <Col xs={12} md={6} lg={6}>
       <SelectField
        floatingLabelText="Branch*"
@@ -80,6 +65,10 @@ class StudentClassDetails extends Component{
             {/*<MenuItem value={'ECE'} label="ECE" primaryText="Ellectronics and Communication Engineering" />*/}
       </SelectField>
       </Col>
+      </Row>
+      </Grid>
+      <Grid fluid>
+      <Row around="xs">
       <Col xs={12} md={6} lg={6}>
       <SelectField
         floatingLabelText="Section*"

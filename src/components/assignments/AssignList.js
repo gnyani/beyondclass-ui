@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
 import {notify} from 'react-notify-toast';
 import {lightBlue300} from 'material-ui/styles/colors';
 import {ActionViewArray,FileFileDownload,NavigationFullscreen} from '../../styledcomponents/SvgIcons.js'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import SubjectAutoCompleteForNotesAndAssign from '../utils/SubjectAutoCompleteForNotesAndAssign.js'
 import '../../styles/student-adda.css';
 import UnauthorizedPage from '../UnauthorizedPage.js'
 
@@ -27,7 +26,16 @@ class AssignList extends Component{
       loadedsubject: '',
     }
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleSubjectChange = this.handleSubjectChange.bind(this);
   }
+
+  handleSubjectChange(subjectValue){
+    console.log("subject value is" +subjectValue)
+    this.setState({
+      subject: subjectValue
+    })
+  }
+
  handleSubmit(){
 
    if(this.state.subject === 1)
@@ -76,7 +84,6 @@ class AssignList extends Component{
    }
 
  }
- handleChange = (event, index, subject) => this.setState({subject});
   render(){
 if(this.props.userrole === "student")
 {
@@ -88,20 +95,13 @@ if(this.props.userrole === "student")
 <br /><br />
   <div className="QpSyllabusDefault">
      <Grid fluid>
-     <Row around="xs" middle="xs">
-     <Col xs={6} sm={6} md={6} lg={6}>
-      <SelectField
-        floatingLabelText="Subject*"
-        value={this.state.subject}
-        onChange={this.handleChange}
-        style={{width:"100%"}}
-      >
-        <MenuItem value={1} primaryText="Select" />
-        <MenuItem value={'OS'} label="OS" primaryText="Operating Systems" />
-        <MenuItem value={'DM'} label="DM" primaryText="Data Mining" />
-      </SelectField>
+     <Row center="xs" middle="xs">
+     <Col xs={12} sm={12} md={6} lg={6}>
+     <SubjectAutoCompleteForNotesAndAssign branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} />
+     <br />
+     <br />
       </Col>
-      <Col xs={6} sm={6} md={6} lg={6} className="register">
+      <Col xs={12} sm={12} md={8} lg={8} className="register">
        <FlatButton type="submit" label="View"  labelPosition="before"  disabled={this.state.buttonDisabled} icon={<ActionViewArray color="white"/>} className="nextButton" onClick={this.handleSubmit} />
      </Col>
       </Row>

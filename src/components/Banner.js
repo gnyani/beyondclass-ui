@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton';
-import CircularProgress from 'material-ui/CircularProgress'
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -12,32 +11,10 @@ class Banner extends Component {
 
   constructor() {
     super();
-    this.state = {
-      isLoggedIn: 'false',
-      isLoaded : 'false' ,
-    }
-     this.isUserLoggedIn = this.isUserLoggedIn.bind(this);
      this.loginToolbar = this.loginToolbar.bind(this);
   }
 
 
-  componentWillMount(){
-  this.isUserLoggedIn()
-  }
-
-  isUserLoggedIn(){
-  fetch('http://'+properties.getHostName+':8080/user/isloggedin', {
-           credentials: 'include',
-           method: 'GET'
-        }).then(response => {
-          return response.text()
-        }).then(response => {
-          this.setState({
-            isLoggedIn : 'true',
-            isLoaded : 'true'
-          })
-        })
-  }
 
 loginToolbar(){
   var loginUrl = 'http://'+properties.getHostName+':8080/google/login'
@@ -76,16 +53,11 @@ loginToolbar(){
 }
 
 render() {
-if(!this.state.isLoaded){
-  return <CircularProgress />;
-}
-else{
   return(
     <div>
     {this.loginToolbar()}
     </div>
   )
-}
 }
 }
 

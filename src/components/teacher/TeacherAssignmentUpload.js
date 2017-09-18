@@ -37,10 +37,12 @@ handleChange = (event, index, value) => this.setState({value});
 
 _handleSubmit(e) {
   e.preventDefault();
-  if(this.state.value === 1)
+  if(this.state.value === 1 )
   {
-  notify.show("please select a subject")
-  }
+  notify.show("please select a subject","warning")
+}else if(this.state.filebase64 === ''){
+  notify.show("please choose a PDF file","warning")
+}
   else{
     this.setState({ buttonDisabled: true });
     fetch('http://'+properties.getHostName+':8080/teacher/assignments/upload', {
@@ -51,12 +53,12 @@ _handleSubmit(e) {
              },
          credentials: 'include',
          body: JSON.stringify({
-           teacherclass: this.props.class,
+           batch: this.props.class,
            subject: this.state.value,
            file : this.state.filebase64,
         })
        }).then(response => {
-         if(response.status === 200)
+         if(response.status === 201)
          {
             return response.text();
          }
@@ -108,6 +110,7 @@ list(buffer){
              </form>
            </CardActions>
          </Card>
+         <br />
       </Col>
   )
   }
