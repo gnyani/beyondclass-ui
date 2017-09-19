@@ -106,7 +106,7 @@ list(buffer){
                 </p></li>
                 </Col>
                <Col xs={1} md={1} sm={1}lg={1}>
-                <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><NavigationClose color="red" hoverColor="black" viewBox='0 0 30 30'/></IconButton>
+                <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><i className="material-icons">delete</i></IconButton>
               </Col>
               </Row>
               </Grid>
@@ -230,8 +230,8 @@ return(
     <Col xs={2} sm={2} md={2} lg={1}>
     <img  className="image" src={require('../../styledcomponents/images/announcements.jpeg')} alt=""/>
     </Col>
-    <Col xs={8} sm={8} md={8} lg={6}>
-    <h2 className="heading"> Latest Announcements</h2>
+    <Col xs={8} sm={8} md={8} lg={4}>
+    <h2 className="heading">Announcement Board</h2>
     </Col>
     </Row>
     </Grid>
