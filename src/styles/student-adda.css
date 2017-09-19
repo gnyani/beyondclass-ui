@@ -1,3 +1,22 @@
+@font-face {
+  font-family: "studentAdda";
+  src: url("./fonts/chalkduster.eot"); /* IE9 Compat Modes */
+  src: url("./fonts/chalkduster.eot?#iefix") format("embedded-opentype"), /* IE6-IE8 */
+    url("./fonts/chalkduster.otf") format("opentype"), /* Open Type Font */
+    url("./fonts/chalkduster.svg") format("svg"), /* Legacy iOS */
+    url("./fonts/chalkduster.ttf") format("truetype"), /* Safari, Android, iOS */
+    url("./fonts/chalkduster.woff") format("woff"), /* Modern Browsers */
+    url("./fonts/chalkduster.woff2") format("woff2"); /* Modern Browsers */
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/materialicons/v29/2fcrYFNaTjcS6g4U3t-Y5ZjZjT5FdEJ140U2DJYC3mY.woff2) format('woff2');
+}
+.material-icons {font-family: 'Material Icons';font-weight: normal;font-style: normal;font-size: 24px;  /* Preferred icon size */display: inline-block;line-height: 1;text-transform: none;letter-spacing: normal;word-wrap: normal;white-space: nowrap;direction: ltr;/* Support for all WebKit browsers. */-webkit-font-smoothing: antialiased;/* Support for Safari and Chrome. */text-rendering: optimizeLegibility;/* Support for Firefox. */-moz-osx-font-smoothing: grayscale;/* Support for IE. */font-feature-settings: 'liga';color:#8a7a7a;}
 .StudentAdda{ margin: 0;padding: 0;border: 0;font-size: 15px;vertical-align: baseline;background: transparent;}
 body,html {height: 100%;width:100%;overflow: hidden;margin: 0;outline: 0;margin: 0;padding: 0;min-width:initial;}
 .backgroundHome{height: 100%;width: 100%;position: absolute;background: url("studentAddaHome.jpg") no-repeat center center fixed;background-size: 100% 100%;}
@@ -5,7 +24,7 @@ body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic
                font-size: 2em;letter-spacing: 0.07em;color: rgb(162,35,142)}
 .b-100{height:100%;width:100%}
 .signUpForm{background: #455A64;color: #FFCCBC;position: relative;top: 125%;border-radius: 7%}
-body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 0px rgb(95, 87, 87);border-radius: 1.5em}
+body .container{border: 2vmin solid rgb(123, 76, 16);background: rgba(20, 21, 18, 0.89); width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 0px rgb(95, 87, 87);border-radius: 1.5em}
 .UserImageContainer .ProfilePic{width: 40%;height: 40% ;color: rgb(33, 150, 243);margin-top: 15%;margin-left: 27%;border-radius: 50%;}
 .UserImageContainer .ProfilePic :hover{width: 40%;height: 40% ;color: rgb(33, 150, 243);margin-top: 15%;margin-left: 27%;border-radius: 50%;}
 .image-upload > input{    display: none;}
@@ -15,11 +34,11 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
               padding: 1vmin 0vmin;margin: 0px;}
 .announcements .heading{text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
                font-size: 4vmin;letter-spacing: 0.08vmin;color: rgb(162,35,142)}
-.announcements .fontStyle{  font-size: 3.5vmin;font-style: italic;
-                            font-weight: 100;letter-spacing: 0.08vmin;color: rgb(1,175,173)}
-.announcements .messageStyle{   font-family: "Comic Sans MS",sans-serif;font-size:3vmin;font-style: italic;font-weight: 50;
-                               color: rgb(247,166,25);text-transform: capitalize;letter-spacing: 0.06vmin;}
-.announcements .image{width: 8vmax;height: 8vmax ;border-radius: 50% }
+.announcements .fontStyle{  font-family: "studentAdda",sans-serif;font-size: 3.5vmin;font-style: italic;
+                            font-weight: 100;letter-spacing: 0.08vmin;color: #da7373;}
+.announcements .messageStyle{   font-family: "studentAdda",sans-serif;font-size:3vmin;font-style: italic;font-weight: 50;
+                               color: rgba(255, 255, 254, 0.78);text-transform: capitalize;letter-spacing: 0.06vmin;}
+.announcements .image{width: 4vmax;height: 4vmax ;border-radius: 50% }
 
 .announcements .imagepreview{width: 40%;height: 40%;}
 
@@ -75,7 +94,7 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
                  letter-spacing: 0.07em;color: rgb(51,138,150)}
 .intro .subheading{text-align: center;font-family: "Comic Sans MS",sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: italic;
                    color:rgb(221,93,93);position: relative; bottom: 1.3em}
-.intro .h4{text-align: center;font-family: "Chalkduster", fantasy,sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: normal;}
+.intro .h4{text-align: center;font-family: "studentAdda", fantasy,sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: normal;}
 .intro .image{overflow: hidden; border-radius: 20%;height: 28%;   width : 20%;margin-left: 40%}
 .personalinfo .h4{font-family: "Arial", sans-serif; font-weight: normal; color: #2196F3}
 /*.personalinfo .RadioButtonGroup{margin-left: 40% !important; }*/
@@ -88,7 +107,7 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
                          color: rgb(247,166,25);letter-spacing: 0.04em;}
 .NotesUpload .Position{text-align: center;}
 .NotesUpload .iframe{width:60%;height: 350px;}
-.Unauthorized {margin-top: 5%;text-align: center;text-align: center;font-family: "Chalkduster", fantasy,sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: normal;}
+.Unauthorized {margin-top: 5%;text-align: center;text-align: center;font-family: "studentAdda", fantasy,sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: normal;}
 .Unauthorized .backHome {color: white!important; background-color: #2196F3 !important; border-radius: 1em !important;}
 .userQuestion{text-align: center;}
 .NotesUpload .iframe{width:60%;height: 350px;}
@@ -98,7 +117,7 @@ body .container{ width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 
 }
 .question{font-weight: bolder;}
 .studentAddaLogoContainer{margin-top: 1vmin;color: rgb(245, 124, 0);background-color: rgb(26, 35, 126);user-select: none;display: inline-flex;align-items: center;justify-content: center;font-size: 3.5vmin;border-radius: 50%;height: 45px;width: 45px;}
-.text{text-align: center;font-family: "Chalkduster",fantasy,sans-serif;font-size: 3.5vmin;letter-spacing: 0.5vmin;font-weight: 100;}
+.text{text-align: center;font-family: "studentAdda",fantasy,sans-serif;font-size: 3.5vmin;letter-spacing: 0.5vmin;font-weight: 100;}
 .studentAddaLogo{margin-top: 0.4vmin;color: rgb(245, 124, 0);background-color: rgb(26, 35, 126);user-select: none;display: inline-flex;align-items: center;justify-content: center;font-size: 3.5vmin;border-radius: 50%;height: 45px;width: 45px;}
 .signupButton{width: 65%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
 .UpdateProfile .button {margin-left: 40% !important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
