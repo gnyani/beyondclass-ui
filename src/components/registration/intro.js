@@ -8,9 +8,9 @@ class Intro extends Component{
   render(){
     return(
         <div className="intro">
-        <Grid fluid>
+        <Grid fluid className="nogutter">
         <Row middle="xs">
-        <Col xs={12} md={12} lg={12}>
+        <Col xs={11} sm={11} md={11} lg={11}>
         <h2 className="headline">Student-Adda</h2>
         <h3 className="subheading">your virtual classroom</h3>
         <br />

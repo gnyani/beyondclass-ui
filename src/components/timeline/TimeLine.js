@@ -36,7 +36,7 @@ class TimeLine extends React.Component {
       <StayVisible
         {...this.props}
       >
-      <Grid fluid>
+      <Grid fluid className="nogutter">
       <Row around="xs">
       <Col xs={12} sm={12} md={12} lg={12}>
       <HorizontalTimelineContent

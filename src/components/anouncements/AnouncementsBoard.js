@@ -4,13 +4,13 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import styled from 'styled-components';
 import IconButton from 'material-ui/IconButton';
-import {NavigationClose} from '../../styledcomponents/SvgIcons.js';
 import Pagination from 'material-ui-pagination';
 import Dialog from 'material-ui/Dialog';
 import{Row,Grid,Col} from 'react-flexbox-grid';
 import '../../styles/student-adda.css';
 import UnauthorizedPage from '../UnauthorizedPage.js'
 import {Media} from '../utils/Media'
+import {Delete} from '../../styledcomponents/SvgIcons'
 
 var properties = require('../properties.json');
 
@@ -95,25 +95,30 @@ handleDialogOpen(i){
 
 list(buffer){
   var i=0;
+  if(this.state.users.length === 0){
+    buffer.push(<p className="name" key={new Date()}><span className="messageStyle">
+                 You are all caught up,You Don't Have Any Announcements Yet !!!
+                </span></p>)
+  }
   for (i=0;i<this.state.users.length;i++){
   if(this.state.useremails[i] === this.props.loggedinuser)
   {
-  buffer.push( <Grid fluid key={i}>
+  buffer.push( <Grid fluid key={i}  className="nogutter">
                <Row middle="xs">
-               <Col xs={10} sm={10} md={11} lg={11}>
+               <Col xs={10} sm={10} md={10} lg={10}>
                <li >
                 <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span> <span className="messageStyle">{this.state.messages[i]}</span>
                 </p></li>
                 </Col>
-               <Col xs={1} md={1} sm={1}lg={1}>
-                <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><i className="material-icons">delete</i></IconButton>
+               <Col xs={2} md={2} sm={2}lg={2}>
+                <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><Delete color='#bbbbbb' viewBox='0 0 20 20'/></IconButton>
               </Col>
               </Row>
               </Grid>
              )
   }
 else{
-  buffer.push(<Grid fluid key={i}>
+  buffer.push(<Grid fluid key={i} className="nogutter">
                <Row >
                <Col xs={12} sm={12} md={12} lg={12}>
                <li>
@@ -221,23 +226,28 @@ return(
 <StayVisible
   {...this.props}
 >
-<Grid fluid>
-<Row start="xs">
-<Col xs={12} sm={12} md={12} lg={12}>
 <div className="announcements">
     <Grid fluid>
-    <Row center="xs" middle="xs">
-    <Col xs={2} sm={2} md={2} lg={1}>
+    <Row  center="xs" middle="xs">
+    <Col  xs={2} sm={2} md={2} lg={2}>
     <img  className="image" src={require('../../styledcomponents/images/announcements.jpeg')} alt=""/>
     </Col>
-    <Col xs={8} sm={8} md={8} lg={4}>
+    <Col xs={8} sm={8} md={8} lg={6}>
     <h2 className="heading">Announcement Board</h2>
     </Col>
     </Row>
     </Grid>
-   <div  className="container">
+
+    <Grid fluid className="nogutter">
+    <Row center="xs" middle="xs">
+    <Col xs={12} sm={12} md={10} lg={11}>
+   <div  className="container" >
       <ul> {this.list(buffer)} </ul>
     </div>
+    </Col>
+    </Row>
+    </Grid>
+    <br /><br />
     <Pagination
     total = { this.state.total }
     current = { this.state.number }
@@ -267,9 +277,6 @@ return(
          >
      </Dialog>
 </div>
-</Col>
-</Row>
-</Grid>
 </StayVisible>
 );
 }

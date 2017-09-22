@@ -44,16 +44,16 @@ class TeacherClassDetails extends Component{
   render(){
     return(
       <div className="classdetails">
-      <Grid fluid>
+      <Grid fluid className="nogutter">
       <Row between="xs">
       <Col xs={12} md={8} lg={6}>
       <h4 className="h4">Class Details</h4>
       </Col>
       </Row>
       </Grid>
-      <Grid fluid>
+      <Grid fluid className="nogutter">
       <Row between="xs">
-      <Col xs={12} md={6} lg={6}>
+      <Col xs={11} sm ={11} md={5} lg={5}>
       <SelectField
         floatingLabelText="University*"
         value={this.props.UniversityValue}
@@ -64,7 +64,7 @@ class TeacherClassDetails extends Component{
         <MenuItem value={'JNTU'} label="JNTU" primaryText="JNTU" />
       </SelectField>
       </Col>
-      <Col xs={12} md={6} lg={6}>
+      <Col xs={11} sm={11} md={5} lg={5}>
       <SelectField
         floatingLabelText="College*"
         value={this.props.CollegeValue}
@@ -77,9 +77,9 @@ class TeacherClassDetails extends Component{
       </Col>
       </Row>
       </Grid>
-      <Grid fluid>
+      <Grid fluid className="nogutter">
       <Row between="xs">
-      <Col xs={12} md={6} lg={6}>
+      <Col xs={11} sm={11} md={5} lg={5}>
       <SelectField
        floatingLabelText="Branch*"
        value={this.props.BranchValue}
@@ -90,7 +90,7 @@ class TeacherClassDetails extends Component{
         <MenuItem value={'ECE'} label="ECE" primaryText="Ellectronics and Communication Engineering" />
       </SelectField>
       </Col>
-      <Col xs={12} md={6} lg={6}>
+      <Col xs={11} sm={11} md={5} lg={5}>
       <SelectField
       floatingLabelText="Select Classes*"
        multiple={true}

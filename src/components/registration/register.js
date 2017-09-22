@@ -349,9 +349,9 @@ generateOtp(){
     return(
   <div style={{overflow:"auto"}}>
   <br /><br /><br /><br /><br /><br />
-    <Grid fluid>
+    <Grid fluid className="nogutter">
     <Row around="xs">
-    <Col xs={12} md={10} lg={8}>
+    <Col xs={11} sm ={11} md={10} lg={8}>
     <div className="RegisterContainer">
       	<Slider ref={c => this.slider = c } {...settings} afterChange={(currentSlide) => {
             this.setState({ currentSlide: currentSlide  })
@@ -371,7 +371,7 @@ generateOtp(){
             handleBatchesChange={this.handleBatchesChange}/></div>
         </Slider>
         <br /> <br /> <br />
-        <Grid fluid>
+        <Grid fluid className="nogutter">
         <Row center="xs" className="register">
         <Col xs>
           {this.previousButton()}

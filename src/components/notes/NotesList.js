@@ -6,6 +6,7 @@ import {ActionViewArray,FileFileDownload,NavigationFullscreen} from '../../style
 import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import UnauthorizedPage from '../UnauthorizedPage.js'
+import Divider from 'material-ui/Divider'
 import SubjectAutoCompleteForNotesAndAssign from '../utils/SubjectAutoCompleteForNotesAndAssign.js'
 
 var properties = require('../properties.json');
@@ -78,7 +79,9 @@ class NotesList extends Component{
             usermsg : 'No files for this subject were found',
             isLoaded: true
           })
-          notify.show("Files Retrieved successfully","success")
+          else {
+            notify.show("Files Retrieved successfully","success")
+          }
         })
    }
 
@@ -86,27 +89,32 @@ class NotesList extends Component{
   render(){
 if(this.props.userrole==="student"){
    return(
-     <Grid fluid>
-     <Row around="xs">
-     <Col xs={12} sm={12} md={10} lg={7}>
      <div>
      <br  /><br />
-  <div className="QpSyllabusDefault">
-     <Grid fluid>
+     <div >
+     <Grid fluid className="nogutter">
      <Row center="xs" middle="xs">
-     <Col xs={12} sm={12} md={6} lg={6}>
+     <Col xs={12} sm={12} md={5} lg={3}>
      <SubjectAutoCompleteForNotesAndAssign branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} />
      <br />
      <br />
       </Col>
-      <Col xs={12} sm={12} md={8} lg={8} className="register">
+      <Col xs={6} sm={6} md={4} lg={4} className="register">
       <FlatButton type="submit" label="View" disabled={this.state.buttonDisabled} icon={<ActionViewArray color="white"/>} className="nextButton" onClick={this.handleSubmit} />
+      <br />
+      </Col>
+      </Row>
+      </Grid>
+      <Grid fluid className="nogutter">
+      <Row around="xs" middle="xs">
+      <Col xs={10} sm={10} md={10} lg={8}>
+      <Divider />
       </Col>
       </Row>
       </Grid>
       </div>
      <div>
-     <Grid fluid>
+     <Grid fluid className="nogutter">
      <Row around="xs">
      {this.state.links.map((src, index) => (
      <Col xs={12} sm={12} md={9} lg={8} key={index}>
@@ -147,9 +155,6 @@ if(this.props.userrole==="student"){
     </p>
     </div>
 </div>
-</Col>
-</Row>
-</Grid>
    )
  }else{
    return(<UnauthorizedPage />)

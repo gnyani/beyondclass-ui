@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import DropDownMenu from 'material-ui/DropDownMenu';
 import TextField from 'material-ui/TextField';
 import MenuItem from 'material-ui/MenuItem';
-import RaisedButton from 'material-ui/RaisedButton';
 import FlatButton from 'material-ui/FlatButton';
 import Divider from 'material-ui/Divider';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -17,6 +16,9 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import '../../styles/student-adda.css';
 import UnauthorizedPage from '../UnauthorizedPage.js'
 import {Media} from '../utils/Media'
+import {India,dataSourceConfig} from '../utils/Cities.js'
+import {Hyderabad,areaDataSourceConfig} from '../utils/Areas.js'
+import AutoComplete from 'material-ui/AutoComplete'
 
 var properties = require('../properties.json');
 
@@ -73,6 +75,8 @@ class CoachingCentres extends Component{
        reviewBoxOpen: false,
        feedetails: false,
        isDataLoaded: false,
+       searchText: '',
+       areaName:'',
      }
      this.populateData = this.populateData.bind(this)
      this.renderOrgCards = this.renderOrgCards.bind(this)
@@ -82,11 +86,47 @@ class CoachingCentres extends Component{
      this.handleReviewBoxOpen = this.handleReviewBoxOpen.bind(this)
      this.handleShowFeeDetails = this.handleShowFeeDetails.bind(this)
      this.fetchReviews = this.fetchReviews.bind(this)
+     this.getIndex = this.getIndex.bind(this)
+     this.getAreaTextField = this.getAreaTextField.bind(this)
+     this.getCityTextField = this.getCityTextField.bind(this)
    }
 
    handleCoachingChange = (event, index, coachingType) => this.setState({coachingType});
-   handleCityChange = (event, index, city) => this.setState({city});
    handleAreaChange = (event, index, area) => this.setState({area});
+
+   handleUpdateInput = (searchText,dataSource) => {
+     let index = this.getIndex(searchText,dataSource,"cityKey")
+     if(index !== -1)
+     this.setState({
+       city:dataSource[index].valueKey,
+       searchText: searchText,
+     })
+     else
+       this.setState({
+         searchText: searchText,
+       });
+   };
+
+handleUpdateArea = (searchText,dataSource) => {
+  let index = this.getIndex(searchText,dataSource,"areaKey")
+  if(index !== -1)
+  this.setState({
+    area:dataSource[index].valueKey,
+    areaName: searchText,
+  })
+  else
+    this.setState({
+      areaName: searchText,
+    });
+};
+  getIndex(value, arr, prop) {
+       for(var i = 0; i < arr.length; i++) {
+           if(arr[i][prop] === value) {
+               return i;
+           }
+       }
+       return -1; //to handle the case where the value doesn't exist
+   }
 
 renderOrgCards(){
  var buffer = []
@@ -144,6 +184,9 @@ if(this.state.coachingcentreId.length!==0)
         </Card>
      </div>)
 }
+}
+else{
+  buffer.push(<p key={new Date()} style={{textAlign:"center"}}>No records found for this search criteria</p>)
 }
 this.setState({
   buffer: buffer,
@@ -324,7 +367,6 @@ populateData(){
         }).then(response => {
           return response.json()
         }).then(response => {
-          console.log("response is" + JSON.stringify(response))
           var newcoachingcentreId = []
           var neworgname = []
           var newdescription= []
@@ -356,7 +398,41 @@ populateData(){
           })
         })
 }
-
+getCityTextField(){
+  if(this.state.coachingType === 1)
+  return(<TextField hintText="Please select ExaminationType" disabled={true} />)
+  else {
+    return(
+      <AutoComplete
+       floatingLabelText="City"
+       hintText="Start Typing City Name"
+       filter={AutoComplete.fuzzyFilter}
+       searchText={this.state.searchText}
+       onUpdateInput={this.handleUpdateInput}
+       dataSource={India}
+       maxSearchResults={5}
+       dataSourceConfig={dataSourceConfig}
+       />
+    )
+  }
+}
+getAreaTextField(){
+  if(this.state.city === 1)
+      return(<TextField hintText="Please select a City" disabled={true} />)
+  else {
+    return(
+    <AutoComplete
+     floatingLabelText="Area"
+     hintText="Start Typing Area Name"
+     filter={AutoComplete.fuzzyFilter}
+     searchText={this.state.areaName}
+     onUpdateInput={this.handleUpdateArea}
+     dataSource={Hyderabad}
+     maxSearchResults={5}
+     dataSourceConfig={areaDataSourceConfig}
+     />)
+  }
+}
   render(){
 
     const actions = [
@@ -371,14 +447,14 @@ if(this.props.userrole==="student")
      {...this.props}
      >
      <br /><br />
-    <Grid fluid>
+    <Grid fluid className="nogutter">
     <Row around="xs">
     <Col xs={12} sm={12} md={10} lg={8}>
     <div className="coachingcentres">
      <div className="div">
-     <Grid fluid>
-     <Row middle="xs">
-     <Col xs>
+     <Grid fluid className="nogutter">
+     <Row between="xs" bottom="xs">
+     <Col xs={10} sm={10} md={5} lg={5}>
      <DropDownMenu
        value={this.state.coachingType}
        onChange={this.handleCoachingChange}
@@ -389,33 +465,23 @@ if(this.props.userrole==="student")
        <MenuItem value={'GMAT'} label="GMAT" primaryText="GMAT" />
      </DropDownMenu>
      </Col>
-
-     <Col xs>
-     <DropDownMenu
-       value={this.state.city}
-       onChange={this.handleCityChange}
-       autoWidth={true}
-     >
-       <MenuItem value={1} primaryText="City*" />
-       <MenuItem value={'HYD'} label="HYD" primaryText="Hyderabad" />
-     </DropDownMenu>
-     </Col>
-     <Col xs>
-     <DropDownMenu
-       value={this.state.area}
-       onChange={this.handleAreaChange}
-       autoWidth={true}
-     >
-       <MenuItem value={1} primaryText="Area*" />
-       <MenuItem value={"HYMN"}  label="HYMN" primaryText="HimayatNagar" />
-       <MenuItem value={"AMP"} label="AMP" primaryText="Ameerpet" />
-     </DropDownMenu>
-     </Col>
-     <Col xs>
-     <RaisedButton label="Go" disabled={this.state.buttonDisabled} onClick={this.populateData.bind(this)}/>
+     <Col xs={10} sm={10} md={5} lg={5}>
+    {this.getCityTextField()}
      </Col>
      </Row>
      </Grid>
+
+     <Grid fluid className="nogutter">
+     <Row between="xs" bottom="xs">
+     <Col xs={10} sm={10} md={5} lg={5}>
+     {this.getAreaTextField()}
+     </Col>
+     <Col xs={10} sm={10} md={5} lg={5}>
+     <FlatButton label="Go" className="fetchButton" onClick={this.populateData.bind(this)}/>
+     </Col>
+     </Row>
+     </Grid>
+     <br /><br />
     </div>
 <Divider />
  {this.state.buffer}

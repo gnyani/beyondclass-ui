@@ -4,7 +4,7 @@ import {blue500, red500} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
 import Divider from 'material-ui/Divider';
 import {ImageCollectionsBookmark,ActionBook,AvLibraryBooks,ActionAssignment,
-       ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool,DeveloperBoard} from '../../styledcomponents/SvgIcons.js'
+       ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool,DeveloperBoard,QuestionAnswer} from '../../styledcomponents/SvgIcons.js'
 
 
 class StudentDashboard extends Component{
@@ -114,7 +114,7 @@ isActive(value){
             <Link to='/UserQuestions' width={this.props.width} style={{ textDecoration: 'none' }}  onClick={this.onChangeSelected.bind(this,"UserQuestions")} >
                   <MenuItem
                   primaryText={'User Questions'}
-                  leftIcon={<ActionSpeakerNotes color={blue500}/>}
+                  leftIcon={<QuestionAnswer color={blue500}/>}
                   onClick={this.props.handleMobileToggle}
                   />
                 </Link></div>

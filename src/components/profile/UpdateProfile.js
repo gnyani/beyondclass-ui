@@ -133,12 +133,12 @@ updateProfile(){
       </Row>
       </Grid>
       <Grid fluid>
-      <Row around="xs" bottom="xs">
-      <Col xs={4} sm={4} md={4} lg={3}>
+      <Row start="xs" bottom="xs">
+      <Col xs={4} sm={4} md={4} lg={5}>
       <DatePicker floatingLabelText="Date of Birth" hintText="Date of Birth" disabled={this.state.dobDisabled} openToYearSelection={true} defaultDate={new Date(this.state.controlledDate)}
-      onChange={this.handleDateChange} style={{width:"100%"}} onDismiss={this.handleDateDismiss}/>
+      onChange={this.handleDateChange} style={{width:'25%'}} onDismiss={this.handleDateDismiss}/>
       </Col>
-      <Col is ="bottom 1 phone-1 tablet-1">
+      <Col xs={1} sm={1} md={1} lg={1}>
       <IconButton onClick={this.handleDobDisable}> <Edit color="red" viewBox='0 0 30 30'/> </IconButton>
       </Col>
       </Row>

@@ -142,7 +142,7 @@ image(){
     {
     return(
       <Grid fluid>
-      <Row around="xs">
+      <Row between="xs">
       <Col xs={12} sm={12} md={10} lg={10}>
       <div>
       <div className="QuestionPapers">
@@ -150,7 +150,7 @@ image(){
        <br />
       <Grid fluid>
       <Row around="xs">
-      <Col xs={12} sm={12} md={5} lg={5}>
+      <Col xs={12} sm={10} md={5} lg={5}>
       <SelectField
         floatingLabelText="Branch*"
         value={this.state.branch}
@@ -162,7 +162,7 @@ image(){
          <MenuItem value={'ECE'} label="ECE" primaryText="ECE" />
        </SelectField>
        </Col>
-       <Col xs={12} sm={12} md={5} lg={5}>
+       <Col xs={12} sm={10} md={5} lg={5}>
         <SelectField
          floatingLabelText="Year*"
           value={this.state.year}
@@ -179,11 +179,11 @@ image(){
        <br />
        <Grid fluid>
        <Row around="xs" middle="xs">
-       <Col xs={12} sm={12} md={5} lg={5}>
+       <Col xs={12} sm={10} md={5} lg={5}>
        <SubjectAutoComplete branch={this.state.branch} handleSubjectChange={this.handleSubjectChange} />
        <br />
        </Col>
-       <Col xs={12} sm={12} md={5} lg={5}>
+       <Col xs={12} sm={10} md={5} lg={5}>
         <FlatButton label="Fetch" className="fetchButton" value="Fetch" primary={true} onTouchTap={this.validateAndFetch} />
         </Col>
        </Row>
