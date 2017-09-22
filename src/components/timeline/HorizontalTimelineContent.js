@@ -6,12 +6,30 @@ import HorizontalTimeline from 'react-horizontal-timeline';
 import {Card, CardActions, CardHeader, CardMedia,CardText} from 'material-ui/Card';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import FlatButton from 'material-ui/FlatButton';
-import {ActionThumbUp,CommunicationComment,NavigationClose} from '../../styledcomponents/SvgIcons.js';
+import {ActionThumbUp,CommunicationComment,NavigationClose,AttachFile} from '../../styledcomponents/SvgIcons.js';
 import {notify} from 'react-notify-toast';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
 import '../../styles/student-adda.css';
 var properties = require('../properties.json');
+
+const styles = {
+  uploadButton: {
+    verticalAlign: 'middle',
+    border: "0.1vmin solid #4DD0E1",
+    borderRadius: '1vmax'
+  },
+  uploadInput: {
+    cursor: 'pointer',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    width: '100%',
+    opacity: 0,
+  },
+};
 
 export default class HorizontalTimelineContent extends React.Component {
   constructor(props) {
@@ -109,7 +127,7 @@ export default class HorizontalTimelineContent extends React.Component {
           this.setState({
             file: file,
             imagePreviewUrl: reader.result,
-            filebase64:canvas.toDataURL('image/jpeg',0.1).split(',').pop(),
+            filebase64:canvas.toDataURL('image/jpeg',0.4).split(',').pop(),
             imageDialog : true,
           });
       }.bind(this)
@@ -162,6 +180,7 @@ export default class HorizontalTimelineContent extends React.Component {
              buttonDisabled  : false,
              imagePreviewUrl: '',
              file: '',
+             filebase64: '',
              message: '',
            })
            notify.show("Post uploaded successfully","success")
@@ -209,7 +228,7 @@ if(this.state.postUrls.length!==0)
     {
       if(this.state.isprofilepicchange[i] === true){
         buffer.push(
-            <Col xs={12} sm={12} md={10} lg={10} key={i}>
+            <Col xs={11} sm={11} md={10} lg={8} key={i}>
               <Card
               onExpandChange={this.deletePostConfirm.bind(this,i)}
               style={{borderRadius:"1.5em"}}
@@ -259,7 +278,7 @@ if(this.state.postUrls.length!==0)
       }
     else{
       buffer.push(
-        <Col xs={12} sm={12} md={10} lg={10} key={i}>
+        <Col xs={11} sm={11} md={10} lg={8} key={i}>
           <Card
           onExpandChange={this.deletePostConfirm.bind(this,i)}
           style={{borderRadius:"1.5em"}}
@@ -309,7 +328,7 @@ if(this.state.postUrls.length!==0)
      )
    }}else{
      if(this.state.isprofilepicchange[i] === true){
-      buffer.push( <Col xs={12} sm={12} md={10} lg={10} key={i}>
+      buffer.push( <Col xs={11} sm={11} md={10} lg={8} key={i}>
          <Card
          style={{borderRadius:"1.5em"}}
          >
@@ -354,7 +373,7 @@ if(this.state.postUrls.length!==0)
       </Col>)
     }else{
      buffer.push(
-         <Col xs={12} sm={12} md={10} lg={10} key={i}>
+         <Col xs={11} sm={11} md={10} lg={8} key={i}>
            <Card
            style={{borderRadius:"1.5em"}}
            >
@@ -661,14 +680,22 @@ getLikedUsers(i){
         style={{width:'60%'}}
         />
         <Grid fluid>
-        <Row between="xs" middle="xs">
-        <Col xs lgOffset={3}>
-        <input type="file" onChange={this._handleImageChange} />
+        <Row around="xs" top="xs">
+        <Col xs={12} sm ={8} md={5} lg={5} >
+        <FlatButton
+        label="Attach an Image"
+        style={styles.uploadButton}
+        primary={true}
+        containerElement="label"
+        icon={<AttachFile />}
+        >
+        <input type="file" accept="image/jpg,image/jpeg,image/png" style={styles.uploadInput} onChange={this._handleImageChange}/>
+        </FlatButton>
+        <br /><br />
        </Col>
-        <Col xs>
+        <Col xs={12} sm ={8} md={4} lg={4}>
         <FlatButton  className="PostButton" type="submit" label="Post"  disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
         </Col>
-
         </Row>
         </Grid>
         <br />
@@ -731,7 +758,7 @@ getLikedUsers(i){
         </Dialog>
 
         <div>
-            <Grid fluid>
+            <Grid fluid className="nogutter">
             <Row around="xs">
             {this.loadTimeline(buffer)}
             </Row>

@@ -21,30 +21,30 @@ class PersonalInfo extends Component{
   render(){
     return(
     <div className="personalinfo">
-    <Grid fluid>
-    <Row >
-    <Col xs={8} md={6} lg={3}>
+    <Grid fluid className="nogutter">
+    <Row around="xs">
+    <Col xs={11} sm={11} md={11} lg={11}>
     <h4 className="h4"> Basic Info </h4>
     </Col>
     </Row>
    </Grid>
-    <Grid fluid>
-    <Row between="xs">
-    <Col xs={12} md={8} lg={5}>
+    <Grid fluid className="nogutter">
+    <Row around="xs">
+    <Col xs={11} sm={11} md={5} lg={5}>
        <TextField floatingLabelText="First Name"  value={this.props.firstName} style={{width:"80%"}}/>
     </Col>
-    <Col xs={12} md={8} lg={5}>
+    <Col xs={11} sm={11} md={5} lg={5}>
        <TextField floatingLabelText="Last Name"  value={this.props.lastName} style={{width:"80%"}}/>
      </Col>
      </Row>
     </Grid>
-    <Grid fluid>
-    <Row bottom="xs" between="xs">
-    <Col xs={12} md={8} lg={5}>
+    <Grid fluid className="nogutter">
+    <Row bottom="xs" around="xs">
+    <Col xs={11} sm={11} md={5} lg={5}>
     <DatePicker floatingLabelText="Date of Birth" hintText="Date of Birth" openToYearSelection={true} maxDate={maxDate}
     style={{width:"80%"}} value={this.props.controlledDate} onChange={this.props.handleDateChange} onDismiss={this.props.handleDateDismiss}/>
     </Col>
-    <Col xs={12} md={8} lg={5}>
+    <Col xs={11} sm={11} md={5} lg={5}>
     <div style={{width:"85%",marginTop:"10%"}}><Phone
      country="IN"
      placeholder="Enter phone number"
@@ -56,9 +56,9 @@ class PersonalInfo extends Component{
     </Row>
     </Grid>
     <br /> <br />
-    <Grid fluid>
+    <Grid fluid className="nogutter">
     <Row center="xs">
-    <Col xs={12} md={8} lg={4}>
+    <Col xs={11} sm={11} md={5} lg={5}>
   <RadioButtonGroup
      name="userroles"
      className="RadioButtonGroup"

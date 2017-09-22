@@ -27,6 +27,7 @@ export const NavAppBar = (props) => {
       <StayVisible
       {...props}
       >
+
       <Paper zDepth={2}>
         <Toolbar  style={{
          noGutter: true,
@@ -35,25 +36,25 @@ export const NavAppBar = (props) => {
         >
            <ToolbarGroup firstChild={true}>
            <IconButton onClick={props.toggle}> <NavigationMenu color="#ffffff" /> </IconButton>
-                 <CustomAvatar />
-             <ToolbarTitle text="StudentAdda" style={{marginLeft:"0.3em",color:'#ffffff'}}/>
+                 <CustomAvatar viewBox='0 0 30 30'/>
+             <ToolbarTitle text="StudentAdda" style={{marginLeft:'0.5Vmax',fontSize:'1.8Vmax',color:'#ffffff'}}/>
            </ToolbarGroup>
            <ToolbarGroup>
            <Badge
             badgeContent={props.notificationsCount}
             secondary={true}
-            badgeStyle={{top: 18, right: 12}}
+            badgeStyle={{top: '2em', right: '1.5em'}}
            >
            <IconButton tooltip="Notifications" containerElement={<Link to="/notifications" />} >
              <NotificationsIcon />
            </IconButton>
          </Badge>
-           <FlatButton  label="Logout" value="logout" style={{color:"#FFFFFF"}} onTouchTap={props.logout}/>
+           <FlatButton  label="Logout" value="logout" style={{position:'relative',right:'15%'}}labelStyle={{color:"#FFFFFF",fontSize:'1.3Vmax'}} onTouchTap={props.logout}/>
            </ToolbarGroup>
          </Toolbar>
       </Paper>
-
-      </StayVisible>)
+      </StayVisible>
+)
 }
 else{
   return(
@@ -67,11 +68,11 @@ else{
    }}>
        <ToolbarGroup firstChild={true}>
        <IconButton onTouchTap={props.toggle}> <NavigationMenu color="#ffffff" /> </IconButton>
-             <CustomAvatar />
-         <ToolbarTitle text="StudentAdda" style={{marginLeft:"0.3em",color:'#ffffff'}}/>
+             <CustomAvatar viewBox='0 0 30 30'/>
+         <ToolbarTitle text="StudentAdda" style={{marginLeft:'0.5Vmax',fontSize:'1.8Vmax',color:'#ffffff'}}/>
        </ToolbarGroup>
        <ToolbarGroup>
-       <FlatButton  label="Logout" value="logout" style={{color:"#FFFFFF"}} onTouchTap={props.logout}/>
+       <FlatButton  label="Logout" value="logout" style={{position:'relative',right:'15%'}} labelStyle={{color:"#FFFFFF",fontSize:'1.3Vmax'}} onTouchTap={props.logout}/>
        </ToolbarGroup>
      </Toolbar>
   </Paper>

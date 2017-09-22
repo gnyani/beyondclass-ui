@@ -2,10 +2,29 @@ import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import {notify} from 'react-notify-toast';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import {FileFileUpload} from '../../styledcomponents/SvgIcons.js'
+import {FileFileUpload,AttachFile} from '../../styledcomponents/SvgIcons.js'
 import UnauthorizedPage from '../UnauthorizedPage.js'
+import Divider from 'material-ui/Divider'
 import SubjectAutoCompleteForNotesAndAssign from '../utils/SubjectAutoCompleteForNotesAndAssign.js'
 var properties = require('../properties.json');
+
+const styles = {
+  uploadButton: {
+    verticalAlign: 'middle',
+    border: "0.1vmin solid #4DD0E1",
+    borderRadius: '1vmax'
+  },
+  uploadInput: {
+    cursor: 'pointer',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+    width: '100%',
+    opacity: 0,
+  },
+};
 
 class NotesUpload extends Component{
 
@@ -25,7 +44,6 @@ class NotesUpload extends Component{
   }
 
   handleSubjectChange(subjectValue){
-    console.log("subject value is" +subjectValue)
     this.setState({
       subject: subjectValue
     })
@@ -34,9 +52,9 @@ class NotesUpload extends Component{
 
   _handleSubmit(e) {
     e.preventDefault();
-    if(this.state.value === 1)
+    if(this.state.subject === 1 || this.state.file === '')
     {
-    notify.show("please select a subject")
+    notify.show("please select a subject and choose a file")
     }
     else{
       this.setState({ buttonDisabled: true });
@@ -98,25 +116,44 @@ class NotesUpload extends Component{
     if(this.props.userrole==="student")
     {
     return (
-      <Grid fluid>
-      <Row around="xs">
-      <Col xs={12} sm={12} md={10} lg={7}>
     <div>
-    <br  />
-      <div className="QpSyllabusDefault NotesUpload">
+    <br  /> <br />
       <Grid fluid>
-        <Row around="xs">
-        <Col xs={12} sm={12} md={6} lg={6}>
+        <Row center="xs" middle="xs">
+        <Col xs={12} sm={12} md={4} lg={3}>
          <SubjectAutoCompleteForNotesAndAssign branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} />
+        <br /><br />
+        </Col>
+        <Col xs={12} sm={12} md={4} lg={3}>
+        <FlatButton
+        label="Choose a PDF file"
+        icon={<AttachFile />}
+        primary={true}
+        style={styles.uploadButton}
+        containerElement="label"
+        >
+        <input type="file" accept="application/pdf" style={styles.uploadInput} onChange={this._handleImageChange}/>
+        </FlatButton>
+        <br />
         </Col>
         </Row>
         </Grid>
-          <p className="paragraph"> Please upload a pdf file </p>
+        <br />
+
+          <Grid fluid className="nogutter NotesUpload">
+          <Row around="xs">
+
+          <Col xs={12} sm={12} md={10} lg={8}>
           <form className="Position" onSubmit={this._handleSubmit}>
-          <input type="file" onChange={this._handleImageChange} />
           <FlatButton type="submit" label="Upload File"  className="uploadbutton" icon={<FileFileUpload color="white"/>} disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
           </form>
-      </div>
+          <br /><br />
+          <Divider />
+          </Col>
+          </Row>
+          </Grid>
+
+
       <div className="NotesUpload">
       <br />
       <br />
@@ -127,9 +164,6 @@ class NotesUpload extends Component{
       <br />
       </div>
   </div>
-  </Col>
-  </Row>
-  </Grid>
     )
   }else{
     return(<UnauthorizedPage />)

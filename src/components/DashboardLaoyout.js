@@ -77,7 +77,7 @@ _handleImageChange(e) {
         this.setState({
           file: file,
           imagePreviewUrl: reader.result,
-          fullImage:canvas.toDataURL('image/jpeg',0.1).split(',').pop(),
+          fullImage:canvas.toDataURL('image/jpeg',0.4).split(',').pop(),
           imageDialog : true,
         });
     }.bind(this)
@@ -190,7 +190,6 @@ dashboard(){
 }
 
 componentWillMount(){
-  console.log("this got called")
   let width= window.innerWidth
   if(width<700){
     this.setState({

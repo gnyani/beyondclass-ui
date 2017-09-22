@@ -4,6 +4,7 @@ import {notify} from 'react-notify-toast';
 import {lightBlue300} from 'material-ui/styles/colors';
 import {ActionViewArray,FileFileDownload,NavigationFullscreen} from '../../styledcomponents/SvgIcons.js'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
+import Divider from 'material-ui/Divider'
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import SubjectAutoCompleteForNotesAndAssign from '../utils/SubjectAutoCompleteForNotesAndAssign.js'
 import '../../styles/student-adda.css';
@@ -80,6 +81,9 @@ class AssignList extends Component{
             usermsg : 'No files for this subject were found',
             isLoaded: true
           })
+          else{
+            notify.show("Files Retrieved Successfully")
+          }
         })
    }
 
@@ -88,30 +92,33 @@ class AssignList extends Component{
 if(this.props.userrole === "student")
 {
    return(
-<Grid fluid>
-<Row around="xs">
-<Col xs={12} sm={12} md={10} lg={7}>
 <div>
 <br /><br />
-  <div className="QpSyllabusDefault">
-     <Grid fluid>
+     <Grid fluid className="nogutter">
      <Row center="xs" middle="xs">
-     <Col xs={12} sm={12} md={6} lg={6}>
+     <Col xs={12} sm={12} md={4} lg={4}>
      <SubjectAutoCompleteForNotesAndAssign branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} />
      <br />
      <br />
       </Col>
-      <Col xs={12} sm={12} md={8} lg={8} className="register">
+      <Col xs={6} sm={6} md={4} lg={4} className="register">
        <FlatButton type="submit" label="View"  labelPosition="before"  disabled={this.state.buttonDisabled} icon={<ActionViewArray color="white"/>} className="nextButton" onClick={this.handleSubmit} />
      </Col>
       </Row>
       </Grid>
-   </div>
+      <br /><br />
+      <Grid fluid className="nogutter">
+      <Row around="xs" middle="xs">
+      <Col xs={10} sm={10} md={10} lg={8}>
+      <Divider />
+      </Col>
+      </Row>
+      </Grid>
    <div>
-   <Grid fluid>
+   <Grid fluid className="nogutter">
    <Row around="xs">
    {this.state.links.map((src, index) => (
-     <Col xs={12} sm={12} md={9} lg={8} key={index}>
+     <Col xs={11} sm={11} md={9} lg={8} key={index}>
      <br />
          <Card style={{borderRadius:"2em"}}>
            <CardHeader
@@ -149,9 +156,6 @@ if(this.props.userrole === "student")
   </p>
   </div>
   </div>
-  </Col>
-  </Row>
-  </Grid>
    )
   }
   else{

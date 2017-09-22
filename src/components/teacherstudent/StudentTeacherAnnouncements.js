@@ -20,7 +20,7 @@ class StudentTeacherAnnouncements extends Component{
     else{
     for (let i=0;i<this.state.announcements.length;i++){
       buffer.push(
-                    <Grid fluid key={i} className="announcements">
+                    <Grid fluid key={i} className="announcements nogutter">
                     <Row >
                     <Col xs={12} sm={12} md={12} lg={12}>
                     <li >
