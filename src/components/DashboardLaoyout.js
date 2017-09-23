@@ -77,7 +77,7 @@ _handleImageChange(e) {
         this.setState({
           file: file,
           imagePreviewUrl: reader.result,
-          fullImage:canvas.toDataURL('image/jpeg',0.4).split(',').pop(),
+          fullImage:canvas.toDataURL('image/jpeg',0.3).split(',').pop(),
           imageDialog : true,
         });
     }.bind(this)
@@ -90,7 +90,7 @@ _handleImageChange(e) {
 saveProPictoDB(){
 if (this.editor) {
   const canvas = this.editor.getImage()
-  var data = canvas.toDataURL('image/jpeg',0.0001).split(',').pop()
+  var data = canvas.toDataURL('image/jpeg',0.1).split(',').pop()
   this.setState({
     filebase64: data,
   },function OnstateChange(){
@@ -309,9 +309,13 @@ else
      />
     <Drawer open={this.state.open} docked={this.state.docked} disableSwipeToOpen={true} width = {this.state.width} onRequestChange={(open) => this.setState({open})}>
     <div className="image-upload UserImageContainer">
-    <div></div>
     <label htmlFor="file-input">
-      <img src={this.state.propiclink}  alt="loading" className="ProfilePic"/>
+    <div className="img__wrap">
+      <img className="img__img" src={this.state.propiclink}  alt="loading" />
+      <div className="img__description_layer">
+        <p className="img__description">Change</p>
+      </div>
+    </div>
     </label>
     <input type="file" id="file-input" onChange={this._handleImageChange}/>
     <canvas id="myCanvas" style={{display:"none"}}></canvas>

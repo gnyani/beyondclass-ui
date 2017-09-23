@@ -127,7 +127,7 @@ export default class HorizontalTimelineContent extends React.Component {
           this.setState({
             file: file,
             imagePreviewUrl: reader.result,
-            filebase64:canvas.toDataURL('image/jpeg',0.4).split(',').pop(),
+            filebase64:canvas.toDataURL('image/jpeg',0.3).split(',').pop(),
             imageDialog : true,
           });
       }.bind(this)
