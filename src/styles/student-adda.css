@@ -18,9 +18,8 @@ body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic
                font-size: 2em;letter-spacing: 0.07em;color: rgb(162,35,142)}
 .b-100{height:100%;width:100%}
 .signUpForm{background: #455A64;color: #FFCCBC;position: relative;top: 125%;border-radius: 7%}
-body .container{border: 2vmin solid rgb(123, 76, 16);background: rgba(20, 21, 18, 0.89); width: calc(90%);box-shadow: -3px 8px 20px 0px rgb(95, 87, 87);border-radius: 1.5em}
-.UserImageContainer .ProfilePic{width: 40%;height: 40% ;color: rgb(33, 150, 243);margin-top: 15%;margin-left: 27%;border-radius: 50%;}
-.UserImageContainer .ProfilePic :hover{width: 40%;height: 40% ;color: rgb(33, 150, 243);margin-top: 15%;margin-left: 27%;border-radius: 50%;}
+body .container{border: 2vmin solid rgb(123, 76, 16);background: rgba(20, 21, 18, 0.89); width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 0px rgb(95, 87, 87);border-radius: 1.5em}
+
 .image-upload > input{    display: none;}
 .image-upload img{cursor: pointer;}
 .announcements{text-align: center;width: 100%;}
@@ -119,3 +118,10 @@ ul li{color: #cccccc;}
 .studentAddaLogo{margin-top: 0.4vmin;color: rgb(245, 124, 0);background-color: rgb(26, 35, 126);user-select: none;display: inline-flex;align-items: center;justify-content: center;font-size: 3.5vmin;border-radius: 50%;height: 45px;width: 45px;}
 .signupButton{width: 65%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
 .UpdateProfile .button {margin-left: 40% !important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
+/*profilePicChange*/
+.img__wrap {position: relative;border-radius:50%;margin-left: 27%;margin-top: 12%;height: 18vmin;width: 18vmin;}
+.img__img{border-radius:50%;height:18vmin;width:18vmin;}
+.img__description_layer {position: absolute;top: 0;bottom: 0;left: 0;right: 0;border-radius:50%;background: rgba(36, 62, 206, 0.6);color: #fff;visibility: hidden;opacity: 0;display: flex;align-items: center;justify-content: center;/* transition effect. not necessary */transition: opacity .2s, visibility .2s;}
+.img__wrap:hover .img__description_layer {visibility: visible;opacity: 1;cursor: pointer;}
+.img__description {transition: .2s;padding:18%;font-size: 3vmin;transform: translateY(1em);}
+.img__wrap:hover .img__description {transform: translateY(0);}
