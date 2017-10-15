@@ -125,3 +125,7 @@ ul li{color: #cccccc;}
 .img__wrap:hover .img__description_layer {visibility: visible;opacity: 1;cursor: pointer;}
 .img__description {transition: .2s;padding:18%;font-size: 3vmin;transform: translateY(1em);}
 .img__wrap:hover .img__description {transform: translateY(0);}
+
+.TeacherAssignment .displayQuestions{font-family: "studentAdda",fantasy,sans-serif;font-size: 3.5vmin;letter-spacing: 0.5vmin;font-weight: 100;}
+.TeacherAssignment .paragraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
+               font-size: 4vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}

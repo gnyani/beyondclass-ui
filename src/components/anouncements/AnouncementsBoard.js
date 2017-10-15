@@ -10,7 +10,7 @@ import{Row,Grid,Col} from 'react-flexbox-grid';
 import '../../styles/student-adda.css';
 import UnauthorizedPage from '../UnauthorizedPage.js'
 import {Media} from '../utils/Media'
-import {Delete} from '../../styledcomponents/SvgIcons'
+import Delete from 'material-ui/svg-icons/action/delete'
 
 var properties = require('../properties.json');
 
@@ -161,7 +161,7 @@ populateData(pageNumber){
         })
 }
 
-componentWillMount(){
+componentDidMount(){
   this.populateData(1)
 }
 
@@ -267,7 +267,7 @@ return(
     <FlatButton label="Announce" type="submit"  disabled={this.state.buttonDisabled}
      className="AnnounceButton" onTouchTap={this.handleSubmit}/>
      <Dialog
-           title="Are you sure you want to Delte this anouncement"
+           title="Are you sure you want to Delete this anouncement"
            modal={false}
            actions={actions}
            open={this.state.DeleteConfirm}

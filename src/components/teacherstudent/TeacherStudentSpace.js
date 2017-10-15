@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import styled from 'styled-components'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import StudentTeacherAnnouncements from './StudentTeacherAnnouncements.js'
-import StudentTeacherAssignments from './StudentTeacherAssignments.js'
+import DisplayAssignmentQuestions from './DisplayAssignmentQuestions.js'
 import UnauthorizedPage from '../UnauthorizedPage.js'
 import {Media} from '../utils/Media'
 
@@ -46,7 +46,7 @@ class TeacherStudentSpace extends Component{
           </div>
         </Tab>
         <Tab label="Assignments" value="assignments">
-          <StudentTeacherAssignments class={this.props.startyear+'-'+this.props.section} />
+          <DisplayAssignmentQuestions class={this.props.startyear+'-'+this.props.section} />
         </Tab>
       </Tabs>
       </div>

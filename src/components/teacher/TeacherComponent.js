@@ -45,7 +45,7 @@ class TeacherComponent extends Component{
           </div>
         </Tab>
         <Tab label="Assignments" value="assignments">
-         <CreateAssignment class={this.props.class} key={this.props.class}/>
+         <CreateAssignment email={this.props.loggedinuser} branch={this.props.branch} class={this.props.class} key={this.props.class}/>
         </Tab>
       </Tabs>
       </div>

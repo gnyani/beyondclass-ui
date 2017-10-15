@@ -9,20 +9,21 @@ class Router extends Component {
     return(
   <Switch >
     <Route exact path='/' component={Banner}/>
-    <Route path='/register' component={Register}/>
-    <Route path='/dashboard' component={DashboardLayout}/>
-    <Route path='/questionpaper' component={DashboardLayout} />
-    <Route path='/syllabus' component={DashboardLayout} />
-    <Route path='/assignments' component={DashboardLayout} />
-    <Route path='/notes' component={DashboardLayout} />
-    <Route path='/announcements' component={DashboardLayout} />
-    <Route path='/timeline' component={DashboardLayout} />
-    <Route path='/coachingcentres' component={DashboardLayout} />
-    <Route path='/UserQuestions' component={DashboardLayout} />
-    <Route path='/teacher/:class' component={DashboardLayout} />
-    <Route path='/teacherstudentspace' component={DashboardLayout} />
-    <Route path='/updateprofile' component={DashboardLayout} />
-    <Route path='/notifications' component={DashboardLayout} key={new Date().getTime()}/>
+    <Route exact path='/register' component={Register}/>
+    <Route exact path='/dashboard' component={DashboardLayout}/>
+    <Route exact path='/questionpaper' component={DashboardLayout} />
+    <Route exact path='/syllabus' component={DashboardLayout} />
+    <Route exact path='/assignments' component={DashboardLayout} />
+    <Route exact path='/notes' component={DashboardLayout} />
+    <Route exact path='/announcements' component={DashboardLayout} />
+    <Route exact path='/timeline' component={DashboardLayout} />
+    <Route exact path='/coachingcentres' component={DashboardLayout} />
+    <Route exact path='/UserQuestions' component={DashboardLayout} />
+    <Route exact path='/teacher/:class' component={DashboardLayout} />
+    <Route exact path='/teacher/reports/view/:assignmentid' component={DashboardLayout} />
+    <Route exact path='/teacherstudentspace' component={DashboardLayout} />
+    <Route exact path='/updateprofile' component={DashboardLayout} />
+    <Route exact path='/notifications' component={DashboardLayout} key={new Date().getTime()}/>
   </Switch>
     );
   }

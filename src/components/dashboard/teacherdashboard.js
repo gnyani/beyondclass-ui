@@ -40,7 +40,6 @@ class TeacherDashboard extends Component{
     ));
   }
   render(){
-    console.log("batches is" + this.props.batches)
     return(
       <div>{this.menuItems(this.props.batches)}</div>
     )

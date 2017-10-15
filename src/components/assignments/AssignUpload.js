@@ -47,7 +47,6 @@ class AssignUpload extends Component{
   }
 
   handleSubjectChange(subjectValue){
-    console.log("subject value is" +subjectValue)
     this.setState({
       subject: subjectValue
     })
