@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import styled from 'styled-components';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import TeacherAnnouncement from './TeacherAnnouncement.js';
-import TeacherAssignmentUpload from './TeacherAssignmentUpload.js';
+import CreateAssignment from './CreateAssignment.js';
 import UnauthorizedPage from '../UnauthorizedPage.js'
 import {Media} from '../utils/Media'
 
@@ -45,7 +45,7 @@ class TeacherComponent extends Component{
           </div>
         </Tab>
         <Tab label="Assignments" value="assignments">
-         <TeacherAssignmentUpload class={this.props.class} key={this.props.class}/>
+         <CreateAssignment class={this.props.class} key={this.props.class}/>
         </Tab>
       </Tabs>
       </div>
