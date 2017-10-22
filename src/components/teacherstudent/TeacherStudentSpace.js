@@ -2,8 +2,8 @@ import React,{Component} from 'react'
 import styled from 'styled-components'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import StudentTeacherAnnouncements from './StudentTeacherAnnouncements.js'
-import DisplayAssignmentQuestions from './DisplayAssignmentQuestions.js'
 import UnauthorizedPage from '../UnauthorizedPage.js'
+import ListAssignments from './ListAssignments'
 import {Media} from '../utils/Media'
 
 const StayVisible = styled.div`
@@ -20,7 +20,7 @@ class TeacherStudentSpace extends Component{
   constructor(props) {
      super(props);
      this.state = {
-       value: 'announcements',
+       value: 'assignments',
      };
    }
 
@@ -40,13 +40,11 @@ class TeacherStudentSpace extends Component{
         value={this.state.value}
         onChange={this.handleChange}
       >
+      <Tab label="Assignments" value="assignments">
+        <ListAssignments email={this.props.loggedinuser}   />
+      </Tab>      
         <Tab label="Announcements" value="announcements">
-          <div>
             <StudentTeacherAnnouncements class={this.props.startyear+'-'+this.props.section} />
-          </div>
-        </Tab>
-        <Tab label="Assignments" value="assignments">
-          <DisplayAssignmentQuestions class={this.props.startyear+'-'+this.props.section} />
         </Tab>
       </Tabs>
       </div>

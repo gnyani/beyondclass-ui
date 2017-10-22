@@ -22,7 +22,7 @@ constructor(){
     questionValue: '',
     message: '',
     controlledDate: null,
-    shouldRender: 1,
+    shouldRender: null,
   }
   this.openCreateAssignmentDialog = this.openCreateAssignmentDialog.bind(this)
   this.handleSubjectChange = this.handleSubjectChange.bind(this)
@@ -71,10 +71,10 @@ submitCreateAssignment(){
     }).then(response =>{
       if(response.status === 200)
       notify.show("Assignment Created successfully","success")
-    })
-    this.setState({
-      createAssignmentDialog: false,
-      shouldRender: this.state.shouldRender+1,
+      this.setState({
+        createAssignmentDialog: false,
+        shouldRender: new Date(),
+      })
     })
 }
 

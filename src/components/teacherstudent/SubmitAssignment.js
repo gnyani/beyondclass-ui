@@ -6,6 +6,8 @@ import Divider from 'material-ui/Divider'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import RaisedButton from 'material-ui/RaisedButton'
 import DisplayAssignmentQuestions from './DisplayAssignmentQuestions.js'
+import { withRouter } from 'react-router';
+import PropTypes from 'prop-types';
 import Save from 'material-ui/svg-icons/content/save'
 import Send from 'material-ui/svg-icons/content/send'
 
@@ -52,7 +54,7 @@ saveAssignment(){
        credentials: 'include',
        body: JSON.stringify({
          email: this.props.loggedinuser,
-         tempassignmentid: this.props.assignmentId,
+         tempassignmentid: this.props.assignmentid,
          answers: this.state.answers,
       })
     }).then(response => {
@@ -64,7 +66,26 @@ saveAssignment(){
     })
 }
 submitAssignment(){
-
+  fetch('http://'+properties.getHostName+':8080/assignments/student/submit', {
+         method: 'POST',
+         headers: {
+               'mode': 'cors',
+               'Content-Type': 'application/json'
+           },
+       credentials: 'include',
+       body: JSON.stringify({
+         email: this.props.loggedinuser,
+         tempassignmentid: this.props.assignmentid,
+         answers: this.state.answers,
+      })
+    }).then(response => {
+      if(response.status === 200){
+        notify.show('Your Assignment got submitted successfully',"success")
+        this.context.router.history.goBack()
+      }else if(response.status === 500){
+        notify.show('Sorry something went wrong please try again',"error")
+      }
+    })
 }
 isValidForSaveOrSubmit = () => {
   var flag = false
@@ -88,7 +109,7 @@ handleAnswerChange(i,event) {
 }
 
   componentDidMount(){
-    fetch('http://'+properties.getHostName+':8080/assignments/get/'+this.props.assignmentId, {
+    fetch('http://'+properties.getHostName+':8080/assignments/get/'+this.props.assignmentid, {
            method: 'POST',
            credentials: 'include',
            headers: {
@@ -144,5 +165,8 @@ handleAnswerChange(i,event) {
     )
   }
 }
+SubmitAssignment.contextTypes = {
+    router: PropTypes.object
+};
 
-export default SubmitAssignment
+export default withRouter(SubmitAssignment)

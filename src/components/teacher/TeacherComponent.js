@@ -19,7 +19,7 @@ class TeacherComponent extends Component{
   constructor(props) {
      super(props);
      this.state = {
-       value: 'announce',
+       value: 'assignments',
      };
    }
 
@@ -39,13 +39,11 @@ class TeacherComponent extends Component{
         value={this.state.value}
         onChange={this.handleChange}
       >
+      <Tab label="Assignments" value="assignments">
+       <CreateAssignment email={this.props.loggedinuser} branch={this.props.branch} class={this.props.class} key={this.props.class}/>
+      </Tab>
         <Tab label="Announce" value="announce">
-          <div>
             <TeacherAnnouncement class={this.props.class} key={this.props.class}/>
-          </div>
-        </Tab>
-        <Tab label="Assignments" value="assignments">
-         <CreateAssignment email={this.props.loggedinuser} branch={this.props.branch} class={this.props.class} key={this.props.class}/>
         </Tab>
       </Tabs>
       </div>

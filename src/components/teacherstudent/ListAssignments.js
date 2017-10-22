@@ -1,18 +1,14 @@
 import React,{Component} from 'react'
 import {notify} from 'react-notify-toast'
 import {Grid,Row,Col} from 'react-flexbox-grid'
-import Delete from 'material-ui/svg-icons/action/delete'
 import View from 'material-ui/svg-icons/action/view-list'
-import IconButton from 'material-ui/IconButton'
 import ViewReport from 'material-ui/svg-icons/content/content-paste'
 import {Link} from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
-import FlatButton from 'material-ui/FlatButton'
-import Dialog from 'material-ui/Dialog'
 import {Card, CardActions,CardText,CardHeader, CardTitle} from 'material-ui/Card'
 
+var properties = require('../properties.json')
 
-var properties = require('../properties.json');
 class ListAssignments extends Component{
 
 constructor(){
@@ -26,41 +22,28 @@ constructor(){
    questions:[],
    additionalComments: [],
    expanded:[],
-   deleteConfirm: false,
-   index: '',
   }
   this.listAssignments = this.listAssignments.bind(this)
-  this.deleteAssignment = this.deleteAssignment.bind(this)
 }
 
 
 componentDidMount(){
-  fetch('http://'+properties.getHostName+':8080/assignments/teacher/list', {
+  fetch('http://'+properties.getHostName+':8080/assignments/student/list', {
          method: 'POST',
          headers: {
                'mode': 'cors',
                'Content-Type': 'application/json'
            },
        credentials: 'include',
-       body: JSON.stringify({
-         email: this.props.email,
-         batch: this.props.class,
-      })
+       body:this.props.email,
     }).then(response =>{
       if(response.status === 200)
       return response.json();
       else if(response.status === 204){
-        this.setState({
-          assignmentIds: [],
-          propicUrls: [],
-          createdDates: [],
-          subjects: [],
-          lastDates: [],
-          questions: [],
-          additionalComments: [],
-        })
+        return response
       }else{
         notify.show("Failed to Load Assignments","Error")
+        return response
       }
     }).then(response => {
       var newassignmentIds=[]
@@ -110,46 +93,14 @@ renderAssignmentQuestions(index){
   return buffer;
 }
 
-shouldComponentUpdate(){
-  return true
-}
 
-handleConfirmDelete(i){
-  this.setState({
-    deleteConfirm:true,
-    index:i,
-  })
-}
 
-handleClose = () => {
-  this.setState({deleteConfirm: false});
-};
-
-deleteAssignment(){
-  fetch('http://'+properties.getHostName+':8080/assignments/'+this.state.assignmentIds[this.state.index]+'/delete',{
-          credentials: 'include',
-          method: 'GET'
-        }).then(response =>{
-          if(response.status===200)
-          {
-          notify.show("Deleted successfully","success")
-          this.setState({
-            deleteConfirm: false,
-          })
-          this.componentDidMount()
-         }
-          else {
-            notify.show("Sorry something Went wrong","error")
-          }
-        })
-
-}
 
 listAssignments(){
   var buffer = []
 if(this.state.assignmentIds.length !== 0)
 {
-  buffer.push(<p className="paragraph" key={new Date()}>Your Assigments for class {this.props.class} </p>)
+  buffer.push(<p className="paragraph" key={new Date()}>Your Pending Assigments</p>)
   for(let i=0; i<this.state.assignmentIds.length; i++){
     var lastDate = new Date(this.state.lastDates[i])
     var createdDate = new Date(this.state.createdDates[i])
@@ -162,15 +113,12 @@ if(this.state.assignmentIds.length !== 0)
           >
           <Grid fluid className="nogutter">
           <Row start="xs" top="xs">
-          <Col xs={10} sm={10} md={11} lg={11}>
+          <Col xs>
            <CardHeader
              title={this.props.email}
              subtitle={"Created on "+createdDate.getDate()+"-"+(createdDate.getMonth()+1)+"-"+createdDate.getFullYear()+" at "+createdDate.getHours()+":"+createdDate.getMinutes()}
              avatar={this.state.propicUrls[i]}
            />
-           </Col>
-           <Col xs={1} sm={1} md={1} lg={1} >
-           <IconButton onClick={this.handleConfirmDelete.bind(this,i)}><Delete color='red' viewBox="0 0 20 20"/></IconButton>
            </Col>
            </Row>
            </Grid>
@@ -190,8 +138,8 @@ if(this.state.assignmentIds.length !== 0)
           </Col>
           <Col xs>
             <CardActions>
-              <RaisedButton label="View Reports" primary={true} icon={<ViewReport />}
-               containerElement={<Link to={'/teacher/reports/view/'+this.state.assignmentIds[i]}/>} />
+              <RaisedButton label="Take Assignment" primary={true} icon={<ViewReport />}
+               containerElement={<Link to={'/student/assignments/take/'+this.state.assignmentIds[i]}/>} />
            </CardActions>
            </Col>
            </Row>
@@ -204,36 +152,16 @@ if(this.state.assignmentIds.length !== 0)
       </Grid>
   )
 }
+}else{
+  buffer.push(<p className="paragraph" >You are all caught up !!!</p>)
 }
 return buffer;
 }
 
   render(){
-const actions1 = [
-    <FlatButton
-      label="Cancel"
-      primary={true}
-      onTouchTap={this.handleClose}
-    />,
-    <FlatButton
-      label="Confirm"
-      primary={true}
-      onTouchTap={this.deleteAssignment}
-    />,
-  ]
     return(
       <div className="TeacherAssignment">
       {this.listAssignments()}
-      <Dialog
-            title="Are you sure about deleting this assignment"
-            modal={true}
-            actions={actions1}
-            open={this.state.deleteConfirm}
-            autoScrollBodyContent={true}
-            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
-            onRequestClose={this.handleClose}
-          >
-      </Dialog>
       </div>
     )
   }

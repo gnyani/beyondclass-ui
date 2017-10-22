@@ -1,22 +1,22 @@
 import React,{Component} from 'react'
-import styled from 'styled-components';
+import styled from 'styled-components'
 import UnauthorizedPage from '../UnauthorizedPage.js'
-import {List, ListItem} from 'material-ui/List';
-import {withRouter} from 'react-router-dom';
-import Divider from 'material-ui/Divider';
-import Avatar from 'material-ui/Avatar';
-import Delete from 'material-ui/svg-icons/action/delete';
-import {NotificationsNone} from '../../styledcomponents/SvgIcons.js'
-import RemoveRedEye from 'material-ui/svg-icons/image/remove-red-eye';
-import IconButton from 'material-ui/IconButton';
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
-import IconMenu from 'material-ui/IconMenu';
-import MenuItem from 'material-ui/MenuItem';
-import {grey400} from 'material-ui/styles/colors';
-import PropTypes from 'prop-types';
-import {Grid,Row,Col} from 'react-flexbox-grid';
-import {notify} from 'react-notify-toast';
-import CircularProgress from 'material-ui/CircularProgress'
+import {List, ListItem} from 'material-ui/List'
+import {withRouter} from 'react-router-dom'
+import Divider from 'material-ui/Divider'
+import Avatar from 'material-ui/Avatar'
+import Delete from 'material-ui/svg-icons/action/delete'
+import NotificationsNone from 'material-ui/svg-icons/social/notifications-none'
+import RemoveRedEye from 'material-ui/svg-icons/image/remove-red-eye'
+import IconButton from 'material-ui/IconButton'
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import IconMenu from 'material-ui/IconMenu'
+import MenuItem from 'material-ui/MenuItem'
+import {grey400} from 'material-ui/styles/colors'
+import PropTypes from 'prop-types'
+import {Grid,Row,Col} from 'react-flexbox-grid'
+import {notify} from 'react-notify-toast'
+import RefreshIndicator from 'material-ui/RefreshIndicator'
 import {Media} from '../utils/Media'
 
 var properties = require('../properties.json')
@@ -114,9 +114,24 @@ handleNotificationDelete(index){
 }
 list(buffer){
   if(!this.state.isDataLoaded)
-  buffer.push(<CircularProgress key={1} width={40} style={{marginTop:"45%"}}/>)
+  buffer.push(
+    <Grid fluid className="RefreshIndicator">
+    <Row center="xs">
+    <Col xs>
+    <br /><br />
+      <RefreshIndicator
+         size={50}
+         left={45}
+         top={0}
+         loadingColor="#FF9800"
+         status="loading"
+         className="refresh"
+        />
+    </Col>
+    </Row>
+    </Grid>)
   else if(this.state.notificationMessages.length === 0)
-  buffer.push(<div key={1}><NotificationsNone style={{marginLeft:"27%",height:'300px',width:'45%'}}/><p className="announcements messageStyle">You are all caught up </p></div>)
+  buffer.push(<div key={1} ><NotificationsNone style={{marginLeft:"27%",height:'300px',width:'45%'}}/><p className="announcements"><span className="paragraph">You are all caught up </span></p></div>)
   else{
   for(let index=0;index<this.state.notificationMessages.length;index++)
   {
