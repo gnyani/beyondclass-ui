@@ -1,7 +1,7 @@
 import React from 'react';
 import {Switch,Route} from 'react-router-dom'
 import QpLayout from './questionpapers/QpLayout.js'
-import AssignLayout from './assignments/AssignLayout.js'
+//import AssignLayout from './assignments/AssignLayout.js'
 import NotesLayout from './notes/NotesLayout.js'
 import SyllabusLayout from './syllabus/SyllabusLayout.js'
 import AnouncementsBoard from './anouncements/AnouncementsBoard.js'
@@ -12,23 +12,30 @@ import TeacherComponent from './teacher/TeacherComponent.js'
 import TeacherStudentSpace from './teacherstudent/TeacherStudentSpace.js'
 import Notifications from './notifications/Notifications.js'
 import UpdateProfile from './profile/UpdateProfile.js'
+import Reports from './teacher/Reports.js'
+import SubmitAssignment from './teacherstudent/SubmitAssignment'
+import EvaluateAssignment from './teacher/EvaluateAssignment'
+import Submissions from './profile/Submissions'
 
 export const Body =(props) => {
     return(
 <main >
   <Switch>
-    <Route path='/questionpaper' render={()=>(<QpLayout {...props} />)}/>
-    <Route path='/syllabus' render={()=>(<SyllabusLayout {...props} />)} />
-    <Route path='/assignments' render={()=>(<AssignLayout {...props} /> )} />
-    <Route path='/notes' render={()=>(<NotesLayout {...props} /> )} />
-    <Route path='/announcements' render={()=>(<AnouncementsBoard {...props}/>)} />
-    <Route path='/timeline' render={()=>(<TimeLine {...props}/>)} />
-    <Route path='/coachingcentres' render={() =>(<CoachingCentres {...props} />)} />
-    <Route path='/UserQuestions' render={() =>(<QuestionLayout {...props} />)} />
-    <Route path='/teacher/:class' render={({match}) =>(<TeacherComponent {...props} class={match.params.class}/>)} />
-    <Route path='/teacherstudentspace' render={() =>(<TeacherStudentSpace {...props} />)} />
-    <Route path='/updateprofile' render={() =>(<UpdateProfile {...props} />)} />
-    <Route path='/notifications' render={() => (<Notifications {...props} />)} />
+    <Route exact path='/questionpaper' render={()=>(<QpLayout {...props} />)}/>
+    <Route exact path='/syllabus' render={()=>(<SyllabusLayout {...props} />)} />
+    <Route exact path='/notes' render={()=>(<NotesLayout {...props} /> )} />
+    <Route exact path='/announcements' render={()=>(<AnouncementsBoard {...props}/>)} />
+    <Route exact path='/timeline' render={()=>(<TimeLine {...props}/>)} />
+    <Route exact path='/coachingcentres' render={() =>(<CoachingCentres {...props} />)} />
+    <Route exact path='/UserQuestions' render={() =>(<QuestionLayout {...props} />)} />
+    <Route exact path='/teacher/:class' render={({match}) =>(<TeacherComponent {...props} class={match.params.class}/>)} />
+    <Route exact path='/teacher/reports/view/:assignmentid' render={({match}) =>(<Reports {...props} assignmentid={match.params.assignmentid}/>)} />
+    <Route exact path='/teacher/assignment/:submissionid/evaluate' render={({match}) =>(<EvaluateAssignment {...props} submissionid={match.params.submissionid}/>)} />
+    <Route exact path='/student/assignments/take/:assignmentid' render={({match}) =>(<SubmitAssignment {...props} assignmentid={match.params.assignmentid}/>)} />
+    <Route exact path='/teacherstudentspace' render={() =>(<TeacherStudentSpace {...props} />)} />
+    <Route exact path='/updateprofile' render={() =>(<UpdateProfile {...props} />)} />
+    <Route exact path='/submissions' render={() => (<Submissions {...props} />)} />
+    <Route exact path='/notifications' render={() => (<Notifications {...props} />)} />
   </Switch>
 </main>
     );

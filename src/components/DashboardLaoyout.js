@@ -8,13 +8,14 @@ import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
 import {lightBlue100,blue500} from 'material-ui/styles/colors';
 import '../styles/student-adda.css';
-import CircularProgress from 'material-ui/CircularProgress';
+import RefreshIndicator from 'material-ui/RefreshIndicator'
 import PropTypes from 'prop-types';
 import {AddImageIcon} from '../styledcomponents/SvgIcons.js'
 import AvatarEditor from 'react-avatar-editor';
 import Dialog from 'material-ui/Dialog';
 import Slider from 'material-ui/Slider';
 import {Link} from 'react-router-dom';
+import {Grid,Row,Col} from 'react-flexbox-grid'
 import StudentDashboard from './dashboard/studentdashboard.js'
 import TeacherDashboard from './dashboard/teacherdashboard.js'
 var properties = require('./properties.json')
@@ -293,7 +294,22 @@ render(){
       onTouchTap={this.handleDialogclose}
     />]
 if(this.state.userrole === ''){
-return(<CircularProgress size={80} thickness={7} style={{marginLeft:"48%"}}/> )
+return(
+  <Grid fluid className="RefreshIndicator">
+  <Row center="xs">
+  <Col xs>
+    <br /><br />
+    <RefreshIndicator
+       size={50}
+       left={45}
+       top={0}
+       loadingColor="#FF9800"
+       status="loading"
+       className="refresh"
+      />
+  </Col>
+  </Row>
+  </Grid>)
 }
 else
 {

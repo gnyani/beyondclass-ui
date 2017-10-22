@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import styled from 'styled-components';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import TeacherAnnouncement from './TeacherAnnouncement.js';
-import TeacherAssignmentUpload from './TeacherAssignmentUpload.js';
+import CreateAssignment from './CreateAssignment.js';
 import UnauthorizedPage from '../UnauthorizedPage.js'
 import {Media} from '../utils/Media'
 
@@ -19,7 +19,7 @@ class TeacherComponent extends Component{
   constructor(props) {
      super(props);
      this.state = {
-       value: 'announce',
+       value: 'assignments',
      };
    }
 
@@ -39,13 +39,11 @@ class TeacherComponent extends Component{
         value={this.state.value}
         onChange={this.handleChange}
       >
+      <Tab label="Assignments" value="assignments">
+       <CreateAssignment email={this.props.loggedinuser} branch={this.props.branch} class={this.props.class} key={this.props.class}/>
+      </Tab>
         <Tab label="Announce" value="announce">
-          <div>
             <TeacherAnnouncement class={this.props.class} key={this.props.class}/>
-          </div>
-        </Tab>
-        <Tab label="Assignments" value="assignments">
-         <TeacherAssignmentUpload class={this.props.class} key={this.props.class}/>
         </Tab>
       </Tabs>
       </div>
