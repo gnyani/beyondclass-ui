@@ -3,12 +3,13 @@ import {notify} from 'react-notify-toast'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import Delete from 'material-ui/svg-icons/action/delete'
 import View from 'material-ui/svg-icons/action/view-list'
-import IconButton from 'material-ui/IconButton'
 import ViewReport from 'material-ui/svg-icons/content/content-paste'
 import {Link} from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 import {Card, CardActions,CardText,CardHeader, CardTitle} from 'material-ui/Card'
 
 
@@ -59,7 +60,10 @@ componentDidMount(){
           questions: [],
           additionalComments: [],
         })
-      }else{
+      }else if(response.status === 302){
+        this.context.router.history.push('/')
+      }
+      else{
         notify.show("Failed to Load Assignments","Error")
       }
     }).then(response => {
@@ -137,6 +141,8 @@ deleteAssignment(){
             deleteConfirm: false,
           })
           this.componentDidMount()
+         }else if(response.status === 302){
+           this.context.router.history.push('/')
          }
           else {
             notify.show("Sorry something Went wrong","error")
@@ -158,22 +164,19 @@ if(this.state.assignmentIds.length !== 0)
       <Row start="xs">
       <Col xs={12} sm={12} md={12} lg={12} >
          <Card
+          onExpandChange={this.handleConfirmDelete.bind(this,i)}
           expanded={this.state.expanded[i]}
           >
-          <Grid fluid className="nogutter">
-          <Row start="xs" top="xs">
-          <Col xs={10} sm={10} md={11} lg={11}>
-           <CardHeader
+
+           <CardHeader className="cardHeader"
+             showExpandableButton={true}
+             closeIcon={<Delete color="red" viewBox="0 0 20 20"/>}
+             openIcon={<Delete color="red" viewBox="0 0 20 20"/>}
              title={this.props.email}
              subtitle={"Created on "+createdDate.getDate()+"-"+(createdDate.getMonth()+1)+"-"+createdDate.getFullYear()+" at "+createdDate.getHours()+":"+createdDate.getMinutes()}
              avatar={this.state.propicUrls[i]}
            />
-           </Col>
-           <Col xs={1} sm={1} md={1} lg={1} >
-           <IconButton onClick={this.handleConfirmDelete.bind(this,i)}><Delete color='red' viewBox="0 0 20 20"/></IconButton>
-           </Col>
-           </Row>
-           </Grid>
+
            <CardTitle style={{textAlign:"center"}} title={this.state.subjects[i]} subtitle={"last date :"+lastDate.getDate()+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()}  />
            <CardText style={{textAlign:"center"}}>
            <p>{this.state.additionalComments[i]}</p>
@@ -238,4 +241,7 @@ const actions1 = [
     )
   }
 }
-export default ListAssignments
+ListAssignments.contextTypes = {
+    router: PropTypes.object
+};
+export default withRouter(ListAssignments)

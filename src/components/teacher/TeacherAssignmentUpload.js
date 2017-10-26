@@ -10,6 +10,8 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/C
 import {lightBlue300,redA700} from 'material-ui/styles/colors';
 import {FileFileDownload} from '../../styledcomponents/SvgIcons.js'
 import Dialog from 'material-ui/Dialog'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 var properties = require('../properties.json');
 
@@ -62,6 +64,9 @@ _handleSubmit(e) {
          {
             return response.text();
          }
+         else if(response.status === 302){
+                 this.context.router.history.push('/')
+        }
          else{
            let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
            notify.show("sorry something went wrong","custom",5000,myColor)
@@ -77,7 +82,7 @@ _handleSubmit(e) {
        })
   }
 }
-componentWillMount(){
+componentDidMount(){
   this.getAssignments()
 }
 deletePostConfirm(i){
@@ -131,7 +136,9 @@ getAssignments(){
        if(response.status === 200)
        {
           return response.json();
-       }
+       }else if(response.status === 302){
+               this.context.router.history.push('/')
+      }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
          notify.show("sorry something went wrong","custom",5000,myColor)
@@ -272,5 +279,8 @@ handleClose = () => {
     )
   }
 }
+TeacherAssignmentUpload.contextTypes = {
+    router: PropTypes.object
+};
 
-export default TeacherAssignmentUpload;
+export default withRouter(TeacherAssignmentUpload)

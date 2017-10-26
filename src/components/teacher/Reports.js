@@ -12,6 +12,8 @@ import CheckIcon from 'material-ui/svg-icons/navigation/check'
 import RejectIcon from 'material-ui/svg-icons/navigation/close'
 import {Card} from 'material-ui/Card'
 import {Link} from 'react-router-dom'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 import {transparent} from 'material-ui/styles/colors'
 
 var properties = require('../properties.json');
@@ -54,7 +56,11 @@ componentDidMount(){
        credentials: 'include',
        body: this.props.assignmentid
     }).then(response =>{
+      if(response.status === 200)
       return response.json()
+      else if(response.status === 302){
+        this.context.router.history.push('/')
+      }
     }).then(response => {
       this.setState({
         numberOfDaysLeft : response.numberOfDaysLeft,
@@ -232,4 +238,7 @@ else
     </StayVisible>)
   }
 }
-export default Reports
+Reports.contextTypes = {
+    router: PropTypes.object
+};
+export default withRouter(Reports)

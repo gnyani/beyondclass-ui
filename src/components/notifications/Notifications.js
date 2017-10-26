@@ -47,7 +47,7 @@ class Notifications extends Component {
   }
 
 
-  componentWillMount(){
+  componentDidMount(){
     this.getNotifications()
   }
   getNotifications(){
@@ -55,7 +55,11 @@ class Notifications extends Component {
             credentials: 'include',
             method: 'GET'
           }).then(response =>{
+            if(response.status === 200)
               return response.json()
+              else if(response.status === 302){
+                this.context.router.history.push('/')
+              }  
           }).then(response =>{
             var newnotificationIds = []
             var newnotificationMessages = []
@@ -94,8 +98,13 @@ handleNotificationDelete(index){
      body: this.state.notificationIds[index],
 
     }).then(response => {
+      if(response.status === 200 )
+      {
         notify.show("Deleted","success")
-        this.componentWillMount()
+        this.componentDidMount()
+      }else if(response.status === 302){
+        this.context.router.history.push('/')
+      }
     })
 }
   handleNotificationRead(index){
@@ -109,7 +118,11 @@ handleNotificationDelete(index){
        body: this.state.notificationIds[index],
 
       }).then(response => {
-          this.componentWillMount()
+        if(response.status === 200)
+          this.componentDidMount()
+      else if(response.status === 302){
+            this.context.router.history.push('/')
+          }
       })
 }
 list(buffer){

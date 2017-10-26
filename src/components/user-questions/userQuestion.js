@@ -5,6 +5,8 @@ import Divider from 'material-ui/Divider';
 import {notify} from 'react-notify-toast';
 import QuestionCard from './questionCard'
 import NewQuestionDialogue from './newQuestionDialogue'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 var properties = require('../properties.json');
 
 class Hello extends React.Component {
@@ -41,7 +43,7 @@ class Hello extends React.Component {
                 name={this.state.users[i].firstName}
                 date={this.state.dates[i]}
                 questionId={this.state.QuestionIds[i]}
-                component={this.componentWillMount}
+                component={this.componentDidMount}
                  key={new Date()}/>
                  <br />
         </Col>
@@ -54,7 +56,11 @@ class Hello extends React.Component {
              credentials: 'include',
              method: 'GET'
           }).then(response => {
+            if(response.status === 200)
             return response.json()
+            else if(response.status === 302){
+              this.context.router.history.push('/')
+            }
           }).then(response => {
             var newquestions = []
             var newanswers = []
@@ -84,7 +90,7 @@ class Hello extends React.Component {
           })
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.getQuestions()
   }
   handleSubmit(){
@@ -117,6 +123,8 @@ class Hello extends React.Component {
               answer:''
             })
             return response.text();
+         }else if(response.status === 302){
+           this.context.router.history.push('/')
          }
          else{
            let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -128,9 +136,9 @@ class Hello extends React.Component {
            number : 1,
            message: '',
          })
-        //  this.componentWillMount()
+        //  this.componentDidMount()
          notify.show("Question uploaded successfully","success")
-         this.componentWillMount();
+         this.componentDidMount();
        })}
   }
   handleQuestionChange(e){
@@ -165,4 +173,9 @@ class Hello extends React.Component {
     );
    }
 }
-export default Hello
+
+Hello.contextTypes = {
+    router: PropTypes.object
+};
+
+export default withRouter(Hello)

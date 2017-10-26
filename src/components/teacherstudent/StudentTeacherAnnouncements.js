@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import {Grid,Row,Col} from 'react-flexbox-grid'
-
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 var properties = require('../properties.json');
 
@@ -42,9 +43,12 @@ class StudentTeacherAnnouncements extends Component{
              credentials: 'include',
              method: 'GET'
           }).then(response => {
+            if(response.status === 200)
             return response.json()
+            else if(response.status === 302){
+              this.context.router.history.push('/')
+            }
           }).then(response => {
-            console.log("response is"+response.content[0])
             var newmessage = []
             var newannouncementIds =[]
             var newTeacherNames = []
@@ -61,7 +65,7 @@ class StudentTeacherAnnouncements extends Component{
           })
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.populateData(1)
   }
 
@@ -77,4 +81,8 @@ class StudentTeacherAnnouncements extends Component{
     )
   }
 }
-export default StudentTeacherAnnouncements;
+StudentTeacherAnnouncements.contextTypes = {
+    router: PropTypes.object
+};
+
+export default withRouter(StudentTeacherAnnouncements)

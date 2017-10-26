@@ -11,6 +11,8 @@ import '../../styles/student-adda.css';
 import { Grid, Row, Col } from 'react-flexbox-grid'
 import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'
 import UnauthorizedPage from '../UnauthorizedPage.js'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 var properties = require('../properties.json');
 
@@ -61,6 +63,8 @@ fetchSyllabus(){
        if(response.status === 200)
        {
           return response.text();
+       }else if(response.status === 302){
+         this.context.router.history.push('/')
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -103,6 +107,7 @@ image(){
             style={{borderRadius:"1.5em"}}
             >
               <CardHeader
+               className="cardHeaderwithTopBorder"
                 title={this.state.subject}
                 subtitle="Syllabus"
               />
@@ -197,5 +202,8 @@ handleChange = (event, index, branch) => this.setState({branch});
   }
 }
 }
+DefaultSyllabus.contextTypes = {
+    router: PropTypes.object
+};
 
-export default DefaultSyllabus;
+export default withRouter(DefaultSyllabus)

@@ -4,8 +4,11 @@ import {notify} from 'react-notify-toast';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import {FileFileUpload,AttachFile} from '../../styledcomponents/SvgIcons.js'
 import UnauthorizedPage from '../UnauthorizedPage.js'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 import Divider from 'material-ui/Divider'
 import SubjectAutoCompleteForNotesAndAssign from '../utils/SubjectAutoCompleteForNotesAndAssign.js'
+
 var properties = require('../properties.json');
 
 const styles = {
@@ -73,6 +76,8 @@ class NotesUpload extends Component{
            if(response.status === 201)
            {
               return response.text();
+           }else if(response.status === 302){
+             this.context.router.history.push('/')
            }
            else{
              let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -170,4 +175,7 @@ class NotesUpload extends Component{
   }
 }
 }
-export default NotesUpload;
+NotesUpload.contextTypes = {
+    router: PropTypes.object
+};
+export default withRouter(NotesUpload)

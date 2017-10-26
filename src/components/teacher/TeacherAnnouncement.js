@@ -7,6 +7,8 @@ import IconButton from 'material-ui/IconButton';
 import {NavigationClose} from '../../styledcomponents/SvgIcons.js';
 import Dialog from 'material-ui/Dialog';
 import {Grid,Row,Col} from 'react-flexbox-grid';
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 
 var properties = require('../properties.json');
@@ -62,6 +64,9 @@ class TeacherAnnouncement extends Component{
          {
             return response.text();
          }
+         else if(response.status === 302){
+                 this.context.router.history.push('/')
+        }
          else{
            let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
            notify.show("sorry something went wrong","custom",5000,myColor)
@@ -72,7 +77,7 @@ class TeacherAnnouncement extends Component{
            number : 1,
            message: '',
          })
-         this.componentWillMount()
+         this.componentDidMount()
          notify.show("Anouncement uploaded successfully","success")
        })}
   }
@@ -102,7 +107,11 @@ class TeacherAnnouncement extends Component{
              credentials: 'include',
              method: 'GET'
           }).then(response => {
+           if(response.status === 200)
             return response.json()
+            else if(response.status === 302){
+              this.context.router.history.push('/')
+            }
           }).then(response => {
             var newmessage = []
             var newannouncementIds =[]
@@ -117,7 +126,7 @@ class TeacherAnnouncement extends Component{
           })
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.populateData(1)
   }
 
@@ -132,8 +141,12 @@ class TeacherAnnouncement extends Component{
           if(response === "Success")
           {
             notify.show("Announcement Deleted successfully","success")
-            this.componentWillMount()
-          }else{
+            this.componentDidMount()
+          }
+          else if(response.status === 302){
+              this.context.router.history.push('/')
+          }
+          else{
             notify.show("Sorry something went wrong", "error")
           }
 
@@ -220,5 +233,8 @@ class TeacherAnnouncement extends Component{
     )
   }
 }
+TeacherAnnouncement.contextTypes = {
+    router: PropTypes.object
+};
 
-export default TeacherAnnouncement;
+export default withRouter(TeacherAnnouncement)

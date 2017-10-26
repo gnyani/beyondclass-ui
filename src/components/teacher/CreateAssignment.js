@@ -8,6 +8,8 @@ import Dialog from 'material-ui/Dialog'
 import AssignmentContent from './AssignmentContent'
 import ListAssignments from './ListAssignments'
 import {notify} from 'react-notify-toast'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 var properties = require('../properties.json');
 
@@ -70,11 +72,17 @@ submitCreateAssignment(){
       })
     }).then(response =>{
       if(response.status === 200)
+      {
       notify.show("Assignment Created successfully","success")
       this.setState({
         createAssignmentDialog: false,
         shouldRender: new Date(),
       })
+    }else if(response.status === 302){
+      this.context.router.history.push('/')
+    }else{
+      notify.show("Something went wrong","error")
+    }
     })
 }
 
@@ -179,6 +187,9 @@ handleClose = () => {
       </div>)
   }
 }
+CreateAssignment.contextTypes = {
+    router: PropTypes.object
+};
 
 
-export default CreateAssignment
+export default withRouter(CreateAssignment)

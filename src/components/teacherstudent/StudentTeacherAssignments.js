@@ -5,6 +5,8 @@ import {lightBlue300} from 'material-ui/styles/colors'
 import {FileFileDownload} from '../../styledcomponents/SvgIcons.js'
 import { Grid, Row, Col } from 'react-flexbox-grid'
 import FlatButton from 'material-ui/FlatButton'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 var properties = require('../properties.json');
 class StudentTeacherAssignments extends Component{
@@ -17,7 +19,7 @@ class StudentTeacherAssignments extends Component{
     }
   }
 
-componentWillMount(){
+componentDidMount(){
   this.getAssignments()
 }
 getAssignments(){
@@ -35,6 +37,8 @@ getAssignments(){
        if(response.status === 200)
        {
           return response.json();
+       }else if(response.status === 302){
+         this.context.router.history.push('/')
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -97,4 +101,7 @@ list(buffer){
     )
   }
 }
-export default StudentTeacherAssignments;
+StudentTeacherAssignments.contextTypes = {
+    router: PropTypes.object
+};
+export default withRouter(StudentTeacherAssignments)

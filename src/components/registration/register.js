@@ -55,7 +55,7 @@ class Register extends Component{
       this.generateOtp = this.generateOtp.bind(this)
   }
 
-  componentWillMount(){
+  componentDidMount(){
     this.getUserDetails()
   }
 
@@ -64,7 +64,11 @@ class Register extends Component{
             credentials: 'include',
             method: 'GET'
          }).then(response => {
+           if(response.status === 200)
            return response.json()
+           else if(response.status === 302){
+             this.context.router.history.push('/')
+           }
          }).then(response => {
            this.setState({
              username : response.userAuthentication.details.name,

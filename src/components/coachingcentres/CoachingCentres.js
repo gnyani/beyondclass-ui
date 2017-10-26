@@ -13,6 +13,8 @@ import {MapsRateReview,CommunicationContacts,CommunicationLocationOn} from '../.
 import { Rating } from 'material-ui-rating'
 import {notify} from 'react-notify-toast';
 import {Tabs, Tab} from 'material-ui/Tabs';
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 import '../../styles/student-adda.css';
 import UnauthorizedPage from '../UnauthorizedPage.js'
 import {Media} from '../utils/Media'
@@ -138,6 +140,7 @@ if(this.state.coachingcentreId.length!==0)
       <br /> <br /> <br />
         <Card className="card" >
           <CardHeader
+            className="cardHeader"
             title={this.state.orgname[i]}
             style={fontStyle}
             subtitle={this.state.coachingType}
@@ -216,7 +219,13 @@ fetch('http://'+properties.getHostName+':8080/coachingcentres/get/'+this.state.c
           credentials: 'include',
           method: 'GET'
         }).then(response => {
+          if(response.status === 200)
          return response.json()
+         else if(response.status === 302){
+           this.context.router.history.push('/')
+         }else{
+           notify.show("something went wrong","error")
+         }
         }).then(response => {
           var newPositiveReviews = []
           var newNormalReviews = []
@@ -305,6 +314,8 @@ postReview(i){
   if(response.status === 200)
   {
      return response.text();
+  }else if(response.status === 302){
+    this.context.router.history.push('/')
   }
   else{
     let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -365,7 +376,13 @@ populateData(){
            credentials: 'include',
            method: 'GET'
         }).then(response => {
+          if(response.status===200)
           return response.json()
+          else if(response.status === 302){
+            this.context.router.history.push('/')
+          }else{
+            notify.show("something went wrong",'error')
+          }
         }).then(response => {
           var newcoachingcentreId = []
           var neworgname = []
@@ -550,5 +567,8 @@ if(this.props.userrole==="student")
  }
 }
 }
+CoachingCentres.contextTypes = {
+    router: PropTypes.object
+};
 
-export default CoachingCentres
+export default withRouter(CoachingCentres)

@@ -5,10 +5,12 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import {notify} from 'react-notify-toast';
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 var properties = require('../properties.json');
 
 
-export default class QuestionCard extends React.Component {
+ class QuestionCard extends React.Component {
 
   constructor(props) {
     super(props);
@@ -59,6 +61,8 @@ export default class QuestionCard extends React.Component {
               answer:''
             })
             return response.text();
+         }else if(response.status === 302){
+           this.context.router.history.push('/')
          }
          else{
            let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -132,6 +136,7 @@ export default class QuestionCard extends React.Component {
     return (
       <Card expanded={this.state.expanded} onExpandChange={this.handleExpandChange}>
         <CardHeader
+          className="cardHeaderwithTopBorder"
           title={this.state.firstName}
           subtitle={this.props.date}
           avatar= {this.state.avatar}
@@ -187,3 +192,9 @@ export default class QuestionCard extends React.Component {
     );
   }
 }
+
+QuestionCard.contextTypes = {
+    router: PropTypes.object
+};
+
+export default withRouter(QuestionCard)

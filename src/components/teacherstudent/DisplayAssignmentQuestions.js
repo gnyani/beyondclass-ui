@@ -1,24 +1,13 @@
 import React,{Component} from 'react'
 import {Grid,Row,Col} from 'react-flexbox-grid'
-import Divider from 'material-ui/Divider'
 
 class DisplayAssignmentQuestions extends Component{
 
 constructor(){
   super();
   this.displayQuestions = this.displayQuestions.bind(this);
-  //git this.renderTextArea = this.renderTextArea.bind(this);
 }
 
-// renderTextArea(i){
-//   var buffer = []
-//   if(this.props.answers)
-//     buffer.push(<textarea key={i} className="answerArea" value={this.props.answers[i]} onChange={this.props.handleAnswerChange.bind(this,i)}  />)
-//   else {
-//     buffer.push(<textarea key={i} className="answerArea" onChange={this.props.handleAnswerChange.bind(this,i)}  />)
-//   }
-//   return buffer
-// }
 displayQuestions(){
   var buffer =[]
   for(let i=0 ; i < this.props.questions.length ;i++){
@@ -32,9 +21,15 @@ displayQuestions(){
       </Row>
       <Row start="xs">
       <Col xs={11} sm={11} md={10} lg={10}>
-    <textarea key={i} className="answerArea" value={this.props.answers[i]} onChange={this.props.handleAnswerChange.bind(this,i)}  />
-      <br /> <br />
-      <Divider />
+      <div className="paper">
+      <div className="paper-content">
+    <textarea key={i} placeholder="Start Typing Your Answer" value={this.props.answers[i]}
+    onDrag={(event)=>{event.preventDefault()}} onDrop={(event)=>{event.preventDefault()}}
+    onCut={(event)=>{event.preventDefault()}} onCopy={(event)=>{event.preventDefault()}}
+    onPaste={(event)=>{event.preventDefault()}} onChange={this.props.handleAnswerChange.bind(this,i)}
+    autoComplete='off' />
+    </div></div>
+      <br /> 
       </Col>
       </Row>
       </Grid>

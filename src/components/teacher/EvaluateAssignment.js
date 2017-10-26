@@ -93,6 +93,8 @@ class EvaluateAssignment extends Component{
        }).then(response =>{
            if(response.status===200){
              return response.json();
+           }else if(response.status === 302){
+             this.context.router.history.push('/')
            }else{
              notify.show('Sorry something Went wrong',"error")
            }
@@ -121,6 +123,8 @@ class EvaluateAssignment extends Component{
          if(response.status === 200)
          {notify.show("Assignment Evaluated Successfully","success")
          this.context.router.history.goBack()
+       }else if(response.status === 302){
+         this.context.router.history.push('/')
        }
          else {
            notify.show("Sorry Something Went Wrong","error")
@@ -145,6 +149,8 @@ class EvaluateAssignment extends Component{
          if(response.status === 200)
          {notify.show("Assignment Evaluated Successfully","success")
          this.context.router.history.goBack()
+       }else if(response.status === 302){
+         this.context.router.history.push('/')
        }
          else {
            notify.show("Sorry Something Went Wrong","error")
