@@ -10,6 +10,8 @@ import{Row,Grid,Col} from 'react-flexbox-grid';
 import '../../styles/student-adda.css';
 import UnauthorizedPage from '../UnauthorizedPage.js'
 import {Media} from '../utils/Media'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 import Delete from 'material-ui/svg-icons/action/delete'
 
 var properties = require('../properties.json');
@@ -72,6 +74,8 @@ handleSubmit(){
        if(response.status === 201 )
        {
           return response.text();
+       }else if(response.status === 302){
+         this.context.router.history.push('/')
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -82,7 +86,7 @@ handleSubmit(){
          response : response,
          number : 1,
          message: '',
-       },function(){this.componentWillMount()})
+       },function(){this.componentDidMount()})
        notify.show("Anouncement uploaded successfully","success")
      })}
 }
@@ -138,7 +142,13 @@ populateData(pageNumber){
            credentials: 'include',
            method: 'GET'
         }).then(response => {
+          if(response.status === 200 )
           return response.json()
+          else if(response.status === 302){
+            this.context.router.history.push('/')
+          }else{
+            notify.show("something went wrong","error")
+          }
         }).then(response => {
           var newmessage = []
           var newuser = []
@@ -198,7 +208,7 @@ DeleteAnnouncement(){
         if(response === "Success")
         {
           notify.show("Announcement Deleted successfully","success")
-          this.componentWillMount()
+          this.componentDidMount()
         }else{
           notify.show("Sorry something went wrong", "error")
         }
@@ -285,5 +295,8 @@ else{
 }
 }
 }
+AnouncementsBoard.contextTypes = {
+    router: PropTypes.object
+};
 
-export default AnouncementsBoard;
+export default withRouter(AnouncementsBoard);

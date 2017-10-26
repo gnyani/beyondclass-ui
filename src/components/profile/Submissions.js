@@ -6,6 +6,8 @@ import {Card,CardTitle,CardHeader,CardText} from 'material-ui/Card'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import ListSubmissions from './ListSubmissions'
 import {notify} from 'react-notify-toast'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 
 var properties = require('../properties.json');
@@ -46,6 +48,9 @@ componentDidMount(){
      }).then(response => {
        if(response.status===200)
        return response.json()
+       else if(response.status === 302){
+         this.context.router.history.push('/')
+       }
        else {
          notify.show("Something went wrong","error")
        }
@@ -138,5 +143,7 @@ else {
 }
   }
 }
-
-export default Submissions
+Submissions.contextTypes = {
+    router: PropTypes.object
+};
+export default withRouter(Submissions)

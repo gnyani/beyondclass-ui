@@ -6,6 +6,8 @@ import MenuItem from 'material-ui/MenuItem';
 import {lightBlue300} from 'material-ui/styles/colors';
 import {Card, CardActions, CardHeader, CardMedia} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 import {FileFileDownload,NavigationFullscreen} from '../../styledcomponents/SvgIcons.js';
 import '../../styles/student-adda.css';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -61,7 +63,9 @@ fetchQp(){
      }).then(response => {
        if(response.status === 200)
        {
-          return response.text();
+        return response.text();
+       }else if(response.status === 302){
+         this.context.router.history.push('/')
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -105,6 +109,7 @@ image(){
             style={{borderRadius:"1.5em"}}
             >
               <CardHeader
+               className="cardHeaderwithTopBorder"
                 title={this.state.subject}
                 subtitle="Question Paper"
               />
@@ -209,5 +214,8 @@ else{
 }
 }
 }
+DefaultQp.contextTypes = {
+    router: PropTypes.object
+};
 
-export default DefaultQp;
+export default withRouter(DefaultQp);

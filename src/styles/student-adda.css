@@ -127,7 +127,7 @@ ul li{color: #cccccc;}
 .img__wrap:hover .img__description_layer {visibility: visible;opacity: 1;cursor: pointer;}
 .img__description {transition: .2s;padding:18%;font-size: 3vmin;transform: translateY(1em);}
 .img__wrap:hover .img__description {transform: translateY(0);}
-.DisplayAssignmentQuestions .list{font-family: "studentAdda",fantasy,sans-serif;font-size: 3.5vmin;letter-spacing: 0.5vmin;font-weight: 100;color: lightblue;
+.DisplayAssignmentQuestions .list{font-family: "studentAdda",fantasy,sans-serif;font-size: 3.5vmin;letter-spacing: 0.5vmin;font-weight: 100;color: black;
         text-transform: capitalize;}
 .DisplayAssignmentQuestions .answerArea{
 width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 2px solid #ccc; border-radius: 4px;background-color: #f8f8f8;
@@ -146,6 +146,9 @@ width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 
 .EvaluateAssignment .displayQuestions{text-transform: capitalize !important;}
 .EvaluateAssignment .displayAnswers{text-transform: capitalize !important; font-weight: 400;}
 .EvaluateAssignment .button{width: 40%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
+.cardHeader {background-color: lightgrey;}
+.cardHeaderwithTopBorder {background-color: lightgrey;border-top-left-radius: 1.5em;border-top-right-radius: 1.5em;}
+.drawerFont {color: #EEEEEE !important}
 /*.MarksIndicator .wrap{background: #E2E2E2 !important; box-shadow: 0 0 1px 1px #fff inset , 1px 1px 5px -1px #000 !important; padding: 2px 2.26ex 2px 2px !important;
             border-radius: 6px 3px 3px 6px !important;font-size: 50 !important}
 .MarksIndicator .input{border-radius: 4px 2px 2px 4px !important;color: #988869 !important;padding: 0.1ex 1ex !important;
@@ -164,8 +167,8 @@ width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 
 .RefreshIndicator  .container{position: relative !important;}
 .RefreshIndicator  .refresh{    display: inline-block !important;position: relative !important;}
 
-#####Circular Progress
-
+###Circular Progress
+/*circular progress used for rendering stats*/
 .CircularProgressbar {
   /*
    * This fixes an issue where the CircularProgressbar svg has
@@ -220,4 +223,54 @@ width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 
 
 .CircularProgressbar.CircularProgressbar-inverted .CircularProgressbar-trail {
   stroke: transparent;
+}
+
+/*textarea for answers*/
+
+.paper {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    min-width: 400px;
+    height: 30vmin;
+    margin: 0 auto;
+    background: lightyellow;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.3);
+    overflow: hidden;
+}
+.paper:before {
+    content: '  ';
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 60px;
+    background: radial-gradient(#575450 6px, transparent 7px) repeat-y;
+    background-size: 30px 30px;
+    border-right: 3px solid #D44147;
+    box-sizing: border-box;
+}
+
+.paper-content {
+    position: absolute;
+    top: 30px; right: 0; bottom: 30px; left: 60px;
+    background: linear-gradient(transparent, transparent 28px, #91D1D3 28px);
+    background-size: 30px 30px;
+}
+
+.paper-content textarea {
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    max-height: 100%;
+    line-height: 30px;
+    padding: 0 10px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: mediumblue;
+    font-family: 'Handlee', cursive;
+    font-weight: bold;
+    font-size: 18px;
+    box-sizing: border-box;
+    z-index: 1;
 }

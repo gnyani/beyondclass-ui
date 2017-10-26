@@ -60,6 +60,8 @@ saveAssignment(){
     }).then(response => {
       if(response.status === 200){
         notify.show('Your work is saved,you can come back anytime here to continue',"success")
+      }else if(response.status === 302){
+        this.context.router.history.push('/')
       }else if(response.status === 500){
         notify.show('Sorry something went wrong please try again',"error")
       }
@@ -82,6 +84,8 @@ submitAssignment(){
       if(response.status === 200){
         notify.show('Your Assignment got submitted successfully',"success")
         this.context.router.history.goBack()
+      }else if(response.status === 302){
+        this.context.router.history.push('/')
       }else if(response.status === 500){
         notify.show('Sorry something went wrong please try again',"error")
       }
@@ -120,6 +124,9 @@ handleAnswerChange(i,event) {
        }).then(response => {
          if(response.status === 200)
          return response.json()
+         else if(response.status === 302){
+           this.context.router.history.push('/')
+         }
          else{
            notify.show("something is not right","error")
          }
@@ -161,6 +168,7 @@ handleAnswerChange(i,event) {
       </Col>
       </Row>
       </Grid>
+      <br /><br />
       </StayVisible>
     )
   }

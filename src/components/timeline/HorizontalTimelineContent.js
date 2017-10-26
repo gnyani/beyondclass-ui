@@ -10,6 +10,7 @@ import {ActionThumbUp,CommunicationComment,NavigationClose,AttachFile} from '../
 import {notify} from 'react-notify-toast';
 import TextField from 'material-ui/TextField';
 import Dialog from 'material-ui/Dialog';
+import { withRouter } from 'react-router-dom'
 import '../../styles/student-adda.css';
 var properties = require('../properties.json');
 
@@ -31,7 +32,7 @@ const styles = {
   },
 };
 
-export default class HorizontalTimelineContent extends React.Component {
+class HorizontalTimelineContent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -100,7 +101,7 @@ export default class HorizontalTimelineContent extends React.Component {
     content: PropTypes.arrayOf(PropTypes.object).isRequired
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.dates = this.props.content.map((entry) => entry.date);
     this.getPosts(0)
   }
@@ -169,6 +170,8 @@ export default class HorizontalTimelineContent extends React.Component {
            if(response.status === 200)
            {
               return response.text();
+           }else if(response.status === 302){
+             this.context.router.history.push('/')
            }
            else{
              let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -184,7 +187,7 @@ export default class HorizontalTimelineContent extends React.Component {
              message: '',
            })
            notify.show("Post uploaded successfully","success")
-           this.componentWillMount()
+           this.componentDidMount()
          })
 
   }
@@ -206,7 +209,9 @@ deletePost(){
     if(response === "successfully deleted")
     {
      notify.show(response,"success")
-     this.componentWillMount()
+     this.componentDidMount()
+   }else if(response.status === 302){
+     this.context.router.history.push('/')
    }
    else{
      notify.show("sorry something went wrong please try again","error")
@@ -234,6 +239,7 @@ if(this.state.postUrls.length!==0)
               style={{borderRadius:"1.5em"}}
               >
                 <CardHeader
+                  className="cardHeaderwithTopBorder"
                   title={this.state.postOwners[i]}
                   subtitle="Changed his profile picture"
                   avatar={this.state.postOwnerPics[i]}
@@ -284,6 +290,7 @@ if(this.state.postUrls.length!==0)
           style={{borderRadius:"1.5em"}}
           >
             <CardHeader
+             className="cardHeaderwithTopBorder"
               title="Posted by"
               subtitle={this.state.postOwners[i]}
               avatar={this.state.postOwnerPics[i]}
@@ -333,6 +340,7 @@ if(this.state.postUrls.length!==0)
          style={{borderRadius:"1.5em"}}
          >
            <CardHeader
+             className="cardHeaderwithTopBorder"
              title={this.state.postOwners[i]}
              subtitle="Changed his profile picture"
              avatar={this.state.postOwnerPics[i]}
@@ -378,6 +386,7 @@ if(this.state.postUrls.length!==0)
            style={{borderRadius:"1.5em"}}
            >
              <CardHeader
+               className="cardHeaderwithTopBorder"
                title="Posted by"
                subtitle={this.state.postOwners[i]}
                avatar={this.state.postOwnerPics[i]}
@@ -479,6 +488,8 @@ postComment(i){
             commentBox: []
           })
           this.getPosts(this.state.value)
+       }else if(response.status === 302){
+         this.context.router.history.push('/')
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -589,7 +600,11 @@ getLikedUsers(i){
         credentials: 'include',
         method: 'GET'
      }).then(response => {
+       if(response.status === 200)
        return response.json()
+       else if(response.status === 302){
+         this.context.router.history.push('/')
+       }
      }).then(response => {
        var newdescription = []
        var newpostUrls = []
@@ -769,3 +784,8 @@ getLikedUsers(i){
     );
   }
 }
+HorizontalTimelineContent.contextTypes = {
+    router: PropTypes.object
+};
+
+export default withRouter(HorizontalTimelineContent)

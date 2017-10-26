@@ -5,6 +5,8 @@ import View from 'material-ui/svg-icons/action/view-list'
 import ViewReport from 'material-ui/svg-icons/content/content-paste'
 import {Link} from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 import {Card, CardActions,CardText,CardHeader, CardTitle} from 'material-ui/Card'
 
 var properties = require('../properties.json')
@@ -41,7 +43,10 @@ componentDidMount(){
       return response.json();
       else if(response.status === 204){
         return response
-      }else{
+      }else if(response.status === 302){
+        this.context.router.history.push('/')
+      }
+      else{
         notify.show("Failed to Load Assignments","Error")
         return response
       }
@@ -115,6 +120,7 @@ if(this.state.assignmentIds.length !== 0)
           <Row start="xs" top="xs">
           <Col xs>
            <CardHeader
+           className="cardHeader"
              title={this.props.email}
              subtitle={"Created on "+createdDate.getDate()+"-"+(createdDate.getMonth()+1)+"-"+createdDate.getFullYear()+" at "+createdDate.getHours()+":"+createdDate.getMinutes()}
              avatar={this.state.propicUrls[i]}
@@ -166,4 +172,7 @@ return buffer;
     )
   }
 }
-export default ListAssignments
+ListAssignments.contextTypes = {
+    router: PropTypes.object
+};
+export default withRouter(ListAssignments)

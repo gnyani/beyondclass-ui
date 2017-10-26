@@ -22,8 +22,8 @@ renderSubmittedAssignments(){
            <Row around="xs">
            <Col xs={11} sm={11} md={9} lg={8}>
            <Card>
-           <CardHeader title='Assignment By' subtitle={assignments[i].email} avatar={assignments[i].propicurl}/>
-           <CardTitle style={{textAlign:'center'}} title={assignments[i].subject} subtitle={'STATUS : '+submissions[i].status+ ' with '+submissions[i].marksGiven+' marks'  } />
+           <CardHeader className="cardHeader"  title='Assignment By' subtitle={assignments[i].email} avatar={assignments[i].propicurl}/>
+           <CardTitle style={{textAlign:'center'}}  title={assignments[i].subject} subtitle={'STATUS : '+submissions[i].status+ ' with '+submissions[i].marksGiven+' marks'  } />
            <CardText style={{textAlign:'center'}}>
            <p>Submitted On {date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()} </p>
            </CardText>
@@ -111,5 +111,6 @@ renderSubmittedAssignments(){
     }
   }
 }
+
 
 export default ListSubmissions

@@ -31,7 +31,7 @@ export const NavAppBar = (props) => {
       <Paper zDepth={2}>
         <Toolbar  style={{
          noGutter: true,
-         backgroundColor: '#00BCD4'
+         backgroundColor: '#00ACC1'
        }}
         >
            <ToolbarGroup firstChild={true}>

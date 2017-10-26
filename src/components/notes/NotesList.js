@@ -7,6 +7,8 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/C
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import UnauthorizedPage from '../UnauthorizedPage.js'
 import Divider from 'material-ui/Divider'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 import SubjectAutoCompleteForNotesAndAssign from '../utils/SubjectAutoCompleteForNotesAndAssign.js'
 
 var properties = require('../properties.json');
@@ -57,6 +59,8 @@ class NotesList extends Component{
           if(response.status === 200)
           {
              return response.json();
+          }else if(response.status === 302){
+            this.context.router.history.push('/')
           }
           else{
             let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -119,8 +123,9 @@ if(this.props.userrole==="student"){
      {this.state.links.map((src, index) => (
      <Col xs={12} sm={12} md={9} lg={8} key={index}>
      <br />
-           <Card style={{borderRadius:"2em"}}>
+           <Card style={{borderRadius: '1.5em'}} >
              <CardHeader
+               className="cardHeaderwithTopBorder"
                title="Uploaded By"
                subtitle={src.split('-')[7]}
              />
@@ -161,5 +166,8 @@ if(this.props.userrole==="student"){
  }
 }
 }
+NotesList.contextTypes = {
+    router: PropTypes.object
+};
 
-export default NotesList;
+export default withRouter(NotesList);

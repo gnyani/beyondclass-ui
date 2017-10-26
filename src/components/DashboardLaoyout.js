@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import {Body} from './main.js'
 import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
-import Divider from 'material-ui/Divider';
 import {NavAppBar} from '../styledcomponents/NavAppBar.js'
 import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
@@ -116,6 +115,8 @@ uploadProPic(){
        {
          notify.show("Avatar Changed successfully","success")
           return response.text();
+       }else if(response.status === 302){
+         this.context.router.history.push('/')
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -148,6 +149,8 @@ postTimeline(){
        if(response.status === 200)
        {
           notify.show("profilepic updated successfully")
+       }else if(response.status === 302){
+         this.context.router.history.push('/')
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -179,6 +182,8 @@ handleLogout(){
               isLoaded : 'true'
             })
             this.context.router.history.push('/');
+          }else if(response.status === 302){
+            this.context.router.history.push('/')
           }
         })
   }
@@ -190,7 +195,8 @@ dashboard(){
   }
 }
 
-componentWillMount(){
+componentDidMount(){
+  window.addEventListener("resize", this.updateDimensions);
   let width= window.innerWidth
   if(width<700){
     this.setState({
@@ -198,11 +204,16 @@ componentWillMount(){
       docked: false,
     })
   }
+
   fetch('http://'+properties.getHostName+':8080/user/loggedin', {
            credentials: 'include',
            method: 'GET'
         }).then(response => {
+          if(response.status === 200)
           return response.json()
+          else if(response.status === 302){
+            this.context.router.history.push('/')
+          }
         }).then(response => {
           this.setState({
               username: response.firstName,
@@ -239,9 +250,6 @@ getNotificationCount(){
   }
 }
 
-componentDidMount() {
-    window.addEventListener("resize", this.updateDimensions);
-}
 componentWillUnmount() {
     window.removeEventListener("resize", this.updateDimensions);
 }
@@ -323,7 +331,8 @@ else
      userrole = {this.state.userrole}
      notificationsCount = {this.state.notificationsCount}
      />
-    <Drawer open={this.state.open} docked={this.state.docked} disableSwipeToOpen={true} width = {this.state.width} onRequestChange={(open) => this.setState({open})}>
+    <Drawer open={this.state.open} docked={this.state.docked} containerStyle={{backgroundColor: 'black'}}
+       width = {this.state.width} onRequestChange={(open) => this.setState({open})}>
     <div className="image-upload UserImageContainer">
     <label htmlFor="file-input">
     <div className="img__wrap">
@@ -339,10 +348,10 @@ else
     <br />
     <br />
     <Link to='/updateprofile'>
-    <FlatButton label="Update Profile" onClick={this.handleMobileToggle}hoverColor ={lightBlue100} fullWidth={true} icon={<AddImageIcon  color={blue500}/>}/>
+    <FlatButton label="Update Profile" labelStyle={{color: '#EEEEEE'}} onClick={this.handleMobileToggle}hoverColor ={lightBlue100} fullWidth={true} icon={<AddImageIcon  color={blue500}/>}/>
     </Link>
     <br />
-<Divider />
+
    {this.dashboard()}
 </Drawer>
 <Dialog

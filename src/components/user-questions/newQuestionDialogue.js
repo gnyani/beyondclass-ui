@@ -29,7 +29,7 @@ export default class NewQuestionDialogue extends React.Component {
     this.setState({open: false});
   };
 
-  componentWillMount(){
+  componentDidMount(){
   }
 
   render() {

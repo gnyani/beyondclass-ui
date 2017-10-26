@@ -15,7 +15,7 @@ const StayVisible = styled.div`
 
 class QuestionLayout extends React.Component {
 
-  componentWillMount() {
+  componentDidMount() {
   }
 
   render(){

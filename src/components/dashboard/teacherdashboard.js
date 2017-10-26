@@ -2,7 +2,6 @@ import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
 import {red500} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
-import Divider from 'material-ui/Divider';
 import {LocationCity} from '../../styledcomponents/SvgIcons.js'
 
 
@@ -32,10 +31,10 @@ class TeacherDashboard extends Component{
           primaryText={'Class  '+this.props.batches[index]}
           leftIcon={<LocationCity color={red500}/>}
           onClick={this.props.handleMobileToggle}
+          className="drawerFont"
            />
            </Link>
            </div>
-      <Divider/>
       </div>
     ));
   }

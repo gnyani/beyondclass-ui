@@ -75,7 +75,7 @@ handleLastNameDisable(){
     lastNameDisabled: false
   })
 }
-componentWillMount(){
+componentDidMount(){
 
 }
 updateProfile(){
