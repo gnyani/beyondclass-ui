@@ -26,6 +26,7 @@ class Router extends Component {
     <Route exact path='/teacherstudentspace' component={DashboardLayout} />
     <Route exact path='/updateprofile' component={DashboardLayout} />
     <Route exact path='/submissions' component={DashboardLayout} />
+    <Route exact path='/codeeditor' component={DashboardLayout} />
     <Route exact path='/notifications' component={DashboardLayout} key={new Date().getTime()}/>
   </Switch>
     );

@@ -81,6 +81,7 @@ componentDidMount(){
       <Card >
       <CardText>
       <table>
+      <tbody>
           <tr>
             <th>Status</th>
             <th>Count</th>
@@ -97,6 +98,7 @@ componentDidMount(){
             <td>REJECTED</td>
             <td>{this.state.rejected}</td>
           </tr>
+        </tbody>  
           </table>
       </CardText>
       </Card>

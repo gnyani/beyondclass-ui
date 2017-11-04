@@ -16,6 +16,7 @@ import Reports from './teacher/Reports.js'
 import SubmitAssignment from './teacherstudent/SubmitAssignment'
 import EvaluateAssignment from './teacher/EvaluateAssignment'
 import Submissions from './profile/Submissions'
+import Editor from './codeeditor/Editor'
 
 export const Body =(props) => {
     return(
@@ -35,6 +36,7 @@ export const Body =(props) => {
     <Route exact path='/teacherstudentspace' render={() =>(<TeacherStudentSpace {...props} />)} />
     <Route exact path='/updateprofile' render={() =>(<UpdateProfile {...props} />)} />
     <Route exact path='/submissions' render={() => (<Submissions {...props} />)} />
+    <Route exact path='/codeeditor' render={() => (<Editor {...props} />)} />
     <Route exact path='/notifications' render={() => (<Notifications {...props} />)} />
   </Switch>
 </main>

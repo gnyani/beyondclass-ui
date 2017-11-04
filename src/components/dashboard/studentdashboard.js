@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import {blue500, red500} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
 import Submissions from 'material-ui/svg-icons/action/assessment'
+import Code from 'material-ui/svg-icons/action/code'
 import {ImageCollectionsBookmark,ActionBook,AvLibraryBooks,
        ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool,DeveloperBoard,QuestionAnswer} from '../../styledcomponents/SvgIcons.js'
 
@@ -101,24 +102,34 @@ isActive(value){
               </Link>
       </div>
       <Divider />*/}
+      <div className={this.isActive('codeeditor')}>
+        <Link to='/codeeditor'  width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"codeeditor")} >
+          <MenuItem
+          primaryText={'Compiler'}
+          leftIcon={<Code color={blue500}/>}
+          onClick={this.props.handleMobileToggle}
+          className="drawerFont"
+          />
+        </Link></div>
       <div  className={this.isActive('coachingcentres')}>
               <Link to="/coachingcentres" width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"coachingcentres")}>
                 <MenuItem primaryText={'Coaching-Centres'}
-                  leftIcon={<SocialSchool color={blue500} />}
+                  leftIcon={<SocialSchool color={red500} />}
                   onClick={this.props.handleMobileToggle}
                   className="drawerFont"
                 />
               </Link>
           </div>
-            <div className={this.isActive('UserQuestions')}>
-            <Link to='/UserQuestions' width={this.props.width} style={{ textDecoration: 'none' }}  onClick={this.onChangeSelected.bind(this,"UserQuestions")} >
+            <div className={this.isActive('Forum')}>
+            <Link to='/UserQuestions' width={this.props.width} style={{ textDecoration: 'none' }}  onClick={this.onChangeSelected.bind(this,"Forum")} >
                   <MenuItem
-                  primaryText={'User Questions'}
-                  leftIcon={<QuestionAnswer color={red500}/>}
+                  primaryText={'Forum'}
+                  leftIcon={<QuestionAnswer color={blue500}/>}
                   onClick={this.props.handleMobileToggle}
                   className="drawerFont"
                   />
                 </Link></div>
+
       </div>
     )
   }

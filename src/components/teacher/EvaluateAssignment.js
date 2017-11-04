@@ -69,6 +69,7 @@ class EvaluateAssignment extends Component{
      questions: [],
      answers: [],
      assignmentMarks: 3,
+     timespent: '',
      isDataLoaded: false,
      acceptDialog: false,
      rejectDialog: false,
@@ -76,6 +77,7 @@ class EvaluateAssignment extends Component{
    this.renderAssignment = this.renderAssignment.bind(this)
    this.handleMarksChange = this.handleMarksChange.bind(this)
    this.renderEvaluateButtons = this.renderEvaluateButtons.bind(this)
+   this.renderInsights = this.renderInsights.bind(this)
  }
 
   componentDidMount(){
@@ -103,6 +105,7 @@ class EvaluateAssignment extends Component{
            this.setState({
              questions:response.createAssignment.questions,
              answers:response.submitAssignment.answers,
+             timespent: response.timespent,
              isDataLoaded: true,
            })
          })
@@ -175,6 +178,23 @@ class EvaluateAssignment extends Component{
     this.setState({
       rejectDialog: true,
     })
+  }
+
+  renderInsights(){
+    var buffer = []
+    if(this.props.userrole === 'teacher'){
+      buffer.push(
+        <Grid fluid>
+        <Row around="xs">
+        <Col xs={11} sm={11} md={9} lg={8}>
+        <div className="insightsBorder"><h4>Some Insights</h4>
+                  <p> Time Spent : {this.state.timespent} </p>
+                 </div>
+        </Col>
+         </Row>
+       </Grid>  )
+    }
+    return buffer
   }
 
   renderAssignment(){
@@ -280,6 +300,8 @@ const actions = [
       <div className="EvaluateAssignment">
       <p className="paragraph">Submitted By {this.state.email} </p>
       <Divider />
+      <br />
+      {this.renderInsights()}
       <br />
       {this.renderAssignment()}
       <br />
