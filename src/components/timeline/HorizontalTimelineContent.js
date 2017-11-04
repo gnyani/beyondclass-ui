@@ -101,7 +101,7 @@ class HorizontalTimelineContent extends React.Component {
     content: PropTypes.arrayOf(PropTypes.object).isRequired
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.dates = this.props.content.map((entry) => entry.date);
     this.getPosts(0)
   }
@@ -187,7 +187,7 @@ class HorizontalTimelineContent extends React.Component {
              message: '',
            })
            notify.show("Post uploaded successfully","success")
-           this.componentDidMount()
+           this.componentWillMount()
          })
 
   }
@@ -209,7 +209,7 @@ deletePost(){
     if(response === "successfully deleted")
     {
      notify.show(response,"success")
-     this.componentDidMount()
+     this.componentWillMount()
    }else if(response.status === 302){
      this.context.router.history.push('/')
    }

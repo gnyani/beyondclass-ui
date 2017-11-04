@@ -13,12 +13,12 @@ renderSubmittedAssignments(){
   var submissions = this.props.submitAssignmentList
   var assignments = this.props.assignmentsList
   if(submissions.length !== 0){
-    buffer.push(<p className="paragraph"> Your submissions </p>)
+    buffer.push(<p className="paragraph" key={new Date()}> Your submissions </p>)
     for(let i=0; i<submissions.length ; i++){
       var date = new Date(submissions[i].submissionDate)
       if(submissions[i].status==='ACCEPTED')
       buffer.push(
-           <Grid fluid>
+           <Grid fluid key={i}>
            <Row around="xs">
            <Col xs={11} sm={11} md={9} lg={8}>
            <Card>
@@ -52,7 +52,7 @@ renderSubmittedAssignments(){
              <Row around="xs">
              <Col xs={11} sm={11} md={9} lg={8}>
              <Card>
-             <CardHeader title='Assignment By' subtitle={assignments[i].email} avatar={assignments[i].propicurl}/>
+             <CardHeader className="cardHeader" title='Assignment By' subtitle={assignments[i].email} avatar={assignments[i].propicurl}/>
              <CardTitle style={{textAlign:'center'}} title={assignments[i].subject} subtitle={'STATUS : '+submissions[i].status} />
              <CardText style={{textAlign:'center'}}>
              <p>Submitted On {date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()} </p>

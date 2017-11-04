@@ -6,8 +6,9 @@ import Divider from 'material-ui/Divider'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import RaisedButton from 'material-ui/RaisedButton'
 import DisplayAssignmentQuestions from './DisplayAssignmentQuestions.js'
-import { withRouter } from 'react-router';
-import PropTypes from 'prop-types';
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
+import IdleTimer from 'react-idle-timer'
 import Save from 'material-ui/svg-icons/content/save'
 import Send from 'material-ui/svg-icons/content/send'
 
@@ -27,7 +28,11 @@ constructor(){
   super();
   this.state={
     questions: [],
-    answers: []
+    answers: [],
+    timeout: 5000,
+     remaining: null,
+     isIdle: false,
+     totalActiveTime: null,
   }
      this.handleAnswerChange = this.handleAnswerChange.bind(this);
      this.saveOrSubmit = this.saveOrSubmit.bind(this);
@@ -56,6 +61,7 @@ saveAssignment(){
          email: this.props.loggedinuser,
          tempassignmentid: this.props.assignmentid,
          answers: this.state.answers,
+         timespent: this.state.totalActiveTime,
       })
     }).then(response => {
       if(response.status === 200){
@@ -79,6 +85,7 @@ submitAssignment(){
          email: this.props.loggedinuser,
          tempassignmentid: this.props.assignmentid,
          answers: this.state.answers,
+         timespent: this.state.totalActiveTime,
       })
     }).then(response => {
       if(response.status === 200){
@@ -135,6 +142,7 @@ handleAnswerChange(i,event) {
          this.setState({
            questions: response.questions,
            answers: response.answers,
+           totalActiveTime: response.timespent,
          })
        }else{
          this.setState({
@@ -142,7 +150,27 @@ handleAnswerChange(i,event) {
          })
        }
        })
+
+this._interval = setInterval(() => {
+  if(this.state.isIdle === false)
+  this.setState({
+    totalActiveTime: this.state.totalActiveTime + 1000
+  });
+}, 1000);
 }
+componentWillUnmount() {
+    clearInterval(this._interval);
+}
+
+_onActive = () => {
+   this.setState({ isIdle: false });
+ }
+
+ _onIdle = () => {
+   this.setState({ isIdle: true });
+ }
+
+
   render(){
     return(
       <StayVisible
@@ -168,7 +196,18 @@ handleAnswerChange(i,event) {
       </Col>
       </Row>
       </Grid>
-      <br /><br />
+
+  <IdleTimer
+  ref="idleTimer"
+  activeAction={this._onActive}
+  idleAction={this._onIdle}
+  timeout={this.state.timeout}
+  startOnLoad={false}
+  format="MM-DD-YYYY HH:MM:ss.SSS">
+
+  <h1>Time Spent: {this.state.totalActiveTime}</h1>
+  </IdleTimer>
+ <br /><br />
       </StayVisible>
     )
   }

@@ -159,7 +159,7 @@ if(this.state.assignmentIds.length !== 0)
   )
 }
 }else{
-  buffer.push(<p className="paragraph" >You are all caught up !!!</p>)
+  buffer.push(<p className="paragraph" key={1} >You are all caught up !!!</p>)
 }
 return buffer;
 }
