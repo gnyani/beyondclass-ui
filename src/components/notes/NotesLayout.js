@@ -37,13 +37,14 @@ class NotesLayout extends Component{
       <Tabs
         value={this.state.value}
         onChange={this.handleChange}
+        inkBarStyle={{backgroundColor:"#FFA107"}}
       >
-        <Tab label="Upload Notes" value="Upload Notes" icon={<FileFileUpload />}>
+        <Tab label="Upload Notes" value="Upload Notes"  buttonStyle={{backgroundColor: '#4d86cf'}} icon={<FileFileUpload />}>
           <div>
             <NotesUpload userrole={this.props.userrole} branch={this.props.branch} />
           </div>
         </Tab>
-        <Tab label="View Notes" value="View Notes" icon={<ActionViewList />}>
+        <Tab label="View Notes" value="View Notes" buttonStyle={{backgroundColor: '#4d86cf'}} icon={<ActionViewList />}>
           <NotesList  userrole={this.props.userrole} branch={this.props.branch} />
         </Tab>
       </Tabs>

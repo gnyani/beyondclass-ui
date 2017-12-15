@@ -205,7 +205,7 @@ _onActive = () => {
   startOnLoad={false}
   format="MM-DD-YYYY HH:MM:ss.SSS">
 
-  <h1>Time Spent: {this.state.totalActiveTime}</h1>
+  {/*<h1>Time Spent: {this.state.totalActiveTime}</h1>*/}
   </IdleTimer>
  <br /><br />
       </StayVisible>

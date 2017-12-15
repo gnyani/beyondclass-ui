@@ -252,7 +252,7 @@ return(
     <Row center="xs" middle="xs">
     <Col xs={12} sm={12} md={10} lg={11}>
    <div  className="container" >
-      <ul> {this.list(buffer)} </ul>
+      <ul style={{color:  '#cccccc'}}> {this.list(buffer)} </ul>
     </div>
     </Col>
     </Row>

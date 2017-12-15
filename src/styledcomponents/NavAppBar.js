@@ -31,7 +31,7 @@ export const NavAppBar = (props) => {
       <Paper zDepth={2}>
         <Toolbar  style={{
          noGutter: true,
-         backgroundColor: '#00ACC1'
+         backgroundColor: '#4d86cf'
        }}
         >
            <ToolbarGroup firstChild={true}>
@@ -64,7 +64,7 @@ else{
   <Paper zDepth={2}>
     <Toolbar  style={{
      noGutter: true,
-     backgroundColor: '#00BCD4'
+     backgroundColor: '#4d86cf'
    }}>
        <ToolbarGroup firstChild={true}>
        <IconButton onTouchTap={props.toggle}> <NavigationMenu color="#ffffff" /> </IconButton>

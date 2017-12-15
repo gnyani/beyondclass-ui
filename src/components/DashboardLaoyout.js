@@ -331,7 +331,7 @@ else
      userrole = {this.state.userrole}
      notificationsCount = {this.state.notificationsCount}
      />
-    <Drawer open={this.state.open} docked={this.state.docked} containerStyle={{backgroundColor: 'black'}}
+    <Drawer open={this.state.open} docked={this.state.docked} containerStyle={{backgroundColor: '#082d51'}}
        width = {this.state.width} onRequestChange={(open) => this.setState({open})}>
     <div className="image-upload UserImageContainer">
     <label htmlFor="file-input">

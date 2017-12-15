@@ -1,11 +1,18 @@
 import React,{Component} from 'react'
 import {Grid,Row,Col} from 'react-flexbox-grid'
-
+import RichTextEditorReadOnly from '../teacher/RichTextEditorReadOnly'
+import { EditorState,convertFromRaw } from 'draft-js'
 class DisplayAssignmentQuestions extends Component{
 
 constructor(){
   super();
   this.displayQuestions = this.displayQuestions.bind(this);
+}
+
+convertToEditorState = (object) => {
+const contentState = convertFromRaw(object)
+const editorState = EditorState.createWithContent(contentState)
+return editorState
 }
 
 displayQuestions(){
@@ -15,7 +22,7 @@ displayQuestions(){
       <Grid fluid>
       <Row start="xs">
       <Col xs>
-      <li className="list" >{this.props.questions[i]}</li>
+      <li ><RichTextEditorReadOnly editorStyle={{position: 'relative',bottom: '6vmin'}} editorState={this.convertToEditorState(this.props.questions[i])} /></li>
       <br />
       </Col>
       </Row>
@@ -29,7 +36,7 @@ displayQuestions(){
     onPaste={(event)=>{event.preventDefault()}} onChange={this.props.handleAnswerChange.bind(this,i)}
     autoComplete='off' />
     </div></div>
-      <br /> 
+      <br />
       </Col>
       </Row>
       </Grid>

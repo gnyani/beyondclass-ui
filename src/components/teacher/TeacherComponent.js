@@ -38,11 +38,12 @@ class TeacherComponent extends Component{
       <Tabs
         value={this.state.value}
         onChange={this.handleChange}
+        inkBarStyle={{backgroundColor:"#FFA107"}}
       >
-      <Tab label="Assignments" value="assignments">
+      <Tab label="Assignments" value="assignments" buttonStyle={{backgroundColor: '#4d86cf'}}>
        <CreateAssignment email={this.props.loggedinuser} branch={this.props.branch} class={this.props.class} key={this.props.class}/>
       </Tab>
-        <Tab label="Announce" value="announce">
+        <Tab label="Announce" value="announce" buttonStyle={{backgroundColor: '#4d86cf'}}>
             <TeacherAnnouncement class={this.props.class} key={this.props.class}/>
         </Tab>
       </Tabs>

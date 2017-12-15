@@ -15,6 +15,8 @@ import UpdateProfile from './profile/UpdateProfile.js'
 import Reports from './teacher/Reports.js'
 import SubmitAssignment from './teacherstudent/SubmitAssignment'
 import EvaluateAssignment from './teacher/EvaluateAssignment'
+import TheoryAssignment from './teacher/AssignmentContent'
+import ProgrammingAssignment from './teacher/ProgrammingAssignment'
 import Submissions from './profile/Submissions'
 import Editor from './codeeditor/Editor'
 
@@ -30,6 +32,8 @@ export const Body =(props) => {
     <Route exact path='/coachingcentres' render={() =>(<CoachingCentres {...props} />)} />
     <Route exact path='/UserQuestions' render={() =>(<QuestionLayout {...props} />)} />
     <Route exact path='/teacher/:class' render={({match}) =>(<TeacherComponent {...props} class={match.params.class}/>)} />
+    <Route exact path='/teacher/:class/create' render={({match}) =>(< TheoryAssignment {...props} class={match.params.class} email={match.params.email} />)} />
+    <Route exact path='/teacher/:class/createpa' render={({match}) =>(< ProgrammingAssignment {...props} class={match.params.class} email={match.params.email} />)} />
     <Route exact path='/teacher/reports/view/:assignmentid' render={({match}) =>(<Reports {...props} assignmentid={match.params.assignmentid}/>)} />
     <Route exact path='/teacher/assignment/:submissionid/evaluate' render={({match}) =>(<EvaluateAssignment {...props} submissionid={match.params.submissionid}/>)} />
     <Route exact path='/student/assignments/take/:assignmentid' render={({match}) =>(<SubmitAssignment {...props} assignmentid={match.params.assignmentid}/>)} />

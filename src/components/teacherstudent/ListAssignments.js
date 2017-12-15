@@ -7,6 +7,8 @@ import {Link} from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
+import RichTextEditorReadOnly from '../teacher/RichTextEditorReadOnly'
+import { EditorState,convertFromRaw } from 'draft-js'
 import {Card, CardActions,CardText,CardHeader, CardTitle} from 'material-ui/Card'
 
 var properties = require('../properties.json')
@@ -93,12 +95,16 @@ renderAssignmentQuestions(index){
   var buffer=[]
   var questions=this.state.questions[index]
   for(let i=0;i<questions.length;i++){
-  buffer.push(<li className="displayQuestions" key={i}>{questions[i]}</li>)
+  buffer.push(<li key={i}><RichTextEditorReadOnly editorStyle={{position: 'relative',bottom: '5vmin'}} editorState={this.convertToEditorState(questions[i])} /></li>)
   }
   return buffer;
 }
 
-
+convertToEditorState = (object) => {
+const contentState = convertFromRaw(object)
+const editorState = EditorState.createWithContent(contentState)
+return editorState
+}
 
 
 listAssignments(){
@@ -133,7 +139,7 @@ if(this.state.assignmentIds.length !== 0)
            <p>{this.state.additionalComments[i]}</p>
            </CardText>
            <CardText expandable={true} >
-            <ol>{this.renderAssignmentQuestions(i)}</ol>
+            <ul>{this.renderAssignmentQuestions(i)}</ul>
           </CardText>
           <Grid fluid>
           <Row center="xs">

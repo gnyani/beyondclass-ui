@@ -39,11 +39,12 @@ class TeacherStudentSpace extends Component{
       <Tabs
         value={this.state.value}
         onChange={this.handleChange}
+        inkBarStyle={{backgroundColor:"#FFA107"}}
       >
-      <Tab label="Assignments" value="assignments">
+      <Tab label="Assignments" value="assignments" buttonStyle={{backgroundColor: '#4d86cf'}}>
         <ListAssignments email={this.props.loggedinuser}   />
-      </Tab>      
-        <Tab label="Announcements" value="announcements">
+      </Tab>
+        <Tab label="Announcements" value="announcements" buttonStyle={{backgroundColor: '#4d86cf'}}>
             <StudentTeacherAnnouncements class={this.props.startyear+'-'+this.props.section} />
         </Tab>
       </Tabs>
