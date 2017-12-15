@@ -197,7 +197,7 @@ class TeacherAnnouncement extends Component{
       <div className="announcements">
       <h2 className="heading"> Your Announcements for class {this.props.class}</h2>
       <div  className="container page">
-         <ul> {this.list(buffer)} </ul>
+         <ul style={{color:  '#cccccc'}}> {this.list(buffer)} </ul>
        </div>
        <Pagination
        total = { this.state.total }

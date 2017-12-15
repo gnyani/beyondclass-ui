@@ -7,6 +7,7 @@ import {Grid,Row,Col} from 'react-flexbox-grid'
 import Divider from 'material-ui/Divider'
 import RaisedButton from 'material-ui/RaisedButton'
 import Compile from 'material-ui/svg-icons/file/cloud-upload'
+import Inputoutput from './Inputoutput'
 import {HelloWorldTemplates} from './HelloWorldTemplates'
 import {editorModes,hackerRankLangNotation} from './Utils'
 
@@ -31,6 +32,12 @@ class Editor extends Component{
 constructor(){
   super();
   this.state={
+    compileError: '',
+    stdErr: '',
+    stdOut: '',
+    message: '',
+    buttonDisabled: false,
+    submissionStarted: false,
     hackerRankCodes: '',
     value: defaultValue,
     languageValue: 'javascript',
@@ -60,7 +67,8 @@ changeTestCases(event){
 
 onChange(newValue) {
   this.setState({
-    value: newValue
+    value: newValue,
+    submissionStarted: false,
   })
 }
 
@@ -91,6 +99,10 @@ setMode = (e,index,value) => {
 submitRequest(){
   var codeslist = this.state.hackerRankCodes
   var langcode = codeslist[this.state.languageValue]
+  this.setState({
+    buttonDisabled: true,
+    submissionStarted: true,
+  })
 
   fetch('http://'+properties.getHostName+':8080/assignments/hackerrank/submit', {
          method: 'POST',
@@ -107,8 +119,16 @@ submitRequest(){
     }).then(response => {
       return response.json()
     }).then(response =>{
-      var xyz = response[0]
-      console.log("response  is" + JSON.stringify({xyz}))
+      var result = response.result
+
+      this.setState({
+        buttonDisabled: false,
+        compileError:result.compilemessage,
+        stdErr: result.stderr,
+        stdOut: result.stdout,
+        message: result.message,
+      })
+
     })
 }
 
@@ -128,8 +148,8 @@ componentDidMount(){
 showInputTextArea(){
   var buffer = []
   if(this.state.checked)
-  buffer.push(<textarea placeholder="Give your input seperated by a space or use new line" rows="10" cols="40"
-  className="testcases" onChange={this.changeTestCases} autoComplete='off'/>)
+  buffer.push(<textarea key={1} placeholder="Give your input seperated by a space or use new line" rows="10" cols="40"
+  className="testcases"  onChange={this.changeTestCases} autoComplete='off'/>)
   return buffer
 }
 
@@ -158,12 +178,16 @@ showInputTextArea(){
             {this.showInputTextArea()}
       </Col>
       <Col xs={11} sm={11} md={3} lg={3}>
-      <RaisedButton label = "Compile & Run" primary={true} icon={<Compile />} onClick={this.submitRequest}/>
+      <RaisedButton label = "Compile & Run" primary={true} disabled={this.state.buttonDisabled} icon={<Compile />} onClick={this.submitRequest}/>
       </Col>
       </Row>
       </Grid>
 
       <br /><br />
+      <Inputoutput submissionStarted={this.state.submissionStarted} buttonDisabled={this.state.buttonDisabled}
+          compileError={this.state.compileError} stdErr={this.state.stdErr} stdOut={this.state.stdOut}
+          testcases={this.state.testcases} message={this.state.message}/>
+      <br /><br /><br /><br />
      </div>
 
 

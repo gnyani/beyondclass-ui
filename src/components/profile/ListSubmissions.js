@@ -48,7 +48,7 @@ renderSubmittedAssignments(){
          )
       else{
         buffer.push(
-             <Grid fluid>
+             <Grid fluid key={i}>
              <Row around="xs">
              <Col xs={11} sm={11} md={9} lg={8}>
              <Card>

@@ -13,6 +13,8 @@ import RejectIcon from 'material-ui/svg-icons/navigation/close'
 import NumericInput from 'react-numeric-input'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
+import RichTextEditorReadOnly from '../teacher/RichTextEditorReadOnly'
+import { EditorState,convertFromRaw } from 'draft-js'
 import Dialog from 'material-ui/Dialog'
 
 var properties = require('../properties.json');
@@ -70,6 +72,8 @@ class EvaluateAssignment extends Component{
      answers: [],
      assignmentMarks: 3,
      timespent: '',
+     insight1: '',
+     insight2: '',
      isDataLoaded: false,
      acceptDialog: false,
      rejectDialog: false,
@@ -109,9 +113,24 @@ class EvaluateAssignment extends Component{
              isDataLoaded: true,
            })
          })
+
+ fetch('http://'+properties.getHostName+':8080/assignments/teacher/insights/'+this.props.submissionid.replace('*','-'), {
+          credentials: 'include',
+          method: 'GET'
+       }).then(response => {
+         if(response.status === 200)
+         return response.json()
+       }).then( response => {
+         var insight1 = (response.insight1 !== null ? response.insight1 : '' )
+         var insight2 = (response.insight2 !== null ? response.insight2 : '' )
+         this.setState({
+           insight1: insight1,
+           insight2: insight2
+         })
+       })
   }
   rejectAssignment = () => {
-    fetch('http://'+properties.getHostName+':8080/assignments/update/evaluation/'+this.state.assignmentid+this.state.email, {
+    fetch('http://'+properties.getHostName+':8080/assignments/update/evaluation/'+this.state.assignmentid+'-'+this.state.email, {
            method: 'POST',
            headers: {
                  'mode': 'cors',
@@ -136,8 +155,14 @@ class EvaluateAssignment extends Component{
        })
   }
 
+  convertToEditorState = (object) => {
+  const contentState = convertFromRaw(object)
+  const editorState = EditorState.createWithContent(contentState)
+  return editorState
+  }
+
   acceptAssignment = () => {
-    fetch('http://'+properties.getHostName+':8080/assignments/update/evaluation/'+this.state.assignmentid+this.state.email, {
+    fetch('http://'+properties.getHostName+':8080/assignments/update/evaluation/'+this.state.assignmentid+'-'+this.state.email, {
            method: 'POST',
            headers: {
                  'mode': 'cors',
@@ -189,6 +214,8 @@ class EvaluateAssignment extends Component{
         <Col xs={11} sm={11} md={9} lg={8}>
         <div className="insightsBorder"><h4>Some Insights</h4>
                   <p> Time Spent : {this.state.timespent} </p>
+                  <p>{this.state.insight1}</p>
+                  <p>{this.state.insight2}</p>
                  </div>
         </Col>
          </Row>
@@ -205,7 +232,7 @@ class EvaluateAssignment extends Component{
        <Row around="xs">
        <Col xs={11} sm={11} md={9} lg={8}>
        <Card>
-      <CardTitle className="displayQuestions" title={'Q. '+this.state.questions[i]} />
+      <CardTitle className="displayQuestions" title={<RichTextEditorReadOnly editorState={this.convertToEditorState(this.state.questions[i])} />} />
       <CardText className="displayAnswers">
       {'Ans: '+this.state.answers[i]}
       </CardText>
