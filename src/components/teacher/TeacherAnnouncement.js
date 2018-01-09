@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Pagination from 'material-ui-pagination';
 import {notify} from 'react-notify-toast';
 import IconButton from 'material-ui/IconButton';
-import {NavigationClose} from '../../styledcomponents/SvgIcons.js';
+import Delete from 'material-ui/svg-icons/action/delete'
 import Dialog from 'material-ui/Dialog';
 import {Grid,Row,Col} from 'react-flexbox-grid';
 import { withRouter } from 'react-router'
@@ -84,16 +84,19 @@ class TeacherAnnouncement extends Component{
 
  list(buffer){
    for (let i=0;i<this.state.announcements.length;i++){
+     var date = new Date(parseInt(this.state.announcementIds[i].split('-')[6],10))
      buffer.push(
-                   <Grid fluid key={i}>
+                   <Grid fluid key={i} className="noGutter">
                    <Row middle="xs">
                    <Col xs={10} sm={10} md={10} lg={10}>
                    <li >
-                   <p className="name"> <span className="fontStyle">{this.state.announcements[i]}</span> </p>
+                   <p className="name"> <span className="fontStyle">{this.state.announcements[i]}</span>
+                   <span className="dateStyleTeacher">{date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()} </span>
+                   </p>
                    </li>
                    </Col>
                    <Col xs={1} sm={1} md={1} lg={1}>
-                   <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><NavigationClose color="red" viewBox="0 0 30 30"/></IconButton>
+                   <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><Delete color='#bbbbbb' viewBox='0 0 20 20'/></IconButton>
                    </Col>
                    </Row>
                    </Grid>
@@ -199,6 +202,7 @@ class TeacherAnnouncement extends Component{
       <div  className="container page">
          <ul style={{color:  '#cccccc'}}> {this.list(buffer)} </ul>
        </div>
+       <br />
        <Pagination
        total = { this.state.total }
        current = { this.state.number }

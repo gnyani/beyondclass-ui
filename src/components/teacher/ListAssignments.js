@@ -29,6 +29,7 @@ constructor(){
    questions:[],
    additionalComments: [],
    expanded:[],
+   assignmentType: [],
    deleteConfirm: false,
    index: '',
   }
@@ -60,6 +61,7 @@ componentDidMount(){
           subjects: [],
           lastDates: [],
           questions: [],
+          assignmentType: [],
           additionalComments: [],
         })
       }else if(response.status === 302){
@@ -76,6 +78,7 @@ componentDidMount(){
       var newlastDates=[]
       var newquestions=[]
       var newadditionalComments=[]
+      var newassignmentType=[]
       for(let i=0; i<response.length;i++){
         newassignmentIds.push(response[i].assignmentid)
         newpropicUrls.push(response[i].propicurl)
@@ -83,7 +86,8 @@ componentDidMount(){
         newsubjects.push(response[i].subject)
         newlastDates.push(response[i].lastdate)
         newquestions.push(response[i].questions)
-        if(response[i].message.trim() !== '')
+        newassignmentType.push(response[i].assignmentType)
+        if(response[i].message !== null && response[i].message.trim() !== '')
         newadditionalComments.push('Additional Comments : '+response[i].message)
         else {
           newadditionalComments.push(response[i].message)
@@ -97,6 +101,7 @@ componentDidMount(){
         subjects: newsubjects,
         lastDates: newlastDates,
         questions: newquestions,
+        assignmentType: newassignmentType,
         additionalComments: newadditionalComments,
       })
     })
@@ -188,6 +193,8 @@ if(this.state.assignmentIds.length !== 0)
 
            <CardTitle style={{textAlign:"center"}} title={this.state.subjects[i]} subtitle={"last date :"+lastDate.getDate()+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()}  />
            <CardText style={{textAlign:"center"}}>
+           <p>{'AssignmentType: ' +this.state.assignmentType[i]}</p>
+           <br />
            <p>{this.state.additionalComments[i]}</p>
            </CardText>
            <CardText expandable={true} >

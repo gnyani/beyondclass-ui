@@ -105,13 +105,16 @@ list(buffer){
                 </span></p>)
   }
   for (i=0;i<this.state.users.length;i++){
+    var date = new Date(parseInt(this.state.announcementIds[i].split('-')[7],10))
   if(this.state.useremails[i] === this.props.loggedinuser)
   {
   buffer.push( <Grid fluid key={i}  className="nogutter">
                <Row middle="xs">
                <Col xs={10} sm={10} md={10} lg={10}>
                <li >
-                <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span> <span className="messageStyle">{this.state.messages[i]}</span>
+                <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span>
+                <span className="messageStyle">{this.state.messages[i]}</span>
+                <span className="dateStyle">{" "+date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}</span>
                 </p></li>
                 </Col>
                <Col xs={2} md={2} sm={2}lg={2}>
@@ -126,7 +129,10 @@ else{
                <Row >
                <Col xs={12} sm={12} md={12} lg={12}>
                <li>
-                <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span> <span className="messageStyle">{this.state.messages[i]}</span> </p>
+                <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span>
+                 <span className="messageStyle">{this.state.messages[i]}</span>
+                 <span className="dateStyle">{" "+date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}</span>
+                 </p>
                 </li>
                 </Col>
                 </Row>

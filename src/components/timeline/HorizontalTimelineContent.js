@@ -227,6 +227,7 @@ loadTimeline(buffer){
 if(this.state.postUrls.length!==0)
 { for (i=0;i<this.state.postUrls.length;i++){
     var bufferImage = []
+    var date = new Date(parseInt(this.state.fileNames[i].split('-').pop(),10))
     if(this.state.postUrls[i] !== null)
     bufferImage.push(<img alt="loading" src={this.state.postUrls[i]} key={i} style={{width:'100%',height:'380px'}}/>)
     if( this.state.postOwnerEmails[i] === this.props.loggedinuser )
@@ -241,7 +242,7 @@ if(this.state.postUrls.length!==0)
                 <CardHeader
                   className="cardHeaderwithTopBorder"
                   title={this.state.postOwners[i]}
-                  subtitle="Changed his profile picture"
+                  subtitle={"Changed his profile picture at "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()}
                   avatar={this.state.postOwnerPics[i]}
                   showExpandableButton={true}
                   closeIcon={<NavigationClose color={redA700} viewBox="0 0 30 30" />}
@@ -292,7 +293,7 @@ if(this.state.postUrls.length!==0)
             <CardHeader
              className="cardHeaderwithTopBorder"
               title="Posted by"
-              subtitle={this.state.postOwners[i]}
+              subtitle={this.state.postOwners[i] + " at "  +date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()}
               avatar={this.state.postOwnerPics[i]}
               showExpandableButton={true}
               closeIcon={<NavigationClose color={redA700} viewBox="0 0 30 30"/>}
@@ -342,7 +343,7 @@ if(this.state.postUrls.length!==0)
            <CardHeader
              className="cardHeaderwithTopBorder"
              title={this.state.postOwners[i]}
-             subtitle="Changed his profile picture"
+             subtitle={"Changed his profile picture at "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()}
              avatar={this.state.postOwnerPics[i]}
            />
            <CardMedia>
@@ -388,7 +389,7 @@ if(this.state.postUrls.length!==0)
              <CardHeader
                className="cardHeaderwithTopBorder"
                title="Posted by"
-               subtitle={this.state.postOwners[i]}
+               subtitle={this.state.postOwners[i] + " at " +date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()}
                avatar={this.state.postOwnerPics[i]}
              />
              <CardMedia>
@@ -690,7 +691,7 @@ getLikedUsers(i){
         onChange = {this.handleChange.bind(this)}
         onKeyPress={this.Enter}
         multiLine={true}
-        rows={2}
+        rows={1}
         rowsMax={4}
         style={{width:'60%'}}
         />
