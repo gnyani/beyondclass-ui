@@ -13,6 +13,7 @@ import {Media} from '../utils/Media'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import Delete from 'material-ui/svg-icons/action/delete'
+import RefreshIndicator from 'material-ui/RefreshIndicator'
 
 var properties = require('../properties.json');
 
@@ -41,7 +42,8 @@ class AnouncementsBoard extends Component{
       display: 7,
       number: 1,
       currentIndex: 0,
-      buttonDisabled: false
+      buttonDisabled: false,
+      isDataLoaded: false,
     }
     this.list = this.list.bind(this);
     this.handleClose = this.handleClose.bind(this)
@@ -99,11 +101,14 @@ handleDialogOpen(i){
 
 list(buffer){
   var i=0;
+if(this.state.isDataLoaded)
+  {
   if(this.state.users.length === 0){
     buffer.push(<p className="name" key={new Date()}><span className="messageStyle">
                  You are all caught up,You Don't Have Any Announcements Yet !!!
                 </span></p>)
   }
+  else{
   for (i=0;i<this.state.users.length;i++){
     var date = new Date(parseInt(this.state.announcementIds[i].split('-')[7],10))
   if(this.state.useremails[i] === this.props.loggedinuser)
@@ -140,6 +145,24 @@ else{
              )
 }
 }
+}
+}
+else{
+  buffer.push(<Grid fluid className="RefreshIndicator">
+  <Row center="xs">
+  <Col xs>
+    <RefreshIndicator
+       size={50}
+       left={45}
+       top={0}
+       loadingColor="#FF9800"
+       status="loading"
+       className="refresh"
+      />
+  </Col>
+  </Row>
+  </Grid>)
+}
   return buffer
 }
 
@@ -172,7 +195,8 @@ populateData(pageNumber){
                messages: newmessage,
                useremails: newuseremails,
                announcementIds : newannouncementIds,
-               total: response.totalPages
+               total: response.totalPages,
+               isDataLoaded: true,
          })
         })
 }

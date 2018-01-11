@@ -19,6 +19,7 @@ import TheoryAssignment from './teacher/AssignmentContent'
 import ProgrammingAssignment from './teacher/ProgrammingAssignment'
 import Submissions from './profile/Submissions'
 import Editor from './codeeditor/Editor'
+import ReportIssue from './issues/report-issue'
 
 export const Body =(props) => {
     return(
@@ -30,6 +31,7 @@ export const Body =(props) => {
     <Route exact path='/announcements' render={()=>(<AnouncementsBoard {...props}/>)} />
     <Route exact path='/timeline' render={()=>(<TimeLine {...props}/>)} />
     <Route exact path='/coachingcentres' render={() =>(<CoachingCentres {...props} />)} />
+    <Route exact path='/report/issue' render={() =>(<ReportIssue {...props} />)} />
     <Route exact path='/UserQuestions' render={() =>(<QuestionLayout {...props} />)} />
     <Route exact path='/teacher/:class' render={({match}) =>(<TeacherComponent {...props} class={match.params.class}/>)} />
     <Route exact path='/teacher/:class/create' render={({match}) =>(< TheoryAssignment {...props} class={match.params.class} email={match.params.email} />)} />

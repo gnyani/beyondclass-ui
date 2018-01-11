@@ -8,6 +8,7 @@ import NotificationsIcon from 'material-ui/svg-icons/social/notifications';
 import {Link} from 'react-router-dom';
 import {Toolbar, ToolbarGroup, ToolbarTitle} from 'material-ui/Toolbar';
 import Paper from 'material-ui/Paper';
+import BugReport from 'material-ui/svg-icons/action/bug-report'
 import CustomAvatar from '../styledcomponents/CustomAvatar.js'
 import {Media} from '../components/utils/Media'
 
@@ -40,6 +41,11 @@ export const NavAppBar = (props) => {
              <ToolbarTitle text="StudentAdda" style={{marginLeft:'0.5Vmax',fontSize:'1.8Vmax',color:'#ffffff'}}/>
            </ToolbarGroup>
            <ToolbarGroup>
+           <div style={{position: 'relative',top: '0.4em',left:'1.5em'}}>
+           <IconButton  tooltip="Report Issue" containerElement={<Link to="/report/issue" />} >
+             <BugReport color="black" />
+           </IconButton>
+           </div>
            <Badge
             badgeContent={props.notificationsCount}
             secondary={true}
@@ -72,6 +78,9 @@ else{
          <ToolbarTitle text="StudentAdda" style={{marginLeft:'0.5Vmax',fontSize:'1.8Vmax',color:'#ffffff'}}/>
        </ToolbarGroup>
        <ToolbarGroup>
+       <IconButton  tooltip="Report Issue" containerElement={<Link to="/report/issue" />} >
+         <BugReport color="black" />
+       </IconButton>
        <FlatButton  label="Logout" value="logout" style={{position:'relative',right:'15%'}} labelStyle={{color:"#FFFFFF",fontSize:'1.3Vmax'}} onTouchTap={props.logout}/>
        </ToolbarGroup>
      </Toolbar>
