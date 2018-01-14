@@ -25,7 +25,9 @@ constructor(){
    lastDates:[],
    questions:[],
    additionalComments: [],
+   assignmentType: [],
    expanded:[],
+   isDataLoaded: false,
   }
   this.listAssignments = this.listAssignments.bind(this)
 }
@@ -60,6 +62,7 @@ componentDidMount(){
       var newlastDates=[]
       var newquestions=[]
       var newadditionalComments=[]
+      var newassignmentType=[]
       for(let i=0; i<response.length;i++){
         newassignmentIds.push(response[i].assignmentid)
         newpropicUrls.push(response[i].propicurl)
@@ -67,7 +70,8 @@ componentDidMount(){
         newsubjects.push(response[i].subject)
         newlastDates.push(response[i].lastdate)
         newquestions.push(response[i].questions)
-        if(response[i].message.trim() !== '')
+        newassignmentType.push(response[i].assignmentType)
+        if( response[i].message !== null && response[i].message.trim() !== '')
         newadditionalComments.push('Additional Comments : '+response[i].message)
         else {
           newadditionalComments.push(response[i].message)
@@ -80,7 +84,9 @@ componentDidMount(){
         subjects: newsubjects,
         lastDates: newlastDates,
         questions: newquestions,
+        assignmentType: newassignmentType,
         additionalComments: newadditionalComments,
+        isDataLoaded: true,
       })
     })
 }
@@ -127,15 +133,19 @@ if(this.state.assignmentIds.length !== 0)
           <Col xs>
            <CardHeader
            className="cardHeader"
-             title={this.props.email}
+             title={this.state.assignmentIds[i].split('-')[6]}
              subtitle={"Created on "+createdDate.getDate()+"-"+(createdDate.getMonth()+1)+"-"+createdDate.getFullYear()+" at "+createdDate.getHours()+":"+createdDate.getMinutes()}
              avatar={this.state.propicUrls[i]}
            />
            </Col>
            </Row>
            </Grid>
+            <CardText style={{textAlign:"center"}}>
+            <p>{'AssignmentType : '+this.state.assignmentType[i]}</p>
+            </CardText>
            <CardTitle style={{textAlign:"center"}} title={this.state.subjects[i]} subtitle={"last date :"+lastDate.getDate()+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()}  />
            <CardText style={{textAlign:"center"}}>
+
            <p>{this.state.additionalComments[i]}</p>
            </CardText>
            <CardText expandable={true} >
@@ -164,8 +174,10 @@ if(this.state.assignmentIds.length !== 0)
       </Grid>
   )
 }
-}else{
+}else if(this.state.assignmentIds.length === 0 && this.state.isDataLoaded === true){
   buffer.push(<p className="paragraph" key={1} >You are all caught up !!!</p>)
+}else{
+  buffer.push(<p className="paragraph" key={1}> Loading Assignments .... </p>)
 }
 return buffer;
 }

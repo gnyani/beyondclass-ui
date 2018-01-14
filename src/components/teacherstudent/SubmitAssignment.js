@@ -9,6 +9,9 @@ import DisplayAssignmentQuestions from './DisplayAssignmentQuestions.js'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import IdleTimer from 'react-idle-timer'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
+import RenderProgrammingAssignment from './RenderProgrammingAssignment'
 import Save from 'material-ui/svg-icons/content/save'
 import Send from 'material-ui/svg-icons/content/send'
 
@@ -33,6 +36,8 @@ constructor(){
      remaining: null,
      isIdle: false,
      totalActiveTime: null,
+     assignmentType: '',
+     confirmSubmitDialog: false,
   }
      this.handleAnswerChange = this.handleAnswerChange.bind(this);
      this.saveOrSubmit = this.saveOrSubmit.bind(this);
@@ -49,7 +54,7 @@ saveOrSubmit(option){
     notify.show("please attempt atlease one answer","warning")
   }
 }
-saveAssignment(){
+saveAssignment(option){
   fetch('http://'+properties.getHostName+':8080/assignments/student/save', {
          method: 'POST',
          headers: {
@@ -65,6 +70,8 @@ saveAssignment(){
       })
     }).then(response => {
       if(response.status === 200){
+        if(option === 'autosave' )
+        notify.show("Your work is auto saved","success")
         notify.show('Your work is saved,you can come back anytime here to continue',"success")
       }else if(response.status === 302){
         this.context.router.history.push('/')
@@ -100,7 +107,6 @@ submitAssignment(){
 }
 isValidForSaveOrSubmit = () => {
   var flag = false
-  console.log('answers are' +this.state.answers)
   for(let i=0 ; i < this.state.answers.length ; i++)
   {
     let answer = this.state.answers[i].trim()
@@ -109,6 +115,17 @@ isValidForSaveOrSubmit = () => {
     }
   }
   return flag
+}
+
+handleDialogOpen = () => {
+  this.setState({
+    confirmSubmitDialog: true,
+  })
+}
+handleClose = () => {
+  this.setState({
+    confirmSubmitDialog: false,
+  })
 }
 
 handleAnswerChange(i,event) {
@@ -142,11 +159,13 @@ handleAnswerChange(i,event) {
          this.setState({
            questions: response.questions,
            answers: response.answers,
+           assignmentType: response.assignmentType,
            totalActiveTime: response.timespent,
          })
        }else{
          this.setState({
            questions: response.questions,
+           assignmentType: response.assignmentType,
          })
        }
        })
@@ -156,8 +175,15 @@ this._interval = setInterval(() => {
   this.setState({
     totalActiveTime: this.state.totalActiveTime + 1000
   });
-}, 1000);
+  if(this.state.totalActiveTime % 30000 === 0 && this.state.assignmentType === 'THEORY')
+  {
+    this.saveAssignment('autosave')
+  }
+ }, 1000);
+
 }
+
+
 componentWillUnmount() {
     clearInterval(this._interval);
 }
@@ -167,11 +193,28 @@ _onActive = () => {
  }
 
  _onIdle = () => {
-   this.setState({ isIdle: true });
+   this.setState({
+     isIdle: true,
+    });
  }
 
 
   render(){
+
+    const actions = [
+      <FlatButton
+        label="Submit"
+        primary={true}
+        onTouchTap={this.saveOrSubmit.bind(this,'submit')}
+      />,
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />]
+
+    if(this.state.assignmentType === 'THEORY')
+    {
     return(
       <StayVisible
       {...this.props}>
@@ -189,13 +232,23 @@ _onActive = () => {
       <RaisedButton label="Save" primary = {true} icon={<Save />} onClick={this.saveOrSubmit.bind(this,'save')}/>
       </Col>
       <Col lg={2}>
-      <RaisedButton label="Submit" primary = {true} icon={<Send />} onClick={this.saveOrSubmit.bind(this,'submit')}/>
+      <RaisedButton label="Submit" primary = {true} icon={<Send />} onClick={this.handleDialogOpen}/>
       </Col>
       </Row>
       </Grid>
       </Col>
       </Row>
       </Grid>
+      <Dialog
+            title="Are you sure you want to submit this assignment ?"
+            modal={false}
+            actions={actions}
+            open={this.state.confirmSubmitDialog}
+            autoScrollBodyContent={true}
+            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            onRequestClose={this.handleClose}
+          >
+      </Dialog>
 
   <IdleTimer
   ref="idleTimer"
@@ -210,7 +263,27 @@ _onActive = () => {
  <br /><br />
       </StayVisible>
     )
-  }
+}
+
+else if(this.state.assignmentType === 'CODING')
+{
+    return(
+      <StayVisible
+      {...this.props}>
+      <div className="ProgrammingAssignment">
+        <p className="paragraph">Submit Assignment</p>
+      <Divider />
+      <RenderProgrammingAssignment  assignmentid={this.props.assignmentid} email={this.props.loggedinuser}
+      questions={this.state.questions} answers={this.state.answers} handleAnswerChange={this.handleAnswerChange}/>
+      </div>
+      </StayVisible>
+    )
+}else{
+  return(<p> still loading</p>)
+}
+
+}
+
 }
 SubmitAssignment.contextTypes = {
     router: PropTypes.object

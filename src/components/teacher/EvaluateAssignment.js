@@ -15,7 +15,9 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import RichTextEditorReadOnly from '../teacher/RichTextEditorReadOnly'
 import { EditorState,convertFromRaw } from 'draft-js'
+import DisplayProgrammingAssignment from './DisplayProgrammingAssignment'
 import Dialog from 'material-ui/Dialog'
+import RenderCodingAssignmentResult from '../codeeditor/RenderCodingAssignmentResult'
 
 var properties = require('../properties.json');
 
@@ -74,6 +76,8 @@ class EvaluateAssignment extends Component{
      timespent: '',
      insight1: '',
      insight2: '',
+     assignmentType: '',
+     mode: '',
      isDataLoaded: false,
      acceptDialog: false,
      rejectDialog: false,
@@ -109,7 +113,10 @@ class EvaluateAssignment extends Component{
            this.setState({
              questions:response.createAssignment.questions,
              answers:response.submitAssignment.answers,
+             assignmentType: response.createAssignment.assignmentType,
              timespent: response.timespent,
+             codingAssignmentResponse : response.submitAssignment.codingAssignmentResponse,
+             mode: response.submitAssignment.mode,
              isDataLoaded: true,
            })
          })
@@ -207,25 +214,40 @@ class EvaluateAssignment extends Component{
 
   renderInsights(){
     var buffer = []
-    if(this.props.userrole === 'teacher'){
+    var response = this.state.codingAssignmentResponse
+    if(this.props.userrole === 'teacher' && this.state.assignmentType==='THEORY'){
       buffer.push(
-        <Grid fluid>
+        <Grid fluid key={1}>
         <Row around="xs">
         <Col xs={11} sm={11} md={9} lg={8}>
-        <div className="insightsBorder"><h4>Some Insights</h4>
+                <div >
+                <fieldset>
+                  <legend >Summary</legend>
                   <p> Time Spent : {this.state.timespent} </p>
                   <p>{this.state.insight1}</p>
                   <p>{this.state.insight2}</p>
+                  </fieldset>
                  </div>
         </Col>
          </Row>
        </Grid>  )
+    }else if(this.props.userrole === 'teacher' && this.state.assignmentType==='CODING'){
+      console.log("response status is" + response.codingAssignmentStatus)
+      buffer.push(
+        <div key={1}>
+        <RenderCodingAssignmentResult assignmentStatus={response.codingAssignmentStatus} expected={response.expected}
+         actual={response.actual} errorMessage={response.errorMessage}
+         failedCase={response.failedCase} passCount={response.passCount} totalCount={response.totalCount}/>
+         </div>
+      )
     }
     return buffer
   }
 
   renderAssignment(){
    var buffer = []
+if(this.state.assignmentType ===  'THEORY')
+{
    for(let i=0; i<this.state.questions.length;i++){
      buffer.push(
        <Grid fluid key={i}>
@@ -243,6 +265,14 @@ class EvaluateAssignment extends Component{
       </Grid>
     )
    }
+ }else{
+   buffer.push(
+     <div key={1}>
+     <DisplayProgrammingAssignment mode={this.state.mode} questions={this.state.questions}
+     source={this.state.answers}/>
+     </div>
+   )
+ }
    return buffer;
   }
 
@@ -254,7 +284,7 @@ class EvaluateAssignment extends Component{
     var buffer=[]
     if(this.props.userrole === 'teacher')
     buffer.push(
-      <div>
+      <div key={1}>
       <Grid fluid  >
       <Row center="xs" middle="xs">
       <Col xs={4} sm={4} md={4} lg={1}>
@@ -262,13 +292,13 @@ class EvaluateAssignment extends Component{
       </Col>
       <Col xs={6} sm={6} md={6} lg={2}>
       <NumericInput style={numberstyle} value={this.state.assignmentMarks} precision={1} size={8} step={0.5}
-      min={0} max={5} mobile={false} onChange={this.handleMarksChange.bind(this)}
+      min={1} max={5} mobile={false} onChange={this.handleMarksChange.bind(this)}
     />
     </Col>
       </Row>
       </Grid>
       <br /><br />
-      <Grid fluid key={new Date()}>
+      <Grid fluid >
           <Row center="xs">
           <Col xs={11} sm={11} md={6} lg={4}>
           <FlatButton className="button" label="Accept" icon={<CheckIcon color="white"/>} onClick={this.openAcceptAssignmentDialog.bind(this)}/>
@@ -277,15 +307,17 @@ class EvaluateAssignment extends Component{
           <FlatButton className="button" label="Reject" icon={<RejectIcon color="white"/>} onClick={this.openRejectAssignmentDialog.bind(this)}/>
           </Col>
           </Row>
+          <br /><br />
           </Grid>
         </div>)
     else {
       buffer.push(
-        <Grid fluid>
+        <Grid fluid key={1}>
         <Row center="xs">
         <Col xs={9} sm={9} md={6} lg={5}>
         <FlatButton key={1} label="Go Back" labelStyle={{textTransform: "none"}}  alt="loading" icon={<NavigationArrowBack color="white"/>}
                  className="button" onClick={()=>{this.context.router.history.goBack()}} />
+        <br /><br />
         </Col>
         </Row>
         </Grid>)

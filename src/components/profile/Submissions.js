@@ -98,7 +98,7 @@ componentDidMount(){
             <td>REJECTED</td>
             <td>{this.state.rejected}</td>
           </tr>
-        </tbody>  
+        </tbody>
           </table>
       </CardText>
       </Card>

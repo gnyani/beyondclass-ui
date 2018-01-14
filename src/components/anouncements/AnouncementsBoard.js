@@ -13,6 +13,7 @@ import {Media} from '../utils/Media'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import Delete from 'material-ui/svg-icons/action/delete'
+import RefreshIndicator from 'material-ui/RefreshIndicator'
 
 var properties = require('../properties.json');
 
@@ -41,7 +42,8 @@ class AnouncementsBoard extends Component{
       display: 7,
       number: 1,
       currentIndex: 0,
-      buttonDisabled: false
+      buttonDisabled: false,
+      isDataLoaded: false,
     }
     this.list = this.list.bind(this);
     this.handleClose = this.handleClose.bind(this)
@@ -99,19 +101,25 @@ handleDialogOpen(i){
 
 list(buffer){
   var i=0;
+if(this.state.isDataLoaded)
+  {
   if(this.state.users.length === 0){
     buffer.push(<p className="name" key={new Date()}><span className="messageStyle">
                  You are all caught up,You Don't Have Any Announcements Yet !!!
                 </span></p>)
   }
+  else{
   for (i=0;i<this.state.users.length;i++){
+    var date = new Date(parseInt(this.state.announcementIds[i].split('-')[7],10))
   if(this.state.useremails[i] === this.props.loggedinuser)
   {
   buffer.push( <Grid fluid key={i}  className="nogutter">
                <Row middle="xs">
                <Col xs={10} sm={10} md={10} lg={10}>
                <li >
-                <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span> <span className="messageStyle">{this.state.messages[i]}</span>
+                <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span>
+                <span className="messageStyle">{this.state.messages[i]}</span>
+                <span className="dateStyle">{" "+date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}</span>
                 </p></li>
                 </Col>
                <Col xs={2} md={2} sm={2}lg={2}>
@@ -126,13 +134,34 @@ else{
                <Row >
                <Col xs={12} sm={12} md={12} lg={12}>
                <li>
-                <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span> <span className="messageStyle">{this.state.messages[i]}</span> </p>
+                <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span>
+                 <span className="messageStyle">{this.state.messages[i]}</span>
+                 <span className="dateStyle">{" "+date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}</span>
+                 </p>
                 </li>
                 </Col>
                 </Row>
                 </Grid>
              )
 }
+}
+}
+}
+else{
+  buffer.push(<Grid fluid className="RefreshIndicator" key={1}>
+  <Row center="xs">
+  <Col xs>
+    <RefreshIndicator
+       size={50}
+       left={45}
+       top={0}
+       loadingColor="#FF9800"
+       status="loading"
+       className="refresh"
+      />
+  </Col>
+  </Row>
+  </Grid>)
 }
   return buffer
 }
@@ -166,7 +195,8 @@ populateData(pageNumber){
                messages: newmessage,
                useremails: newuseremails,
                announcementIds : newannouncementIds,
-               total: response.totalPages
+               total: response.totalPages,
+               isDataLoaded: true,
          })
         })
 }
@@ -257,7 +287,8 @@ return(
     </Col>
     </Row>
     </Grid>
-    <br /><br />
+    <br />
+    <p className="note">Note: All your announcements will be expired after 7 days</p>
     <Pagination
     total = { this.state.total }
     current = { this.state.number }
@@ -286,6 +317,7 @@ return(
            onRequestClose={this.handleClose}
          >
      </Dialog>
+     <br /><br />
 </div>
 </StayVisible>
 );

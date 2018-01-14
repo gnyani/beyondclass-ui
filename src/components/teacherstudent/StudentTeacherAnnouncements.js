@@ -12,20 +12,26 @@ class StudentTeacherAnnouncements extends Component{
     this.state={
       announcements: [],
       teachernames: [],
+      announcementIds: [],
     }
   }
 
   list(buffer){
+
     if(this.state.announcements.length === 0)
     buffer.push(<p key={new Date()} className="messageStyle" style={{textAlign:"center"}}>You are all caught up, you don't have any announcements yet</p>)
     else{
     for (let i=0;i<this.state.announcements.length;i++){
+        var date = new Date(parseInt(this.state.announcementIds[i].split('-')[6],10))
       buffer.push(
-                    <Grid fluid key={i} className="announcements nogutter">
+                    <Grid fluid key={i} className="nogutter">
                     <Row >
                     <Col xs={12} sm={12} md={12} lg={12}>
                     <li >
-                    <p className="name"> <span className="fontStyle">{this.state.teachernames[i]} </span>: <span className="messageStyle">{this.state.announcements[i]}</span> </p>
+                    <p className="name"> <span className="fontStyle">{this.state.teachernames[i]}: </span>
+                    <span className="messageStyle">{this.state.announcements[i]}</span>
+                    <span className="dateStyle">{" "+date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()} </span>
+                    </p>
                     </li>
                     </Col>
                     </Row>
@@ -74,8 +80,8 @@ class StudentTeacherAnnouncements extends Component{
     return(
       <div className="announcements">
       <h2 className="paragraph">Announcements from your teachers</h2>
-      <div  className="container page">
-         <ul>{this.list(buffer)}</ul>
+      <div  className="container">
+         <ul style={{color:  '#cccccc'}}>{this.list(buffer)}</ul>
        </div>
       </div>
     )

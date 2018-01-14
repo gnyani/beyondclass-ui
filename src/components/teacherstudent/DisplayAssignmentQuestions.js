@@ -49,7 +49,7 @@ displayQuestions(){
   render(){
     return(
     <div className="DisplayAssignmentQuestions">
-    <ol> {this.displayQuestions()}</ol>
+    <ol > {this.displayQuestions()}</ol>
     </div>
     )
   }

@@ -7,6 +7,7 @@ import UnauthorizedPage from '../UnauthorizedPage.js'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import Divider from 'material-ui/Divider'
+import TextField from 'material-ui/TextField'
 import SubjectAutoCompleteForNotesAndAssign from '../utils/SubjectAutoCompleteForNotesAndAssign.js'
 
 var properties = require('../properties.json');
@@ -39,7 +40,8 @@ class NotesUpload extends Component{
       filebase64: '',
       imagePreviewUrl: '',
       buttonDisabled: false,
-      response: ''
+      response: '',
+      comment: '',
     };
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
@@ -52,12 +54,18 @@ class NotesUpload extends Component{
     })
   }
 
+handleCommentChange = (event) => {
+  this.setState({
+    comment: event.target.value,
+  })
+}
+
 
   _handleSubmit(e) {
     e.preventDefault();
-    if(this.state.subject === 1 || this.state.file === '')
+    if(this.state.subject === 1 || this.state.file === '' || this.state.comment.trim() === '')
     {
-    notify.show("please select a subject and choose a file")
+    notify.show("please select a subject, add a comment and choose a file","warning")
     }
     else{
       this.setState({ buttonDisabled: true });
@@ -71,6 +79,7 @@ class NotesUpload extends Component{
            body: JSON.stringify({
              subject: this.state.subject,
              file : this.state.filebase64,
+             comment: this.state.comment,
           })
          }).then(response => {
            if(response.status === 201)
@@ -88,7 +97,8 @@ class NotesUpload extends Component{
              response : response,
              buttonDisabled  : false,
              imagePreviewUrl: '',
-             file: ''
+             file: '',
+             comment: '',
            })
            notify.show("file upload successful","success")
          })
@@ -144,10 +154,24 @@ class NotesUpload extends Component{
         </Row>
         </Grid>
         <br />
-
+         <Grid fluid className="nogutter">
+         <Row center="xs">
+         <Col xs={12} sm={12} md={10} lg={8}>
+         <TextField
+         hintText="Add Some Comment to this Notes"
+         value = {this.state.comment}
+         onChange = {this.handleCommentChange}
+         multiLine={true}
+         rows={1}
+         rowsMax={4}
+         style={{width: '70%'}}
+         />
+         </Col>
+         </Row>
+         </Grid>
+         <br />
           <Grid fluid className="nogutter NotesUpload">
           <Row around="xs">
-
           <Col xs={12} sm={12} md={10} lg={8}>
           <form className="Position" onSubmit={this._handleSubmit}>
           <FlatButton type="submit" label="Upload File"  className="uploadbutton" icon={<FileFileUpload color="white"/>} disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />

@@ -10,8 +10,10 @@ import {List, ListItem} from 'material-ui/List'
 import IconButton from 'material-ui/IconButton'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
 import RejectIcon from 'material-ui/svg-icons/navigation/close'
+import Download from 'material-ui/svg-icons/file/file-download'
 import {Card} from 'material-ui/Card'
 import {Link} from 'react-router-dom'
+import FlatButton from 'material-ui/FlatButton'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import {transparent} from 'material-ui/styles/colors'
@@ -75,8 +77,34 @@ componentDidMount(){
         isDataLoaded: true,
       })
     })
-
 }
+
+nonZeroSubmissions = () => {
+  var buffer=[]
+    var src = 'http://'+properties.getHostName+':8080/assignments/generate/excel/'+this.props.assignmentid
+  if(this.state.numberOfStudentsSubmitted && this.state.numberOfStudentsSubmitted>0)
+  {
+ buffer.push(
+  <div key={1}>
+  <p className="paragraph">Submitted Students</p>
+  <br />
+  <Grid fluid>
+  <Row center="xs">
+  <Col xs>
+    <form method="post" action={src}>
+    <FlatButton type="submit" label="Download Reports" className="download" icon={<Download color="white"/>}/>
+    </form>
+  </Col>
+  </Row>
+  </Grid>
+  <br />
+  </div>)
+}else{
+  buffer.push(<p key={1} className="paragraph">No Submissions on this assignment yet</p>)
+}
+return buffer
+}
+
 
 renderListItems(){
   var buffer = []
@@ -95,6 +123,7 @@ renderListItems(){
                         >
                         <CheckIcon color="green" />
                         </IconButton>}
+    containerElement={<Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} />}
     secondaryText={<p>Submitted on {submittedDate.getDate()+"-"+(submittedDate.getMonth()+1)+"-"+submittedDate.getFullYear()+" at "+submittedDate.getHours()+":"+submittedDate.getMinutes()}</p>}
     />
     <Divider inset={true} />
@@ -111,6 +140,7 @@ else if(this.state.submittedStudents[i].status === 'REJECTED')
                            >
                            <RejectIcon color="red" />
                            </IconButton>}
+          containerElement={<Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} />}
        secondaryText={<p>Submitted on {submittedDate.getDate()+"-"+(submittedDate.getMonth()+1)+"-"+submittedDate.getFullYear()+" at "+submittedDate.getHours()+":"+submittedDate.getMinutes()}</p>}
        />
        <Divider inset={true} />
@@ -122,7 +152,7 @@ else if(this.state.submittedStudents[i].status === 'REJECTED')
          leftAvatar={<Avatar src={this.state.submittedStudents[i].propicurl} />}
          rightAvatar={<Avatar color='purple' backgroundColor={transparent}
             > {this.state.submittedStudents[i].marksGiven} </Avatar>}
-
+         containerElement={<Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} />}
          secondaryText={<p>Submitted on {submittedDate.getDate()+"-"+(submittedDate.getMonth()+1)+"-"+submittedDate.getFullYear()+" at "+submittedDate.getHours()+":"+submittedDate.getMinutes()}</p>}
 
          />
@@ -204,7 +234,7 @@ return(
       <br />
       <Divider />
       <div className="Reports">
-      <p className="paragraph">Submitted Students</p>
+      {this.nonZeroSubmissions()}
       <Grid fluid className="nogutter">
       <Row around="xs">
       <Col xs={11} sm={11} md={9} lg={8}>

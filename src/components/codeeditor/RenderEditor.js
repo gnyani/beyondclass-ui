@@ -47,8 +47,7 @@ class RenderEditor extends Component {
   render() {
     return (
       <div >
-
-       <Grid fluid>
+       <Grid fluid className="nogutter">
        <Row center="xs" >
        <Col xs>
         <SelectField

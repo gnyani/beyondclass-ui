@@ -45,7 +45,7 @@ class NotesLayout extends Component{
           </div>
         </Tab>
         <Tab label="View Notes" value="View Notes" buttonStyle={{backgroundColor: '#4d86cf'}} icon={<ActionViewList />}>
-          <NotesList  userrole={this.props.userrole} branch={this.props.branch} />
+          <NotesList  loggedinuser={this.props.loggedinuser} userrole={this.props.userrole} branch={this.props.branch} />
         </Tab>
       </Tabs>
       </div>
