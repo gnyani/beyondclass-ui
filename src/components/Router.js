@@ -18,6 +18,7 @@ class Router extends Component {
     <Route exact path='/announcements' component={DashboardLayout} />
     <Route exact path='/timeline' component={DashboardLayout} />
     <Route exact path='/coachingcentres' component={DashboardLayout} />
+    <Route exact path='/report/issue' component={DashboardLayout} />
     <Route exact path='/UserQuestions' component={DashboardLayout} />
     <Route exact path='/teacher/:class' component={DashboardLayout} />
     <Route exact path='/teacher/:class/create' component={DashboardLayout} />

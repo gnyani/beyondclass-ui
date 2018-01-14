@@ -82,13 +82,13 @@ submitCreateAssignment(){
          lastdate: this.state.controlledDate,
          message: this.state.message,
          questions: this.state.questions,
+         assignmentType: 'THEORY'
       })
     }).then(response =>{
       if(response.status === 200)
       {
       notify.show("Assignment Created successfully","success")
       this.setState({
-        createAssignmentDialog: false,
         shouldRender: new Date(),
       })
       this.context.router.history.goBack()
@@ -124,13 +124,13 @@ addQuestion = () => {
   var newquestions = this.state.questions.slice()
   var newquestionEditorStates = this.state.questionsEditoStates.slice()
   var question = this.state.questionValue
+
   if(question.trim() === "")
-  notify.show("You cannot add empty Question","warning")
+    notify.show("You cannot add empty Question","warning")
   else
   {
   newquestions.push(this.state.contentState)
   newquestionEditorStates.push(this.state.editorState)
-  }
   this.setState({
     questions: newquestions,
     questionsEditoStates: newquestionEditorStates,
@@ -138,6 +138,7 @@ addQuestion = () => {
     editorState:EditorState.createEmpty(),
     showTextField: false,
   })
+  }
 }
 
 
@@ -169,9 +170,15 @@ handleMessageChange = (event) => {
 }
 
 handleShowTextField = () => {
+
+  if(this.state.showTextField === true)
+   {
+  this.addQuestion()
+  }else{
   this.setState({
     showTextField: true,
   })
+}
 }
 
 displayQuestions(){
@@ -182,7 +189,8 @@ displayQuestions(){
     <Grid fluid  key={i}>
     <Row start="xs">
     <Col xs={10} sm={10} md={11} lg={11}>
-    <li className="displayQuestions"><RichTextEditorReadOnly editorState={this.state.questionsEditoStates[i]} /></li>
+    <RichTextEditorReadOnly editorStyle={{borderStyle:'solid',borderRadius:'10',borderWidth:'0.6px'}}
+    editorState={this.state.questionsEditoStates[i]} />
     </Col>
     <Col xs={2} sm={2} md={1} lg={1}>
     <IconButton onClick={this.deleteQuestion.bind(this,i)}><Delete color="red" viewBox="0 0 20 20" /></IconButton>
@@ -225,7 +233,7 @@ renderTextField(){
       >
       <div className="TeacherAssignment">
       <Grid fluid>
-      <Row start="xs" bottom="xs">
+      <Row center="xs" bottom="xs">
       <Col xs>
       <SubjectAutoCompleteForNotesAndAssign branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} />
       </Col>
@@ -233,17 +241,19 @@ renderTextField(){
       <DatePicker hintText="Last Date" minDate={this.state.minDate} onChange={this.handleDateChange} />
       </Col>
       </Row>
-      <Row start="xs">
+      <Row center="xs">
       <Col xs>
       <TextField style={{width: '75%'}} hintText="Additional Comments" floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
       </Col>
       </Row>
       </Grid>
-      <ul>{this.displayQuestions()}</ul>
+      {this.displayQuestions()}
       <Grid fluid>
       <Row center="xs">
       <Col xs>
+      <br /><br />
       {this.renderTextField()}
+      <br /><br />
       <RaisedButton label="Add Question" primary={true} icon={<Add />} onClick={this.handleShowTextField} />
       <br /><br /><br />
       <RaisedButton label = "Submit" primary={true} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />

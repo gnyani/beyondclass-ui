@@ -7,10 +7,14 @@ import Add from 'material-ui/svg-icons/content/add'
 import RaisedButton from 'material-ui/RaisedButton'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import IconButton from 'material-ui/IconButton'
+import {notify} from 'react-notify-toast'
 import AddBox from 'material-ui/svg-icons/content/add-box'
+import CheckIcon from 'material-ui/svg-icons/navigation/check'
 import Delete from 'material-ui/svg-icons/action/delete'
 import {EditorState} from 'draft-js'
 import TestCases from './TestCases'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 const StayVisible = styled.div`
   position: relative;
@@ -20,6 +24,7 @@ const StayVisible = styled.div`
     margin-left: 0px;
   `}
 `
+var properties = require('../properties.json')
 
 class ProgrammingAssignment extends Component{
   constructor(){
@@ -29,6 +34,7 @@ class ProgrammingAssignment extends Component{
       minDate: new Date(),
       controlledDate: null,
       showTextFields: false,
+      questions: [],
       questionValue: '',
       input: '',
       output: '',
@@ -69,8 +75,11 @@ class ProgrammingAssignment extends Component{
      {
        text = text + blocks[i].text
      }
+     var questions =[]
+     questions.push(contentState)
      this.setState({
        contentState,
+       questions: questions,
        questionValue: text,
      });
   };
@@ -123,6 +132,49 @@ class ProgrammingAssignment extends Component{
     return buffer
   }
 
+  validateCreateAssignment = () => {
+    if(this.state.controlledDate === null)
+    notify.show("Please select last submission date","warning")
+    else if(this.state.questionValue.trim() === "")
+    notify.show("Please Type the Question","warning")
+    else if(this.state.inputs.length === 0)
+    notify.show("Please add atleast one test case","warning")
+    else {
+      this.submitCreateAssignment()
+    }
+  }
+
+  submitCreateAssignment = () => {
+    fetch('http://'+properties.getHostName+':8080/assignments/create', {
+           method: 'POST',
+           headers: {
+                 'mode': 'cors',
+                 'Content-Type': 'application/json'
+             },
+         credentials: 'include',
+         body: JSON.stringify({
+           email: this.props.loggedinuser,
+           batch : this.props.class,
+           lastdate: this.state.controlledDate,
+           questions: this.state.questions,
+           inputs: this.state.inputs,
+           outputs: this.state.outputs,
+           assignmentType: 'CODING'
+        })
+      }).then(response =>{
+        if(response.status === 200)
+        {
+        notify.show("Assignment Created successfully","success")
+        this.context.router.history.goBack()
+      }else if(response.status === 302){
+        this.context.router.history.push('/')
+      }else{
+        notify.show("Something went wrong","error")
+      }
+      })
+}
+
+
   renderTestCaseTabs(){
    var buffer=[]
    if(this.state.showTextFields){
@@ -174,13 +226,21 @@ class ProgrammingAssignment extends Component{
       {this.renderTestCaseTabs()}
       <br />
       <RaisedButton label="Add TestCase" primary={true} icon={<Add />} onClick={this.handleShowTextFields} />
+      <br />
+      <br />
+      <RaisedButton label="Submit" primary={true} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
       </Col>
       </Row>
       </Grid>
+      <br /><br />
       </div>
       </StayVisible>
     )
   }
 }
 
-export default ProgrammingAssignment
+ProgrammingAssignment.contextTypes = {
+    router: PropTypes.object
+};
+
+export default withRouter(ProgrammingAssignment)

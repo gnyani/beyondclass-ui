@@ -93,15 +93,6 @@ isActive(value){
               />
         </Link>
       </div>
-  {/*    <div className={this.isActive('entertainment')}>
-              <Link to="/entertainment" width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"entertainment")}>
-                <MenuItem primaryText={'Entertainment'}
-                  leftIcon={<AvMovie color={blue500} />}
-                  onClick={this.props.handleMobileToggle}
-                />
-              </Link>
-      </div>
-      <Divider />*/}
       <div className={this.isActive('codeeditor')}>
         <Link to='/codeeditor'  width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"codeeditor")} >
           <MenuItem
@@ -111,6 +102,15 @@ isActive(value){
           className="drawerFont"
           />
         </Link></div>
+        {/*    <div className={this.isActive('entertainment')}>
+                    <Link to="/entertainment" width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"entertainment")}>
+                      <MenuItem primaryText={'Entertainment'}
+                        leftIcon={<AvMovie color={blue500} />}
+                        onClick={this.props.handleMobileToggle}
+                      />
+                    </Link>
+            </div>
+            <Divider />
       <div  className={this.isActive('coachingcentres')}>
               <Link to="/coachingcentres" width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"coachingcentres")}>
                 <MenuItem primaryText={'Coaching-Centres'}
@@ -128,7 +128,7 @@ isActive(value){
                   onClick={this.props.handleMobileToggle}
                   className="drawerFont"
                   />
-                </Link></div>
+                </Link></div>*/} 
 
       </div>
     )

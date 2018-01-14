@@ -79,7 +79,7 @@ renderSubmittedAssignments(){
       }
     }
 
-  }else{
+  }else if(submissions.length === 0){
     buffer.push(<p className="paragraph">You did not submit any assignments till date </p>)
   }
   return buffer;
@@ -87,7 +87,7 @@ renderSubmittedAssignments(){
 
 
   render(){
-    if(this.props.submitAssignmentList.length !== 0)
+      if(this.props.submitAssignmentList)
     return(
      <div className="Reports">
      {this.renderSubmittedAssignments()}
