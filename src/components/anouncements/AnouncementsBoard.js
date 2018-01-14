@@ -148,7 +148,7 @@ else{
 }
 }
 else{
-  buffer.push(<Grid fluid className="RefreshIndicator">
+  buffer.push(<Grid fluid className="RefreshIndicator" key={1}>
   <Row center="xs">
   <Col xs>
     <RefreshIndicator
@@ -287,7 +287,8 @@ return(
     </Col>
     </Row>
     </Grid>
-    <br /><br />
+    <br />
+    <p className="note">Note: All your announcements will be expired after 7 days</p>
     <Pagination
     total = { this.state.total }
     current = { this.state.number }
@@ -316,6 +317,7 @@ return(
            onRequestClose={this.handleClose}
          >
      </Dialog>
+     <br /><br />
 </div>
 </StayVisible>
 );

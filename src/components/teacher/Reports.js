@@ -79,6 +79,32 @@ componentDidMount(){
     })
 }
 
+nonZeroSubmissions = () => {
+  var buffer=[]
+    var src = 'http://'+properties.getHostName+':8080/assignments/generate/excel/'+this.props.assignmentid
+  if(this.state.numberOfStudentsSubmitted && this.state.numberOfStudentsSubmitted>0)
+  {
+ buffer.push(
+  <div key={1}>
+  <p className="paragraph">Submitted Students</p>
+  <br />
+  <Grid fluid>
+  <Row center="xs">
+  <Col xs>
+    <form method="post" action={src}>
+    <FlatButton type="submit" label="Download Reports" className="download" icon={<Download color="white"/>}/>
+    </form>
+  </Col>
+  </Row>
+  </Grid>
+  <br />
+  </div>)
+}else{
+  buffer.push(<p key={1} className="paragraph">No Submissions on this assignment yet</p>)
+}
+return buffer
+}
+
 
 renderListItems(){
   var buffer = []
@@ -137,7 +163,6 @@ else if(this.state.submittedStudents[i].status === 'REJECTED')
   return buffer;
 }
   render(){
-    var src = 'http://'+properties.getHostName+':8080/assignments/generate/excel/'+this.props.assignmentid
 if(this.state.isDataLoaded)
 return(
       <StayVisible
@@ -209,18 +234,7 @@ return(
       <br />
       <Divider />
       <div className="Reports">
-      <p className="paragraph">Submitted Students</p>
-      <br />
-      <Grid fluid>
-      <Row center="xs">
-      <Col xs>
-        <form method="post" action={src}>
-        <FlatButton type="submit" label="Download Reports" className="download" icon={<Download color="white"/>}/>
-        </form>
-      </Col>
-      </Row>
-      </Grid>
-      <br />
+      {this.nonZeroSubmissions()}
       <Grid fluid className="nogutter">
       <Row around="xs">
       <Col xs={11} sm={11} md={9} lg={8}>

@@ -232,6 +232,7 @@ class ProgrammingAssignment extends Component{
       </Col>
       </Row>
       </Grid>
+      <br /><br />
       </div>
       </StayVisible>
     )

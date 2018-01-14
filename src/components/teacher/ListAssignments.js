@@ -181,11 +181,11 @@ if(this.state.assignmentIds.length !== 0)
           onExpandChange={this.handleConfirmDelete.bind(this,i)}
           expanded={this.state.expanded[i]}
           >
-
+          {/*Add this icon when you are ready for deleting,not a good option to delete since students submissions will be screwed
+            showExpandableButton={true}
+            closeIcon={<Delete color="red" viewBox="0 0 20 20"/>}
+          openIcon={<Delete color="red" viewBox="0 0 20 20"/>}*/}
            <CardHeader className="cardHeader"
-             showExpandableButton={true}
-             closeIcon={<Delete color="red" viewBox="0 0 20 20"/>}
-             openIcon={<Delete color="red" viewBox="0 0 20 20"/>}
              title={this.props.email}
              subtitle={"Created on "+createdDate.getDate()+"-"+(createdDate.getMonth()+1)+"-"+createdDate.getFullYear()+" at "+createdDate.getHours()+":"+createdDate.getMinutes()}
              avatar={this.state.propicUrls[i]}

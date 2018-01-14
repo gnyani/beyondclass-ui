@@ -10,8 +10,13 @@ import Compile from 'material-ui/svg-icons/file/cloud-upload'
 import Save from 'material-ui/svg-icons/content/save'
 import Send from 'material-ui/svg-icons/content/send'
 import Inputoutput from './Inputoutput'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
+import RenderCodingAssignmentResult from './RenderCodingAssignmentResult'
 import {HelloWorldTemplates} from './HelloWorldTemplates'
 import {editorModes,hackerRankLangNotation} from './Utils'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 
 var properties = require('../properties.json')
 
@@ -40,6 +45,7 @@ constructor(){
     message: '',
     buttonDisabled: false,
     saveButton : false,
+    submitButton: false,
     submissionStarted: false,
     hackerRankCodes: '',
     value: defaultValue,
@@ -53,6 +59,14 @@ constructor(){
     showPrintMargin: false,
     highlightActiveLine: true,
     checked: false,
+    assignmentStatus: '',
+    expected: '',
+    actual: '',
+    passCount: '',
+    totalCount: '',
+    failedCase: '',
+    errorMessage: '',
+    submitConfirm: false,
   }
   this.setTheme = this.setTheme.bind(this);
   this.setMode = this.setMode.bind(this);
@@ -65,6 +79,18 @@ constructor(){
 changeTestCases(event){
   this.setState({
     testcases: event.target.value,
+  })
+}
+
+handleSubmit = () => {
+  this.setState({
+    submitConfirm: true,
+  })
+}
+
+handleClose = () => {
+  this.setState({
+    submitConfirm: false,
   })
 }
 
@@ -150,7 +176,7 @@ compileAndRun = () => {
     submissionStarted: true,
   })
 
-  fetch('http://'+properties.getHostName+':8080/assignments/hackerrank/assignment/submit', {
+  fetch('http://'+properties.getHostName+':8080/assignments/hackerrank/assignment/compile', {
          method: 'POST',
          headers: {
                'mode': 'cors',
@@ -158,7 +184,7 @@ compileAndRun = () => {
            },
        credentials: 'include',
        body: JSON.stringify({
-         source: this.state.value,
+         source: this.state.source,
          lang: langcode,
          assignmentid: this.props.assignmentid,
       })
@@ -167,6 +193,13 @@ compileAndRun = () => {
       return response.json()
     }).then(response =>{
       this.setState({
+        assignmentStatus: response.codingAssignmentStatus,
+        expected: response.expected,
+        actual: response.actual,
+        passCount: response.passCount,
+        totalCount: response.totalCount,
+        failedCase: response.failedCase,
+        errorMessage: response.errorMessage,
         buttonDisabled: false
       })
     })
@@ -205,6 +238,43 @@ saveProgrammingAssignment = () => {
 
 }
 
+submitProgrammingAssignment = () => {
+  var codeslist = this.state.hackerRankCodes
+  var langcode = codeslist[this.state.languageValue]
+  this.setState({
+    submitButton: true,
+    submitConfirm: false,
+  })
+  fetch('http://'+properties.getHostName+':8080/assignments/hackerrank/assignment/submit', {
+         method: 'POST',
+         headers: {
+               'mode': 'cors',
+               'Content-Type': 'application/json'
+           },
+       credentials: 'include',
+       body: JSON.stringify({
+         source: this.state.source,
+         language: this.state.mode,
+         langcode: langcode,
+         tempassignmentid: this.props.assignmentid,
+         theme: this.state.theme,
+         email: this.props.email
+      })
+    }).then(response => {
+      if(response.status === 200){
+        notify.show("Assignment Submitted successfully","success")
+        this.context.router.history.goBack()
+        return response.text()
+      }else{
+        notify.show("Sorry something went wrong please try again","error")
+      }
+    }).then(response =>{
+      this.setState({
+        submitButton : false
+      })
+    })
+}
+
 componentDidMount(){
   fetch('http://'+properties.getHostName+':8080/assignments/hackerrank/languages', {
           credentials: 'include',
@@ -240,12 +310,13 @@ if(this.props.state==="Assignment"){
        var mode = response.language ? response.language : this.state.mode
        var theme = response.theme ? response.theme : this.state.theme
        this.setState({
+         languageValue: mode,
          mode: mode,
          source: source,
          theme: theme,
        })
      })
-  }   
+  }
 }
 showInputTextArea(){
   var buffer = []
@@ -295,7 +366,7 @@ else if(this.props.state==="Assignment"){
 var language = this.getKeyByValue(editorModes,this.state.mode)
 
   buffer.push(
-    <div >
+    <div key={1}>
     <RenderEditor value={this.state.source} theme={this.state.theme} mode={this.state.mode} fontSize={this.state.fontSize}
                  showGutter={this.state.showGutter} showPrintMargin={this.state.showPrintMargin} highlightActiveLine={this.state.highlightActiveLine}
                  setTheme={this.setTheme} setMode={this.setMode} language={language}  onChange={this.onChange}/>
@@ -312,7 +383,7 @@ var language = this.getKeyByValue(editorModes,this.state.mode)
     <RaisedButton label="Save" primary = {true} icon={<Save />} disabled={this.state.saveButton} onClick={this.saveProgrammingAssignment}/>
     </Col>
     <Col xs>
-    <RaisedButton label="Submit" primary = {true} icon={<Send />} />
+    <RaisedButton label="Submit" primary = {true} icon={<Send />} disabled={this.state.submitButton} onClick={this.handleSubmit}/>
     </Col>
     </Row>
     </Grid>
@@ -320,6 +391,9 @@ var language = this.getKeyByValue(editorModes,this.state.mode)
     </Row>
     </Grid>
     <br /><br/><br />
+    <RenderCodingAssignmentResult assignmentStatus={this.state.assignmentStatus} expected={this.state.expected}
+     actual={this.state.actual} errorMessage={this.state.errorMessage}
+     failedCase={this.state.failedCase} passCount={this.state.passCount} totalCount={this.state.totalCount}/>
     </div>
   )
 }
@@ -328,15 +402,40 @@ return buffer
 
 
   render(){
+    const actions = [
+      <FlatButton
+        label="Confirm"
+        primary={true}
+        onTouchTap={this.submitProgrammingAssignment}
+      />,
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />]
+
     return(
       <StayVisible
       {...this.props}
       >
 
       {this.showCheckBoxAndCompile()}
+      <Dialog
+            title="Are you sure you want to submit this assignment ?"
+            modal={false}
+            actions={actions}
+            open={this.state.submitConfirm}
+            autoScrollBodyContent={true}
+            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            onRequestClose={this.handleClose}
+          >
+      </Dialog>
 
     </StayVisible>)
   }
 }
+Editor.contextTypes = {
+    router: PropTypes.object
+};
 
-export default Editor
+export default withRouter(Editor)

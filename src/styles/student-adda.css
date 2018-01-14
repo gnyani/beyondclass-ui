@@ -43,6 +43,8 @@ tr:nth-child(even) {background-color: #dddddd;}
 
 .announcements .paragraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
                font-size: 4vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
+.announcements .note{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: lighter;
+               font-size: 2.5vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
 
 .announcements .deleteSpan{float:right; margin-right: 1.5em;}
 .input{ float: left !important;margin-left: 10%;width: 65% !important;border: 0px !important;padding: 5px 0px !important;margin-bottom: 20px !important;}
@@ -167,7 +169,14 @@ width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 
 .report-issue .heading{padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
                font-size: 3.5vmin;letter-spacing: 0.06vmin;color: rgb(162,35,142);}
 .report-issue .submit{background-color: #2196F3 !important;color: white!important;border-radius: 1vmax!important;}
-.report-issue .image{width:60%;height: 60%;text-align: center;}         
+.report-issue .image{width:60%;height: 60%;text-align: center;}
+.renderCodingAssignment .positionSummary{width: 70%;margin-left: 15%}
+.renderCodingAssignment .summaryParagraph{text-align: left;font-family: Helvetica Neue,Helvetica,Arial,sans-serif; }
+legend {
+    text-align: left;
+    font-weight: bold;
+    font-size: 3vmin;
+}
 /*.MarksIndicator .wrap{background: #E2E2E2 !important; box-shadow: 0 0 1px 1px #fff inset , 1px 1px 5px -1px #000 !important; padding: 2px 2.26ex 2px 2px !important;
             border-radius: 6px 3px 3px 6px !important;font-size: 50 !important}
 .MarksIndicator .input{border-radius: 4px 2px 2px 4px !important;color: #988869 !important;padding: 0.1ex 1ex !important;

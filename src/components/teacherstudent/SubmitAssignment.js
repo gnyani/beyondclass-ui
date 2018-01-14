@@ -70,7 +70,7 @@ saveAssignment(option){
       })
     }).then(response => {
       if(response.status === 200){
-        if(option === 'autosave')
+        if(option === 'autosave' )
         notify.show("Your work is auto saved","success")
         notify.show('Your work is saved,you can come back anytime here to continue',"success")
       }else if(response.status === 302){
@@ -175,7 +175,7 @@ this._interval = setInterval(() => {
   this.setState({
     totalActiveTime: this.state.totalActiveTime + 1000
   });
-  if(this.state.totalActiveTime % 30000 === 0)
+  if(this.state.totalActiveTime % 30000 === 0 && this.state.assignmentType === 'THEORY')
   {
     this.saveAssignment('autosave')
   }
@@ -240,7 +240,7 @@ _onActive = () => {
       </Row>
       </Grid>
       <Dialog
-            title="Are you sure you want to Submit this assignment"
+            title="Are you sure you want to submit this assignment ?"
             modal={false}
             actions={actions}
             open={this.state.confirmSubmitDialog}
