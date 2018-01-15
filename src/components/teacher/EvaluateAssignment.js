@@ -78,6 +78,8 @@ class EvaluateAssignment extends Component{
      insight2: '',
      assignmentType: '',
      mode: '',
+     inputs: [],
+     outputs: [],
      isDataLoaded: false,
      acceptDialog: false,
      rejectDialog: false,
@@ -104,7 +106,7 @@ class EvaluateAssignment extends Component{
            if(response.status===200){
              return response.json();
            }else if(response.status === 302){
-             this.context.router.history.push('/')
+              window.location.reload()
            }else{
              notify.show('Sorry something Went wrong',"error")
            }
@@ -115,6 +117,8 @@ class EvaluateAssignment extends Component{
              answers:response.submitAssignment.answers,
              assignmentType: response.createAssignment.assignmentType,
              timespent: response.timespent,
+             inputs: response.createAssignment.inputs,
+             outputs: response.createAssignment.outputs,
              codingAssignmentResponse : response.submitAssignment.codingAssignmentResponse,
              mode: response.submitAssignment.mode,
              isDataLoaded: true,
@@ -127,6 +131,8 @@ class EvaluateAssignment extends Component{
        }).then(response => {
          if(response.status === 200)
          return response.json()
+         else if(response.status === 302)
+          window.location.reload()
        }).then( response => {
          var insight1 = (response.insight1 !== null ? response.insight1 : '' )
          var insight2 = (response.insight2 !== null ? response.insight2 : '' )
@@ -153,7 +159,7 @@ class EvaluateAssignment extends Component{
          {notify.show("Assignment Evaluated Successfully","success")
          this.context.router.history.goBack()
        }else if(response.status === 302){
-         this.context.router.history.push('/')
+          window.location.reload()
        }
          else {
            notify.show("Sorry Something Went Wrong","error")
@@ -185,7 +191,7 @@ class EvaluateAssignment extends Component{
          {notify.show("Assignment Evaluated Successfully","success")
          this.context.router.history.goBack()
        }else if(response.status === 302){
-         this.context.router.history.push('/')
+         window.location.reload()
        }
          else {
            notify.show("Sorry Something Went Wrong","error")
@@ -269,7 +275,7 @@ if(this.state.assignmentType ===  'THEORY')
    buffer.push(
      <div key={1}>
      <DisplayProgrammingAssignment mode={this.state.mode} questions={this.state.questions}
-     source={this.state.answers}/>
+     source={this.state.answers} inputs={this.state.inputs} outputs={this.state.outputs}/>
      </div>
    )
  }

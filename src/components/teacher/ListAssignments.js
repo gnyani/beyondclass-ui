@@ -13,6 +13,7 @@ import PropTypes from 'prop-types'
 import RichTextEditorReadOnly from './RichTextEditorReadOnly'
 import { EditorState,convertFromRaw } from 'draft-js'
 import {Card, CardActions,CardText,CardHeader, CardTitle} from 'material-ui/Card'
+import RefreshIndicator from 'material-ui/RefreshIndicator'
 
 
 var properties = require('../properties.json');
@@ -31,6 +32,7 @@ constructor(){
    expanded:[],
    assignmentType: [],
    deleteConfirm: false,
+   isDataLoaded: false,
    index: '',
   }
   this.listAssignments = this.listAssignments.bind(this)
@@ -65,7 +67,7 @@ componentDidMount(){
           additionalComments: [],
         })
       }else if(response.status === 302){
-        this.context.router.history.push('/')
+         window.location.reload()
       }
       else{
         notify.show("Failed to Load Assignments","Error")
@@ -79,6 +81,7 @@ componentDidMount(){
       var newquestions=[]
       var newadditionalComments=[]
       var newassignmentType=[]
+      if(response)
       for(let i=0; i<response.length;i++){
         newassignmentIds.push(response[i].assignmentid)
         newpropicUrls.push(response[i].propicurl)
@@ -103,6 +106,7 @@ componentDidMount(){
         questions: newquestions,
         assignmentType: newassignmentType,
         additionalComments: newadditionalComments,
+        isDataLoaded: true,
       })
     })
 }
@@ -156,7 +160,7 @@ deleteAssignment(){
           })
           this.componentDidMount()
          }else if(response.status === 302){
-           this.context.router.history.push('/')
+            window.location.reload()
          }
           else {
             notify.show("Sorry something Went wrong","error")
@@ -223,6 +227,23 @@ if(this.state.assignmentIds.length !== 0)
       </Grid>
   )
 }
+}else if(this.state.isDataLoaded){
+  buffer.push(<p className="paragraph" key={new Date()}>You did not give any Assigments to this class yet </p>)
+}else{
+  buffer.push(<Grid fluid className="RefreshIndicator" key={1}>
+  <Row center="xs">
+  <Col xs>
+    <RefreshIndicator
+       size={50}
+       left={45}
+       top={0}
+       loadingColor="#FF9800"
+       status="loading"
+       className="refresh"
+      />
+  </Col>
+  </Row>
+  </Grid>)
 }
 return buffer;
 }

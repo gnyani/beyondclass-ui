@@ -48,10 +48,10 @@ class StudentClassDetails extends Component{
         value={this.props.startYearValue}
         onChange={this.props.handleYearChange}
       >
-        <MenuItem value={new Date().getFullYear()} primaryText={new Date().getFullYear()} />
-        <MenuItem value={new Date().getFullYear()-1} primaryText={new Date().getFullYear()-1} />
+        {/*<MenuItem value={new Date().getFullYear()} primaryText={new Date().getFullYear()} />
+        <MenuItem value={new Date().getFullYear()-1} primaryText={new Date().getFullYear()-1} />*/}
         <MenuItem value={new Date().getFullYear()-2} primaryText={new Date().getFullYear()-2} />
-        <MenuItem value={new Date().getFullYear()-3} primaryText={new Date().getFullYear()-3} />
+        {/*<MenuItem value={new Date().getFullYear()-3} primaryText={new Date().getFullYear()-3} />*/}
       </SelectField>
       </Col>
       <Col xs={11} sm={11} md={5} lg={5}>

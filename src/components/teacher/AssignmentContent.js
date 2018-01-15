@@ -1,7 +1,7 @@
 import React,{Component} from 'react'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import {notify} from 'react-notify-toast'
-import SubjectAutoCompleteForNotesAndAssign from '../utils/SubjectAutoCompleteForNotesAndAssign.js'
+import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'
 import DatePicker from 'material-ui/DatePicker'
 import TextField from 'material-ui/TextField'
 import Add from 'material-ui/svg-icons/content/add'
@@ -43,6 +43,7 @@ constructor(){
     editorState: EditorState.createEmpty(),
     contentState: '',
     questionsEditoStates: [],
+    submitButton: false,
   }
   this.renderTextField = this.renderTextField.bind(this)
   this.displayQuestions = this.displayQuestions.bind(this)
@@ -68,6 +69,9 @@ validateCreateAssignment = () => {
 }
 
 submitCreateAssignment(){
+  this.setState({
+    submitButton: true,
+  })
   fetch('http://'+properties.getHostName+':8080/assignments/create', {
          method: 'POST',
          headers: {
@@ -90,10 +94,11 @@ submitCreateAssignment(){
       notify.show("Assignment Created successfully","success")
       this.setState({
         shouldRender: new Date(),
+        submitButton: false,
       })
       this.context.router.history.goBack()
     }else if(response.status === 302){
-      this.context.router.history.push('/')
+       window.location.reload()
     }else{
       notify.show("Something went wrong","error")
     }
@@ -235,7 +240,7 @@ renderTextField(){
       <Grid fluid>
       <Row center="xs" bottom="xs">
       <Col xs>
-      <SubjectAutoCompleteForNotesAndAssign branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} />
+      <SubjectAutoComplete type="syllabus" branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} />
       </Col>
       <Col xs>
       <DatePicker hintText="Last Date" minDate={this.state.minDate} onChange={this.handleDateChange} />
@@ -256,7 +261,7 @@ renderTextField(){
       <br /><br />
       <RaisedButton label="Add Question" primary={true} icon={<Add />} onClick={this.handleShowTextField} />
       <br /><br /><br />
-      <RaisedButton label = "Submit" primary={true} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
+      <RaisedButton label = "Submit" primary={true} disabled={this.state.submitButton} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
       </Col>
       </Row>
       </Grid>

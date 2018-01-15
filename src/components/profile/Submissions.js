@@ -33,6 +33,7 @@ constructor(){
     rejected: 0,
     submitAssignmentList: [],
     assignmentsList: [],
+    isDataLoaded: false,
   }
 }
 
@@ -49,7 +50,7 @@ componentDidMount(){
        if(response.status===200)
        return response.json()
        else if(response.status === 302){
-         this.context.router.history.push('/')
+         window.location.reload()
        }
        else {
          notify.show("Something went wrong","error")
@@ -63,12 +64,13 @@ componentDidMount(){
          totalPoints: response.totalPoints,
          submitAssignmentList: response.submitAssignmentList,
          assignmentsList: response.assignmentsList,
+         isDataLoaded: true,
        })
      })
 }
 
   render(){
-    if(this.state.submitAssignmentList)
+    if(this.state.isDataLoaded)
     return(
       <StayVisible
       {... this.props}

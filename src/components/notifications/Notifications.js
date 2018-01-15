@@ -16,6 +16,7 @@ import {grey400} from 'material-ui/styles/colors'
 import PropTypes from 'prop-types'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import {notify} from 'react-notify-toast'
+import FlatButton from 'material-ui/FlatButton'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import {Media} from '../utils/Media'
 
@@ -29,6 +30,13 @@ const StayVisible = styled.div`
     margin-left: 0px;
   `}
 `
+const styles = {
+  uploadButton: {
+    verticalAlign: 'middle',
+    border: "0.1vmin solid #4DD0E1",
+    borderRadius: '1vmax'
+  }
+}
 
 class Notifications extends Component {
 
@@ -58,8 +66,8 @@ class Notifications extends Component {
             if(response.status === 200)
               return response.json()
               else if(response.status === 302){
-                this.context.router.history.push('/')
-              }  
+                window.location.reload()
+              }
           }).then(response =>{
             var newnotificationIds = []
             var newnotificationMessages = []
@@ -103,10 +111,29 @@ handleNotificationDelete(index){
         notify.show("Deleted","success")
         this.componentDidMount()
       }else if(response.status === 302){
-        this.context.router.history.push('/')
+        window.location.reload()
       }
     })
 }
+markAllAsRead = () => {
+  fetch('http://'+properties.getHostName+':8080/user/notifications/markallasread',{
+        credentials: 'include',
+        method: 'GET'
+      }).then(response =>{
+          if(response.status === 200)
+          {
+            notify.show("Success","success")
+          }else if(response.status === 302){
+            window.location.reload()
+          }
+          else{
+            notify.show("Sorry something went wrong please try again later","error")
+          }
+      }).then(response =>{
+         window.location.reload()
+      })
+}
+
   handleNotificationRead(index){
     fetch('http://'+properties.getHostName+':8080/user/notifications/read',{
          method: 'POST',
@@ -121,7 +148,7 @@ handleNotificationDelete(index){
         if(response.status === 200)
           this.componentDidMount()
       else if(response.status === 302){
-            this.context.router.history.push('/')
+          window.location.reload()
           }
       })
 }
@@ -146,6 +173,15 @@ list(buffer){
   else if(this.state.notificationMessages.length === 0)
   buffer.push(<div key={1} ><NotificationsNone style={{marginLeft:"27%",height:'300px',width:'45%'}}/><p className="announcements"><span className="paragraph">You are all caught up </span></p></div>)
   else{
+    buffer.push(
+      <div key={1}>
+      <Grid fluid>
+      <Row center="xs">
+      <FlatButton label="Mark All As Read" primary={true} style={styles.uploadButton} onClick={this.markAllAsRead}/>
+      </Row>
+      </Grid>
+      <br /> <br />
+       </div>)
   for(let index=0;index<this.state.notificationMessages.length;index++)
   {
     var date= new Date(this.state.createdDates[index])

@@ -24,6 +24,7 @@ class TeacherAnnouncement extends Component{
       DeleteConfirm: false,
       currentIndex: '',
       announcementids: [],
+      buttonDisabled: false,
     }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.Enter = this.Enter.bind(this);
@@ -65,7 +66,7 @@ class TeacherAnnouncement extends Component{
             return response.text();
          }
          else if(response.status === 302){
-                 this.context.router.history.push('/')
+                  window.location.reload()
         }
          else{
            let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -75,6 +76,7 @@ class TeacherAnnouncement extends Component{
          this.setState({
            response : response,
            number : 1,
+           buttonDisabled: false,
            message: '',
          })
          this.componentDidMount()
@@ -83,6 +85,8 @@ class TeacherAnnouncement extends Component{
   }
 
  list(buffer){
+   if(this.state.announcements.length !== 0)
+   {
    for (let i=0;i<this.state.announcements.length;i++){
      var date = new Date(parseInt(this.state.announcementIds[i].split('-')[6],10))
      buffer.push(
@@ -102,6 +106,12 @@ class TeacherAnnouncement extends Component{
                    </Grid>
 
                 )
+      }
+ }
+ else{
+   buffer.push(<p className="name" key={new Date()}><span className="fontStyle">
+                You did not make any announcements to this class yet !!!
+               </span></p>)
  }
  return buffer;
 }

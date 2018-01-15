@@ -74,7 +74,7 @@ saveAssignment(option){
         notify.show("Your work is auto saved","success")
         notify.show('Your work is saved,you can come back anytime here to continue',"success")
       }else if(response.status === 302){
-        this.context.router.history.push('/')
+         window.location.reload()
       }else if(response.status === 500){
         notify.show('Sorry something went wrong please try again',"error")
       }

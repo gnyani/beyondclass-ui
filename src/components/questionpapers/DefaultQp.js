@@ -21,7 +21,7 @@ class DefaultQp extends Component{
    constructor(){
      super();
      this.state = {
-       branch : 1,
+       branch : 'CSE',
        year : 1,
        subject : 1,
        response : '',
@@ -32,7 +32,6 @@ class DefaultQp extends Component{
      }
      this.validateAndFetch = this.validateAndFetch.bind(this);
      this.fetchQp = this.fetchQp.bind(this);
-     this.image = this.image.bind(this);
      this.handleSubjectChange = this.handleSubjectChange.bind(this)
    }
 
@@ -63,9 +62,12 @@ fetchQp(){
      }).then(response => {
        if(response.status === 200)
        {
+         notify.show("Retrieval Successful","success");
         return response.text();
        }else if(response.status === 302){
-         this.context.router.history.push('/')
+           window.location.reload()
+       }else if(response.status === 404){
+         notify.show("No records found for this subject","error")
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -75,7 +77,7 @@ fetchQp(){
        this.setState({
          response : response,
          isLoaded : true
-       },function(){this.image()})
+       })
      })
 }
 
@@ -88,22 +90,10 @@ handleSubjectChange(subjectValue){
   })
 }
 
-image(){
-
+displayQuestionPaper = () => {
+var buffer = []
   if(this.state.response){
-    var x = []
-    var obj = new Image();
-      obj.src = this.state.response
-      obj.onerror = () => {
-        x.push(<p key={new Date()}>Sorry no records found for this subject</p>)
-        this.setState({
-          image: x.slice(),
-        })
-        notify.show("No Records found for this subject","warning")
-      }
-
-      obj.onload = () => {
-        x.push(
+        buffer.push(
           <Col xs={12} sm={12} md={10} lg={8} key={new Date()}>
             <Card
             style={{borderRadius:"1.5em"}}
@@ -114,19 +104,21 @@ image(){
                 subtitle="Question Paper"
               />
               <CardMedia>
-                 <img alt="loading" src ={obj.src} className="image" />
+                 <iframe title="QuestionPaper" src ={this.state.response} height="300" />
               </CardMedia>
               <CardActions>
                 <div >
                 <Grid fluid>
                 <Row between="xs">
                 <Col xs>
-                <form method="post" action={obj.src+"/download"}>
+                <form method="post" action={this.state.response+"/download"}>
                 <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color={lightBlue300} />}/>
                 </form>
                 </Col>
                 <Col xs>
-                <FlatButton type="submit" label="Full View" fullWidth={true}  onClick={() => this.setState({ isOpen: true })} icon={<NavigationFullscreen color={lightBlue300} />}/>
+                <form method="post" action={this.state.response}>
+                <FlatButton type="submit" label="Full View" fullWidth={true}  icon={<NavigationFullscreen color={lightBlue300} />}/>
+                </form>
                 </Col>
                 </Row>
                 </Grid>
@@ -135,12 +127,8 @@ image(){
             </Card>
             </Col>
           )
-        this.setState({
-          image: x.slice(),
-        })
-        notify.show("Retrieval Successful","success");
-      }
    }
+   return buffer
 }
   render(){
     if(this.props.userrole==="student")
@@ -164,7 +152,6 @@ image(){
       >
          <MenuItem value={1} primaryText="Select" />
          <MenuItem value={'CSE'} label="CSE" primaryText="CSE" />
-         <MenuItem value={'ECE'} label="ECE" primaryText="ECE" />
        </SelectField>
        </Col>
        <Col xs={12} sm={10} md={5} lg={5}>
@@ -175,8 +162,10 @@ image(){
           autoWidth={true}
         >
           <MenuItem value={1} primaryText="Select" />
-          <MenuItem value={'2015'} label="2015" primaryText="2015" />
-          <MenuItem value={'2016'} label="2016" primaryText="2016" />
+          <MenuItem value={'2009'} label="2009" primaryText="2009" />
+          <MenuItem value={'2010'} label="2010" primaryText="2010" />
+          <MenuItem value={'2011'} label="2011" primaryText="2011" />
+          <MenuItem value={'2012'} label="2012" primaryText="2012" />
         </SelectField>
         </Col>
         </Row>
@@ -185,7 +174,7 @@ image(){
        <Grid fluid>
        <Row around="xs" middle="xs">
        <Col xs={12} sm={10} md={5} lg={5}>
-       <SubjectAutoComplete branch={this.state.branch} handleSubjectChange={this.handleSubjectChange} />
+       <SubjectAutoComplete branch={this.state.branch} type='questionpaper' handleSubjectChange={this.handleSubjectChange} />
        <br />
        </Col>
        <Col xs={12} sm={10} md={5} lg={5}>
@@ -199,9 +188,10 @@ image(){
         <br /> <br />
         <Grid fluid>
         <Row around="xs">
-        {this.state.image}
+        {this.displayQuestionPaper()}
         </Row>
         </Grid>
+        <br /><br />
     </div>
     </div>
     </Col>

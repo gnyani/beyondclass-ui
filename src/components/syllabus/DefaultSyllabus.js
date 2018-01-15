@@ -22,7 +22,7 @@ class DefaultSyllabus extends Component{
    constructor(){
      super();
      this.state = {
-       branch : 1,
+       branch : 'CSE',
        subject : 1,
        response : '',
        isLoaded : false,
@@ -32,7 +32,6 @@ class DefaultSyllabus extends Component{
      }
      this.validateAndFetch = this.validateAndFetch.bind(this);
      this.fetchSyllabus = this.fetchSyllabus.bind(this);
-     this.image = this.image.bind(this);
      this.handleSubjectChange = this.handleSubjectChange.bind(this)
    }
 
@@ -62,9 +61,12 @@ fetchSyllabus(){
      }).then(response => {
        if(response.status === 200)
        {
+         notify.show("Retrieval Successful","success");
           return response.text();
        }else if(response.status === 302){
-         this.context.router.history.push('/')
+          window.location.reload()
+       }else if(response.status === 404){
+         notify.show("No records found for this subject","error")
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -74,8 +76,6 @@ fetchSyllabus(){
        this.setState({
          response : response,
          isLoaded : true
-       },function(){
-         this.image()
        })
      })
 }
@@ -86,22 +86,10 @@ handleSubjectChange(subjectValue){
   })
 }
 
-image(){
-
+displaySyllabus = () => {
+    var buffer = []
   if(this.state.response){
-    var x = []
-    var obj = new Image();
-      obj.src = this.state.response
-      obj.onerror = () => {
-        x.push(<p key={new Date()}>Sorry no records found for this subject</p>)
-        this.setState({
-          image: x.slice(),
-        })
-        notify.show("No Records found for this subject","warning")
-      }
-
-      obj.onload = () => {
-        x.push(
+        buffer.push(
           <Col xs={12} sm={12} md={11} lg={10} key={new Date()}>
             <Card
             style={{borderRadius:"1.5em"}}
@@ -112,19 +100,21 @@ image(){
                 subtitle="Syllabus"
               />
               <CardMedia>
-                 <img alt="loading" src ={obj.src} className="image" />
+                 <iframe title="syllabus"  src ={this.state.response} height="300" />
               </CardMedia>
               <CardActions>
                 <div >
                 <Grid fluid>
                 <Row between="xs">
                 <Col xs>
-                <form method="post" action={obj.src+"/download"}>
+                <form method="post" action={this.state.response+"/download"}>
                 <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color={lightBlue300} />}/>
                 </form>
                 </Col>
                 <Col xs>
-                <FlatButton type="submit" label="Full View" fullWidth={true}  onClick={() => this.setState({ isOpen: true })} icon={<NavigationFullscreen color={lightBlue300} />}/>
+                <form method="post" action={this.state.response}>
+                <FlatButton type="submit" label="Full View" fullWidth={true}  icon={<NavigationFullscreen color={lightBlue300} />}/>
+                </form>
                 </Col>
                 </Row>
                 </Grid>
@@ -133,13 +123,10 @@ image(){
             </Card>
             </Col>
           )
-        this.setState({
-          image: x.slice(),
-        })
-        notify.show("Retrieval Successful","success");
-      }
-   }
 }
+return buffer
+}
+
 
 handleChange = (event, index, branch) => this.setState({branch});
 
@@ -165,11 +152,10 @@ handleChange = (event, index, branch) => this.setState({branch});
        >
          <MenuItem value={1} primaryText="Select*" />
          <MenuItem value={'CSE'} label="CSE" primaryText="CSE" />
-         <MenuItem value={'ECE'} label="ECE" primaryText="ECE" />
        </SelectField>
        </Col>
        <Col xs={12} sm={12} md={5} lg={5}>
-       <SubjectAutoComplete branch={this.state.branch} handleSubjectChange={this.handleSubjectChange} />
+       <SubjectAutoComplete branch={this.state.branch} type='syllabus' handleSubjectChange={this.handleSubjectChange} />
        </Col>
        </Row>
        </Grid>
@@ -187,9 +173,10 @@ handleChange = (event, index, branch) => this.setState({branch});
         <br /> <br /> <br />
         <Grid fluid>
         <Row around="xs">
-        {this.state.image}
+        {this.displaySyllabus()}
         </Row>
         </Grid>
+        <br /><br />
     </div>
     </div>
     </Col>
