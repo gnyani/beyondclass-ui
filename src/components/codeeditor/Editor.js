@@ -216,8 +216,7 @@ compileAndRun = () => {
     })
 }
 
-saveProgrammingAssignment = (option) => {
-  console.log("this got called with" +option)
+saveProgrammingAssignment = () => {
   this.setState({
     saveButton: true
   })
