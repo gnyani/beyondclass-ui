@@ -167,7 +167,7 @@ class ProgrammingAssignment extends Component{
         notify.show("Assignment Created successfully","success")
         this.context.router.history.goBack()
       }else if(response.status === 302){
-        this.context.router.history.push('/')
+         window.location.reload()
       }else{
         notify.show("Something went wrong","error")
       }

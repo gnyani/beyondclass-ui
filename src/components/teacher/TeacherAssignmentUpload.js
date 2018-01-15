@@ -65,7 +65,7 @@ _handleSubmit(e) {
             return response.text();
          }
          else if(response.status === 302){
-                 this.context.router.history.push('/')
+                  window.location.reload()
         }
          else{
            let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};

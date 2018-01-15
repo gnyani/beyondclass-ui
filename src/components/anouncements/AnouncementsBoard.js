@@ -77,7 +77,7 @@ handleSubmit(){
        {
           return response.text();
        }else if(response.status === 302){
-         this.context.router.history.push('/')
+         window.location.reload()
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -174,7 +174,7 @@ populateData(pageNumber){
           if(response.status === 200 )
           return response.json()
           else if(response.status === 302){
-            this.context.router.history.push('/')
+            window.location.reload()
           }else{
             notify.show("something went wrong","error")
           }
@@ -239,7 +239,10 @@ DeleteAnnouncement(){
         {
           notify.show("Announcement Deleted successfully","success")
           this.componentDidMount()
-        }else{
+        }else if(response.status === 302){
+          window.location.reload()
+        }
+        else{
           notify.show("Sorry something went wrong", "error")
         }
 

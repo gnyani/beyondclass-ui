@@ -27,14 +27,14 @@ loginToolbar(){
                     <Col xs={6} sm={6} md={5} lg={5}>
                     <div >
                       <div className="studentAddaLogoContainer">
-                           SA
+                           B
                       </div>
                       </div>
                     </Col>
                 </Row>
                 <Row>
                     <Col xs={12} sm={12} md={12} lg={12}>
-                    <h2 className="text">Welcome to StudentAdda<br></br><span>Your Virtual Class room</span></h2>
+                    <h2 className="text">Welcome to Beyond Class<br></br><span>Your Virtual Class room</span></h2>
                     </Col>
                 </Row>
                 <Row>

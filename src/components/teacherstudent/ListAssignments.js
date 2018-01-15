@@ -7,6 +7,7 @@ import {Link} from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
+import RefreshIndicator from 'material-ui/RefreshIndicator'
 import RichTextEditorReadOnly from '../teacher/RichTextEditorReadOnly'
 import { EditorState,convertFromRaw } from 'draft-js'
 import {Card, CardActions,CardText,CardHeader, CardTitle} from 'material-ui/Card'
@@ -48,7 +49,7 @@ componentDidMount(){
       else if(response.status === 204){
         return response
       }else if(response.status === 302){
-        this.context.router.history.push('/')
+         window.location.reload()
       }
       else{
         notify.show("Failed to Load Assignments","Error")
@@ -177,7 +178,21 @@ if(this.state.assignmentIds.length !== 0)
 }else if(this.state.assignmentIds.length === 0 && this.state.isDataLoaded === true){
   buffer.push(<p className="paragraph" key={1} >You are all caught up !!!</p>)
 }else{
-  buffer.push(<p className="paragraph" key={1}> Loading Assignments .... </p>)
+  buffer.push(
+  <Grid fluid className="RefreshIndicator">
+  <Row center="xs">
+  <Col xs>
+    <RefreshIndicator
+       size={50}
+       left={45}
+       top={0}
+       loadingColor="#FF9800"
+       status="loading"
+       className="refresh"
+      />
+  </Col>
+  </Row>
+  </Grid>)
 }
 return buffer;
 }

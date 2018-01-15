@@ -25,6 +25,39 @@ class DisplayProgrammingAssignment extends Component{
      this.setState({expanded: !this.state.expanded});
    };
 
+renderRows = () => {
+  var buffer = []
+  for(var i=0; i< this.props.inputs.length;i++)
+  {
+  buffer.push(
+
+        <tr>
+          <td>{this.props.inputs[i]}</td>
+          <td>{this.props.outputs[i]}</td>
+        </tr>
+
+  )
+}
+  return buffer;
+}
+   renderInputs = () => {
+     var buffer = []
+     buffer.push(<table>
+           <tbody>
+            <tr>
+              <th>Inputs</th>
+              <th>Outputs</th>
+           </tr>
+           {this.renderRows()}
+         </tbody>
+       </table>)
+
+   return buffer
+
+   }
+
+
+
   render(){
     return(
       <Grid fluid key={1}>
@@ -34,6 +67,10 @@ class DisplayProgrammingAssignment extends Component{
       expanded = {this.state.expanded}
       >
      <CardTitle className="displayQuestions" title={<RichTextEditorReadOnly editorState={this.convertToEditorState(this.props.questions[0])} />} />
+     <CardText>
+     <h3>TestCases:</h3>
+     {this.renderInputs()}
+     </CardText>
      <CardText expandable={true} >
      <AceEditor
      mode={this.props.mode}

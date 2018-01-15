@@ -4,7 +4,7 @@ class CustomAvatar extends Component{
 render(){
   return(
       <div className="studentAddaLogo">
-        SA
+        B
       </div>
   )
 }

@@ -86,7 +86,7 @@ isActive(value){
           </div>
       <div  className={this.isActive('notes')}>
       <Link to='/notes' width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"notes")}>
-              <MenuItem primaryText={'Notes'}
+              <MenuItem primaryText={'Share Notes'}
                 leftIcon={<ImageCollectionsBookmark color={red500} />}
                 onClick={this.props.handleMobileToggle}
                 className="drawerFont"
@@ -96,7 +96,7 @@ isActive(value){
       <div className={this.isActive('codeeditor')}>
         <Link to='/codeeditor'  width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"codeeditor")} >
           <MenuItem
-          primaryText={'Compiler'}
+          primaryText={'Code Editor'}
           leftIcon={<Code color={blue500}/>}
           onClick={this.props.handleMobileToggle}
           className="drawerFont"
@@ -128,7 +128,7 @@ isActive(value){
                   onClick={this.props.handleMobileToggle}
                   className="drawerFont"
                   />
-                </Link></div>*/} 
+                </Link></div>*/}
 
       </div>
     )

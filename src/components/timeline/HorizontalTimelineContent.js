@@ -171,7 +171,7 @@ class HorizontalTimelineContent extends React.Component {
            {
               return response.text();
            }else if(response.status === 302){
-             this.context.router.history.push('/')
+              window.location.reload()
            }
            else{
              let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -211,7 +211,7 @@ deletePost(){
      notify.show(response,"success")
      this.componentWillMount()
    }else if(response.status === 302){
-     this.context.router.history.push('/')
+      window.location.reload()
    }
    else{
      notify.show("sorry something went wrong please try again","error")
@@ -490,7 +490,7 @@ postComment(i){
           })
           this.getPosts(this.state.value)
        }else if(response.status === 302){
-         this.context.router.history.push('/')
+          window.location.reload()
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -604,7 +604,7 @@ getLikedUsers(i){
        if(response.status === 200)
        return response.json()
        else if(response.status === 302){
-         this.context.router.history.push('/')
+          window.location.reload()
        }
      }).then(response => {
        var newdescription = []

@@ -15,6 +15,7 @@ import FlatButton from 'material-ui/FlatButton'
 import RenderCodingAssignmentResult from './RenderCodingAssignmentResult'
 import {HelloWorldTemplates} from './HelloWorldTemplates'
 import {editorModes,hackerRankLangNotation} from './Utils'
+import IdleTimer from 'react-idle-timer'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
@@ -67,6 +68,11 @@ constructor(){
     failedCase: '',
     errorMessage: '',
     submitConfirm: false,
+    timeout: 5000,
+     remaining: null,
+     isIdle: false,
+     totalActiveTime: null,
+
   }
   this.setTheme = this.setTheme.bind(this);
   this.setMode = this.setMode.bind(this);
@@ -153,7 +159,10 @@ submitRequest(){
          testcases: this.state.testcases,
       })
     }).then(response => {
+      if(response.status === 200)
       return response.json()
+      else if(response.status === 302)
+      window.location.reload()
     }).then(response =>{
       var result = response.result
 
@@ -191,6 +200,8 @@ compileAndRun = () => {
     }).then(response =>{
       if(response.status === 200)
       return response.json()
+      else if(response.status === 302)
+      window.location.reload()
     }).then(response =>{
       this.setState({
         assignmentStatus: response.codingAssignmentStatus,
@@ -225,9 +236,14 @@ saveProgrammingAssignment = () => {
       })
     }).then(response => {
       if(response.status === 200){
+        if(option === 'autosave')
+        notify.show("Your work got autosaved","success")
         notify.show("Assignment Saved successfully","success")
         return response.text()
-      }else{
+      }else if(response.status === 302){
+        window.location.reload()
+      }
+      else{
         notify.show("Sorry something went wrong please try again","error")
       }
     }).then(response =>{
@@ -265,7 +281,10 @@ submitProgrammingAssignment = () => {
         notify.show("Assignment Submitted successfully","success")
         this.context.router.history.goBack()
         return response.text()
-      }else{
+      }else if(response.status === 302){
+        window.location.reload()
+      }
+      else{
         notify.show("Sorry something went wrong please try again","error")
       }
     }).then(response =>{
@@ -282,6 +301,8 @@ componentDidMount(){
         }).then(response => {
           if(response.status === 200)
           return response.json()
+          else if(response.status === 302)
+          window.location.reload()
         }).then(response => {
           this.setState({
             hackerRankCodes: response.languages.codes
@@ -300,7 +321,7 @@ if(this.props.state==="Assignment"){
        if(response.status === 200)
        return response.json()
        else if(response.status === 302){
-         this.context.router.history.push('/')
+         window.location.reload()
        }
        else{
          notify.show("something is not right","error")
@@ -317,7 +338,35 @@ if(this.props.state==="Assignment"){
        })
      })
   }
+  this._interval = setInterval(() => {
+    if(this.state.isIdle === false)
+    this.setState({
+      totalActiveTime: this.state.totalActiveTime + 1000
+    });
+    if(this.state.totalActiveTime % 30000 === 0)
+    {
+      console.log("Trying to call autosave")
+      this.saveProgrammingAssignment('autosave')
+    }
+   }, 1000);
 }
+
+componentWillUnmount() {
+    clearInterval(this._interval);
+}
+
+_onActive = () => {
+   this.setState({ isIdle: false });
+ }
+
+ _onIdle = () => {
+   this.setState({
+     isIdle: true,
+    });
+ }
+
+
+
 showInputTextArea(){
   var buffer = []
   if(this.state.checked)
@@ -380,7 +429,7 @@ var language = this.getKeyByValue(editorModes,this.state.mode)
     <RaisedButton label="Complie & Run" primary = {true}  icon={<Compile />} disabled={this.state.buttonDisabled} onClick={this.compileAndRun}/>
     </Col>
     <Col xs>
-    <RaisedButton label="Save" primary = {true} icon={<Save />} disabled={this.state.saveButton} onClick={this.saveProgrammingAssignment}/>
+    <RaisedButton label="Save" primary = {true} icon={<Save />} disabled={this.state.saveButton} onClick={this.saveProgrammingAssignment.bind(this,'save')}/>
     </Col>
     <Col xs>
     <RaisedButton label="Submit" primary = {true} icon={<Send />} disabled={this.state.submitButton} onClick={this.handleSubmit}/>
@@ -394,6 +443,16 @@ var language = this.getKeyByValue(editorModes,this.state.mode)
     <RenderCodingAssignmentResult assignmentStatus={this.state.assignmentStatus} expected={this.state.expected}
      actual={this.state.actual} errorMessage={this.state.errorMessage}
      failedCase={this.state.failedCase} passCount={this.state.passCount} totalCount={this.state.totalCount}/>
+     <IdleTimer
+     ref="idleTimer"
+     activeAction={this._onActive}
+     idleAction={this._onIdle}
+     timeout={this.state.timeout}
+     startOnLoad={false}
+     format="MM-DD-YYYY HH:MM:ss.SSS">
+
+     {/*<h1>Time Spent: {this.state.totalActiveTime}</h1>*/}
+     </IdleTimer>
     </div>
   )
 }

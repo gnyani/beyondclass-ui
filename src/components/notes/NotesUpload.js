@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import FlatButton from 'material-ui/FlatButton';
+import FlatButton from 'material-ui/FlatButton'
 import {notify} from 'react-notify-toast';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import {FileFileUpload,AttachFile} from '../../styledcomponents/SvgIcons.js'
@@ -8,7 +8,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import Divider from 'material-ui/Divider'
 import TextField from 'material-ui/TextField'
-import SubjectAutoCompleteForNotesAndAssign from '../utils/SubjectAutoCompleteForNotesAndAssign.js'
+import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'
 
 var properties = require('../properties.json');
 
@@ -86,7 +86,7 @@ handleCommentChange = (event) => {
            {
               return response.text();
            }else if(response.status === 302){
-             this.context.router.history.push('/')
+             window.location.reload()
            }
            else{
              let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -136,7 +136,7 @@ handleCommentChange = (event) => {
       <Grid fluid>
         <Row center="xs" middle="xs">
         <Col xs={12} sm={12} md={4} lg={3}>
-         <SubjectAutoCompleteForNotesAndAssign branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} />
+         <SubjectAutoComplete type="notes" branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} />
         <br /><br />
         </Col>
         <Col xs={12} sm={12} md={4} lg={3}>

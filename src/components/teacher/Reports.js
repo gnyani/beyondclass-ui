@@ -61,7 +61,7 @@ componentDidMount(){
       if(response.status === 200)
       return response.json()
       else if(response.status === 302){
-        this.context.router.history.push('/')
+         window.location.reload()
       }
     }).then(response => {
       this.setState({

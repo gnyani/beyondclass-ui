@@ -67,7 +67,7 @@ class Register extends Component{
            if(response.status === 200)
            return response.json()
            else if(response.status === 302){
-             this.context.router.history.push('/')
+              window.location.reload()
            }
          }).then(response => {
            this.setState({
@@ -93,7 +93,10 @@ validateOtp(){
             },
           body: this.state.otp
       }).then(response => {
-        return response.text();
+        if(response.status === 200)
+        return response.text()
+        else if(response.status === 302)
+         window.location.reload()
       }).then(response =>{
       if(response === 'success')
       this.registerUser()
@@ -128,7 +131,10 @@ validateOtp(){
           userrole: this.state.userrole,
         })
       }).then(response => {
+        if(response.status === 200)
         return response.text();
+        else if(response.status === 302)
+         window.location.reload()
       }).then(response => {
         if(response === 'User registration successful')
         {
@@ -159,7 +165,10 @@ validateOtp(){
            userrole: this.state.userrole,
          })
        }).then(response => {
+         if(response.status === 200)
          return response.text();
+         else if(response.status === 302)
+          window.location.reload()
        }).then(response => {
          if(response === 'User registration successful')
          {
@@ -309,7 +318,10 @@ generateOtp(){
           },
          body: this.state.mobilenumber
         }).then(response => {
+          if(response.status === 200)
           return response.text()
+          else if(response.status === 302)
+           window.location.reload()
         }).then(response =>{
           if(response !== 'success')
           notify.show("Could not generate OTP please try again","error")

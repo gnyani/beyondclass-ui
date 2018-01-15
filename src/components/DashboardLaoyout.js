@@ -116,7 +116,7 @@ uploadProPic(){
          notify.show("Avatar Changed successfully","success")
           return response.text();
        }else if(response.status === 302){
-         this.context.router.history.push('/')
+          window.location.reload()
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -150,7 +150,7 @@ postTimeline(){
        {
           notify.show("profilepic updated successfully")
        }else if(response.status === 302){
-         this.context.router.history.push('/')
+          window.location.reload()
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -183,7 +183,7 @@ handleLogout(){
             })
             this.context.router.history.push('/');
           }else if(response.status === 302){
-            this.context.router.history.push('/')
+             window.location.reload()
           }
         })
   }
@@ -212,7 +212,7 @@ componentDidMount(){
           if(response.status === 200)
           return response.json()
           else if(response.status === 302){
-            this.context.router.history.push('/')
+             window.location.reload()
           }
         }).then(response => {
           this.setState({
@@ -241,7 +241,10 @@ getNotificationCount(){
           credentials: 'include',
           method: 'GET'
         }).then(response =>{
+          if(response.status === 200)
             return response.text()
+          else if(response.status === 302)
+           window.location.reload()
         }).then(response =>{
           this.setState({
             notificationsCount: response

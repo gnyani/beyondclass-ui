@@ -92,14 +92,17 @@ updateProfile(){
           dob: this.state.controlledDate,
         })
       }).then(response => {
+        if(response.status === 200)
         return response.text();
+        else if(response.status === 302){
+          window.location.reload()
+        }
       }).then(response =>{
         if(response === "success")
         {
         notify.show("Profile Updated successfully","success")
         window.location.reload()
-      }
-        else {
+      }else {
         notify.show("Sorry something went wrong please try again later","error")
         }
       })

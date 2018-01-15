@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {CSE,ECE,dataSourceConfig} from '../utils/Subjects.js'
+import {CSE,ECE,CSESyllabus,dataSourceConfig} from '../utils/Subjects.js'
 import AutoComplete from 'material-ui/AutoComplete'
 import TextField from 'material-ui/TextField'
 
@@ -34,7 +34,9 @@ getIndex(value, arr, prop) {
 
   render(){
     if(this.props.branch === 'CSE')
-    return (
+    {
+      if(this.props.type === 'questionpaper')
+      return (
       <AutoComplete
        floatingLabelText="Start Typing Subject Name"
        filter={AutoComplete.fuzzyFilter}
@@ -43,8 +45,21 @@ getIndex(value, arr, prop) {
        dataSource={CSE}
        maxSearchResults={5}
        dataSourceConfig={dataSourceConfig}
+       />)
+    else {
+      return (
+      <AutoComplete
+       floatingLabelText="Start Typing Subject Name"
+       filter={AutoComplete.fuzzyFilter}
+       searchText={this.state.searchText}
+       onUpdateInput={this.handleUpdateInput}
+       dataSource={CSESyllabus}
+       maxSearchResults={5}
+       dataSourceConfig={dataSourceConfig}
        />
     )
+    }
+  }
   if(this.props.branch === 'ECE')
   return (
     <AutoComplete

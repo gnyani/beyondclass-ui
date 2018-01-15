@@ -11,7 +11,7 @@ import { withRouter } from 'react-router'
 import {redA700} from 'material-ui/styles/colors'
 import PropTypes from 'prop-types'
 import Dialog from 'material-ui/Dialog'
-import SubjectAutoCompleteForNotesAndAssign from '../utils/SubjectAutoCompleteForNotesAndAssign.js'
+import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'
 
 var properties = require('../properties.json');
 
@@ -140,7 +140,7 @@ class NotesList extends Component{
           {
              return response.json();
           }else if(response.status === 302){
-            this.context.router.history.push('/')
+            window.location.reload()
           }
           else{
             let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -186,7 +186,7 @@ class NotesList extends Component{
       this.handleSubmit()
     }
     else if(response.status === 302){
-       this.context.router.history.push('/')
+       window.location.reload()
      }
      else{
        notify.show("sorry something went wrong please try again","error")
@@ -217,7 +217,7 @@ if(this.props.userrole==="student"){
      <Grid fluid className="nogutter">
      <Row center="xs" middle="xs">
      <Col xs={12} sm={12} md={5} lg={3}>
-     <SubjectAutoCompleteForNotesAndAssign branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} />
+     <SubjectAutoComplete branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} />
      <br />
      <br />
       </Col>
