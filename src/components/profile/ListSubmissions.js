@@ -23,6 +23,9 @@ renderSubmittedAssignments(){
            <Col xs={11} sm={11} md={9} lg={8}>
            <Card>
            <CardHeader className="cardHeader"  title='Assignment By' subtitle={assignments[i].email} avatar={assignments[i].propicurl}/>
+           <CardText style={{textAlign:'center'}}>
+           <p>AssignmentType : {assignments[i].assignmentType}</p>
+           </CardText>
            <CardTitle style={{textAlign:'center'}}  title={assignments[i].subject} subtitle={'STATUS : '+submissions[i].status+ ' with '+submissions[i].marksGiven+' marks'  } />
            <CardText style={{textAlign:'center'}}>
            <p>Submitted On {date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()} </p>
@@ -53,6 +56,9 @@ renderSubmittedAssignments(){
              <Col xs={11} sm={11} md={9} lg={8}>
              <Card>
              <CardHeader className="cardHeader" title='Assignment By' subtitle={assignments[i].email} avatar={assignments[i].propicurl}/>
+             <CardText style={{textAlign:'center'}}>
+             <p>AssignmentType : {assignments[i].assignmentType}</p>
+             </CardText>
              <CardTitle style={{textAlign:'center'}} title={assignments[i].subject} subtitle={'STATUS : '+submissions[i].status} />
              <CardText style={{textAlign:'center'}}>
              <p>Submitted On {date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()} </p>

@@ -216,7 +216,7 @@ compileAndRun = () => {
     })
 }
 
-saveProgrammingAssignment = () => {
+saveProgrammingAssignment = (option) => {
   this.setState({
     saveButton: true
   })
