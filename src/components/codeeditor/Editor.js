@@ -240,8 +240,6 @@ saveProgrammingAssignment = (option) => {
         notify.show("Your work got autosaved","success")
         notify.show("Assignment Saved successfully","success")
         return response.text()
-      }else if(response.status === 302){
-        window.location.reload()
       }
       else{
         notify.show("Sorry something went wrong please try again","error")

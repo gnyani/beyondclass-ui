@@ -56,6 +56,7 @@ componentDidMount(){
          notify.show("Something went wrong","error")
        }
      }).then(response => {
+       if(response)
        this.setState({
          totalCount: response.totalSubmissionsCount,
          pendingCount: response.pendingApprovalCount,

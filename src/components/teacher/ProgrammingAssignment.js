@@ -40,6 +40,7 @@ class ProgrammingAssignment extends Component{
       output: '',
       inputs: [],
       outputs: [],
+      buttonDisabled: false,
     }
     this.renderTestCaseTabs = this.renderTestCaseTabs.bind(this)
   }
@@ -145,6 +146,9 @@ class ProgrammingAssignment extends Component{
   }
 
   submitCreateAssignment = () => {
+    this.setState({
+      buttonDisabled: true,
+    })
     fetch('http://'+properties.getHostName+':8080/assignments/create', {
            method: 'POST',
            headers: {
@@ -165,6 +169,9 @@ class ProgrammingAssignment extends Component{
         if(response.status === 200)
         {
         notify.show("Assignment Created successfully","success")
+        this.setState({
+          buttonDisabled: false,
+        })
         this.context.router.history.goBack()
       }else if(response.status === 302){
          window.location.reload()
@@ -228,7 +235,7 @@ class ProgrammingAssignment extends Component{
       <RaisedButton label="Add TestCase" primary={true} icon={<Add />} onClick={this.handleShowTextFields} />
       <br />
       <br />
-      <RaisedButton label="Submit" primary={true} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
+      <RaisedButton label="Submit" primary={true} disabled={this.state.disabled} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
       </Col>
       </Row>
       </Grid>

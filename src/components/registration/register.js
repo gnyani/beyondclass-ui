@@ -64,11 +64,7 @@ class Register extends Component{
             credentials: 'include',
             method: 'GET'
          }).then(response => {
-           if(response.status === 200)
            return response.json()
-           else if(response.status === 302){
-              window.location.reload()
-           }
          }).then(response => {
            this.setState({
              username : response.userAuthentication.details.name,
@@ -93,10 +89,7 @@ validateOtp(){
             },
           body: this.state.otp
       }).then(response => {
-        if(response.status === 200)
         return response.text()
-        else if(response.status === 302)
-         window.location.reload()
       }).then(response =>{
       if(response === 'success')
       this.registerUser()
@@ -131,10 +124,7 @@ validateOtp(){
           userrole: this.state.userrole,
         })
       }).then(response => {
-        if(response.status === 200)
         return response.text();
-        else if(response.status === 302)
-         window.location.reload()
       }).then(response => {
         if(response === 'User registration successful')
         {
@@ -165,10 +155,7 @@ validateOtp(){
            userrole: this.state.userrole,
          })
        }).then(response => {
-         if(response.status === 200)
          return response.text();
-         else if(response.status === 302)
-          window.location.reload()
        }).then(response => {
          if(response === 'User registration successful')
          {
