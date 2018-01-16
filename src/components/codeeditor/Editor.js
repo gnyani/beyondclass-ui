@@ -341,9 +341,8 @@ if(this.props.state==="Assignment"){
     this.setState({
       totalActiveTime: this.state.totalActiveTime + 1000
     });
-    if(this.state.totalActiveTime % 30000 === 0)
+    if(this.state.totalActiveTime % 30000 === 0 && this.props.state==="Assignment")
     {
-      console.log("Trying to call autosave")
       this.saveProgrammingAssignment('autosave')
     }
    }, 1000);
