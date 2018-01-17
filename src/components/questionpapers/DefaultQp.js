@@ -67,7 +67,7 @@ fetchQp(){
        }else if(response.status === 302){
            window.location.reload()
        }else if(response.status === 404){
-         notify.show("No records found for this subject","error")
+         notify.show("No records found for this year","error")
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
