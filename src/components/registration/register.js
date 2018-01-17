@@ -35,7 +35,7 @@ class Register extends Component{
         lastName : ' ',
         rollno : ' ',
         userrole: "student",
-        hostel : 'No',
+        hostel : false,
         mobilenumber : '',
         controlledDate: null,
         currentSlide: 0,
