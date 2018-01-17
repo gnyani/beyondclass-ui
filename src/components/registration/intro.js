@@ -11,7 +11,7 @@ class Intro extends Component{
         <Grid fluid className="nogutter">
         <Row middle="xs">
         <Col xs={11} sm={11} md={11} lg={11}>
-        <h2 className="headline">Student-Adda</h2>
+        <h2 className="headline">Beyond Class</h2>
         <h3 className="subheading">your virtual classroom</h3>
         <br />
         <img className="image" src={this.props.propiclink}  alt=''/>
