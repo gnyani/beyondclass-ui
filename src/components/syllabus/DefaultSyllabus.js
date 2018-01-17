@@ -96,7 +96,7 @@ displaySyllabus = () => {
             >
               <CardHeader
                className="cardHeaderwithTopBorder"
-                title={this.state.subject}
+                title={this.state.response.split('/').pop().split('-').pop()}
                 subtitle="Syllabus"
               />
               <CardMedia>

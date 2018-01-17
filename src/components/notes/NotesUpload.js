@@ -9,6 +9,7 @@ import PropTypes from 'prop-types'
 import Divider from 'material-ui/Divider'
 import TextField from 'material-ui/TextField'
 import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'
+import CircularProgress from 'material-ui/CircularProgress'
 
 var properties = require('../properties.json');
 
@@ -42,6 +43,7 @@ class NotesUpload extends Component{
       buttonDisabled: false,
       response: '',
       comment: '',
+      uploadStarted: false,
     };
     this._handleImageChange = this._handleImageChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
@@ -68,7 +70,7 @@ handleCommentChange = (event) => {
     notify.show("please select a subject, add a comment and choose a file","warning")
     }
     else{
-      this.setState({ buttonDisabled: true });
+      this.setState({ buttonDisabled: true,uploadStarted: true });
       fetch('http://'+properties.getHostName+':8080/user/notes/upload', {
              method: 'POST',
              headers: {
@@ -99,6 +101,7 @@ handleCommentChange = (event) => {
              imagePreviewUrl: '',
              file: '',
              comment: '',
+             uploadStarted: false,
            })
            notify.show("file upload successful","success")
          })
@@ -120,6 +123,25 @@ handleCommentChange = (event) => {
     }
 
     reader.readAsDataURL(file)
+  }
+
+  showProgress = () => {
+    var buffer =[]
+    if(this.state.uploadStarted)
+    {
+      buffer.push(  <Grid fluid>
+                    <Row center ="xs" middle="xs">
+                    <Col xs>
+                     <CircularProgress />
+                     </Col>
+                     <Col xs>
+                     <h4>Loading ...</h4>
+                     </Col>
+                     </Row>
+                      </Grid>)
+
+    }
+
   }
 
   render() {
@@ -170,6 +192,7 @@ handleCommentChange = (event) => {
          </Row>
          </Grid>
          <br />
+         {this.showProgress()}
           <Grid fluid className="nogutter NotesUpload">
           <Row around="xs">
           <Col xs={12} sm={12} md={10} lg={8}>

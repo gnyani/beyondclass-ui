@@ -235,7 +235,7 @@ class ProgrammingAssignment extends Component{
       <RaisedButton label="Add TestCase" primary={true} icon={<Add />} onClick={this.handleShowTextFields} />
       <br />
       <br />
-      <RaisedButton label="Submit" primary={true} disabled={this.state.disabled} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
+      <RaisedButton label="Submit" primary={true} disabled={this.state.buttonDisabled} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
       </Col>
       </Row>
       </Grid>

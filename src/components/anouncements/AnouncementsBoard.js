@@ -115,14 +115,14 @@ if(this.state.isDataLoaded)
   {
   buffer.push( <Grid fluid key={i}  className="nogutter">
                <Row middle="xs">
-               <Col xs={10} sm={10} md={10} lg={10}>
+               <Col xs={10} sm={10} md={11} lg={11}>
                <li >
                 <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span>
                 <span className="messageStyle">{this.state.messages[i]}</span>
                 <span className="dateStyle">{" "+date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}</span>
                 </p></li>
                 </Col>
-               <Col xs={2} md={2} sm={2}lg={2}>
+               <Col xs={2} md={1} sm={2} lg={1}>
                 <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><Delete color='#bbbbbb' viewBox='0 0 20 20'/></IconButton>
               </Col>
               </Row>
@@ -132,7 +132,7 @@ if(this.state.isDataLoaded)
 else{
   buffer.push(<Grid fluid key={i} className="nogutter">
                <Row >
-               <Col xs={12} sm={12} md={12} lg={12}>
+               <Col xs={10} sm={10} md={11} lg={11}>
                <li>
                 <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span>
                  <span className="messageStyle">{this.state.messages[i]}</span>

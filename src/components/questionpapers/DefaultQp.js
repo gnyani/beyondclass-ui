@@ -100,7 +100,7 @@ var buffer = []
             >
               <CardHeader
                className="cardHeaderwithTopBorder"
-                title={this.state.subject}
+                title={this.state.response.split('/').pop().split('-')[3]}
                 subtitle="Question Paper"
               />
               <CardMedia>
