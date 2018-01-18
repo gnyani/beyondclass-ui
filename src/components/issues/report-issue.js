@@ -153,7 +153,7 @@ class ReportIssue extends Component{
       style={styles.uploadButton}
       containerElement="label"
       >
-      <input type="file" accept="image/*" style={styles.uploadInput} onChange={this._handleImageChange}/>
+      <input type="file" accept="image/png,image/jpeg,image/jpg" style={styles.uploadInput} onChange={this._handleImageChange}/>
       </FlatButton>
       </Col>
       </Row>

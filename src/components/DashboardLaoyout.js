@@ -345,7 +345,7 @@ else
       </div>
     </div>
     </label>
-    <input type="file" id="file-input" onChange={this._handleImageChange}/>
+    <input type="file" id="file-input" accept="image/png,image/jpeg,image/jpg" onChange={this._handleImageChange}/>
     <canvas id="myCanvas" style={{display:"none"}}></canvas>
    </div>
     <br />
