@@ -343,7 +343,7 @@ if(this.state.postUrls.length!==0)
            <CardHeader
              className="cardHeaderwithTopBorder"
              title={this.state.postOwners[i]}
-             subtitle={"Changed his profile picture at "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()}
+             subtitle={"Changed profile picture at "+date.getHours()+":"+date.getMinutes()+":"+date.getSeconds()}
              avatar={this.state.postOwnerPics[i]}
            />
            <CardMedia>
