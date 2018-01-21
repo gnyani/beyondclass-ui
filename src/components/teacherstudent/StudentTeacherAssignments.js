@@ -57,7 +57,7 @@ getAssignments(){
 }
 list(buffer){
   if(this.state.links.length === 0)
-  buffer.push(<p key={new Date()} >No Assignments found</p>)
+  buffer.push(<p key={1} >No Assignments found</p>)
   else{
   for(let i=0; i<this.state.links.length; i++){
     buffer.push( <Col xs={11} sm={11} md={9} lg={8} key={i}>

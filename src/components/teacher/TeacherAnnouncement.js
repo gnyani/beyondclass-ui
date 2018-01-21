@@ -109,7 +109,7 @@ class TeacherAnnouncement extends Component{
       }
  }
  else{
-   buffer.push(<p className="name" key={new Date()}><span className="fontStyle">
+   buffer.push(<p className="name" key={1}><span className="fontStyle">
                 You did not make any announcements to this class yet !!!
                </span></p>)
  }

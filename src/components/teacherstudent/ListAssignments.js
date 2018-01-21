@@ -118,7 +118,7 @@ listAssignments(){
   var buffer = []
 if(this.state.assignmentIds.length !== 0)
 {
-  buffer.push(<p className="paragraph" key={new Date()}>Your Pending Assigments</p>)
+  buffer.push(<p className="paragraph" key={this.state.assignmentIds.length+1}>Your Pending Assigments</p>)
   for(let i=0; i<this.state.assignmentIds.length; i++){
     var lastDate = new Date(this.state.lastDates[i])
     var createdDate = new Date(this.state.createdDates[i])

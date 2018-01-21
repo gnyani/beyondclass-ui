@@ -31,7 +31,7 @@ renderRows = () => {
   {
   buffer.push(
 
-        <tr>
+        <tr key={i}>
           <td>{this.props.inputs[i]}</td>
           <td>{this.props.outputs[i]}</td>
         </tr>
@@ -42,7 +42,7 @@ renderRows = () => {
 }
    renderInputs = () => {
      var buffer = []
-     buffer.push(<table>
+     buffer.push(<table key={1}>
            <tbody>
             <tr>
               <th>Inputs</th>

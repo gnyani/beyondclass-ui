@@ -278,15 +278,15 @@ nextButton(){
  var buffer=[];
 if(this.state.currentSlide === 2)
 {
-  buffer.push(  <FlatButton key={new Date()} label="Register" labelStyle={{textTransform: "none"}}  icon={<NavigationArrowForward color="white"/>}
+  buffer.push(  <FlatButton key={1} label="Register" labelStyle={{textTransform: "none"}}  icon={<NavigationArrowForward color="white"/>}
               className="nextButton" onClick={this.validateDetails} />)
 }
 else if(this.state.currentSlide === 1){
-  buffer.push(  <FlatButton key={new Date()} label="Next" labelStyle={{textTransform: "none"}}  icon={<NavigationArrowForward color="white"/>}
+  buffer.push(  <FlatButton key={1} label="Next" labelStyle={{textTransform: "none"}}  icon={<NavigationArrowForward color="white"/>}
               className="nextButton" onClick={this.next} />)
 }
 else{
-  buffer.push(  <FlatButton key={new Date()} label="Next" labelStyle={{textTransform: "none"}}  icon={<NavigationArrowForward color="white"/>}
+  buffer.push(  <FlatButton key={1} label="Next" labelStyle={{textTransform: "none"}}  icon={<NavigationArrowForward color="white"/>}
               style={{position:"relative",right:"50%"}}  className="nextButton" onClick={this.next} />)
 }
 return buffer;

@@ -104,7 +104,7 @@ list(buffer){
 if(this.state.isDataLoaded)
   {
   if(this.state.users.length === 0){
-    buffer.push(<p className="name" key={new Date()}><span className="messageStyle">
+    buffer.push(<p className="name" key={1}><span className="messageStyle">
                  You are all caught up,You Don't Have Any Announcements Yet !!!
                 </span></p>)
   }

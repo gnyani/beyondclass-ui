@@ -13,7 +13,7 @@ renderSubmittedAssignments(){
   var submissions = this.props.submitAssignmentList
   var assignments = this.props.assignmentsList
   if(submissions.length !== 0){
-    buffer.push(<p className="paragraph" key={new Date()}> Your submissions </p>)
+    buffer.push(<p className="paragraph" key={submissions.length+1}> Your submissions </p>)
     for(let i=0; i<submissions.length ; i++){
       var date = new Date(submissions[i].submissionDate)
       if(submissions[i].status==='ACCEPTED')

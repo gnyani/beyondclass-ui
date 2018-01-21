@@ -22,9 +22,9 @@ class Inputoutput extends Component{
 getInputTestCases(){
   var buffer = []
    if(this.props.testcases !== '')
-   buffer.push(<input type="text"  className="OutputTextInput" key={new Date()} disabled={true} value={this.props.testcases.split(/[\s \n]+/)} />)
+   buffer.push(<input type="text"  className="OutputTextInput" key={1} disabled={true} value={this.props.testcases.split(/[\s \n]+/)} />)
    else {
-     buffer.push(<input type="text"  className="OutputTextInput" key={new Date()} disabled={true} value='No Test Inputs Given' />)
+     buffer.push(<input type="text"  className="OutputTextInput" key={1} disabled={true} value='No Test Inputs Given' />)
    }
    return buffer
 }

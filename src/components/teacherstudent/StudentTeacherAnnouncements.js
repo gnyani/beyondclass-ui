@@ -19,7 +19,7 @@ class StudentTeacherAnnouncements extends Component{
   list(buffer){
 
     if(this.state.announcements.length === 0)
-    buffer.push(<p key={new Date()} className="messageStyle" style={{textAlign:"center"}}>You are all caught up, you don't have any announcements yet</p>)
+    buffer.push(<p key={1} className="messageStyle" style={{textAlign:"center"}}>You are all caught up, you don't have any announcements yet</p>)
     else{
     for (let i=0;i<this.state.announcements.length;i++){
         var date = new Date(parseInt(this.state.announcementIds[i].split('-')[6],10))

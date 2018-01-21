@@ -173,7 +173,7 @@ listAssignments(){
   var buffer = []
 if(this.state.assignmentIds.length !== 0)
 {
-  buffer.push(<p className="paragraph" key={new Date()}>Your Assigments for class {this.props.class} </p>)
+  buffer.push(<p className="paragraph" key={this.state.assignmentIds.length+1}>Your Assigments for class {this.props.class} </p>)
   for(let i=0; i<this.state.assignmentIds.length; i++){
     var lastDate = new Date(this.state.lastDates[i])
     var createdDate = new Date(this.state.createdDates[i])
@@ -228,7 +228,7 @@ if(this.state.assignmentIds.length !== 0)
   )
 }
 }else if(this.state.isDataLoaded){
-  buffer.push(<p className="paragraph" key={new Date()}>You did not give any Assigments to this class yet </p>)
+  buffer.push(<p className="paragraph" key={1}>You did not give any Assigments to this class yet </p>)
 }else{
   buffer.push(<Grid fluid className="RefreshIndicator" key={1}>
   <Row center="xs">

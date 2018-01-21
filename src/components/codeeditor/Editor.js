@@ -139,6 +139,11 @@ setMode = (e,index,value) => {
     source: map.get(value)
   })
 }
+
+scrollToBottom = () => {
+  this.endDiv.scrollIntoView({ behavior: "smooth" });
+}
+
 submitRequest(){
   var codeslist = this.state.hackerRankCodes
   var langcode = codeslist[this.state.languageValue]
@@ -146,7 +151,7 @@ submitRequest(){
     buttonDisabled: true,
     submissionStarted: true,
   })
-
+  this.scrollToBottom();
   fetch('http://'+properties.getHostName+':8080/assignments/hackerrank/submit', {
          method: 'POST',
          headers: {
@@ -173,9 +178,11 @@ submitRequest(){
         stdErr: result.stderr,
         stdOut: result.stdout,
         message: result.message,
+      },function callback(){
+        this.scrollToBottom();
       })
-
     })
+
 }
 
 compileAndRun = () => {
@@ -185,7 +192,7 @@ compileAndRun = () => {
     buttonDisabled: true,
     submissionStarted: true,
   })
-
+    this.scrollToBottom();
   fetch('http://'+properties.getHostName+':8080/assignments/hackerrank/assignment/compile', {
          method: 'POST',
          headers: {
@@ -213,8 +220,11 @@ compileAndRun = () => {
         failedCase: response.failedCase,
         errorMessage: response.errorMessage,
         buttonDisabled: false
+      },function callback(){
+        this.scrollToBottom();
       })
     })
+
 }
 
 saveProgrammingAssignment = (option) => {
@@ -260,6 +270,8 @@ submitProgrammingAssignment = () => {
     submitButton: true,
     submitConfirm: false,
   })
+
+
   fetch('http://'+properties.getHostName+':8080/assignments/hackerrank/assignment/submit', {
          method: 'POST',
          headers: {
@@ -497,6 +509,9 @@ return buffer
           >
       </Dialog>
 
+      <div style={{ float:"left", clear: "both" }}
+             ref={(el) => { this.endDiv = el; }}>
+        </div>
     </StayVisible>)
   }
 }

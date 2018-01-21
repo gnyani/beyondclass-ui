@@ -90,7 +90,7 @@ displaySyllabus = () => {
     var buffer = []
   if(this.state.response){
         buffer.push(
-          <Col xs={12} sm={12} md={11} lg={10} key={new Date()}>
+          <Col xs={12} sm={12} md={11} lg={10} key={1}>
             <Card
             style={{borderRadius:"1.5em"}}
             >

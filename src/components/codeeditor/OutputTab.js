@@ -11,14 +11,14 @@ checkStatus(){
   if(this.props.compileError !== '' && this.props.compileError !== 'Syntax OK\n')
   {
   status = 'COMPILE_ERROR'
-  buffer.push(<input type="text"  className="OutputTextInput" key={new Date()} disabled={true} value={"STATUS : "+status} />)
+  buffer.push(<input type="text"  className="OutputTextInput" key={1} disabled={true} value={"STATUS : "+status} />)
 }else if(this.props.message && this.props.message[0] === 'Runtime error'){
   status = 'RUNTIME_EXCEPTION'
-  buffer.push(<input type="text"  className="OutputTextInput" key={new Date()} disabled={true} value={"STATUS : "+status} />)
+  buffer.push(<input type="text"  className="OutputTextInput" key={1} disabled={true} value={"STATUS : "+status} />)
 }
   else {
     status = 'SUCCESS'
-    buffer.push(<input type="text"  className="OutputTextInput" key={new Date()} disabled={true} value={"STATUS : "+status} />)
+    buffer.push(<input type="text"  className="OutputTextInput" key={1} disabled={true} value={"STATUS : "+status} />)
   }
   return buffer
 }
@@ -28,7 +28,7 @@ giveConsoleOutput(){
   var stdoutstring = ''
   var stderrstring = ''
   if(this.props.compileError !== '' && this.props.compileError !== 'Syntax OK\n')
-  buffer.push(<input type="text"  className="OutputTextInput" key={new Date()} disabled={true} value={this.props.compileError}/>)
+  buffer.push(<input type="text"  className="OutputTextInput" key={1} disabled={true} value={this.props.compileError}/>)
    else if(this.props.message && this.props.message[0] === 'Runtime error')
    {
      if(this.props.stdErr.length === 1)
@@ -38,7 +38,7 @@ giveConsoleOutput(){
          stderrstring = stderrstring+'CASE '+(i+1)+': '+this.props.stdErr[i]+'\n'
        }
      }
-    buffer.push(<TextareaAutosize className="OutputTextInput" maxRows={10} key={new Date()} disabled={true} value={stderrstring} />)
+    buffer.push(<TextareaAutosize className="OutputTextInput" maxRows={10} key={1} disabled={true} value={stderrstring} />)
   }
   else{
     if(this.props.stdOut.length === 1)
@@ -48,7 +48,7 @@ giveConsoleOutput(){
       stdoutstring = stdoutstring+'CASE '+(i+1)+':\n'+this.props.stdOut[i]+'\n'
     }
   }
-    buffer.push(<TextareaAutosize maxRows={10} className="OutputTextInput" key={new Date()} disabled={true} value={stdoutstring} />)
+    buffer.push(<TextareaAutosize maxRows={10} className="OutputTextInput" key={1} disabled={true} value={stdoutstring} />)
   }
   return buffer
 }
