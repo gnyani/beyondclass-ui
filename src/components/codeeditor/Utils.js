@@ -8,7 +8,9 @@ export const modes = [
   {name: "Python 3",value:'python',key:7},
   {name: "Scala",value:'scala',key:8},
   {name: "Groovy",value:'groovy',key:9},
-  {name: "GoLang",value:'golang',key:10}
+  {name: "GoLang",value:'golang',key:10},
+  {name: "Bash",value:'sh',key:11},
+  {name: "Ruby",value:'ruby',key:12}
 ]
 
 export const editorModes = {
@@ -22,6 +24,8 @@ export const editorModes = {
   'Scala': 'scala',
   'Groovy': 'groovy',
   'GoLang': 'golang',
+  'Bash':'sh',
+  'Ruby':'ruby',
 }
 
 export const hackerRankLangNotation = {
@@ -35,6 +39,8 @@ export const hackerRankLangNotation = {
   'Scala': 'scala',
   'Groovy': 'groovy',
   'GoLang': 'go',
+  'Bash':'bash',
+  'Ruby':'ruby',
 }
 
 

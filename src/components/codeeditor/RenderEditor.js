@@ -54,6 +54,7 @@ class RenderEditor extends Component {
          floatingLabelText="Language"
          value={this.props.language}
          onChange={this.props.setMode}
+         disabled={this.props.disabledLanguage}
          style={{textAlign: 'left'}}
          underlineStyle={{borderColor: 'black'}}
          iconStyle={{fill:'black'}}

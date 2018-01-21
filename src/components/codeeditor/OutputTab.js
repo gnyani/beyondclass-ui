@@ -8,7 +8,7 @@ class OutputTab extends Component{
 checkStatus(){
   var buffer = []
   var status
-  if(this.props.compileError !== '')
+  if(this.props.compileError !== '' && this.props.compileError !== 'Syntax OK\n')
   {
   status = 'COMPILE_ERROR'
   buffer.push(<input type="text"  className="OutputTextInput" key={new Date()} disabled={true} value={"STATUS : "+status} />)
@@ -27,7 +27,7 @@ giveConsoleOutput(){
   var buffer = []
   var stdoutstring = ''
   var stderrstring = ''
-  if(this.props.compileError !== '')
+  if(this.props.compileError !== '' && this.props.compileError !== 'Syntax OK\n')
   buffer.push(<input type="text"  className="OutputTextInput" key={new Date()} disabled={true} value={this.props.compileError}/>)
    else if(this.props.message && this.props.message[0] === 'Runtime error')
    {

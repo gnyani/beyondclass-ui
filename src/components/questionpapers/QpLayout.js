@@ -40,7 +40,7 @@ class QpLayout extends Component{
         onChange={this.handleChange}
       >
         <Tab label="Question-Papers-Archive" value="QuestionPaperArchive" style={{backgroundColor: '#4d86cf'}}
-        disableTouchRipple={true} icon={<ContentArchive />}>
+         buttonStyle={{cursor: "default"}} disableTouchRipple={true} icon={<ContentArchive />}>
           <div>
             <DefaultQp userrole={this.props.userrole} />
           </div>

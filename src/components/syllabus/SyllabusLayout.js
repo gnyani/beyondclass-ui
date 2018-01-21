@@ -38,7 +38,7 @@ class SyllabusLayout extends Component{
         onChange={this.handleChange}
       >
         <Tab label="Syllabus-Archive" value="Syllabus Archive" style={{backgroundColor: '#4d86cf'}}
-        disableTouchRipple={true} icon={<ContentArchive />}>
+         buttonStyle={{cursor: "default"}} disableTouchRipple={true} icon={<ContentArchive />}>
           <div>
             <DefaultSyllabus userrole={this.props.userrole} />
           </div>

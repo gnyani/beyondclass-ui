@@ -72,6 +72,7 @@ constructor(){
      remaining: null,
      isIdle: false,
      totalActiveTime: null,
+     disabledLanguage: false,
 
   }
   this.setTheme = this.setTheme.bind(this);
@@ -328,10 +329,19 @@ if(this.props.state==="Assignment"){
        var source = response.source ? response.source : this.state.value
        var mode = response.language ? response.language : this.state.mode
        var theme = response.theme ? response.theme : this.state.theme
+       var disabled
+       if(response.language)
+         disabled = true
+       else {
+         disabled = this.state.disabledLanguage
+       }
+       var language = this.getKeyByValue(editorModes,mode)
        this.setState({
          languageValue: mode,
+         language: language,
          mode: mode,
          source: source,
+         disabledLanguage: disabled,
          theme: theme,
        })
      })
@@ -341,7 +351,7 @@ if(this.props.state==="Assignment"){
     this.setState({
       totalActiveTime: this.state.totalActiveTime + 1000
     });
-    if(this.state.totalActiveTime % 30000 === 0 && this.props.state==="Assignment")
+    if(this.state.totalActiveTime % 3000000 === 0 && this.props.state==="Assignment")
     {
       this.saveProgrammingAssignment('autosave')
     }
@@ -377,10 +387,10 @@ var buffer=[]
 if(typeof this.props.state === "undefined")
 {
 buffer.push(
-<div className="Editor">
+<div className="Editor" key={1}>
 <RenderEditor value={this.state.value} theme={this.state.theme} mode={this.state.mode} fontSize={this.state.fontSize}
              showGutter={this.state.showGutter} showPrintMargin={this.state.showPrintMargin} highlightActiveLine={this.state.highlightActiveLine}
-             setTheme={this.setTheme} setMode={this.setMode} language={this.state.language}  onChange={this.onChange}/>
+             setTheme={this.setTheme} setMode={this.setMode} disabledLanguage={this.state.disabledLanguage} language={this.state.language}  onChange={this.onChange}/>
 <br />
   <Grid fluid>
 <Row center="xs">
@@ -409,13 +419,13 @@ buffer.push(
 }
 else if(this.props.state==="Assignment"){
 
-var language = this.getKeyByValue(editorModes,this.state.mode)
+
 
   buffer.push(
     <div key={1}>
     <RenderEditor value={this.state.source} theme={this.state.theme} mode={this.state.mode} fontSize={this.state.fontSize}
                  showGutter={this.state.showGutter} showPrintMargin={this.state.showPrintMargin} highlightActiveLine={this.state.highlightActiveLine}
-                 setTheme={this.setTheme} setMode={this.setMode} language={language}  onChange={this.onChange}/>
+                 setTheme={this.setTheme} setMode={this.setMode} disabledLanguage={this.state.disabledLanguage} language={this.state.language}  onChange={this.onChange}/>
     <br />
     <Grid fluid >
     <Row start="xs">
