@@ -301,6 +301,7 @@ legend {
     padding: 0 10px;
     border: 0;
     outline: 0;
+    resize: none;
     background: transparent;
     color: mediumblue;
     font-family: 'Handlee', cursive;

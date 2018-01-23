@@ -7,15 +7,19 @@ import TextField from 'material-ui/TextField'
 import Add from 'material-ui/svg-icons/content/add'
 import AddBox from 'material-ui/svg-icons/content/add-box'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
+import SelectField from 'material-ui/SelectField'
 import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import Delete from 'material-ui/svg-icons/action/delete'
 import IconButton from 'material-ui/IconButton'
 import {Media} from '../utils/Media'
 import styled from 'styled-components'
+import Dialog from 'material-ui/Dialog'
 import { EditorState } from 'draft-js'
 import RichTextEditor from './RichTextEditor'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
+import MenuItem from 'material-ui/MenuItem'
 import RichTextEditorReadOnly from './RichTextEditorReadOnly'
 
 const StayVisible = styled.div`
@@ -39,11 +43,13 @@ constructor(){
     showTextField: false,
     questionValue: '',
     message: '',
+    numQuestions: 1,
     controlledDate: null,
     editorState: EditorState.createEmpty(),
     contentState: '',
     questionsEditoStates: [],
     submitButton: false,
+    submitConfirm: false,
   }
   this.renderTextField = this.renderTextField.bind(this)
   this.displayQuestions = this.displayQuestions.bind(this)
@@ -56,21 +62,32 @@ Enter(event){
    }
 }
 
+handleClose(){
+  this.setState({
+    submitConfirm: false,
+  })
+}
+
 validateCreateAssignment = () => {
   if(this.state.subject === '')
   notify.show("Please select the subject of the assignment","warning")
   else if(this.state.controlledDate === null)
   notify.show("Please select last submission date","warning")
   else if(this.state.questions.length === 0)
-  notify.show("Please add atlease one question","warning")
+  notify.show("Please add atleast one question","warning")
+  else if(this.state.questions.length < this.state.numQuestions)
+  notify.show("Number of Questions should be greater than or equal to the number of questions given to each student","warning")
   else {
-    this.submitCreateAssignment()
+    this.setState({
+      submitConfirm: true
+    })
   }
 }
 
-submitCreateAssignment(){
+submitCreateAssignment = () => {
   this.setState({
     submitButton: true,
+    submitConfirm: false,
   })
   fetch('http://'+properties.getHostName+':8080/assignments/create', {
          method: 'POST',
@@ -86,21 +103,24 @@ submitCreateAssignment(){
          lastdate: this.state.controlledDate,
          message: this.state.message,
          questions: this.state.questions,
-         assignmentType: 'THEORY'
+         assignmentType: 'THEORY',
+         numberOfQuesPerStudent: this.state.numQuestions,
       })
     }).then(response =>{
+      this.setState({
+        submitButton: false,
+      })
       if(response.status === 200)
       {
       notify.show("Assignment Created successfully","success")
       this.setState({
         shouldRender: new Date(),
-        submitButton: false,
       })
       this.context.router.history.goBack()
     }else if(response.status === 302){
        window.location.reload()
     }else{
-      notify.show("Something went wrong","error")
+      notify.show("Something went wrong please try again","error")
     }
     })
 }
@@ -155,6 +175,8 @@ deleteQuestion = (i) => {
     questions: newquestions
   })
 }
+
+handleNumberChange = (event, index, numQuestions) => this.setState({numQuestions});
 
 handleSubjectChange = (subjectValue) => {
   this.setState({
@@ -232,6 +254,18 @@ renderTextField(){
   return buffer;
 }
   render(){
+    const actions = [
+      <FlatButton
+        label="Confirm"
+        primary={true}
+        onTouchTap={this.submitCreateAssignment}
+      />,
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />]
+
     return(
       <StayVisible
         {...this.props}
@@ -251,6 +285,25 @@ renderTextField(){
       <TextField style={{width: '75%'}} hintText="Additional Comments" floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
       </Col>
       </Row>
+      <br />
+      <Row center="xs" middle='xs'>
+      <Col xs={8} sm={8} md={7} lg={4} >
+      <h4>Number of Questions to be given to each Student:</h4>
+      </Col>
+      <Col xs={4} sm={4} md={3} lg={3}>
+      <SelectField
+        value={this.state.numQuestions}
+        onChange={this.handleNumberChange}
+        style={{width: '50%'}}
+      >
+        <MenuItem value={1}  primaryText="One" />
+        <MenuItem value={2}  primaryText="Two" />
+        <MenuItem value={3}  primaryText="Three" />
+        <MenuItem value={4}  primaryText="Four" />
+        <MenuItem value={5}  primaryText="Five" />
+      </SelectField>
+      </Col>
+      </Row>
       </Grid>
       {this.displayQuestions()}
       <Grid fluid>
@@ -265,7 +318,16 @@ renderTextField(){
       </Col>
       </Row>
       </Grid>
-
+      <Dialog
+            title="Are you sure about creating this assignment, Once submitted it cannot be deleted or edited"
+            modal={false}
+            actions={actions}
+            open={this.state.submitConfirm}
+            autoScrollBodyContent={true}
+            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            onRequestClose={this.handleClose}
+          >
+      </Dialog>
       </div>
       </StayVisible>)
   }

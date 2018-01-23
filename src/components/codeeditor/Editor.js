@@ -7,8 +7,6 @@ import {notify} from 'react-notify-toast'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import RaisedButton from 'material-ui/RaisedButton'
 import Compile from 'material-ui/svg-icons/file/cloud-upload'
-import Save from 'material-ui/svg-icons/content/save'
-import Send from 'material-ui/svg-icons/content/send'
 import Inputoutput from './Inputoutput'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
@@ -45,8 +43,6 @@ constructor(){
     stdOut: '',
     message: '',
     buttonDisabled: false,
-    saveButton : false,
-    submitButton: false,
     submissionStarted: false,
     hackerRankCodes: '',
     value: defaultValue,
@@ -204,6 +200,7 @@ compileAndRun = () => {
          source: this.state.source,
          lang: langcode,
          assignmentid: this.props.assignmentid,
+         questionNumber: this.props.questionnumber,
       })
     }).then(response =>{
       if(response.status === 200)
@@ -227,41 +224,7 @@ compileAndRun = () => {
 
 }
 
-saveProgrammingAssignment = (option) => {
-  this.setState({
-    saveButton: true
-  })
-  fetch('http://'+properties.getHostName+':8080/assignments/hackerrank/assignment/save', {
-         method: 'POST',
-         headers: {
-               'mode': 'cors',
-               'Content-Type': 'application/json'
-           },
-       credentials: 'include',
-       body: JSON.stringify({
-         source: this.state.value,
-         language: this.state.mode,
-         tempassignmentid: this.props.assignmentid,
-         theme: this.state.theme,
-         email: this.props.email
-      })
-    }).then(response => {
-      if(response.status === 200){
-        if(option === 'autosave')
-        notify.show("Your work got autosaved","success")
-        notify.show("Assignment Saved successfully","success")
-        return response.text()
-      }
-      else{
-        notify.show("Sorry something went wrong please try again","error")
-      }
-    }).then(response =>{
-      this.setState({
-        saveButton : false
-      })
-    })
 
-}
 
 submitProgrammingAssignment = () => {
   var codeslist = this.state.hackerRankCodes
@@ -285,7 +248,8 @@ submitProgrammingAssignment = () => {
          langcode: langcode,
          tempassignmentid: this.props.assignmentid,
          theme: this.state.theme,
-         email: this.props.email
+         email: this.props.email,
+         timespent: this.state.totalActiveTime,
       })
     }).then(response => {
       if(response.status === 200){
@@ -341,13 +305,15 @@ if(this.props.state==="Assignment"){
        var source = response.source ? response.source : this.state.value
        var mode = response.language ? response.language : this.state.mode
        var theme = response.theme ? response.theme : this.state.theme
-       var disabled
-       if(response.language)
-         disabled = true
-       else {
-         disabled = this.state.disabledLanguage
-       }
+       var totalActiveTime = response.timespent ? response.timespent : this.state.totalActiveTime
+       var map = new Map(Object.entries(HelloWorldTemplates))
        var language = this.getKeyByValue(editorModes,mode)
+       var template = map.get(language)
+       var disabled = false
+       if(template !== source)
+       {
+         disabled = true
+       }
        this.setState({
          languageValue: mode,
          language: language,
@@ -355,6 +321,7 @@ if(this.props.state==="Assignment"){
          source: source,
          disabledLanguage: disabled,
          theme: theme,
+         totalActiveTime: totalActiveTime
        })
      })
   }
@@ -363,7 +330,7 @@ if(this.props.state==="Assignment"){
     this.setState({
       totalActiveTime: this.state.totalActiveTime + 1000
     });
-    if(this.state.totalActiveTime % 3000000 === 0 && this.props.state==="Assignment")
+    if(this.state.totalActiveTime % 30000 === 0 && this.props.state==="Assignment")
     {
       this.saveProgrammingAssignment('autosave')
     }
@@ -408,7 +375,7 @@ buffer.push(
 <Row center="xs">
 <Col xs={11} sm={11} md={8} lg={8}>
 <Checkbox
-  label="Test Againt Custom Input"
+  label="Test Against Custom Input"
   checked={this.state.checked}
   onCheck={this.updateCheck}
   style={{maxWidth: 250 }}
@@ -439,22 +406,10 @@ else if(this.props.state==="Assignment"){
                  showGutter={this.state.showGutter} showPrintMargin={this.state.showPrintMargin} highlightActiveLine={this.state.highlightActiveLine}
                  setTheme={this.setTheme} setMode={this.setMode} disabledLanguage={this.state.disabledLanguage} language={this.state.language}  onChange={this.onChange}/>
     <br />
-    <Grid fluid >
-    <Row start="xs">
-    <Col xs={11} sm={11}  md={10} lg={10}>
     <Grid fluid className="nogutter">
-    <Row end="xs" top="xs">
+    <Row center="xs" top="xs">
     <Col xs>
     <RaisedButton label="Complie & Run" primary = {true}  icon={<Compile />} disabled={this.state.buttonDisabled} onClick={this.compileAndRun}/>
-    </Col>
-    <Col xs>
-    <RaisedButton label="Save" primary = {true} icon={<Save />} disabled={this.state.saveButton} onClick={this.saveProgrammingAssignment.bind(this,'save')}/>
-    </Col>
-    <Col xs>
-    <RaisedButton label="Submit" primary = {true} icon={<Send />} disabled={this.state.submitButton} onClick={this.handleSubmit}/>
-    </Col>
-    </Row>
-    </Grid>
     </Col>
     </Row>
     </Grid>

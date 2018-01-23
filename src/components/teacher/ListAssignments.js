@@ -96,7 +96,6 @@ componentDidMount(){
           newadditionalComments.push(response[i].message)
         }
       }
-      console.log("question are" + JSON.stringify(newquestions))
       this.setState({
         assignmentIds: newassignmentIds,
         propicUrls: newpropicUrls,

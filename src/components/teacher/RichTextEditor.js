@@ -11,7 +11,7 @@ class RichTextEditor extends Component {
       <div>
         <Editor
           placeholder={placeholder}
-          editorState={editorState}  editorStyle={{borderStyle: 'solid',borderWidth: '0.1px'}}
+          editorState={editorState}  editorStyle={{borderStyle: 'solid',borderWidth: '0.1px',fontSize: '24'}}
           wrapperClassName="demo-wrapper"
           editorClassName="demo-editor"
           onEditorStateChange={this.props.onEditorStateChange}

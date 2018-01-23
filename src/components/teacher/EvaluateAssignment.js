@@ -17,7 +17,7 @@ import RichTextEditorReadOnly from '../teacher/RichTextEditorReadOnly'
 import { EditorState,convertFromRaw } from 'draft-js'
 import DisplayProgrammingAssignment from './DisplayProgrammingAssignment'
 import Dialog from 'material-ui/Dialog'
-import RenderCodingAssignmentResult from '../codeeditor/RenderCodingAssignmentResult'
+import RenderCodingAssignmentResult from './RenderCodingAssignmentResult'
 
 var properties = require('../properties.json');
 
@@ -76,6 +76,9 @@ class EvaluateAssignment extends Component{
      timespent: '',
      insight1: '',
      insight2: '',
+     insight3: '',
+     insight4: '',
+     insight5: '',
      assignmentType: '',
      mode: '',
      inputs: [],
@@ -113,7 +116,7 @@ class EvaluateAssignment extends Component{
          }).then(response =>{
 
            this.setState({
-             questions:response.createAssignment.questions,
+             questions:response.submittedQuestions,
              answers:response.submitAssignment.answers,
              assignmentType: response.createAssignment.assignmentType,
              timespent: response.timespent,
@@ -136,9 +139,15 @@ class EvaluateAssignment extends Component{
        }).then( response => {
          var insight1 = (response.insight1 !== null ? response.insight1 : '' )
          var insight2 = (response.insight2 !== null ? response.insight2 : '' )
+         var insight3 = (response.insight1 !== null ? response.insight3 : '' )
+         var insight4 = (response.insight2 !== null ? response.insight4 : '' )
+         var insight5 = (response.insight1 !== null ? response.insight5 : '' )
          this.setState({
            insight1: insight1,
-           insight2: insight2
+           insight2: insight2,
+           insight3: insight3,
+           insight4: insight4,
+           insight5: insight5,
          })
        })
   }
@@ -228,21 +237,23 @@ class EvaluateAssignment extends Component{
         <Col xs={11} sm={11} md={9} lg={8}>
                 <div >
                 <fieldset>
-                  <legend >Summary</legend>
+                  <legend >Insights</legend>
                   <p> Time Spent : {this.state.timespent} </p>
                   <p>{this.state.insight1}</p>
                   <p>{this.state.insight2}</p>
+                  <p>{this.state.insight3}</p>
+                  <p>{this.state.insight4}</p>
+                  <p>{this.state.insight5}</p>
                   </fieldset>
                  </div>
         </Col>
          </Row>
        </Grid>  )
     }else if(this.props.userrole === 'teacher' && this.state.assignmentType==='CODING'){
-      console.log("response status is" + response.codingAssignmentStatus)
       buffer.push(
         <div key={1}>
         <RenderCodingAssignmentResult assignmentStatus={response.codingAssignmentStatus} expected={response.expected}
-         actual={response.actual} errorMessage={response.errorMessage}
+         actual={response.actual} errorMessage={response.errorMessage} timespent={this.state.timespent}
          failedCase={response.failedCase} passCount={response.passCount} totalCount={response.totalCount}/>
          </div>
       )
