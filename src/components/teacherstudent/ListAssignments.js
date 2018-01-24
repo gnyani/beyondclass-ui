@@ -179,7 +179,7 @@ if(this.state.assignmentIds.length !== 0)
   buffer.push(<p className="paragraph" key={1} >You are all caught up !!!</p>)
 }else{
   buffer.push(
-  <Grid fluid className="RefreshIndicator">
+  <Grid fluid className="RefreshIndicator" key={1}>
   <Row center="xs">
   <Col xs>
     <RefreshIndicator

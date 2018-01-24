@@ -3,17 +3,13 @@ import {Media} from '../utils/Media'
 import styled from 'styled-components'
 import RenderEditor from './RenderEditor'
 import Checkbox from 'material-ui/Checkbox'
-import {notify} from 'react-notify-toast'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import RaisedButton from 'material-ui/RaisedButton'
 import Compile from 'material-ui/svg-icons/file/cloud-upload'
 import Inputoutput from './Inputoutput'
-import Dialog from 'material-ui/Dialog'
-import FlatButton from 'material-ui/FlatButton'
 import RenderCodingAssignmentResult from './RenderCodingAssignmentResult'
 import {HelloWorldTemplates} from './HelloWorldTemplates'
 import {editorModes,hackerRankLangNotation} from './Utils'
-import IdleTimer from 'react-idle-timer'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
@@ -65,7 +61,6 @@ constructor(){
     errorMessage: '',
     submitConfirm: false,
     timeout: 5000,
-     remaining: null,
      isIdle: false,
      totalActiveTime: null,
      disabledLanguage: false,
@@ -82,18 +77,6 @@ constructor(){
 changeTestCases(event){
   this.setState({
     testcases: event.target.value,
-  })
-}
-
-handleSubmit = () => {
-  this.setState({
-    submitConfirm: true,
-  })
-}
-
-handleClose = () => {
-  this.setState({
-    submitConfirm: false,
   })
 }
 
@@ -183,7 +166,7 @@ submitRequest(){
 
 compileAndRun = () => {
   var codeslist = this.state.hackerRankCodes
-  var langcode = codeslist[this.state.languageValue]
+  var langcode = codeslist[this.props.languageValue]
   this.setState({
     buttonDisabled: true,
     submissionStarted: true,
@@ -197,7 +180,7 @@ compileAndRun = () => {
            },
        credentials: 'include',
        body: JSON.stringify({
-         source: this.state.source,
+         source: this.props.source,
          lang: langcode,
          assignmentid: this.props.assignmentid,
          questionNumber: this.props.questionnumber,
@@ -225,50 +208,6 @@ compileAndRun = () => {
 }
 
 
-
-submitProgrammingAssignment = () => {
-  var codeslist = this.state.hackerRankCodes
-  var langcode = codeslist[this.state.languageValue]
-  this.setState({
-    submitButton: true,
-    submitConfirm: false,
-  })
-
-
-  fetch('http://'+properties.getHostName+':8080/assignments/hackerrank/assignment/submit', {
-         method: 'POST',
-         headers: {
-               'mode': 'cors',
-               'Content-Type': 'application/json'
-           },
-       credentials: 'include',
-       body: JSON.stringify({
-         source: this.state.source,
-         language: this.state.mode,
-         langcode: langcode,
-         tempassignmentid: this.props.assignmentid,
-         theme: this.state.theme,
-         email: this.props.email,
-         timespent: this.state.totalActiveTime,
-      })
-    }).then(response => {
-      if(response.status === 200){
-        notify.show("Assignment Submitted successfully","success")
-        this.context.router.history.goBack()
-        return response.text()
-      }else if(response.status === 302){
-        window.location.reload()
-      }
-      else{
-        notify.show("Sorry something went wrong please try again","error")
-      }
-    }).then(response =>{
-      this.setState({
-        submitButton : false
-      })
-    })
-}
-
 componentDidMount(){
   fetch('http://'+properties.getHostName+':8080/assignments/hackerrank/languages', {
           credentials: 'include',
@@ -283,73 +222,8 @@ componentDidMount(){
             hackerRankCodes: response.languages.codes
           })
         })
-if(this.props.state==="Assignment"){
-  fetch('http://'+properties.getHostName+':8080/assignments/get/'+this.props.assignmentid, {
-         method: 'POST',
-         credentials: 'include',
-         headers: {
-             'mode': 'cors',
-             'Content-Type': 'application/json'
-           },
-         body: this.props.email,
-     }).then(response => {
-       if(response.status === 200)
-       return response.json()
-       else if(response.status === 302){
-         window.location.reload()
-       }
-       else{
-         notify.show("something is not right","error")
-       }
-     }).then(response => {
-       var source = response.source ? response.source : this.state.value
-       var mode = response.language ? response.language : this.state.mode
-       var theme = response.theme ? response.theme : this.state.theme
-       var totalActiveTime = response.timespent ? response.timespent : this.state.totalActiveTime
-       var map = new Map(Object.entries(HelloWorldTemplates))
-       var language = this.getKeyByValue(editorModes,mode)
-       var template = map.get(language)
-       var disabled = false
-       if(template !== source)
-       {
-         disabled = true
-       }
-       this.setState({
-         languageValue: mode,
-         language: language,
-         mode: mode,
-         source: source,
-         disabledLanguage: disabled,
-         theme: theme,
-         totalActiveTime: totalActiveTime
-       })
-     })
-  }
-  this._interval = setInterval(() => {
-    if(this.state.isIdle === false)
-    this.setState({
-      totalActiveTime: this.state.totalActiveTime + 1000
-    });
-    if(this.state.totalActiveTime % 30000 === 0 && this.props.state==="Assignment")
-    {
-      this.saveProgrammingAssignment('autosave')
-    }
-   }, 1000);
+
 }
-
-componentWillUnmount() {
-    clearInterval(this._interval);
-}
-
-_onActive = () => {
-   this.setState({ isIdle: false });
- }
-
- _onIdle = () => {
-   this.setState({
-     isIdle: true,
-    });
- }
 
 
 
@@ -402,9 +276,9 @@ else if(this.props.state==="Assignment"){
 
   buffer.push(
     <div key={1}>
-    <RenderEditor value={this.state.source} theme={this.state.theme} mode={this.state.mode} fontSize={this.state.fontSize}
+    <RenderEditor value={this.props.source} theme={this.props.theme} mode={this.props.mode} fontSize={this.state.fontSize}
                  showGutter={this.state.showGutter} showPrintMargin={this.state.showPrintMargin} highlightActiveLine={this.state.highlightActiveLine}
-                 setTheme={this.setTheme} setMode={this.setMode} disabledLanguage={this.state.disabledLanguage} language={this.state.language}  onChange={this.onChange}/>
+                 setTheme={this.props.setTheme} setMode={this.props.setMode} disabledLanguage={this.props.disabledLanguage} language={this.props.language}  onChange={this.props.onChange}/>
     <br />
     <Grid fluid className="nogutter">
     <Row center="xs" top="xs">
@@ -417,16 +291,6 @@ else if(this.props.state==="Assignment"){
     <RenderCodingAssignmentResult assignmentStatus={this.state.assignmentStatus} expected={this.state.expected}
      actual={this.state.actual} errorMessage={this.state.errorMessage}
      failedCase={this.state.failedCase} passCount={this.state.passCount} totalCount={this.state.totalCount}/>
-     <IdleTimer
-     ref="idleTimer"
-     activeAction={this._onActive}
-     idleAction={this._onIdle}
-     timeout={this.state.timeout}
-     startOnLoad={false}
-     format="MM-DD-YYYY HH:MM:ss.SSS">
-
-     {/*<h1>Time Spent: {this.state.totalActiveTime}</h1>*/}
-     </IdleTimer>
     </div>
   )
 }
@@ -435,17 +299,6 @@ return buffer
 
 
   render(){
-    const actions = [
-      <FlatButton
-        label="Confirm"
-        primary={true}
-        onTouchTap={this.submitProgrammingAssignment}
-      />,
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />]
 
     return(
       <StayVisible
@@ -453,16 +306,7 @@ return buffer
       >
 
       {this.showCheckBoxAndCompile()}
-      <Dialog
-            title="Are you sure you want to submit this assignment ?"
-            modal={false}
-            actions={actions}
-            open={this.state.submitConfirm}
-            autoScrollBodyContent={true}
-            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
-            onRequestClose={this.handleClose}
-          >
-      </Dialog>
+
 
       <div style={{ float:"left", clear: "both" }}
              ref={(el) => { this.endDiv = el; }}>
