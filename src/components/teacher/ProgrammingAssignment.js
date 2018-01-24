@@ -278,6 +278,8 @@ renderRows = (j) => {
 deleteQuestion = (i) => {
   var newquestions = this.state.questions.slice()
   newquestions.splice(i,1)
+  var newquestionEditorStates = this.state.questionsEditoStates.slice()
+  newquestionEditorStates.splice(i,1)
   var newallinputs = this.state.allinputs.slice()
   newallinputs.splice(i,1)
   var newalloutputs = this.state.alloutputs.slice()
@@ -286,6 +288,7 @@ deleteQuestion = (i) => {
     allinputs: newallinputs,
     alloutputs: newalloutputs,
     questions: newquestions,
+    questionsEditoStates: newquestionEditorStates
   })
 }
 
