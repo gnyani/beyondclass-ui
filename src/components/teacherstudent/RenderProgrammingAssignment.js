@@ -27,7 +27,7 @@ constructor(){
   this.state={
     saveButton : false,
     submitButton: false,
-    source: [defaultValue,defaultValue,defaultValue,defaultValue],
+    source: [defaultValue,defaultValue,defaultValue,defaultValue,defaultValue],
     language: ["Javascript","Javascript","Javascript","Javascript","Javascript"],
     theme: ["textmate","textmate","textmate","textmate","textmate"],
     disabledLanguage: [false,false,false,false],
@@ -190,6 +190,7 @@ _onActive = () => {
             },
         credentials: 'include',
         body: JSON.stringify({
+          questions:this.props.questions.slice(),
           source: this.state.source.slice(),
           language: this.state.mode.slice(),
           langcode: langcode,

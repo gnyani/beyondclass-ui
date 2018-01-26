@@ -66,7 +66,7 @@ renderRows = () => {
       <Card
       expanded = {this.state.expanded}
       >
-     <CardTitle className="displayQuestions" title={<RichTextEditorReadOnly editorState={this.convertToEditorState(this.props.questions[0])} />} />
+     <CardTitle className="displayQuestions" title={<RichTextEditorReadOnly editorState={this.convertToEditorState(this.props.question)} />} />
      <CardText>
      <h3>TestCases:</h3>
      {this.renderInputs()}
@@ -77,7 +77,7 @@ renderRows = () => {
      theme='textmate'
      name="My_editor"
      style={{width:'90%',marginLeft: '5%'}}
-     value={this.props.source[0]}
+     value={this.props.source}
      readOnly={true}
      highlightActiveLine={false}
        />

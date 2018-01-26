@@ -72,6 +72,7 @@ class EvaluateAssignment extends Component{
      email: this.props.submissionid.split('*')[1],
      questions: [],
      answers: [],
+     questionIndex: [],
      assignmentMarks: 3,
      timespent: '',
      insight1: '',
@@ -121,6 +122,7 @@ class EvaluateAssignment extends Component{
              answers:response.submitAssignment.answers,
              assignmentType: response.createAssignment.assignmentType,
              timespent: response.timespent,
+             questionIndex: response.submitAssignment.questionIndex,
              inputs: response.createAssignment.inputs,
              outputs: response.createAssignment.outputs,
              codingAssignmentResponse : response.submitAssignment.codingAssignmentResponse,
@@ -256,6 +258,7 @@ class EvaluateAssignment extends Component{
   renderAssignment(){
    var buffer = []
    var response = this.state.codingAssignmentResponse
+
 if(this.state.assignmentType ===  'THEORY')
 {
    for(let i=0; i<this.state.questions.length;i++){
@@ -276,15 +279,15 @@ if(this.state.assignmentType ===  'THEORY')
     )
    }
  }else{
-   for(let i=0; i<this.state.questions.length;i++){
+   for(var i=0; i<this.state.questionIndex.length;i++){
    buffer.push(
-     <div key={1}>
-     <RenderCodingAssignmentResult assignmentStatus={response.codingAssignmentStatus[i]} expected={response.expected[i]}
-      actual={response.actual[i]} errorMessage={response.errorMessage[i]}
-      failedCase={response.failedCase[i]} passCount={response.passCount[i]} totalCount={response.totalCount[i]}/>
+     <div key={i}>
+     <RenderCodingAssignmentResult assignmentStatus={response[i].codingAssignmentStatus} expected={response[i].expected}
+      actual={response[i].actual} errorMessage={response[i].errorMessage}
+      failedCase={response[i].failedCase} passCount={response[i].passCount} totalCount={response[i].totalCount}/>
       <br /><br />
-     <DisplayProgrammingAssignment mode={this.state.mode[i]} questions={this.state.questions[i]}
-     source={this.state.answers[i]} inputs={this.state.inputs[i]} outputs={this.state.outputs[i]}/>
+     <DisplayProgrammingAssignment mode={this.state.mode[i]} question={this.state.questions[i]}
+     source={this.state.answers[i]} inputs={this.state.inputs[this.state.questionIndex[i]]} outputs={this.state.outputs[this.state.questionIndex[i]]}/>
      </div>
    )
   }
