@@ -183,7 +183,7 @@ compileAndRun = () => {
          source: this.props.source,
          lang: langcode,
          assignmentid: this.props.assignmentid,
-         questionNumber: this.props.questionnumber,
+         question: this.props.question,
       })
     }).then(response =>{
       if(response.status === 200)

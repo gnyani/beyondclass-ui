@@ -122,11 +122,9 @@ componentDidMount(){
        var map = new Map(Object.entries(HelloWorldTemplates))
       var language = []
       var disabled = []
-      console.log("mode is" + JSON.stringify({mode}))
 
        for(var i=0;i<mode.length;i++)
         language[i] = this.getKeyByValue(editorModes,mode[i])
-              console.log("language is" + JSON.stringify({language}))
        for(i=0;i<language.length;i++)
        {
        var template = map.get(language[i])
@@ -136,7 +134,6 @@ componentDidMount(){
          disabled[i] = true
        }
      }
-     console.log("disabled is" + JSON.stringify({disabled}))
        this.setState({
          languageValue: mode.slice(),
          language: language,
@@ -289,7 +286,7 @@ displayQuestions(){
       </Col>
       </Row>
       </Grid>
-    <Editor state={"Assignment"} questionnumber={i} email={this.props.email}  assignmentid={this.props.assignmentid}
+    <Editor state={"Assignment"} question={this.props.questions[i]}  email={this.props.email}  assignmentid={this.props.assignmentid}
             languageValue={this.state.languageValue[i]} setMode={this.setMode.bind(this,i)} setTheme={this.setTheme.bind(this,i)} mode={this.state.mode[i]}
             language={this.state.language[i]} theme={this.state.theme[i]} disabledLanguage={this.state.disabledLanguage[i]} source={this.state.source[i]} onChange={this.onChange.bind(this,i)}/>
 

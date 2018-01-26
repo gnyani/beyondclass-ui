@@ -80,6 +80,7 @@ class EvaluateAssignment extends Component{
      insight4: '',
      insight5: '',
      assignmentType: '',
+     codingAssignmentResponse: [],
      mode: '',
      inputs: [],
      outputs: [],
@@ -229,8 +230,7 @@ class EvaluateAssignment extends Component{
 
   renderInsights(){
     var buffer = []
-    var response = this.state.codingAssignmentResponse
-    if(this.props.userrole === 'teacher' && this.state.assignmentType==='THEORY'){
+    if(this.props.userrole === 'teacher' ){
       buffer.push(
         <Grid fluid key={1}>
         <Row around="xs">
@@ -249,20 +249,13 @@ class EvaluateAssignment extends Component{
         </Col>
          </Row>
        </Grid>  )
-    }else if(this.props.userrole === 'teacher' && this.state.assignmentType==='CODING'){
-      buffer.push(
-        <div key={1}>
-        <RenderCodingAssignmentResult assignmentStatus={response.codingAssignmentStatus} expected={response.expected}
-         actual={response.actual} errorMessage={response.errorMessage} timespent={this.state.timespent}
-         failedCase={response.failedCase} passCount={response.passCount} totalCount={response.totalCount}/>
-         </div>
-      )
     }
     return buffer
   }
 
   renderAssignment(){
    var buffer = []
+   var response = this.state.codingAssignmentResponse
 if(this.state.assignmentType ===  'THEORY')
 {
    for(let i=0; i<this.state.questions.length;i++){
@@ -283,12 +276,18 @@ if(this.state.assignmentType ===  'THEORY')
     )
    }
  }else{
+   for(let i=0; i<this.state.questions.length;i++){
    buffer.push(
      <div key={1}>
-     <DisplayProgrammingAssignment mode={this.state.mode} questions={this.state.questions}
-     source={this.state.answers} inputs={this.state.inputs} outputs={this.state.outputs}/>
+     <RenderCodingAssignmentResult assignmentStatus={response.codingAssignmentStatus[i]} expected={response.expected[i]}
+      actual={response.actual[i]} errorMessage={response.errorMessage[i]}
+      failedCase={response.failedCase[i]} passCount={response.passCount[i]} totalCount={response.totalCount[i]}/>
+      <br /><br />
+     <DisplayProgrammingAssignment mode={this.state.mode[i]} questions={this.state.questions[i]}
+     source={this.state.answers[i]} inputs={this.state.inputs[i]} outputs={this.state.outputs[i]}/>
      </div>
    )
+  }
  }
    return buffer;
   }
