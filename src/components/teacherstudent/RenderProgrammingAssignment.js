@@ -109,6 +109,10 @@ componentDidMount(){
      }).then(response => {
        if(response.status === 200)
        return response.json()
+       else if(response.status === 403){
+         notify.show("You might have already submitted the assignment or the assignment got expired","warning")
+         this.context.router.history.goBack()
+       }
        else{
          notify.show("something is not right","error")
        }

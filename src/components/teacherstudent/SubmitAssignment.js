@@ -150,26 +150,29 @@ handleAnswerChange(i,event) {
        }).then(response => {
          if(response.status === 200)
          return response.json()
-         else if(response.status === 302){
-           this.context.router.history.push('/')
+         else if(response.status === 403){
+           notify.show("You might have already submitted the assignment or the assignment got expired","warning")
+           this.context.router.history.goBack()
          }
          else{
            notify.show("something is not right","error")
          }
        }).then(response => {
-         if(response.answers){
-         this.setState({
-           questions: response.questions,
-           answers: response.answers,
-           assignmentType: response.assignmentType,
-           totalActiveTime: response.timespent,
-         })
-       }else{
-         this.setState({
-           questions: response.questions,
-           assignmentType: response.assignmentType,
-         })
-       }
+         if(response){
+          if(response.answers){
+              this.setState({
+                questions: response.questions,
+                answers: response.answers,
+                assignmentType: response.assignmentType,
+                totalActiveTime: response.timespent,
+              })
+            }else{
+              this.setState({
+                questions: response.questions,
+                assignmentType: response.assignmentType,
+              })
+            }
+          }
        })
 
 this._interval = setInterval(() => {
