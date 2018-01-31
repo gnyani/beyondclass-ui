@@ -6,6 +6,7 @@ import {Grid,Row,Col} from 'react-flexbox-grid'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import Divider from 'material-ui/Divider'
 import Avatar from 'material-ui/Avatar'
+import {notify} from 'react-notify-toast'
 import {List, ListItem} from 'material-ui/List'
 import IconButton from 'material-ui/IconButton'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
@@ -60,9 +61,6 @@ componentDidMount(){
     }).then(response =>{
       if(response.status === 200)
       return response.json()
-      else if(response.status === 302){
-         window.location.reload()
-      }
     }).then(response => {
       this.setState({
         numberOfDaysLeft : response.numberOfDaysLeft,
@@ -76,7 +74,10 @@ componentDidMount(){
         percentOfEvaluationsDone: response.percentOfEvaluationsDone,
         isDataLoaded: true,
       })
-    })
+    }).catch(response => {
+    notify.show("Please login your session expired","error");
+    this.context.router.history.push('/');
+   });
 }
 
 nonZeroSubmissions = () => {

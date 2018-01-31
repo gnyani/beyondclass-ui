@@ -1,4 +1,5 @@
 import React,{Component} from 'react'
+import {notify} from 'react-notify-toast'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
@@ -51,9 +52,6 @@ class StudentTeacherAnnouncements extends Component{
           }).then(response => {
             if(response.status === 200)
             return response.json()
-            else if(response.status === 302){
-               window.location.reload()
-            }
           }).then(response => {
             var newmessage = []
             var newannouncementIds =[]
@@ -68,7 +66,10 @@ class StudentTeacherAnnouncements extends Component{
                  teachernames: newTeacherNames,
                  total: response.totalPages
            })
-          })
+          }).catch(response => {
+          notify.show("Please login your session expired","error");
+          this.context.router.history.push('/');
+         });
   }
 
   componentDidMount(){

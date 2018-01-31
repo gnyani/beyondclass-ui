@@ -37,8 +37,6 @@ getAssignments(){
        if(response.status === 200)
        {
           return response.json();
-       }else if(response.status === 302){
-          window.location.reload()
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -53,7 +51,10 @@ getAssignments(){
          links : response,
          fileNames: newfileNames,
        })
-    })
+    }).catch(response => {
+    notify.show("Please login your session expired","error");
+    this.context.router.history.push('/');
+   });
 }
 list(buffer){
   if(this.state.links.length === 0)

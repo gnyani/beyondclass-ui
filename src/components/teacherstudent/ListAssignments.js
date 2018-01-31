@@ -48,8 +48,6 @@ componentDidMount(){
       return response.json();
       else if(response.status === 204){
         return response
-      }else if(response.status === 302){
-         window.location.reload()
       }
       else{
         notify.show("Failed to Load Assignments","Error")
@@ -89,7 +87,10 @@ componentDidMount(){
         additionalComments: newadditionalComments,
         isDataLoaded: true,
       })
-    })
+    }).catch(response => {
+    notify.show("Please login again your session expired","error");
+    this.context.router.history.push('/');
+   })
 }
 
 handleExpand(i){

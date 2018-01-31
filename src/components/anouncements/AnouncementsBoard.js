@@ -76,8 +76,6 @@ handleSubmit(){
        if(response.status === 201 )
        {
           return response.text();
-       }else if(response.status === 302){
-         window.location.reload()
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -90,7 +88,11 @@ handleSubmit(){
          message: '',
        },function(){this.componentDidMount()})
        notify.show("Anouncement uploaded successfully","success")
-     })}
+     }).catch(response => {
+     notify.show("Please login before posting an announcement","error");
+     this.context.router.history.push('/');
+    });
+   }
 }
 handleDialogOpen(i){
   this.setState({
@@ -173,9 +175,7 @@ populateData(pageNumber){
         }).then(response => {
           if(response.status === 200 )
           return response.json()
-          else if(response.status === 302){
-            window.location.reload()
-          }else{
+          else{
             notify.show("something went wrong","error")
           }
         }).then(response => {
@@ -198,7 +198,10 @@ populateData(pageNumber){
                total: response.totalPages,
                isDataLoaded: true,
          })
-        })
+       }).catch(response => {
+        notify.show("Please login before viewing announcements","error");
+        this.context.router.history.push('/');
+       });
 }
 
 componentDidMount(){
@@ -239,14 +242,14 @@ DeleteAnnouncement(){
         {
           notify.show("Announcement Deleted successfully","success")
           this.componentDidMount()
-        }else if(response.status === 302){
-          window.location.reload()
         }
         else{
           notify.show("Sorry something went wrong", "error")
         }
-
-      })
+      }).catch(response => {
+      notify.show("Please login before you delete an announcement","error");
+      this.context.router.history.push('/');
+     });
       this.handleClose()
 }
 render(){

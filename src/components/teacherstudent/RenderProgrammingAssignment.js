@@ -88,13 +88,14 @@ componentDidMount(){
         }).then(response => {
           if(response.status === 200)
           return response.json()
-          else if(response.status === 302)
-          window.location.reload()
         }).then(response => {
           this.setState({
             hackerRankCodes: response.languages.codes
           })
-        })
+        }).catch(response => {
+        notify.show("Please login your session expired","error");
+        this.context.router.history.push('/');
+       });
 
 
   fetch('http://'+properties.getHostName+':8080/assignments/get/'+this.props.assignmentid, {
@@ -108,9 +109,6 @@ componentDidMount(){
      }).then(response => {
        if(response.status === 200)
        return response.json()
-       else if(response.status === 302){
-         window.location.reload()
-       }
        else{
          notify.show("something is not right","error")
        }
@@ -143,7 +141,10 @@ componentDidMount(){
          theme: theme,
          totalActiveTime: totalActiveTime
        })
-     })
+     }).catch(response => {
+     notify.show("Please login your session expired","error");
+     this.context.router.history.push('/');
+    });
      this._interval = setInterval(() => {
        if(this.state.isIdle === false)
        this.setState({
@@ -204,8 +205,6 @@ _onActive = () => {
          notify.show("Assignment Submitted successfully","success")
          this.context.router.history.goBack()
          return response.text()
-       }else if(response.status === 302){
-         window.location.reload()
        }
        else{
          notify.show("Sorry something went wrong please try again","error")
@@ -214,7 +213,10 @@ _onActive = () => {
        this.setState({
          submitButton : false
        })
-     })
+     }).catch(response => {
+     notify.show("Please login your session expired","error");
+     this.context.router.history.push('/');
+    });
  }
 
 saveProgrammingAssignment = (option) => {
@@ -250,7 +252,10 @@ saveProgrammingAssignment = (option) => {
       this.setState({
         saveButton : false
       })
-    })
+    }).catch(response => {
+    notify.show("Please login your session expired","error");
+    this.context.router.history.push('/');
+   });
 }
 
 onChange = (i,newValue) => {

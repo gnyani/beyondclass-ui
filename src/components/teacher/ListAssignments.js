@@ -66,8 +66,6 @@ componentDidMount(){
           assignmentType: [],
           additionalComments: [],
         })
-      }else if(response.status === 302){
-         window.location.reload()
       }
       else{
         notify.show("Failed to Load Assignments","Error")
@@ -107,7 +105,10 @@ componentDidMount(){
         additionalComments: newadditionalComments,
         isDataLoaded: true,
       })
-    })
+    }).catch(response => {
+    notify.show("Please login before viewing dashboard","error");
+    this.context.router.history.push('/');
+   });
 }
 
 convertToEditorState = (object) => {

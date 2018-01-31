@@ -65,9 +65,6 @@ class Notifications extends Component {
           }).then(response =>{
             if(response.status === 200)
               return response.json()
-              else if(response.status === 302){
-                window.location.reload()
-              }
           }).then(response =>{
             var newnotificationIds = []
             var newnotificationMessages = []
@@ -89,7 +86,10 @@ class Notifications extends Component {
               createdDates: newcreatedDates,
               isDataLoaded: true
             })
-          })
+          }).catch(response => {
+          notify.show("Please login before viewing notifications","error");
+          this.context.router.history.push('/');
+         });
   }
 handleRoute(route,index){
   this.context.router.history.push('/'+route)
@@ -110,10 +110,11 @@ handleNotificationDelete(index){
       {
         notify.show("Deleted","success")
         this.componentDidMount()
-      }else if(response.status === 302){
-        window.location.reload()
       }
-    })
+    }).catch(response => {
+    notify.show("Please login before viewing dashboard","error");
+    this.context.router.history.push('/');
+   });
 }
 markAllAsRead = () => {
   fetch('http://'+properties.getHostName+':8080/user/notifications/markallasread',{
@@ -123,15 +124,16 @@ markAllAsRead = () => {
           if(response.status === 200)
           {
             notify.show("Success","success")
-          }else if(response.status === 302){
-            window.location.reload()
           }
           else{
             notify.show("Sorry something went wrong please try again later","error")
           }
       }).then(response =>{
          window.location.reload()
-      })
+      }).catch(response => {
+      notify.show("Please login before viewing notifications","error");
+      this.context.router.history.push('/');
+     });
 }
 
   handleNotificationRead(index){
@@ -147,10 +149,10 @@ markAllAsRead = () => {
       }).then(response => {
         if(response.status === 200)
           this.componentDidMount()
-      else if(response.status === 302){
-          window.location.reload()
-          }
-      })
+      }).catch(response => {
+      notify.show("Please login before viewing notifications","error");
+      this.context.router.history.push('/');
+     });
 }
 list(buffer){
   if(!this.state.isDataLoaded)

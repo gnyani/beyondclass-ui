@@ -65,9 +65,6 @@ class TeacherAnnouncement extends Component{
          {
             return response.text();
          }
-         else if(response.status === 302){
-                  window.location.reload()
-        }
          else{
            let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
            notify.show("sorry something went wrong","custom",5000,myColor)
@@ -81,7 +78,11 @@ class TeacherAnnouncement extends Component{
          })
          this.componentDidMount()
          notify.show("Anouncement uploaded successfully","success")
-       })}
+       }).catch(response => {
+       notify.show("Please login your session expired","error");
+       this.context.router.history.push('/');
+      });
+     }
   }
 
  list(buffer){
@@ -136,7 +137,10 @@ class TeacherAnnouncement extends Component{
                  announcements: newmessage,
                  total: response.totalPages
            })
-          })
+          }).catch(response => {
+          notify.show("Please login your session expired","error");
+          this.context.router.history.push('/');
+         });
   }
 
   componentDidMount(){
@@ -163,7 +167,10 @@ class TeacherAnnouncement extends Component{
             notify.show("Sorry something went wrong", "error")
           }
 
-        })
+        }).catch(response => {
+        notify.show("Please login your session expired","error");
+        this.context.router.history.push('/');
+       });
         this.handleClose()
   }
 

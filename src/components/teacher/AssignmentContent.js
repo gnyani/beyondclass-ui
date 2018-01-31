@@ -117,12 +117,13 @@ submitCreateAssignment = () => {
         shouldRender: new Date(),
       })
       this.context.router.history.goBack()
-    }else if(response.status === 302){
-       window.location.reload()
     }else{
       notify.show("Something went wrong please try again","error")
     }
-    })
+    }).catch(response => {
+    notify.show("Please login your session expired","error");
+    this.context.router.history.push('/');
+   });
 }
 
 onEditorStateChange: Function = (editorState) => {

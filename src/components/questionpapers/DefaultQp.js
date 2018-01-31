@@ -64,8 +64,6 @@ fetchQp(){
        {
          notify.show("Retrieval Successful","success");
         return response.text();
-       }else if(response.status === 302){
-           window.location.reload()
        }else if(response.status === 404){
          notify.show("No records found for this year","error")
        }
@@ -78,7 +76,10 @@ fetchQp(){
          response : response,
          isLoaded : true
        })
-     })
+     }).catch(response => {
+     notify.show("Please login your session expired","error");
+     this.context.router.history.push('/');
+    });
 }
 
 handleChange = (event, index, branch) => this.setState({branch});

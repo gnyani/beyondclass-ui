@@ -49,9 +49,6 @@ componentDidMount(){
      }).then(response => {
        if(response.status===200)
        return response.json()
-       else if(response.status === 302){
-         window.location.reload()
-       }
        else {
          notify.show("Something went wrong","error")
        }
@@ -67,7 +64,10 @@ componentDidMount(){
          assignmentsList: response.assignmentsList,
          isDataLoaded: true,
        })
-     })
+     }).catch(response => {
+     notify.show("Please login before viewing your submissions","error");
+     this.context.router.history.push('/');
+    });
 }
 
   render(){

@@ -115,8 +115,6 @@ uploadProPic(){
        {
          notify.show("Avatar Changed successfully","success")
           return response.text();
-       }else if(response.status === 302){
-          window.location.reload()
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -130,7 +128,10 @@ uploadProPic(){
        },function OnstateChange(){
          this.postTimeline()
        })
-     })
+     }).catch(response => {
+     notify.show("Please login your session expired","error");
+     this.context.router.history.push('/');
+    });
 }
 postTimeline(){
   fetch('http://'+properties.getHostName+':8080/users/timeline/upload', {
@@ -149,8 +150,6 @@ postTimeline(){
        if(response.status === 200)
        {
           notify.show("profilepic updated successfully")
-       }else if(response.status === 302){
-          window.location.reload()
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -158,7 +157,10 @@ postTimeline(){
        }
        //FIX THIS: reloading the whole page is not a good idea
        window.location.reload()
-     })
+     }).catch(response => {
+     notify.show("Please login before viewing dashboard","error");
+     this.context.router.history.push('/');
+    });
 }
 
 handleDialogclose(){
@@ -182,10 +184,11 @@ handleLogout(){
               isLoaded : 'true'
             })
             this.context.router.history.push('/');
-          }else if(response.status === 302){
-             window.location.reload()
           }
-        })
+        }).catch(response => {
+        notify.show("Please login your session expired","error");
+        this.context.router.history.push('/');
+       });
   }
 dashboard(){
   if(this.state.userrole === 'student'){
@@ -211,9 +214,6 @@ componentDidMount(){
         }).then(response => {
           if(response.status === 200)
           return response.json()
-          else if(response.status === 302){
-             window.location.reload()
-          }
         }).then(response => {
           this.setState({
               username: response.firstName,

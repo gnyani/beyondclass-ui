@@ -97,8 +97,6 @@ class ReportIssue extends Component{
            if(response.status === 200)
            {
               return response.text();
-           }else if(response.status === 302){
-             window.location.reload()
            }
            else{
              let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -112,7 +110,10 @@ class ReportIssue extends Component{
              message: '',
            })
            notify.show("Thank you for reporting the issue","success")
-         })
+         }).catch(response => {
+         notify.show("Please login before reporting any issues","error");
+         this.context.router.history.push('/');
+        });
     }
   }
 

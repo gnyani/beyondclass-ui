@@ -87,8 +87,6 @@ handleCommentChange = (event) => {
            if(response.status === 201)
            {
               return response.text();
-           }else if(response.status === 302){
-             window.location.reload()
            }
            else{
              let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -104,7 +102,10 @@ handleCommentChange = (event) => {
              uploadStarted: false,
            })
            notify.show("file upload successful","success")
-         })
+         }).catch(response => {
+         notify.show("Please login before uploading notes","error");
+         this.context.router.history.push('/');
+        });
     }
   }
 

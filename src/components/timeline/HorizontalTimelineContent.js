@@ -170,8 +170,6 @@ class HorizontalTimelineContent extends React.Component {
            if(response.status === 200)
            {
               return response.text();
-           }else if(response.status === 302){
-              window.location.reload()
            }
            else{
              let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -188,7 +186,10 @@ class HorizontalTimelineContent extends React.Component {
            })
            notify.show("Post uploaded successfully","success")
            this.componentWillMount()
-         })
+         }).catch(response => {
+         notify.show("Please login your session expired","error");
+         this.context.router.history.push('/');
+        });
 
   }
 }
@@ -210,13 +211,14 @@ deletePost(){
     {
      notify.show(response,"success")
      this.componentWillMount()
-   }else if(response.status === 302){
-      window.location.reload()
    }
    else{
      notify.show("sorry something went wrong please try again","error")
    }
-   })
+   }).catch(response => {
+   notify.show("Please login your session expired","error");
+   this.context.router.history.push('/');
+  });
    this.setState({
      DialogconfirmDelete: false
    })
@@ -489,14 +491,15 @@ postComment(i){
             commentBox: []
           })
           this.getPosts(this.state.value)
-       }else if(response.status === 302){
-          window.location.reload()
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
          notify.show("sorry something went wrong","custom",5000,myColor)
        }
-     })
+     }).catch(response => {
+     notify.show("Please login your session expired","error");
+     this.context.router.history.push('/');
+    });
 }
 
 getComments(i){
@@ -549,7 +552,10 @@ getLikedUsers(i){
    Dialogopen: true,
    likedUsers: likedusers
    })
-   })
+   }).catch(response => {
+   notify.show("Please login your session expired","error");
+   this.context.router.history.push('/');
+  });
 }
 
   disLikes(i){
@@ -566,7 +572,10 @@ getLikedUsers(i){
          this.setState({
          likeCounts: postlikes
          })
-       })
+       }).catch(response => {
+       notify.show("Please login your session expired","error");
+       this.context.router.history.push('/');
+      });
 }
 
   addLikes(i){
@@ -587,7 +596,10 @@ getLikedUsers(i){
           likeCounts: postlikes
           })
       }
-     })
+     }).catch(response => {
+     notify.show("Please login your session expired","error");
+     this.context.router.history.push('/');
+    });
   }
 
   getPosts(index){
@@ -603,9 +615,6 @@ getLikedUsers(i){
      }).then(response => {
        if(response.status === 200)
        return response.json()
-       else if(response.status === 302){
-          window.location.reload()
-       }
      }).then(response => {
        var newdescription = []
        var newpostUrls = []
@@ -646,7 +655,10 @@ getLikedUsers(i){
           postOwnerPics: newpostOwnerPics,
           isprofilepicchange: newisprofilepicchange,
         })
-      })
+      }).catch(response => {
+      notify.show("Please login your session expired","error");
+      this.context.router.history.push('/');
+     });
   }
 
   handleCommentChange = (e) => this.setState({commentText:e.target.value});

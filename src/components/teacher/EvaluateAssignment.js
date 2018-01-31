@@ -110,8 +110,6 @@ class EvaluateAssignment extends Component{
        }).then(response =>{
            if(response.status===200){
              return response.json();
-           }else if(response.status === 302){
-              window.location.reload()
            }else{
              notify.show('Sorry something Went wrong',"error")
            }
@@ -129,7 +127,10 @@ class EvaluateAssignment extends Component{
              mode: response.submitAssignment.mode,
              isDataLoaded: true,
            })
-         })
+         }).catch(response => {
+         notify.show("Please login your session expired","error");
+         this.context.router.history.push('/');
+        });
 
  fetch('http://'+properties.getHostName+':8080/assignments/teacher/insights/'+this.props.submissionid.replace('*','-'), {
           credentials: 'include',
@@ -137,8 +138,6 @@ class EvaluateAssignment extends Component{
        }).then(response => {
          if(response.status === 200)
          return response.json()
-         else if(response.status === 302)
-          window.location.reload()
        }).then( response => {
          var insight1 = (response.insight1 !== null ? response.insight1 : '' )
          var insight2 = (response.insight2 !== null ? response.insight2 : '' )
@@ -152,7 +151,10 @@ class EvaluateAssignment extends Component{
            insight4: insight4,
            insight5: insight5,
          })
-       })
+       }).catch(response => {
+       notify.show("Please login your session expired","error");
+       this.context.router.history.push('/');
+      });
   }
   rejectAssignment = () => {
     fetch('http://'+properties.getHostName+':8080/assignments/update/evaluation/'+this.state.assignmentid+'-'+this.state.email, {
@@ -170,14 +172,15 @@ class EvaluateAssignment extends Component{
          if(response.status === 200)
          {notify.show("Assignment Evaluated Successfully","success")
          this.context.router.history.goBack()
-       }else if(response.status === 302){
-          window.location.reload()
        }
          else {
            notify.show("Sorry Something Went Wrong","error")
          }
          this.handleClose()
-       })
+       }).catch(response => {
+       notify.show("Please login your session expired","error");
+       this.context.router.history.push('/');
+      });
   }
 
   convertToEditorState = (object) => {
@@ -202,14 +205,15 @@ class EvaluateAssignment extends Component{
          if(response.status === 200)
          {notify.show("Assignment Evaluated Successfully","success")
          this.context.router.history.goBack()
-       }else if(response.status === 302){
-         window.location.reload()
        }
          else {
            notify.show("Sorry Something Went Wrong","error")
          }
          this.handleClose()
-       })
+       }).catch(response => {
+       notify.show("Please login your session expired","error");
+       this.context.router.history.push('/');
+      });
   }
 
   handleMarksChange(valueAsNumber){

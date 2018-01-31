@@ -7,6 +7,7 @@ import {Grid,Row,Col} from 'react-flexbox-grid'
 import RaisedButton from 'material-ui/RaisedButton'
 import Compile from 'material-ui/svg-icons/file/cloud-upload'
 import Inputoutput from './Inputoutput'
+import {notify} from 'react-notify-toast'
 import RenderCodingAssignmentResult from './RenderCodingAssignmentResult'
 import {HelloWorldTemplates} from './HelloWorldTemplates'
 import {editorModes,hackerRankLangNotation} from './Utils'
@@ -146,8 +147,6 @@ submitRequest(){
     }).then(response => {
       if(response.status === 200)
       return response.json()
-      else if(response.status === 302)
-      window.location.reload()
     }).then(response =>{
       var result = response.result
 
@@ -160,7 +159,10 @@ submitRequest(){
       },function callback(){
         this.scrollToBottom();
       })
-    })
+    }).catch(response => {
+    notify.show("Please login before you can compile your program","error");
+    this.context.router.history.push('/');
+   });
 
 }
 
@@ -188,8 +190,6 @@ compileAndRun = () => {
     }).then(response =>{
       if(response.status === 200)
       return response.json()
-      else if(response.status === 302)
-      window.location.reload()
     }).then(response =>{
       this.setState({
         assignmentStatus: response.codingAssignmentStatus,
@@ -203,7 +203,10 @@ compileAndRun = () => {
       },function callback(){
         this.scrollToBottom();
       })
-    })
+    }).catch(response => {
+    notify.show("Please login before you compile your program","error");
+    this.context.router.history.push('/');
+   })
 
 }
 
@@ -215,13 +218,14 @@ componentDidMount(){
         }).then(response => {
           if(response.status === 200)
           return response.json()
-          else if(response.status === 302)
-          window.location.reload()
         }).then(response => {
           this.setState({
             hackerRankCodes: response.languages.codes
           })
-        })
+        }).catch(response => {
+        notify.show("Please login before accessing code editor","error");
+        this.context.router.history.push('/');
+       });
 
 }
 

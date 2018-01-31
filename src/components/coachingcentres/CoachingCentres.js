@@ -221,9 +221,7 @@ fetch('http://'+properties.getHostName+':8080/coachingcentres/get/'+this.state.c
         }).then(response => {
           if(response.status === 200)
          return response.json()
-         else if(response.status === 302){
-           this.context.router.history.push('/')
-         }else{
+         else{
            notify.show("something went wrong","error")
          }
         }).then(response => {
@@ -247,7 +245,10 @@ fetch('http://'+properties.getHostName+':8080/coachingcentres/get/'+this.state.c
           negativeReviews: newNegativeReviews.slice(),
           reviewBoxOpen: true,
          });
-        })
+        }).catch(response => {
+        notify.show("Please login your session expired","error");
+        this.context.router.history.push('/');
+       });
 }
 
 showReviewBox(i){
@@ -314,8 +315,6 @@ postReview(i){
   if(response.status === 200)
   {
      return response.text();
-  }else if(response.status === 302){
-    this.context.router.history.push('/')
   }
   else{
     let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -323,7 +322,10 @@ postReview(i){
   }
 }).then(response => {
   notify.show("Review posted successfully","success")
-})
+}).catch(response => {
+notify.show("Please login your session expired","error");
+this.context.router.history.push('/');
+});
 }
 this.setState({
   reviewText:' ',
@@ -378,9 +380,7 @@ populateData(){
         }).then(response => {
           if(response.status===200)
           return response.json()
-          else if(response.status === 302){
-            this.context.router.history.push('/')
-          }else{
+          else{
             notify.show("something went wrong",'error')
           }
         }).then(response => {
@@ -413,7 +413,10 @@ populateData(){
          },function afterStateChange () {
               this.renderOrgCards();
           })
-        })
+        }).catch(response => {
+        notify.show("Please login your session expired","error");
+        this.context.router.history.push('/');
+       });
 }
 getCityTextField(){
   if(this.state.coachingType === 1)

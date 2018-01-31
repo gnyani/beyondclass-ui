@@ -7,6 +7,8 @@ import {Edit} from '../../styledcomponents/SvgIcons.js'
 import IconButton from 'material-ui/IconButton';
 import DatePicker from 'material-ui/DatePicker';
 import FlatButton from 'material-ui/FlatButton'
+import { withRouter } from 'react-router'
+import PropTypes from 'prop-types'
 import {notify} from 'react-notify-toast';
 import {NavigationArrowForward} from '../../styledcomponents/SvgIcons.js';
 import {Media} from '../utils/Media'
@@ -94,9 +96,6 @@ updateProfile(){
       }).then(response => {
         if(response.status === 200)
         return response.text();
-        else if(response.status === 302){
-          window.location.reload()
-        }
       }).then(response =>{
         if(response === "success")
         {
@@ -105,7 +104,10 @@ updateProfile(){
       }else {
         notify.show("Sorry something went wrong please try again later","error")
         }
-      })
+      }).catch(response => {
+      notify.show("Please login before updating your profile","error");
+      this.context.router.history.push('/');
+     });
 }
   render(){
     return(
@@ -158,4 +160,7 @@ updateProfile(){
     )
   }
 }
-export default UpdateProfile;
+UpdateProfile.contextTypes = {
+    router: PropTypes.object
+};
+export default withRouter(UpdateProfile);

@@ -96,7 +96,10 @@ validateOtp(){
       else {
       notify.show("please enter a valid Otp","error")
       }
-  })
+  }).catch(response => {
+  notify.show("Please login your session expired","error");
+  this.context.router.history.push('/');
+ });
 
 }
 
@@ -134,7 +137,10 @@ validateOtp(){
         else{
           notify.show(response,"error")
         }
-      })
+      }).catch(response => {
+      notify.show("Please login your session expired","error");
+      this.context.router.history.push('/');
+     });
  }else{
    fetch('http://'+properties.getHostName+':8080/users/registration', {
            credentials: 'include',
@@ -165,7 +171,10 @@ validateOtp(){
          else{
            notify.show(response,"error")
          }
-       })
+       }).catch(response => {
+       notify.show("Please login your session expired","error");
+       this.context.router.history.push('/');
+      });
  }
  }
 
@@ -295,6 +304,28 @@ handleClose = () => {
   this.setState({confirmDialog: false,otpDialog: false});
 };
 
+logoutSession = () => {
+  fetch('http://'+properties.getHostName+':8080/user/logout', {
+           credentials: 'include',
+           method: 'GET'
+        }).then(response => {
+           return response.text()
+        }).then(response => {
+          if(response){
+            let myColor = { background: '#0E1717', text: "#FFFFFF" };
+            notify.show('Logout Successful!','success',3000,myColor);
+            this.setState({
+              isLoggedIn : 'false',
+              isLoaded : 'true'
+            })
+            this.context.router.history.push('/');
+          }
+        }).catch(response => {
+        notify.show("Please login your session expired","error");
+        this.context.router.history.push('/');
+       });
+}
+
 generateOtp(){
   fetch('http://'+properties.getHostName+':8080/user/generate/otp', {
          credentials: 'include',
@@ -307,15 +338,16 @@ generateOtp(){
         }).then(response => {
           if(response.status === 200)
           return response.text()
-          else if(response.status === 302)
-           window.location.reload()
         }).then(response =>{
           if(response !== 'success')
           notify.show("Could not generate OTP please try again","error")
           else {
             this.setState({confirmDialog: false,otpDialog: true})
           }
-        })
+        }).catch(response => {
+        notify.show("Please login your session expired","error");
+        this.context.router.history.push('/');
+       });
 }
 
   render(){
@@ -352,7 +384,13 @@ generateOtp(){
     return(
   <div style={{overflow:"auto"}}>
   <br /><br /><br /><br /><br /><br />
-    <Grid fluid className="nogutter">
+    <Grid fluid className="nogutter register">
+    <Row around="xs">
+    <Col xs={4} sm={4} md={3} lg={3}>
+    <FlatButton key={1} label="Logout"   className="nextButton" onClick={this.logoutSession} />
+    </Col>
+    </Row>
+    <br /><br />
     <Row around="xs">
     <Col xs={11} sm ={11} md={10} lg={8}>
     <div className="RegisterContainer">

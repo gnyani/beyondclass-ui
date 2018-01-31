@@ -63,8 +63,6 @@ fetchSyllabus(){
        {
          notify.show("Retrieval Successful","success");
           return response.text();
-       }else if(response.status === 302){
-          window.location.reload()
        }else if(response.status === 404){
          notify.show("No records found for this subject","error")
        }
@@ -77,7 +75,10 @@ fetchSyllabus(){
          response : response,
          isLoaded : true
        })
-     })
+     }).catch(response => {
+     notify.show("Please login your session expired","error");
+     this.context.router.history.push('/');
+    });
 }
 
 handleSubjectChange(subjectValue){

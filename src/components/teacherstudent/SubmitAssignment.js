@@ -73,12 +73,13 @@ saveAssignment(option){
         if(option === 'autosave' )
         notify.show("Your work is auto saved","success")
         notify.show('Your work is saved,you can come back anytime here to continue',"success")
-      }else if(response.status === 302){
-         window.location.reload()
       }else if(response.status === 500){
         notify.show('Sorry something went wrong please try again',"error")
       }
-    })
+    }).catch(response => {
+    notify.show("Please login your session expired","error");
+    this.context.router.history.push('/');
+   });
 }
 submitAssignment(){
   fetch('http://'+properties.getHostName+':8080/assignments/student/submit', {
@@ -98,12 +99,13 @@ submitAssignment(){
       if(response.status === 200){
         notify.show('Your Assignment got submitted successfully',"success")
         this.context.router.history.goBack()
-      }else if(response.status === 302){
-        this.context.router.history.push('/')
       }else if(response.status === 500){
         notify.show('Sorry something went wrong please try again',"error")
       }
-    })
+    }).catch(response => {
+    notify.show("Please login your session expired","error");
+    this.context.router.history.push('/');
+   });
 }
 isValidForSaveOrSubmit = () => {
   var flag = false

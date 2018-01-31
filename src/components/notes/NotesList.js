@@ -139,8 +139,6 @@ class NotesList extends Component{
           if(response.status === 200)
           {
              return response.json();
-          }else if(response.status === 302){
-            window.location.reload()
           }
           else{
             let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -167,7 +165,10 @@ class NotesList extends Component{
           else {
             notify.show("Files Retrieved successfully","success")
           }
-        })
+        }).catch(response => {
+        notify.show("Please login before viewing notes","error");
+        this.context.router.history.push('/');
+       });
    }
  }
  handleClose = () => {
@@ -185,13 +186,13 @@ class NotesList extends Component{
       notify.show("Deleted successfully","success")
       this.handleSubmit()
     }
-    else if(response.status === 302){
-       window.location.reload()
-     }
      else{
        notify.show("sorry something went wrong please try again","error")
      }
-   })
+   }).catch(response => {
+   notify.show("Please login before deleting notes","error");
+   this.context.router.history.push('/');
+  });
     this.setState({
       confirmDeleteDialog: false
     })
