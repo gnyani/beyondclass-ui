@@ -131,7 +131,7 @@ componentDidMount(){
        {
        var template = map.get(language[i])
         disabled[i] = false
-       if(template !== source[i])
+       if(template !== source[i].trim())
        {
          disabled[i] = true
        }
