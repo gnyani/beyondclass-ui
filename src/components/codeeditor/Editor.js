@@ -287,7 +287,7 @@ else if(this.props.state==="Assignment"){
     <Grid fluid className="nogutter">
     <Row center="xs" top="xs">
     <Col xs>
-    <RaisedButton label="Complie & Run" primary = {true}  icon={<Compile />} disabled={this.state.buttonDisabled} onClick={this.compileAndRun}/>
+    <RaisedButton label="Compile & Run" primary = {true}  icon={<Compile />} disabled={this.state.buttonDisabled} onClick={this.compileAndRun}/>
     </Col>
     </Row>
     </Grid>
