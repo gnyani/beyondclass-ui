@@ -143,6 +143,7 @@ width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 
 .Reports .stat{font-size: 5vmin;letter-spacing: 0.1vmin;font-weight: bold;;}
 .Reports .card{background-color:#455A64 !important;color: #CCCCCC !important}
 .Reports .download {background-color: #082d51 !important;color: white!important;border-radius: 1vmax!important }
+.Reports .button{width: 40%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
 .EvaluateAssignment .paragraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
                font-size: 4vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
 .EvaluateAssignment .displayQuestions{text-transform: capitalize !important;}

@@ -331,6 +331,13 @@ if(this.state.assignmentType ===  'THEORY')
           </Col>
           </Row>
           <br /><br />
+          <Row center="xs">
+          <Col xs={9} sm={9} md={6} lg={5}>
+          <FlatButton key={1} label="Go Back" labelStyle={{textTransform: "none"}}  alt="loading" icon={<NavigationArrowBack color="white"/>}
+                   className="button" onClick={()=>{this.context.router.history.goBack()}} />
+          </Col>
+          </Row>
+          <br /><br />
           </Grid>
         </div>)
     else {
@@ -383,6 +390,14 @@ const actions = [
       <p className="paragraph">Submitted By {this.state.email} </p>
       <Divider />
       <br />
+      <Grid fluid>
+      <Row center="xs">
+      <Col xs={9} sm={9} md={6} lg={5}>
+      <FlatButton key={1} label="Go Back" labelStyle={{textTransform: "none"}}  alt="loading" icon={<NavigationArrowBack color="white"/>}
+               className="button" onClick={()=>{this.context.router.history.goBack()}} />
+      </Col>
+      </Row>
+      </Grid>
       {this.renderInsights()}
       <br />
       {this.renderAssignment()}

@@ -12,6 +12,7 @@ import IconButton from 'material-ui/IconButton'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
 import RejectIcon from 'material-ui/svg-icons/navigation/close'
 import Download from 'material-ui/svg-icons/file/file-download'
+import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import {Card} from 'material-ui/Card'
 import {Link} from 'react-router-dom'
 import FlatButton from 'material-ui/FlatButton'
@@ -82,6 +83,15 @@ componentDidMount(){
 
 nonZeroSubmissions = () => {
   var buffer=[]
+  buffer.push(<Grid fluid key={0}>
+        <Row center="xs">
+        <Col xs={9} sm={9} md={6} lg={5}>
+        <br /><br />
+        <FlatButton key={1} label="Go Back" labelStyle={{textTransform: "none"}}  alt="loading" icon={<NavigationArrowBack color="white"/>}
+                 className="button" onClick={()=>{this.context.router.history.goBack()}} />
+        </Col>
+        </Row>
+        </Grid>)
     var src = 'http://'+properties.getHostName+':8080/assignments/generate/excel/'+this.props.assignmentid
   if(this.state.numberOfStudentsSubmitted && this.state.numberOfStudentsSubmitted>0)
   {
