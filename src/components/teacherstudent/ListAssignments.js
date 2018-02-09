@@ -145,7 +145,7 @@ if(this.state.assignmentIds.length !== 0)
             <CardText style={{textAlign:"center"}}>
             <p>{'AssignmentType : '+this.state.assignmentType[i]}</p>
             </CardText>
-           <CardTitle style={{textAlign:"center"}} title={this.state.subjects[i]} subtitle={"last date :"+lastDate.getDate()+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()}  />
+           <CardTitle style={{textAlign:"center"}} title={this.state.subjects[i]} subtitle={"last date :"+lastDate.getDate()+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()+" at "+lastDate.getHours()+":"+lastDate.getMinutes()}  />
            <CardText style={{textAlign:"center"}}>
 
            <p>{this.state.additionalComments[i]}</p>

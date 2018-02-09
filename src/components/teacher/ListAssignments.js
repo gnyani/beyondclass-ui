@@ -195,7 +195,7 @@ if(this.state.assignmentIds.length !== 0)
              avatar={this.state.propicUrls[i]}
            />
 
-           <CardTitle style={{textAlign:"center"}} title={this.state.subjects[i]} subtitle={"last date :"+lastDate.getDate()+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()}  />
+           <CardTitle style={{textAlign:"center"}} title={this.state.subjects[i]} subtitle={"last date :"+(lastDate.getDate())+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()+" at 11:59 PM"}  />
            <CardText style={{textAlign:"center"}}>
            <p>{'AssignmentType: ' +this.state.assignmentType[i]}</p>
            <br />

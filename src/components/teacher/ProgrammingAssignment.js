@@ -12,6 +12,7 @@ import IconButton from 'material-ui/IconButton'
 import {notify} from 'react-notify-toast'
 import AddBox from 'material-ui/svg-icons/content/add-box'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
+import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
@@ -37,10 +38,10 @@ class ProgrammingAssignment extends Component{
     super();
     this.state={
       editorState: EditorState.createEmpty(),
-      minDate: new Date(),
+      minDate: new Date(new Date().setDate(new Date().getDate()+1)),
 
       controlledDate: null,
-      showTextFields: true,
+      showTextFields: false,
       questions: [],
       questionsEditoStates: [],
       questionValue: '',
@@ -166,16 +167,16 @@ class ProgrammingAssignment extends Component{
     {
     buffer.push(
       <Grid fluid key={i}>
-      <Row start="xs" middle="xs">
-      <Col xs={9} sm={9} md={8} lg={8}>
       <p className="testcaseparagraph"> TestCase{i}: </p>
-      <br />
+      <Row center="xs" middle="xs">
+      <Col xs={9} sm={9} md={5} lg={5}>
       <textarea  value={this.state.inputs[i]} rows="4"
       className="testcasesDisplay" disabled={true}/>
-      <br />
+      </Col>
+      <Col xs={9} sm={9} md={5} lg={5}>
       <textarea  value={this.state.outputs[i]} rows="4"  className="testcasesDisplay"  disabled={true} />
       </Col>
-      <Col xs={2} sm={2} md={2} lg={2} >
+      <Col xs={2} sm={2} md={2} lg={1} >
       <IconButton onClick={this.removeTestCase.bind(this,i)}><Delete viewBox='0 0 20 20' color="red"/></IconButton>
       </Col>
       </Row>
@@ -229,6 +230,8 @@ renderRows = (j) => {
     notify.show("Please select last submission date","warning")
     else if(this.state.questions.length === 0)
     notify.show("Please Add atleast one Question","warning")
+    else if(this.state.numQuestions > this.state.questions.length)
+    notify.show("number of questions cannot be more than total number of questions","warning")
     else {
       this.setState({
         submitConfirm: true,
@@ -356,7 +359,8 @@ displayQuestionBox = () => {
        <Grid fluid key={1}>
        <Row around="xs" middle="xs">
        <Col xs={10} sm={10} md={10} lg={10}>
-       <TestCases key={1} changeInputs = {this.changeInputs} changeOutputs={this.changeOutputs}/>
+       <TestCases key={1} input={this.state.input} output={this.state.output}
+         changeInputs = {this.changeInputs} changeOutputs={this.changeOutputs}/>
        </Col>
        <Col xs={2} sm={2} md={2} lg={2}>
        <IconButton onClick={this.addTestCase}><AddBox viewBox='0 0 20 20' color="green"/></IconButton>
@@ -368,7 +372,7 @@ displayQuestionBox = () => {
    return buffer;
   }
 
-  handleClose(){
+  handleClose = () =>{
     this.setState({
       submitConfirm: false,
     })
@@ -399,6 +403,15 @@ displayQuestionBox = () => {
         {...this.props}
       >
       <div className="ProgrammingAssignment">
+      <Grid fluid >
+      <Row center="xs">
+      <Col xs={9} sm={9} md={6} lg={5}>
+      <br /><br />
+      <FlatButton key={1} label="Go Back"   alt="loading" icon={<NavigationArrowBack color="white"/>}
+      className="button" onClick={()=>{this.context.router.history.goBack()}} />
+      </Col>
+      </Row>
+      </Grid>
       <Grid fluid>
       <br /><br />
       <Row center="xs" bottom="xs">

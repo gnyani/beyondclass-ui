@@ -8,6 +8,7 @@ import Add from 'material-ui/svg-icons/content/add'
 import AddBox from 'material-ui/svg-icons/content/add-box'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
 import SelectField from 'material-ui/SelectField'
+import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import Delete from 'material-ui/svg-icons/action/delete'
@@ -37,7 +38,7 @@ class AssignmentContent extends Component{
 constructor(){
   super();
   this.state={
-    minDate: new Date(),
+    minDate: new Date(new Date().setDate(new Date().getDate()+1)),
     questions: [],
     subject: '',
     showTextField: false,
@@ -272,6 +273,15 @@ renderTextField(){
         {...this.props}
       >
       <div className="TeacherAssignment">
+      <Grid fluid >
+      <Row center="xs">
+      <Col xs={9} sm={9} md={6} lg={5}>
+      <br /><br />
+      <FlatButton key={1} label="Go Back"   alt="loading" icon={<NavigationArrowBack color="white"/>}
+      className="button" onClick={()=>{this.context.router.history.goBack()}} />
+      </Col>
+      </Row>
+      </Grid>
       <Grid fluid>
       <Row center="xs" bottom="xs">
       <Col xs>

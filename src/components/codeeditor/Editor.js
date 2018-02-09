@@ -125,6 +125,9 @@ scrollToBottom = () => {
 }
 
 submitRequest(){
+  if(this.state.value.trim() === "")
+  notify.show("Source code cannot be empty","error")
+  else{
   var codeslist = this.state.hackerRankCodes
   var langcode = codeslist[this.state.languageValue]
   this.setState({
@@ -147,10 +150,12 @@ submitRequest(){
     }).then(response => {
       if(response.status === 200)
       return response.json()
+      else if(response.status === 500)
+      notify.show("Sorry Something Went Wrong","error")
     }).then(response =>{
+      if(response){
       var result = response.result
-
-      this.setState({
+     this.setState({
         buttonDisabled: false,
         compileError:result.compilemessage,
         stdErr: result.stderr,
@@ -159,14 +164,22 @@ submitRequest(){
       },function callback(){
         this.scrollToBottom();
       })
+    } else{
+      this.setState({
+        buttonDisabled: false
+      })
+    }
     }).catch(response => {
     notify.show("Please login before you can compile your program","error");
     this.context.router.history.push('/');
    });
-
+ }
 }
 
 compileAndRun = () => {
+  if(this.props.source.trim() === "")
+  notify.show("Source code cannot be empty","error")
+  else{
   var codeslist = this.state.hackerRankCodes
   var langcode = codeslist[this.props.languageValue]
   this.setState({
@@ -190,7 +203,12 @@ compileAndRun = () => {
     }).then(response =>{
       if(response.status === 200)
       return response.json()
+      else if(response.status === 500){
+        notify.show("Sorry Something Went Wrong","error")
+      }
+
     }).then(response =>{
+      if(response)
       this.setState({
         assignmentStatus: response.codingAssignmentStatus,
         expected: response.expected,
@@ -203,11 +221,16 @@ compileAndRun = () => {
       },function callback(){
         this.scrollToBottom();
       })
+      else{
+        this.setState({
+          buttonDisabled: false
+        })
+      }
     }).catch(response => {
-    notify.show("Please login before you compile your program","error");
-    this.context.router.history.push('/');
+        notify.show("Please login before you compile your program","error");
+        this.context.router.history.push('/');
    })
-
+ }
 }
 
 
@@ -247,7 +270,7 @@ buffer.push(
 <div className="Editor" key={1}>
 <RenderEditor value={this.state.value} theme={this.state.theme} mode={this.state.mode} fontSize={this.state.fontSize}
              showGutter={this.state.showGutter} showPrintMargin={this.state.showPrintMargin} highlightActiveLine={this.state.highlightActiveLine}
-             setTheme={this.setTheme} setMode={this.setMode} disabledLanguage={this.state.disabledLanguage} language={this.state.language}  onChange={this.onChange}/>
+             setTheme={this.setTheme} setMode={this.setMode}  language={this.state.language}  onChange={this.onChange}/>
 <br />
   <Grid fluid>
 <Row center="xs">

@@ -12,6 +12,7 @@ import IdleTimer from 'react-idle-timer'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import RenderProgrammingAssignment from './RenderProgrammingAssignment'
+import RefreshIndicator from 'material-ui/RefreshIndicator'
 import Save from 'material-ui/svg-icons/content/save'
 import Send from 'material-ui/svg-icons/content/send'
 
@@ -284,7 +285,20 @@ else if(this.state.assignmentType === 'CODING')
       </StayVisible>
     )
 }else{
-  return(<p> still loading</p>)
+  return(<Grid fluid className="RefreshIndicator" key={1}>
+  <Row center="xs">
+  <Col xs>
+    <RefreshIndicator
+       size={50}
+       left={45}
+       top={0}
+       loadingColor="#FF9800"
+       status="loading"
+       className="refresh"
+      />
+  </Col>
+  </Row>
+  </Grid>)
 }
 
 }

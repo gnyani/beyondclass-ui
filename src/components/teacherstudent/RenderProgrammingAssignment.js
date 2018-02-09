@@ -30,14 +30,16 @@ constructor(){
     source: [defaultValue,defaultValue,defaultValue,defaultValue,defaultValue],
     language: ["Javascript","Javascript","Javascript","Javascript","Javascript"],
     theme: ["textmate","textmate","textmate","textmate","textmate"],
-    disabledLanguage: [false,false,false,false],
     languageValue: ["javascript","javascript","javascript","javascript","javascript"],
     hackerRankCodes: '',
     mode: ["javascript","javascript","javascript","javascript","javascript"],
     submitConfirm : false,
     timeout: 5000,
      isIdle: false,
+     changeLangDialog: false,
      totalActiveTime: null,
+     i: '',
+     value: '',
   }
   this.displayQuestions = this.displayQuestions.bind(this);
 }
@@ -52,23 +54,32 @@ getKeyByValue = (object, value) => {
   return Object.keys(object).find(key => object[key] === value);
 }
 
-setMode = (i,e,index,value) => {
+setModeConfirm = (i,e,index,value) =>{
+  this.setState({
+    changeLangDialog: true,
+    i: i,
+    value: value,
+  })
+}
+
+setMode = () => {
   var map = new Map(Object.entries(HelloWorldTemplates))
   var editorModesMap = new Map(Object.entries(editorModes))
   var hackerRankLangNotationMap=new Map(Object.entries(hackerRankLangNotation))
   var newLanguageValue = this.state.languageValue.slice()
-  newLanguageValue[i] = hackerRankLangNotationMap.get(value)
+  newLanguageValue[this.state.i] = hackerRankLangNotationMap.get(this.state.value)
   var newLanguage = this.state.language.slice()
-  newLanguage[i] = value
+  newLanguage[this.state.i] = this.state.value
   var newMode = this.state.mode.slice()
-  newMode[i] = editorModesMap.get(value)
+  newMode[this.state.i] = editorModesMap.get(this.state.value)
   var newSource = this.state.source.slice()
-  newSource[i] = map.get(value)
+  newSource[this.state.i] = map.get(this.state.value)
   this.setState({
     languageValue: newLanguageValue,
     language: newLanguage,
     mode: newMode,
-    source: newSource
+    source: newSource,
+    changeLangDialog: false,
   })
 }
 
@@ -141,7 +152,6 @@ componentDidMount(){
          language: language,
          mode: mode,
          source: source,
-         disabledLanguage: disabled.slice(),
          theme: theme,
          totalActiveTime: totalActiveTime
        })
@@ -280,6 +290,7 @@ handleSubmit = () => {
 handleClose = () => {
   this.setState({
     submitConfirm: false,
+    changeLangDialog: false,
   })
 }
 
@@ -297,8 +308,8 @@ displayQuestions(){
       </Row>
       </Grid>
     <Editor state={"Assignment"} question={this.props.questions[i]}  email={this.props.email}  assignmentid={this.props.assignmentid}
-            languageValue={this.state.languageValue[i]} setMode={this.setMode.bind(this,i)} setTheme={this.setTheme.bind(this,i)} mode={this.state.mode[i]}
-            language={this.state.language[i]} theme={this.state.theme[i]} disabledLanguage={this.state.disabledLanguage[i]} source={this.state.source[i]} onChange={this.onChange.bind(this,i)}/>
+            languageValue={this.state.languageValue[i]} setMode={this.setModeConfirm.bind(this,i)} setTheme={this.setTheme.bind(this,i)} mode={this.state.mode[i]}
+            language={this.state.language[i]} theme={this.state.theme[i]}  source={this.state.source[i]} onChange={this.onChange.bind(this,i)}/>
 
       <br />
       <br />
@@ -309,6 +320,19 @@ displayQuestions(){
 
   render(){
     const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        keyboardFocused={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Confirm"
+        primary={true}
+        onTouchTap={this.setMode}
+      />]
+
+    const actions1 = [
       <FlatButton
         label="Confirm"
         primary={true}
@@ -321,7 +345,7 @@ displayQuestions(){
       />]
     return(
     <div >
-    <Grid fluid>
+    <Grid fluid className="nogutter">
     <Row center="xs" bottom="xs">
     <Col xs>
     <br />
@@ -342,9 +366,18 @@ displayQuestions(){
     <Dialog
           title="Are you sure you want to submit this assignment ?"
           modal={false}
-          actions={actions}
+          actions={actions1}
           open={this.state.submitConfirm}
           autoScrollBodyContent={true}
+          titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+          onRequestClose={this.handleClose}
+        >
+    </Dialog>
+    <Dialog
+          title="Your work in the current language could be lost. Are you sure?"
+          modal={false}
+          actions={actions}
+          open={this.state.changeLangDialog}
           titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
           onRequestClose={this.handleClose}
         >

@@ -54,7 +54,6 @@ class RenderEditor extends Component {
          floatingLabelText="Language"
          value={this.props.language}
          onChange={this.props.setMode}
-         disabled={this.props.disabledLanguage}
          style={{textAlign: 'left'}}
          underlineStyle={{borderColor: 'black'}}
          iconStyle={{fill:'black'}}
@@ -80,14 +79,11 @@ class RenderEditor extends Component {
       </Col>
       </Row>
       </Grid>
-        <Grid fluid>
-        <Row around="xs">
-        <Col xs>
           <AceEditor
           mode={this.props.mode}
           theme={this.props.theme}
           name="My_editor"
-          style={{width:'90%',marginLeft: '5%'}}
+          style={{width:'98%',marginLeft: '1%',height:'73vmin'}}
           onChange={this.props.onChange}
           value={this.props.value}
           fontSize={this.props.fontSize}
@@ -101,9 +97,6 @@ class RenderEditor extends Component {
           showLineNumbers= {true}
           tabSize= {2}
             />
-      </Col>
-      </Row>
-      </Grid>
     </div>
     );
   }
