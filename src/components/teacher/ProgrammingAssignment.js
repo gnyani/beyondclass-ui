@@ -12,13 +12,15 @@ import IconButton from 'material-ui/IconButton'
 import {notify} from 'react-notify-toast'
 import AddBox from 'material-ui/svg-icons/content/add-box'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
+import Save from 'material-ui/svg-icons/content/save'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import TextField from 'material-ui/TextField'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import Delete from 'material-ui/svg-icons/action/delete'
 import RichTextEditorReadOnly from './RichTextEditorReadOnly'
-import {EditorState} from 'draft-js'
+import RefreshIndicator from 'material-ui/RefreshIndicator'
+import {EditorState,convertFromRaw} from 'draft-js'
 import TestCases from './TestCases'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
@@ -32,6 +34,8 @@ const StayVisible = styled.div`
   `}
 `
 var properties = require('../properties.json')
+
+let id=0;
 
 class ProgrammingAssignment extends Component{
   constructor(){
@@ -55,7 +59,9 @@ class ProgrammingAssignment extends Component{
       numQuestions: 1,
       showQuestionBox: true,
       buttonDisabled: false,
+      saveButton: false,
       submitConfirm: false,
+      isDataLoaded: false,
       message: '',
     }
     this.renderTestCaseTabs = this.renderTestCaseTabs.bind(this)
@@ -117,6 +123,43 @@ class ProgrammingAssignment extends Component{
     })
   }
 
+  componentDidMount(){
+    if(this.props.assignmentid){
+    fetch('http://'+properties.getHostName+':8080/assignments/teacher/get/'+this.props.assignmentid, {
+          credentials: 'include',
+          method: 'GET'
+        }).then(response => {
+          if(response.status === 200)
+          return response.json()
+          else if (response.status === 204) {
+          }
+        }).then(response => {
+          if(response){
+           var newEditorStates = []
+          for(let i=0; i<response.questions.length;i++){
+            newEditorStates.push({id:++id,value:EditorState.createWithContent(convertFromRaw(response.questions[i]))})
+            }
+          }
+          this.setState({
+            questions: response.questions,
+            message: response.message,
+            isDataLoaded: true,
+            questionsEditoStates: newEditorStates.slice(),
+            allinputs: response.inputs,
+            alloutputs: response.outputs,
+            numQuestions: response.numberOfQuesPerStudent,
+          })
+        }).catch(response => {
+        notify.show("Please login your session expired","error");
+        this.context.router.history.push('/');
+       });
+      }else{
+        this.setState({
+          isDataLoaded:true,
+        })
+      }
+  }
+
   addQuestion = () => {
     var newquestions = this.state.questions.slice()
     var newquestionEditorStates = this.state.questionsEditoStates.slice()
@@ -128,7 +171,7 @@ class ProgrammingAssignment extends Component{
     else
     {
     newquestions.push(this.state.contentState)
-    newquestionEditorStates.push(this.state.editorState)
+    newquestionEditorStates.push({id: ++id,value:this.state.editorState})
     var allinputs = this.state.allinputs.slice()
     var alloutputs = this.state.alloutputs.slice()
     allinputs.push(this.state.inputs)
@@ -239,6 +282,54 @@ renderRows = (j) => {
     }
   }
 
+  validateSaveCreateAssignment = () => {
+    if(this.state.questions.length === 0)
+    notify.show("Please add atleast one question before you can save the assignment","warning")
+    else{
+      this.saveCreateAssignment()
+    }
+  }
+
+  saveCreateAssignment = () => {
+    this.setState({
+      saveButton: true,
+    })
+    fetch('http://'+properties.getHostName+':8080/assignments/create/save', {
+           method: 'POST',
+           headers: {
+                 'mode': 'cors',
+                 'Content-Type': 'application/json'
+             },
+         credentials: 'include',
+         body: JSON.stringify({
+           email: this.props.loggedinuser,
+           batch : this.props.class,
+           lastdate: this.state.controlledDate,
+           questions: this.state.questions,
+           inputs: this.state.allinputs,
+           outputs: this.state.alloutputs,
+           message: this.state.message,
+           numberOfQuesPerStudent: this.state.numQuestions,
+           assignmentType: 'CODING'
+        })
+      }).then(response =>{
+        this.setState({
+          saveButton: false,
+        })
+        if(response.status === 200)
+        {
+        notify.show("Assignment Created successfully","success")
+        this.context.router.history.goBack()
+      }else{
+        notify.show("Something went wrong, please try again","error")
+      }
+      }).catch(response => {
+      notify.show("Please login your session expired","error");
+      this.context.router.history.push('/');
+     });
+}
+
+
   submitCreateAssignment = () => {
     this.setState({
       buttonDisabled: true,
@@ -307,13 +398,13 @@ displayQuestions(){
     for(let i=0; i < this.state.questions.length ; i++)
     {
     buffer.push(
-      <div key={i}>
+      <div key={this.state.questionsEditoStates[i].id}>
       <p className="paragraph"> Question{i+1}:</p>
       <Grid fluid >
       <Row start="xs">
       <Col xs={10} sm={10} md={11} lg={11}>
       <RichTextEditorReadOnly editorStyle={{borderStyle:'solid',borderRadius:'10',borderWidth:'0.6px'}}
-      editorState={this.state.questionsEditoStates[i]} />
+      editorState={this.state.questionsEditoStates[i].value} />
       </Col>
       <Col xs={2} sm={2} md={1} lg={1}>
       <IconButton onClick={this.deleteQuestion.bind(this,i)}><Delete color="red" viewBox="0 0 20 20" /></IconButton>
@@ -331,7 +422,7 @@ displayQuestionBox = () => {
   var buffer = []
   if(this.state.showQuestionBox){
   buffer.push(
-    <Grid fluid>
+    <Grid fluid key={1}>
     <Row center="xs" middle="xs">
     <Col xs>
     <RichTextEditor  editorState={this.state.editorState} onEditorStateChange={this.onEditorStateChange}
@@ -398,6 +489,7 @@ displayQuestionBox = () => {
         primary={true}
         onTouchTap={this.handleClose}
       />]
+  if(this.state.isDataLoaded){
     return(
       <StayVisible
         {...this.props}
@@ -419,7 +511,7 @@ displayQuestionBox = () => {
       <DatePicker hintText="Last Date" minDate={this.state.minDate} onChange={this.handleDateChange} />
       </Col>
       <Col xs={6} sm={6} md={4} lg={4}>
-      <TextField hintText="Additional Comments" style={{width:'75%'}} floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
+      <TextField hintText="Additional Comments" style={{width:'75%'}} value={this.state.message} floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
       </Col>
       </Row>
       <br />
@@ -466,7 +558,10 @@ displayQuestionBox = () => {
       </Row>
       <br />
       <Row center="xs">
-      <Col xs>
+      <Col xs={6} sm={6} md={4} lg={3}>
+      <RaisedButton label = "Save" primary={true} disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment} />
+      </Col>
+      <Col xs={6} sm={6} md={4} lg={3}>
       <RaisedButton label="Submit" primary={true} disabled={this.state.buttonDisabled} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
       </Col>
       </Row>
@@ -485,6 +580,22 @@ displayQuestionBox = () => {
       </Dialog>
       </StayVisible>
     )
+  }else{
+    return(<Grid fluid className="RefreshIndicator" key={1}>
+    <Row center="xs">
+    <Col xs>
+      <RefreshIndicator
+         size={50}
+         left={45}
+         top={0}
+         loadingColor="#FF9800"
+         status="loading"
+         className="refresh"
+        />
+    </Col>
+    </Row>
+    </Grid>)
+  }
   }
 }
 

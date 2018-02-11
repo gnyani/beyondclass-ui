@@ -4,6 +4,7 @@ import {Grid,Row,Col} from 'react-flexbox-grid'
 import Delete from 'material-ui/svg-icons/action/delete'
 import View from 'material-ui/svg-icons/action/view-list'
 import ViewReport from 'material-ui/svg-icons/content/content-paste'
+import RightIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
 import {Link} from 'react-router-dom'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
@@ -22,6 +23,10 @@ class ListAssignments extends Component{
 constructor(){
   super();
   this.state={
+   savedAssignmentIds:[],
+   savedCreatedDates:[],
+   savedAssignmentTypes: [],
+   savedAssignmentSubjects: [],
    assignmentIds: [],
    propicUrls: [],
    createdDates: [],
@@ -41,6 +46,52 @@ constructor(){
 
 
 componentDidMount(){
+
+  fetch('http://'+properties.getHostName+':8080/assignments/teacher/saved/list', {
+         method: 'POST',
+         headers: {
+               'mode': 'cors',
+               'Content-Type': 'application/json'
+           },
+       credentials: 'include',
+       body: JSON.stringify({
+         email: this.props.email,
+         batch: this.props.class,
+      })
+    }).then(response =>{
+      if(response.status === 200)
+      return response.json();
+      else if(response.status === 204){
+        this.setState({
+          savedAssignmentIds: [],
+          savedCreatedDates: [],
+          savedAssignmentTypes: [],
+          savedAssignmentSubjects: [],
+        })
+      }
+      else{
+        notify.show("Failed to Load Assignments","Error")
+      }
+    }).then(response => {
+      var newSavedAssignmentIds = []
+      var newSavedCreatedDates = []
+      var newSavedAssignmentTypes = []
+      var newSavedAssignmentSubjects = []
+      if(response)
+      for(let i=0; i<response.length;i++){
+        newSavedAssignmentIds.push(response[i].assignmentid)
+        newSavedCreatedDates.push(response[i].createDate)
+        newSavedAssignmentTypes.push(response[i].assignmentType)
+        newSavedAssignmentSubjects.push(response[i].subject)
+      }
+      this.setState({
+        savedAssignmentIds: newSavedAssignmentIds,
+        savedAssignmentTypes: newSavedAssignmentTypes,
+        savedCreatedDates: newSavedCreatedDates,
+        savedAssignmentSubjects: newSavedAssignmentSubjects,
+      })
+    })
+
   fetch('http://'+properties.getHostName+':8080/assignments/teacher/list', {
          method: 'POST',
          headers: {
@@ -148,7 +199,7 @@ handleClose = () => {
 };
 
 deleteAssignment(){
-  fetch('http://'+properties.getHostName+':8080/assignments/'+this.state.assignmentIds[this.state.index]+'/delete',{
+  fetch('http://'+properties.getHostName+':8080/assignments/'+this.state.savedAssignmentIds[this.state.index]+'/delete',{
           credentials: 'include',
           method: 'GET'
         }).then(response =>{
@@ -159,15 +210,83 @@ deleteAssignment(){
             deleteConfirm: false,
           })
           this.componentDidMount()
-         }else if(response.status === 302){
-            window.location.reload()
-         }
+        }
           else {
             notify.show("Sorry something Went wrong","error")
           }
-        })
+        }).catch(response => {
+        notify.show("Please login your session expired","error");
+        this.context.router.history.push('/');
+       });
 
 }
+
+decideSubject = (i) => {
+  var buffer = []
+  if(this.state.savedAssignmentTypes[i] === 'THEORY')
+  buffer.push(<p>{'Subject: ' +this.state.savedAssignmentSubjects[i]}</p>)
+  return buffer
+}
+
+decideAction = (i) => {
+  var buffer = []
+  if(this.state.savedAssignmentTypes[i] === 'THEORY')
+  buffer.push(<RaisedButton label="Continue Working" primary={true} icon={<RightIcon />}
+  containerElement={<Link to={'/teacher/create/'+this.props.class+'/saved/'+this.state.savedAssignmentIds[i]}/>} />)
+  else {
+    buffer.push(<RaisedButton label="Continue Working" primary={true} icon={<RightIcon />}
+   containerElement={<Link to={'/teacher/createpa/'+this.props.class+'/saved/'+this.state.savedAssignmentIds[i]}/>} />)
+  }
+  return buffer
+}
+
+listSavedAssignments = () => {
+  var buffer = []
+  if(this.state.savedAssignmentIds.length !== 0)
+  {
+    buffer.push(<p className="paragraph" key={this.state.savedAssignmentIds.length+1}>Your Draft Assigments for class {this.props.class} </p>)
+    for(let i=0; i<this.state.savedAssignmentIds.length; i++){
+      var createdDate = new Date(this.state.savedCreatedDates[i])
+      buffer.push(
+        <Grid fluid key={i}>
+        <Row start="xs">
+        <Col xs={12} sm={12} md={12} lg={12} >
+           <Card
+            onExpandChange={this.handleConfirmDelete.bind(this,i)}
+            >
+             <CardHeader className="cardHeader"
+               title={this.props.email}
+               subtitle={"Saved on "+createdDate.getDate()+"-"+(createdDate.getMonth()+1)+"-"+createdDate.getFullYear()+" at "+createdDate.getHours()+":"+createdDate.getMinutes()}
+               avatar={this.state.propicUrls[i]}
+               showExpandableButton={true}
+               closeIcon={<Delete color="red" viewBox="0 0 20 20"/>}
+               openIcon={<Delete color="red" viewBox="0 0 20 20"/>}
+             />
+             <CardText style={{textAlign:"center"}}>
+             <p>{'AssignmentType: ' +this.state.savedAssignmentTypes[i]}</p>
+             <br />
+             {this.decideSubject(i)}
+             </CardText>
+            <Grid fluid>
+            <Row center="xs">
+            <Col xs>
+              <CardActions>
+              {this.decideAction(i)}
+             </CardActions>
+             </Col>
+             </Row>
+             </Grid>
+             <br />
+           </Card>
+           <br />
+        </Col>
+        </Row>
+        </Grid>
+    )
+  }
+  }
+  return buffer;
+  }
 
 listAssignments(){
   var buffer = []
@@ -263,9 +382,10 @@ const actions1 = [
   ]
     return(
       <div className="TeacherAssignment">
+      {this.listSavedAssignments()}
       {this.listAssignments()}
       <Dialog
-            title="Are you sure about deleting this assignment"
+            title="Are you sure about deleting this draft assignment"
             modal={true}
             actions={actions1}
             open={this.state.deleteConfirm}

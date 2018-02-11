@@ -2,11 +2,13 @@ import React,{Component} from 'react'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import {notify} from 'react-notify-toast'
 import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'
+import {SubjectsNameLookup} from '../utils/Subjects.js'
 import DatePicker from 'material-ui/DatePicker'
 import TextField from 'material-ui/TextField'
 import Add from 'material-ui/svg-icons/content/add'
 import AddBox from 'material-ui/svg-icons/content/add-box'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
+import Save from 'material-ui/svg-icons/content/save'
 import SelectField from 'material-ui/SelectField'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -16,12 +18,13 @@ import IconButton from 'material-ui/IconButton'
 import {Media} from '../utils/Media'
 import styled from 'styled-components'
 import Dialog from 'material-ui/Dialog'
-import { EditorState } from 'draft-js'
+import { EditorState,convertFromRaw } from 'draft-js'
 import RichTextEditor from './RichTextEditor'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import MenuItem from 'material-ui/MenuItem'
 import RichTextEditorReadOnly from './RichTextEditorReadOnly'
+import RefreshIndicator from 'material-ui/RefreshIndicator'
 
 const StayVisible = styled.div`
   position: relative;
@@ -34,6 +37,8 @@ const StayVisible = styled.div`
 
 var properties = require('../properties.json')
 
+let id = 0;
+
 class AssignmentContent extends Component{
 constructor(){
   super();
@@ -43,6 +48,7 @@ constructor(){
     subject: '',
     showTextField: false,
     questionValue: '',
+    subjectValue: '',
     message: '',
     numQuestions: 1,
     controlledDate: null,
@@ -50,7 +56,9 @@ constructor(){
     contentState: '',
     questionsEditoStates: [],
     submitButton: false,
+    saveButton: false,
     submitConfirm: false,
+    isDataLoaded: false,
   }
   this.renderTextField = this.renderTextField.bind(this)
   this.displayQuestions = this.displayQuestions.bind(this)
@@ -69,6 +77,17 @@ handleClose(){
   })
 }
 
+validateSaveCreateAssignment = () => {
+  if(this.state.questions.length === 0)
+  notify.show("Please add atleast one question before you can save the assignment","warning")
+  else if(this.state.subject === ""){
+    notify.show("Please select the subject","warning")
+  }
+  else{
+    this.saveCreateAssignment()
+  }
+}
+
 validateCreateAssignment = () => {
   if(this.state.subject === '')
   notify.show("Please select the subject of the assignment","warning")
@@ -84,7 +103,79 @@ validateCreateAssignment = () => {
     })
   }
 }
-
+componentDidMount(){
+  if(this.props.assignmentid){
+  fetch('http://'+properties.getHostName+':8080/assignments/teacher/get/'+this.props.assignmentid, {
+        credentials: 'include',
+        method: 'GET'
+      }).then(response => {
+        if(response.status === 200)
+        return response.json()
+        else if (response.status === 204) {
+        }
+      }).then(response => {
+        if(response){
+         var newEditorStates = []
+        for(let i=0; i<response.questions.length;i++){
+          newEditorStates.push({id:++id,value:EditorState.createWithContent(convertFromRaw(response.questions[i]))})
+          }
+        }
+        this.setState({
+          questions: response.questions,
+          message: response.message,
+          subject: response.subject,
+          isDataLoaded: true,
+          subjectValue: SubjectsNameLookup[response.subject],
+          questionsEditoStates: newEditorStates.slice(),
+          numQuestions: response.numberOfQuesPerStudent,
+        })
+      }).catch(response => {
+      notify.show("Please login your session expired","error");
+      this.context.router.history.push('/');
+     });
+    }else{
+      this.setState({
+        isDataLoaded:true,
+      })
+    }
+}
+saveCreateAssignment = () => {
+  this.setState({
+    saveButton: true,
+  })
+  fetch('http://'+properties.getHostName+':8080/assignments/create/save', {
+         method: 'POST',
+         headers: {
+               'mode': 'cors',
+               'Content-Type': 'application/json'
+           },
+       credentials: 'include',
+       body: JSON.stringify({
+         email: this.props.loggedinuser,
+         subject: this.state.subject,
+         batch : this.props.class,
+         lastdate: this.state.controlledDate,
+         message: this.state.message,
+         questions: this.state.questions,
+         assignmentType: 'THEORY',
+         numberOfQuesPerStudent: this.state.numQuestions,
+      })
+    }).then(response =>{
+      this.setState({
+        saveButton: false,
+      })
+      if(response.status === 200)
+      {
+      notify.show("Assignment Saved successfully","success")
+      this.context.router.history.goBack()
+    }else{
+      notify.show("Something went wrong please try again","error")
+    }
+    }).catch(response => {
+    notify.show("Please login your session expired","error");
+    this.context.router.history.push('/');
+   });
+}
 submitCreateAssignment = () => {
   this.setState({
     submitButton: true,
@@ -114,9 +205,6 @@ submitCreateAssignment = () => {
       if(response.status === 200)
       {
       notify.show("Assignment Created successfully","success")
-      this.setState({
-        shouldRender: new Date(),
-      })
       this.context.router.history.goBack()
     }else{
       notify.show("Something went wrong please try again","error")
@@ -157,7 +245,7 @@ addQuestion = () => {
   else
   {
   newquestions.push(this.state.contentState)
-  newquestionEditorStates.push(this.state.editorState)
+  newquestionEditorStates.push({id:++id,value:this.state.editorState})
   this.setState({
     questions: newquestions,
     questionsEditoStates: newquestionEditorStates,
@@ -173,8 +261,11 @@ addQuestion = () => {
 deleteQuestion = (i) => {
   var newquestions = this.state.questions.slice()
   newquestions.splice(i,1)
+  var newquestionEditorStates = this.state.questionsEditoStates.slice()
+  newquestionEditorStates.splice(i,1)
   this.setState({
-    questions: newquestions
+    questions: newquestions,
+    questionsEditoStates: newquestionEditorStates
   })
 }
 
@@ -215,11 +306,11 @@ displayQuestions(){
   for(let i=0; i < this.state.questions.length ; i++)
   {
   buffer.push(
-    <Grid fluid  key={i}>
+    <Grid fluid key={this.state.questionsEditoStates[i].id}>
     <Row start="xs">
     <Col xs={10} sm={10} md={11} lg={11}>
     <RichTextEditorReadOnly editorStyle={{borderStyle:'solid',borderRadius:'10',borderWidth:'0.6px'}}
-    editorState={this.state.questionsEditoStates[i]} />
+    editorState={this.state.questionsEditoStates[i].value} />
     </Col>
     <Col xs={2} sm={2} md={1} lg={1}>
     <IconButton onClick={this.deleteQuestion.bind(this,i)}><Delete color="red" viewBox="0 0 20 20" /></IconButton>
@@ -267,7 +358,7 @@ renderTextField(){
         primary={true}
         onTouchTap={this.handleClose}
       />]
-
+    if(this.state.isDataLoaded){
     return(
       <StayVisible
         {...this.props}
@@ -285,7 +376,7 @@ renderTextField(){
       <Grid fluid>
       <Row center="xs" bottom="xs">
       <Col xs>
-      <SubjectAutoComplete type="syllabus" branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} />
+      <SubjectAutoComplete type="syllabus" branch={this.props.branch} searchText={this.state.subjectValue} handleSubjectChange={this.handleSubjectChange} />
       </Col>
       <Col xs>
       <DatePicker hintText="Last Date" minDate={this.state.minDate} onChange={this.handleDateChange} />
@@ -293,7 +384,7 @@ renderTextField(){
       </Row>
       <Row center="xs">
       <Col xs>
-      <TextField style={{width: '75%'}} hintText="Additional Comments" floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
+      <TextField style={{width: '75%'}} value={this.state.message} hintText="Additional Comments" floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
       </Col>
       </Row>
       <br />
@@ -325,6 +416,13 @@ renderTextField(){
       <br /><br />
       <RaisedButton label="Add Question" primary={true} icon={<Add />} onClick={this.handleShowTextField} />
       <br /><br /><br />
+      </Col>
+      </Row>
+      <Row center='xs' middle='xs'>
+      <Col xs={6} sm={6} md={4} lg={3}>
+      <RaisedButton label = "Save" primary={true} disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment} />
+      </Col>
+      <Col xs={6} sm={6} md={4} lg={3}>
       <RaisedButton label = "Submit" primary={true} disabled={this.state.submitButton} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
       </Col>
       </Row>
@@ -341,6 +439,22 @@ renderTextField(){
       </Dialog>
       </div>
       </StayVisible>)
+    }else{
+      return(<Grid fluid className="RefreshIndicator" key={1}>
+      <Row center="xs">
+      <Col xs>
+        <RefreshIndicator
+           size={50}
+           left={45}
+           top={0}
+           loadingColor="#FF9800"
+           status="loading"
+           className="refresh"
+          />
+      </Col>
+      </Row>
+      </Grid>)
+    }
   }
 }
 AssignmentContent.contextTypes = {

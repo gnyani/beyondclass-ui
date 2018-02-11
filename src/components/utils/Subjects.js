@@ -27,6 +27,19 @@ export const CSESyllabus = [
   {subjectKey: 'Finishing School 2', valueKey: 'FS2'}
 ];
 
+export const SubjectsNameLookup = {
+  'OS':'Operating Systems',
+  'DS':'Data Structures',
+  'JAVA':'Object Oriented Programming JAVA',
+  'DAA':'Design and Analysis of Algorithms',
+  'M4':'Mathematics - 4',
+  'CA':'Computer Architecture',
+  'ES':'Environmental Studies',
+  'JAVALAB':'Java Lab',
+  'OSLAB':'Operating Systems Lab',
+  'FS2':'Finishing School 2',
+}
+
 export const ECE = [
   {subjectKey:'Basic Circuit Analysis',valueKey:'BCA'},
   {subjectKey:'Electrical Technology',valueKey:'ET'},

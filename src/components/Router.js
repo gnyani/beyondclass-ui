@@ -24,6 +24,8 @@ class Router extends Component {
     <Route exact path='/teacher/:class/create' component={DashboardLayout} />
     <Route exact path='/teacher/:class/createpa' component={DashboardLayout} />
     <Route exact path='/teacher/reports/view/:assignmentid' component={DashboardLayout} />
+    <Route exact path='/teacher/create/:class/saved/:assignmentid' component={DashboardLayout} />
+    <Route exact path='/teacher/createpa/:class/saved/:assignmentid' component={DashboardLayout} />
     <Route exact path='/teacher/assignment/:assignmentid/evaluate' component={DashboardLayout} />
     <Route exact path='/student/assignments/take/:assignmentid' component={DashboardLayout} />
     <Route exact path='/teacherstudentspace' component={DashboardLayout} />

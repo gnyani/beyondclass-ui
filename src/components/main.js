@@ -1,7 +1,6 @@
 import React from 'react';
 import {Switch,Route} from 'react-router-dom'
 import QpLayout from './questionpapers/QpLayout.js'
-//import AssignLayout from './assignments/AssignLayout.js'
 import NotesLayout from './notes/NotesLayout.js'
 import SyllabusLayout from './syllabus/SyllabusLayout.js'
 import AnouncementsBoard from './anouncements/AnouncementsBoard.js'
@@ -39,6 +38,8 @@ export const Body =(props) => {
     <Route exact path='/teacher/reports/view/:assignmentid' render={({match}) =>(<Reports {...props} assignmentid={match.params.assignmentid}/>)} />
     <Route exact path='/teacher/assignment/:submissionid/evaluate' render={({match}) =>(<EvaluateAssignment {...props} submissionid={match.params.submissionid}/>)} />
     <Route exact path='/student/assignments/take/:assignmentid' render={({match}) =>(<SubmitAssignment {...props} assignmentid={match.params.assignmentid}/>)} />
+    <Route exact path='/teacher/create/:class/saved/:assignmentid' render={({match}) =>(< TheoryAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
+    <Route exact path='/teacher/createpa/:class/saved/:assignmentid' render={({match}) =>(< ProgrammingAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
     <Route exact path='/teacherstudentspace' render={() =>(<TeacherStudentSpace {...props} />)} />
     <Route exact path='/updateprofile' render={() =>(<UpdateProfile {...props} />)} />
     <Route exact path='/submissions' render={() => (<Submissions {...props} />)} />

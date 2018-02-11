@@ -12,6 +12,12 @@ constructor(){
  this.getIndex = this.getIndex.bind(this);
 }
 
+componentDidMount(){
+  if(this.props.searchText !== "")
+  this.setState({
+    searchText: this.props.searchText
+  })
+}
 
  handleUpdateInput = (searchText,dataSource) => {
    let index = this.getIndex(searchText,dataSource,"subjectKey")
