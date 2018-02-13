@@ -114,7 +114,6 @@ class EvaluateAssignment extends Component{
              notify.show('Sorry something Went wrong',"error")
            }
          }).then(response =>{
-           console.log("response is"+JSON.stringify({response}))
            this.setState({
              questions:response.submittedQuestions,
              answers:response.submitAssignment.answers,
@@ -128,7 +127,6 @@ class EvaluateAssignment extends Component{
              isDataLoaded: true,
            })
          }).catch(response => {
-          console.log("response is" + response)
          notify.show("Please login your session expired","error");
          this.context.router.history.push('/');
         });

@@ -13,10 +13,13 @@ constructor(){
 }
 
 componentDidMount(){
-  if(this.props.searchText !== "")
+  if(typeof this.props.searchText !== "undefined")
+  {
+    console.log("came here")
   this.setState({
     searchText: this.props.searchText
   })
+}
 }
 
  handleUpdateInput = (searchText,dataSource) => {
