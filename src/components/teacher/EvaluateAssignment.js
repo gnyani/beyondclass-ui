@@ -85,6 +85,8 @@ class EvaluateAssignment extends Component{
      mode: '',
      inputs: [],
      outputs: [],
+     userName: '',
+     rollNumber: '',
      isDataLoaded: false,
      acceptDialog: false,
      rejectDialog: false,
@@ -122,6 +124,8 @@ class EvaluateAssignment extends Component{
              questionIndex: response.submitAssignment.questionIndex,
              inputs: response.createAssignment.inputs,
              outputs: response.createAssignment.outputs,
+             userName: response.userName,
+             rollNumber: response.rollNumber,
              codingAssignmentResponse : response.submitAssignment.codingAssignmentResponse,
              mode: response.submitAssignment.mode,
              isDataLoaded: true,
@@ -380,13 +384,13 @@ const actions = [
       onTouchTap={this.rejectAssignment}
     />,
   ]
-
+  console.log(this.state.userName)
    if(this.state.isDataLoaded)
     return(
       <StayVisible
       {... this.props}>
       <div className="EvaluateAssignment">
-      <p className="paragraph">Submitted By {this.state.email} </p>
+      <p className="paragraph">Submitted By {this.state.userName}({this.state.rollNumber}) </p>
       <Divider />
       <br />
       <Grid fluid>
