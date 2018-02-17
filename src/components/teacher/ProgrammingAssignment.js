@@ -44,7 +44,7 @@ class ProgrammingAssignment extends Component{
       editorState: EditorState.createEmpty(),
       minDate: new Date(new Date().setDate(new Date().getDate()+1)),
 
-      controlledDate: null,
+      controlledDate: new Date(new Date().setDate(new Date().getDate()+1)),
       showTextFields: false,
       questions: [],
       questionsEditoStates: [],
@@ -119,6 +119,8 @@ class ProgrammingAssignment extends Component{
     this.setState({
       inputs: inputs,
       outputs: outputs,
+      input: '',
+      output: '',
       showTextFields: false,
     })
   }
@@ -148,6 +150,7 @@ class ProgrammingAssignment extends Component{
             allinputs: response.inputs,
             alloutputs: response.outputs,
             numQuestions: response.numberOfQuesPerStudent,
+            controlledDate: response.lastdate,
           })
         }).catch(response => {
         notify.show("Please login your session expired","error");
@@ -508,7 +511,7 @@ displayQuestionBox = () => {
       <br /><br />
       <Row center="xs" bottom="xs">
       <Col xs={6} sm={6} md={4} lg={5}>
-      <DatePicker hintText="Last Date" minDate={this.state.minDate} onChange={this.handleDateChange} />
+      <DatePicker hintText="Last Date" floatingLabelText="Last Date" minDate={this.state.minDate} defaultDate={new Date(this.state.controlledDate)} onChange={this.handleDateChange} />
       </Col>
       <Col xs={6} sm={6} md={4} lg={4}>
       <TextField hintText="Additional Comments" style={{width:'75%'}} value={this.state.message} floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
@@ -569,7 +572,7 @@ displayQuestionBox = () => {
       <br /><br />
       </div>
       <Dialog
-            title="Are you sure about creating this assignment, Once submitted it cannot be deleted or edited"
+            title={"Are you sure about creating this assignment with last date : "+this.state.controlledDate+", Once submitted it cannot be deleted or edited"}
             modal={false}
             actions={actions}
             open={this.state.submitConfirm}

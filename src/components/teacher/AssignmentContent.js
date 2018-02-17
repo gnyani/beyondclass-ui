@@ -51,7 +51,7 @@ constructor(){
     subjectValue: '',
     message: '',
     numQuestions: 1,
-    controlledDate: null,
+    controlledDate: new Date(new Date().setDate(new Date().getDate()+1)),
     editorState: EditorState.createEmpty(),
     contentState: '',
     questionsEditoStates: [],
@@ -379,7 +379,7 @@ renderTextField(){
       <SubjectAutoComplete type="syllabus" branch={this.props.branch} searchText={this.state.subjectValue} handleSubjectChange={this.handleSubjectChange} />
       </Col>
       <Col xs>
-      <DatePicker hintText="Last Date" minDate={this.state.minDate} onChange={this.handleDateChange} />
+      <DatePicker hintText="Last Date" floatingLabelText="Last Date" defaultDate={new Date(this.state.controlledDate)} minDate={this.state.minDate} onChange={this.handleDateChange} />
       </Col>
       </Row>
       <Row center="xs">
@@ -428,7 +428,7 @@ renderTextField(){
       </Row>
       </Grid>
       <Dialog
-            title="Are you sure about creating this assignment, Once submitted it cannot be deleted or edited"
+            title={"Are you sure about creating this assignment with last date : "+this.state.controlledDate+", Once submitted it cannot be deleted or edited"}
             modal={false}
             actions={actions}
             open={this.state.submitConfirm}
