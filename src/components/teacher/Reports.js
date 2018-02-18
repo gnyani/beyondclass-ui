@@ -10,13 +10,21 @@ import {notify} from 'react-notify-toast'
 import {List, ListItem} from 'material-ui/List'
 import IconButton from 'material-ui/IconButton'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
+import {EvaluateIcon} from '../../styledcomponents/SvgIcons'
 import RejectIcon from 'material-ui/svg-icons/navigation/close'
+import Notify from 'material-ui/svg-icons/social/notifications-active'
+import NotifcationsOff from 'material-ui/svg-icons/social/notifications-off'
+import Notifications from 'material-ui/svg-icons/social/notifications'
+import Email from 'material-ui/svg-icons/communication/email'
+import EmailOutline from 'material-ui/svg-icons/communication/mail-outline.js'
 import Download from 'material-ui/svg-icons/file/file-download'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import {Card} from 'material-ui/Card'
 import {Link} from 'react-router-dom'
 import FlatButton from 'material-ui/FlatButton'
 import { withRouter } from 'react-router'
+import Dialog from 'material-ui/Dialog'
+import Checkbox from 'material-ui/Checkbox'
 import PropTypes from 'prop-types'
 import {transparent} from 'material-ui/styles/colors'
 
@@ -46,6 +54,9 @@ constructor(){
     evaluationsDone: '',
     percentOfEvaluationsDone: '',
     isDataLoaded: false,
+    notifyOptionsDialog: false,
+    emailChecked: false,
+    notificationChecked: true,
   }
   this.renderListItems = this.renderListItems.bind(this)
 }
@@ -81,6 +92,35 @@ componentDidMount(){
    });
 }
 
+showNotifyOptions = () => {
+  this.setState({
+    notifyOptionsDialog: true,
+  })
+}
+updateEmailCheck = () => {
+  this.setState((oldState) => {
+    return {
+      emailChecked: !oldState.emailChecked,
+    };
+  });
+}
+updateNotificationCheck = () => {
+  this.setState((oldState) => {
+    return {
+      notificationChecked: !oldState.notificationChecked,
+    };
+  });
+}
+
+notifyOthers = () => {
+  if(this.state.percentStudentsSubmitted === 100)
+  notify.show("Everybody in this class had already submitted the assignment","warning")
+  else if(this.state.percentdaysCompleted === 100)
+  notify.show("This Assignment has already expired","warning")
+  else{
+    this.showNotifyOptions()
+  }
+}
 nonZeroSubmissions = () => {
   var buffer=[]
   buffer.push(<Grid fluid key={0}>
@@ -101,17 +141,31 @@ nonZeroSubmissions = () => {
   <br />
   <Grid fluid>
   <Row center="xs">
-  <Col xs>
+  <Col xs={6} sm={6} md={4} lg={3}>
     <form method="post" action={src}>
     <FlatButton type="submit" label="Download Reports" className="download" icon={<Download color="white"/>}/>
     </form>
+  </Col>
+  <Col xs={6} sm={6} md={4} lg={3}>
+  <FlatButton label="Notify Others" className="download" icon={<Notify color="white"/>} onClick={this.notifyOthers}/>
   </Col>
   </Row>
   </Grid>
   <br />
   </div>)
 }else{
-  buffer.push(<p key={1} className="paragraph">No Submissions on this assignment yet</p>)
+  buffer.push(<Grid fluid key={1} className="paragraph">
+               <br />
+               <Row center="xs">
+               No Submissions on this assignment yet
+               </Row>
+               <br />
+               <Row center = "xs">
+               <Col xs={6} sm={6} md={4} lg={3}>
+               <FlatButton label="Notify All" className="download" icon={<Notify color="white"/>} onClick={this.notifyOthers}/>
+               </Col>
+               </Row>
+               </Grid>)
 }
 return buffer
 }
@@ -132,7 +186,7 @@ renderListItems(){
                         tooltipPosition="bottom-left"
                         containerElement={<Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} />}
                         >
-                        <CheckIcon color="green" />
+                        <EvaluateIcon viewBox="0 0 22 22" color="green" />
                         </IconButton>}
     containerElement={<Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} />}
     secondaryText={<p>Submitted on {submittedDate.getDate()+"-"+(submittedDate.getMonth()+1)+"-"+submittedDate.getFullYear()+" at "+submittedDate.getHours()+":"+submittedDate.getMinutes()}</p>}
@@ -173,7 +227,75 @@ else if(this.state.submittedStudents[i].status === 'REJECTED')
   }
   return buffer;
 }
+notifyRequest = () => {
+if(this.state.notificationChecked === false && this.state.emailChecked === false){
+  notify.show("Please select at least one option to notify","warning")
+}else{
+  fetch('http://'+properties.getHostName+':8080/assignments/teacher/notify', {
+         method: 'POST',
+         headers: {
+               'mode': 'cors',
+               'Content-Type': 'application/json'
+           },
+       credentials: 'include',
+       body: JSON.stringify({
+         email: this.state.emailChecked,
+         notification: this.state.notificationChecked,
+         assignmentId: this.props.assignmentid,
+       })
+    }).then(response =>{
+      if(response.status === 200){
+      notify.show("Notified Successfully","success")
+      this.setState({
+          notifyOptionsDialog: false,
+       })
+     }else if(response.status === 406){
+       notify.show("Sorry, You can notify only once per assignment per day","warning")
+       this.setState({
+           notifyOptionsDialog: false,
+        })
+     }
+      else {
+        notify.show("Sorry Something Went Wrong,Please Try again in sometime","error")
+      }
+    }).catch(response => {
+    notify.show("Please login your session expired","error");
+    this.context.router.history.push('/');
+   });
+}
+}
+
+printNotificationOptions = () => {
+  var buffer = []
+  if(this.state.emailChecked === true && this.state.notificationChecked === true){
+    buffer.push(<p>***We are going to send both email and notification !!!***</p>)
+  }else if(this.state.emailChecked === true){
+    buffer.push(<p>***We are going to send only a email !!!***</p>)
+  }else if(this.state.notificationChecked === true){
+    buffer.push(<p>***We are going to send only a notification !!!***</p>)
+  }else{
+    buffer.push(<p>***You should select atleast one option to notify students !!!***</p>)
+  }
+  return buffer
+}
+
+handleClose = () => {
+  this.setState({
+    notifyOptionsDialog: false,
+  })
+}
   render(){
+    const actions = [
+      <FlatButton
+        label="Confirm"
+        primary={true}
+        onTouchTap={this.notifyRequest}
+      />,
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />]
 if(this.state.isDataLoaded)
 return(
       <StayVisible
@@ -255,6 +377,35 @@ return(
       </Col>
       </Row>
       </Grid>
+      <Dialog
+            title="How would you like to Notify"
+            modal={false}
+            actions={actions}
+            open={this.state.notifyOptionsDialog}
+            autoScrollBodyContent={true}
+            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            onRequestClose={this.handleClose}
+          >
+          <Checkbox
+          label="Send Notification"
+          checkedIcon={<Notifications/>}
+          uncheckedIcon={<NotifcationsOff/>}
+          checked={this.state.notificationChecked}
+          onCheck={this.updateNotificationCheck}
+          />
+          <Checkbox
+          label="Send Email"
+          checkedIcon={<Email />}
+          uncheckedIcon={<EmailOutline />}
+          checked={this.state.emailChecked}
+          onCheck={this.updateEmailCheck}
+          />
+          <Grid fluid>
+          <Row center="xs">
+          {this.printNotificationOptions()}
+          </Row>
+          </Grid>
+      </Dialog>
       </div>
       </StayVisible>)
 else
