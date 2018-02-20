@@ -52,7 +52,8 @@ getInputTestCases(){
       buttonStyle={{backgroundColor: '#4d86cf'}}
     >
     <Output buttonDisabled={this.props.buttonDisabled} stdOut={this.props.stdOut} stdErr={this.props.stdErr}
-     compileError={this.props.compileError} message={this.props.message}/>
+     compileError={this.props.compileError} runtime={this.props.runtime} memory={this.props.memory}  
+     message={this.props.message}/>
     </Tab>
   </Tabs>)
   else {

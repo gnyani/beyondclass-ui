@@ -23,6 +23,13 @@ checkStatus(){
   return buffer
 }
 
+printStats(){
+  var buffer = []
+  buffer.push(<input type="text"  className="OutputTextInput" key={1} disabled={true} value={"Runtime : "+this.props.runtime+" s"} />)
+  buffer.push(<input type="text"  className="OutputTextInput" key={2} disabled={true} value={"Memory : "+this.props.memory+" bytes"} />)
+  return buffer
+}
+
 giveConsoleOutput(){
   var buffer = []
   var stdoutstring = ''
@@ -76,6 +83,7 @@ giveConsoleOutput(){
       return(<div>
           {this.checkStatus()}
          {this.giveConsoleOutput()}
+         {this.printStats()}
          </div> )
     }
   }

@@ -65,6 +65,8 @@ constructor(){
      isIdle: false,
      totalActiveTime: null,
      disabledLanguage: false,
+     runtime: '',
+     memory: '',
 
   }
   this.setTheme = this.setTheme.bind(this);
@@ -161,6 +163,8 @@ submitRequest(){
         stdErr: result.stderr,
         stdOut: result.stdout,
         message: result.message,
+        runtime: result.time,
+        memory: result.memory,
       },function callback(){
         this.scrollToBottom();
       })
@@ -217,6 +221,8 @@ compileAndRun = () => {
         totalCount: response.totalCount,
         failedCase: response.failedCase,
         errorMessage: response.errorMessage,
+        runtime: response.runtime,
+        memory: response.memory,
         buttonDisabled: false
       },function callback(){
         this.scrollToBottom();
@@ -292,15 +298,13 @@ buffer.push(
 <br /><br />
 <Inputoutput submissionStarted={this.state.submissionStarted} buttonDisabled={this.state.buttonDisabled}
     compileError={this.state.compileError} stdErr={this.state.stdErr} stdOut={this.state.stdOut}
-    testcases={this.state.testcases} message={this.state.message}/>
+    testcases={this.state.testcases} runtime={this.state.runtime} memory={this.state.memory}
+    message={this.state.message}/>
 <br /><br /><br /><br />
 </div>
 )
 }
 else if(this.props.state==="Assignment"){
-
-
-
   buffer.push(
     <div key={1}>
     <RenderEditor value={this.props.source} theme={this.props.theme} mode={this.props.mode} fontSize={this.state.fontSize}
@@ -316,7 +320,7 @@ else if(this.props.state==="Assignment"){
     </Grid>
     <br /><br/><br />
     <RenderCodingAssignmentResult assignmentStatus={this.state.assignmentStatus} expected={this.state.expected}
-     actual={this.state.actual} errorMessage={this.state.errorMessage}
+     actual={this.state.actual} errorMessage={this.state.errorMessage} runtime={this.state.runtime} memory={this.state.memory}
      failedCase={this.state.failedCase} passCount={this.state.passCount} totalCount={this.state.totalCount}/>
     </div>
   )

@@ -4,6 +4,20 @@ import {Grid,Row,Col} from 'react-flexbox-grid'
 
 class RenderCodingAssignmentResult extends Component{
 
+  showRunStats = () => {
+    var buffer = []
+    if( this.props.runtime !== ""){
+    buffer.push(
+    <div key={2}>
+    <h5 className="summaryParagraph">Program RunTime : [{this.props.runtime.toString()}] in seconds</h5>
+    <h5 className="summaryParagraph">Program Memory : [{this.props.memory.toString()}] in bytes</h5>
+    </div>
+      )
+    }
+    return buffer
+  }
+
+
   renderOuput = () => {
     var buffer = []
     if(this.props.assignmentStatus === 'SUCCESS')
@@ -12,6 +26,7 @@ class RenderCodingAssignmentResult extends Component{
           <fieldset>
           <legend >Summary</legend>
           <h4 className="summaryParagraph">All Test cases are passing</h4>
+          {this.showRunStats()}
           </fieldset>
           </div>)
     else if(this.props.assignmentStatus === 'TESTS_FAILED')
@@ -25,6 +40,7 @@ class RenderCodingAssignmentResult extends Component{
       <h5 className="summaryParagraph"> TotalPassedTests : {this.props.passCount} </h5>
       <h5 className="summaryParagraph"> TotalTestCases: {this.props.totalCount} </h5>
       <h5 className="summaryParagraph"> FailedCase: {this.props.failedCase}</h5>
+      {this.showRunStats()}
       </fieldset>
       </div>)
     else if(this.props.assignmentStatus === 'COMPILER_ERROR')
@@ -34,6 +50,7 @@ class RenderCodingAssignmentResult extends Component{
       <legend>Summary</legend>
       <h4 className="summaryParagraph">Compilation Failed</h4>
       <h5 className="summaryParagraph">Error :</h5><TextareaAutosize key={2} className="OutputTextInput" disabled={true} value={this.props.errorMessage} />
+      {this.showRunStats()}
       </fieldset>
       </div>
     )
@@ -44,6 +61,7 @@ class RenderCodingAssignmentResult extends Component{
       <legend>Summary</legend>
       <h4 className="summaryParagraph">RunTime Exception</h4>
       <h5 className="summaryParagraph">Error :</h5><TextareaAutosize key={2} className="OutputTextInput" disabled={true} value={this.props.errorMessage} />
+      {this.showRunStats()}
       </fieldset>
       </div>
     )

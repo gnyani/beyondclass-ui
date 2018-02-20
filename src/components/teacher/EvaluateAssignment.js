@@ -290,7 +290,7 @@ if(this.state.assignmentType ===  'THEORY')
    buffer.push(
      <div key={i}>
      <RenderCodingAssignmentResult assignmentStatus={response[i].codingAssignmentStatus} expected={response[i].expected}
-      actual={response[i].actual} errorMessage={response[i].errorMessage}
+      actual={response[i].actual} errorMessage={response[i].errorMessage} runtime={response[i].runtime || ""} memory={response[i].memory || ""}
       failedCase={response[i].failedCase} passCount={response[i].passCount} totalCount={response[i].totalCount}/>
       <br /><br />
      <DisplayProgrammingAssignment mode={this.state.mode[i]} question={this.state.questions[i]}
@@ -384,7 +384,6 @@ const actions = [
       onTouchTap={this.rejectAssignment}
     />,
   ]
-  console.log(this.state.userName)
    if(this.state.isDataLoaded)
     return(
       <StayVisible
