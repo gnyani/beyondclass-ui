@@ -150,9 +150,6 @@ if(this.state.assignmentIds.length !== 0)
 
            <p>{this.state.additionalComments[i]}</p>
            </CardText>
-           <CardText expandable={true} >
-            <ul>{this.renderAssignmentQuestions(i)}</ul>
-          </CardText>
           <Grid fluid>
           <Row center="xs">
           <Col xs>
@@ -168,6 +165,9 @@ if(this.state.assignmentIds.length !== 0)
            </Col>
            </Row>
            </Grid>
+           <CardText expandable={true} >
+            <ul>{this.renderAssignmentQuestions(i)}</ul>
+          </CardText>
            <br />
          </Card>
          <br />

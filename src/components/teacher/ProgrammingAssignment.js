@@ -20,6 +20,7 @@ import MenuItem from 'material-ui/MenuItem'
 import Delete from 'material-ui/svg-icons/action/delete'
 import RichTextEditorReadOnly from './RichTextEditorReadOnly'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
+import IdleTimer from 'react-idle-timer'
 import {EditorState,convertFromRaw} from 'draft-js'
 import TestCases from './TestCases'
 import { withRouter } from 'react-router'
@@ -63,6 +64,9 @@ class ProgrammingAssignment extends Component{
       submitConfirm: false,
       isDataLoaded: false,
       message: '',
+      timeout: 5000,
+      isIdle: false,
+      totalActiveTime: null,
     }
     this.renderTestCaseTabs = this.renderTestCaseTabs.bind(this)
     this.displayQuestions = this.displayQuestions.bind(this)
@@ -161,7 +165,30 @@ class ProgrammingAssignment extends Component{
           isDataLoaded:true,
         })
       }
+      this._interval = setInterval(() => {
+        if(this.state.isIdle === false)
+        this.setState({
+          totalActiveTime: this.state.totalActiveTime + 1000
+        });
+        if(this.state.totalActiveTime % 20000 === 0 )
+        {
+          this.validateSaveCreateAssignment('autosave')
+        }
+       }, 1000);
   }
+  componentWillUnmount() {
+      clearInterval(this._interval);
+  }
+
+  _onActive = () => {
+     this.setState({ isIdle: false });
+   }
+
+   _onIdle = () => {
+     this.setState({
+       isIdle: true,
+      });
+   }
 
   addQuestion = () => {
     var newquestions = this.state.questions.slice()
@@ -285,15 +312,18 @@ renderRows = (j) => {
     }
   }
 
-  validateSaveCreateAssignment = () => {
-    if(this.state.questions.length === 0)
-    notify.show("Please add atleast one question before you can save the assignment","warning")
+  validateSaveCreateAssignment = (option) => {
+    if(this.state.questions.length === 0 && option === 'autosave'){
+      //do nothing
+    }
+    else if(this.state.questions.length === 0)
+        notify.show("Please add atleast one question before you can save the assignment","warning")
     else{
-      this.saveCreateAssignment()
+      this.saveCreateAssignment(option)
     }
   }
 
-  saveCreateAssignment = () => {
+  saveCreateAssignment = (option) => {
     this.setState({
       saveButton: true,
     })
@@ -319,9 +349,13 @@ renderRows = (j) => {
         this.setState({
           saveButton: false,
         })
-        if(response.status === 200)
+        if(response.status === 200 && option === 'autosave')
         {
-        notify.show("Assignment Created successfully","success")
+        notify.show("Assignment Auto-Saved successfully","success")
+       }
+        else if(response.status === 200)
+        {
+        notify.show("Assignment Saved successfully","success")
         this.context.router.history.goBack()
       }else{
         notify.show("Something went wrong, please try again","error")
@@ -562,7 +596,7 @@ displayQuestionBox = () => {
       <br />
       <Row center="xs">
       <Col xs={6} sm={6} md={4} lg={3}>
-      <RaisedButton label = "Save" primary={true} disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment} />
+      <RaisedButton label = "Save" primary={true} disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment.bind('save')} />
       </Col>
       <Col xs={6} sm={6} md={4} lg={3}>
       <RaisedButton label="Submit" primary={true} disabled={this.state.buttonDisabled} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
@@ -581,6 +615,16 @@ displayQuestionBox = () => {
             onRequestClose={this.handleClose}
           >
       </Dialog>
+      <IdleTimer
+      ref="idleTimer"
+      activeAction={this._onActive}
+      idleAction={this._onIdle}
+      timeout={this.state.timeout}
+      startOnLoad={false}
+      format="MM-DD-YYYY HH:MM:ss.SSS">
+
+      {/*<h1>Time Spent: {this.state.totalActiveTime}</h1>*/}
+      </IdleTimer>
       </StayVisible>
     )
   }else{
