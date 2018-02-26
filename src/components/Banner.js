@@ -14,6 +14,15 @@ class Banner extends Component {
      this.loginToolbar = this.loginToolbar.bind(this);
   }
 
+componentDidMount(){
+  fetch('http://'+properties.getHostName+':8080/user/loggedin', {
+           credentials: 'include',
+           method: 'GET'
+        }).then(response => {
+          if(response.status === 200)
+          this.context.router.history.push('/announcements');
+        })
+}
 
 
 loginToolbar(){
