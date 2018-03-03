@@ -171,6 +171,8 @@ width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 
 .report-issue .image{width:60%;height: 60%;text-align: center;}
 .renderCodingAssignment .positionSummary{width: 70%;margin-left: 15%}
 .renderCodingAssignment .summaryParagraph{text-align: left;font-family: Helvetica Neue,Helvetica,Arial,sans-serif; }
+.SavedSnippets .paragraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: lighter;
+               font-size: 3vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
 legend {
     text-align: left;
     font-weight: bold;

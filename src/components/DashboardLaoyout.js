@@ -351,7 +351,7 @@ else
     <br />
     <br />
     <Link to='/updateprofile'>
-    <FlatButton label="Update Profile" labelStyle={{color: '#EEEEEE'}} onClick={this.handleMobileToggle}hoverColor ={lightBlue100} fullWidth={true} icon={<AddImageIcon  color={blue500}/>}/>
+    <FlatButton label="Update Profile" labelStyle={{color: '#EEEEEE'}} onClick={this.handleMobileToggle} hoverColor ={lightBlue100} fullWidth={true} icon={<AddImageIcon  color={blue500}/>}/>
     </Link>
     <br />
 

@@ -157,7 +157,7 @@ markAllAsRead = () => {
 list(buffer){
   if(!this.state.isDataLoaded)
   buffer.push(
-    <Grid fluid className="RefreshIndicator">
+    <Grid fluid key={1} className="RefreshIndicator">
     <Row center="xs">
     <Col xs>
     <br /><br />
@@ -187,7 +187,7 @@ list(buffer){
   for(let index=0;index<this.state.notificationMessages.length;index++)
   {
     var date= new Date(this.state.createdDates[index])
-  buffer.push(<div key={index}>
+  buffer.push(<div key={Date.now()+index}>
     <Grid fluid>
     <Row around="xs" middle="xs">
     <Col xs={11} sm={11} md={11} lg={11}>

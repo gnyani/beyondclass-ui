@@ -17,7 +17,7 @@ import EvaluateAssignment from './teacher/EvaluateAssignment'
 import TheoryAssignment from './teacher/AssignmentContent'
 import ProgrammingAssignment from './teacher/ProgrammingAssignment'
 import Submissions from './profile/Submissions'
-import Editor from './codeeditor/Editor'
+import CodeEditor from './codeeditor/CodeEditor'
 import ReportIssue from './issues/report-issue'
 
 export const Body =(props) => {
@@ -43,7 +43,7 @@ export const Body =(props) => {
     <Route exact path='/teacherstudentspace' render={() =>(<TeacherStudentSpace {...props} />)} />
     <Route exact path='/updateprofile' render={() =>(<UpdateProfile {...props} />)} />
     <Route exact path='/submissions' render={() => (<Submissions {...props} />)} />
-    <Route exact path='/codeeditor' render={() => (<Editor {...props} />)} />
+    <Route exact path='/codeeditor' render={() => (<CodeEditor {...props} />)} />
     <Route exact path='/notifications' render={() => (<Notifications {...props} />)} />
   </Switch>
 </main>

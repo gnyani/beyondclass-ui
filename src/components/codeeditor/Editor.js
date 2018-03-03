@@ -1,6 +1,4 @@
 import React,{Component} from 'react'
-import {Media} from '../utils/Media'
-import styled from 'styled-components'
 import RenderEditor from './RenderEditor'
 import Checkbox from 'material-ui/Checkbox'
 import {Grid,Row,Col} from 'react-flexbox-grid'
@@ -11,20 +9,15 @@ import {notify} from 'react-notify-toast'
 import RenderCodingAssignmentResult from './RenderCodingAssignmentResult'
 import {HelloWorldTemplates} from './HelloWorldTemplates'
 import {editorModes,hackerRankLangNotation} from './Utils'
+import Dialog from 'material-ui/Dialog'
+import FlatButton from 'material-ui/FlatButton'
+import ShowSaveTags from './ShowSaveTags'
+import Save from 'material-ui/svg-icons/content/save'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 var properties = require('../properties.json')
 
-
-const StayVisible = styled.div`
-  position: relative;
-  margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
-  transition: margin .1s;
-  ${Media.handheld`
-    margin-left: 0px;
-  `}
-`
 
 const defaultValue =
 `console.log("Welcome to Beyond Class");`;
@@ -60,6 +53,7 @@ constructor(){
     totalCount: '',
     failedCase: '',
     errorMessage: '',
+    saveDialog: false,
     submitConfirm: false,
     timeout: 5000,
      isIdle: false,
@@ -67,6 +61,8 @@ constructor(){
      disabledLanguage: false,
      runtime: '',
      memory: '',
+     description: '',
+     snippetTags: [],
 
   }
   this.setTheme = this.setTheme.bind(this);
@@ -81,6 +77,22 @@ changeTestCases(event){
   this.setState({
     testcases: event.target.value,
   })
+}
+
+handleDescriptionChange = (event) =>{
+  this.setState({
+    description: event.target.value
+  })
+}
+
+openSaveDialog = () => {
+  if(this.state.value.trim() === "")
+  notify.show("Source code cannot be empty","error")
+  else{
+  this.setState({
+    saveDialog: true,
+  })
+}
 }
 
 onChange(newValue) {
@@ -152,8 +164,9 @@ submitRequest(){
     }).then(response => {
       if(response.status === 200)
       return response.json()
-      else if(response.status === 500)
-      notify.show("Sorry Something Went Wrong","error")
+      else if(response.status === 500){
+        notify.show("Sorry something went wrong or you might not be connected to internet","error")
+      }
     }).then(response =>{
       if(response){
       var result = response.result
@@ -208,7 +221,7 @@ compileAndRun = () => {
       if(response.status === 200)
       return response.json()
       else if(response.status === 500){
-        notify.show("Sorry Something Went Wrong","error")
+        notify.show("Sorry something went wrong or you might not be connected to internet","error")
       }
 
     }).then(response =>{
@@ -247,7 +260,10 @@ componentDidMount(){
         }).then(response => {
           if(response.status === 200)
           return response.json()
+          else if(response.status === 500)
+          notify.show("Please check your internet connectivity","error")
         }).then(response => {
+          if(response)
           this.setState({
             hackerRankCodes: response.languages.codes
           })
@@ -258,6 +274,26 @@ componentDidMount(){
 
 }
 
+addSnippetTag = (tag) => {
+  var currentTags = this.state.snippetTags.slice()
+  if(currentTags.length >= 4)
+  {
+    notify.show("You can add only 3 tags per snippet","warning")
+  }else{
+  currentTags.push(tag)
+  this.setState({
+    snippetTags: currentTags
+  })
+ }
+}
+removeSnippetTag = (index) => {
+  var currentTags = this.state.snippetTags.slice()
+  currentTags.splice(index,1)
+  console.log(currentTags.toString())
+  this.setState({
+    snippetTags: currentTags
+  })
+}
 
 
 showInputTextArea(){
@@ -280,7 +316,7 @@ buffer.push(
 <br />
   <Grid fluid>
 <Row center="xs">
-<Col xs={11} sm={11} md={8} lg={8}>
+<Col xs={11} sm={11} md={6} lg={6}>
 <Checkbox
   label="Test Against Custom Input"
   checked={this.state.checked}
@@ -289,7 +325,10 @@ buffer.push(
 />
       {this.showInputTextArea()}
 </Col>
-<Col xs={11} sm={11} md={3} lg={3}>
+<Col xs={6} sm={6} md={3} lg={3}>
+<RaisedButton label = "Save" primary={true}  icon={<Save />} onClick={this.openSaveDialog}/>
+</Col>
+<Col xs={6} sm={6} md={3} lg={3}>
 <RaisedButton label = "Compile & Run" primary={true} disabled={this.state.buttonDisabled} icon={<Compile />} onClick={this.submitRequest}/>
 </Col>
 </Row>
@@ -327,22 +366,79 @@ else if(this.props.state==="Assignment"){
 }
 return buffer
 }
+saveCodeSnippet = () => {
+  if(this.state.snippetTags.length === 0)
+  notify.show("Please add atleast one tag","warning")
+  else{
+      this.handleClose()
+      fetch('http://'+properties.getHostName+':8080/assignments/codeeditor/save', {
+             method: 'POST',
+             headers: {
+                   'mode': 'cors',
+                   'Content-Type': 'application/json'
+               },
+           credentials: 'include',
+           body: JSON.stringify({
+             source: this.state.value,
+             language: this.state.mode,
+             tags: this.state.snippetTags,
+             description: this.state.description,
+             email: this.props.loggedinuser,
+          })
+        }).then(response => {
+          if(response.status === 201){
+            notify.show("Snippet saved successfully","success")
+            this.setState({
+              description: '',
+              snippetTags: [],
+            })
+            this.props.handleReloadListChange()
+          }
+          else if(response.status === 500)
+          notify.show("something is not right please try again later","error")
+        }).catch(response => {
+          notify.show("Your session expired please copy your code to notepad and refresh the page")
+        })
 
+  }
+}
 
+handleClose = () => {
+  this.setState({
+   saveDialog: false,
+  })
+}
   render(){
-
+    const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Save"
+        primary={true}
+        onTouchTap={this.saveCodeSnippet}
+      />]
     return(
-      <StayVisible
-      {...this.props}
-      >
-
+       <div>
       {this.showCheckBoxAndCompile()}
-
-
       <div style={{ float:"left", clear: "both" }}
              ref={(el) => { this.endDiv = el; }}>
         </div>
-    </StayVisible>)
+        <Dialog
+              title="Save Code Snippet"
+              modal={false}
+              actions={actions}
+              open={this.state.saveDialog}
+              titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+              onRequestClose={this.handleClose}
+            >
+            <ShowSaveTags snippetTags={this.state.snippetTags} removeSnippetTag={this.removeSnippetTag}
+            addSnippetTag={this.addSnippetTag} handleDescriptionChange={this.handleDescriptionChange}
+            description={this.state.description}/>
+        </Dialog>
+       </div>)
   }
 }
 Editor.contextTypes = {
