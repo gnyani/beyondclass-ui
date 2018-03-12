@@ -340,7 +340,7 @@ generateOtp(){
           return response.text()
         }).then(response =>{
           if(response !== 'success')
-          notify.show("Could not generate OTP please try again","error")
+          notify.show("Could not generate OTP please try again later","error")
           else {
             this.setState({confirmDialog: false,otpDialog: true})
           }
