@@ -18,6 +18,8 @@ import { EditorState,convertFromRaw } from 'draft-js'
 import DisplayProgrammingAssignment from './DisplayProgrammingAssignment'
 import Dialog from 'material-ui/Dialog'
 import RenderCodingAssignmentResult from './RenderCodingAssignmentResult'
+import TextField from 'material-ui/TextField'
+import { get } from 'lodash'
 
 var properties = require('../properties.json');
 
@@ -87,6 +89,7 @@ class EvaluateAssignment extends Component{
      outputs: [],
      userName: '',
      rollNumber: '',
+     remarks: '',
      isDataLoaded: false,
      acceptDialog: false,
      rejectDialog: false,
@@ -126,6 +129,7 @@ class EvaluateAssignment extends Component{
              outputs: response.createAssignment.outputs,
              userName: response.userName,
              rollNumber: response.rollNumber,
+             remarks: get(response,'submitAssignment.remarks',''),
              codingAssignmentResponse : response.submitAssignment.codingAssignmentResponse,
              mode: response.submitAssignment.mode,
              isDataLoaded: true,
@@ -169,6 +173,7 @@ class EvaluateAssignment extends Component{
          credentials: 'include',
          body:JSON.stringify({
            marks: 0,
+           remarks: this.state.remarks,
            status: 'REJECTED',
          })
        }).then(response => {
@@ -202,6 +207,7 @@ class EvaluateAssignment extends Component{
          credentials: 'include',
          body:JSON.stringify({
            marks: this.state.assignmentMarks,
+           remarks: this.state.remarks,
            status: 'ACCEPTED',
          })
        }).then(response => {
@@ -225,6 +231,11 @@ class EvaluateAssignment extends Component{
     })
   }
 
+handleRemarksChange = (event) =>{
+  this.setState({
+    remarks: event.target.value
+  })
+}
   openAcceptAssignmentDialog(){
     this.setState({
       acceptDialog: true,
@@ -235,6 +246,17 @@ class EvaluateAssignment extends Component{
     this.setState({
       rejectDialog: true,
     })
+  }
+
+  showRemarks = () => {
+    var buffer = []
+
+  if(this.state.remarks && this.state.remarks.trim() !== '')
+  buffer.push(
+    <p key={new Date()}>Remarks from your teacher : {this.state.remarks}</p>
+  )
+
+return buffer
   }
 
   renderInsights(){
@@ -253,6 +275,21 @@ class EvaluateAssignment extends Component{
                   <p>{this.state.insight3}</p>
                   <p>{this.state.insight4}</p>
                   <p>{this.state.insight5}</p>
+                  </fieldset>
+                 </div>
+        </Col>
+         </Row>
+       </Grid>  )
+    }else{
+      buffer.push(
+        <Grid fluid key={1}>
+        <Row around="xs">
+        <Col xs={11} sm={11} md={9} lg={8}>
+                <div >
+                <fieldset>
+                  <legend >Insights</legend>
+                  <p> Time Spent : {this.state.timespent} </p>
+                  {this.showRemarks()}
                   </fieldset>
                  </div>
         </Col>
@@ -312,6 +349,16 @@ if(this.state.assignmentType ===  'THEORY')
     buffer.push(
       <div key={1}>
       <Grid fluid  >
+      <Row center="xs">
+      <TextField
+       value = {this.state.remarks}
+       onChange = {this.handleRemarksChange}
+       style={{width: "60%"}}
+       floatingLabelText = "Remarks"
+       hintText = "Remarks"
+       />
+      </Row>
+      <br />
       <Row center="xs" middle="xs">
       <Col xs={4} sm={4} md={4} lg={1}>
       <p style={{fontWeight:'Bold'}}> Marks: </p>
