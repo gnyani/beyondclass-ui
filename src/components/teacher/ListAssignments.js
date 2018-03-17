@@ -11,10 +11,9 @@ import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
-import RichTextEditorReadOnly from './RichTextEditorReadOnly'
-import { EditorState,convertFromRaw } from 'draft-js'
 import {Card, CardActions,CardText,CardHeader, CardTitle} from 'material-ui/Card'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
+import ViewQuestions from './ViewQuestions'
 
 
 var properties = require('../properties.json');
@@ -32,7 +31,6 @@ constructor(){
    createdDates: [],
    subjects:[],
    lastDates:[],
-   questions:[],
    additionalComments: [],
    expanded:[],
    assignmentType: [],
@@ -113,7 +111,6 @@ componentDidMount(){
           createdDates: [],
           subjects: [],
           lastDates: [],
-          questions: [],
           assignmentType: [],
           additionalComments: [],
         })
@@ -127,7 +124,6 @@ componentDidMount(){
       var newcreatedDates=[]
       var newsubjects=[]
       var newlastDates=[]
-      var newquestions=[]
       var newadditionalComments=[]
       var newassignmentType=[]
       if(response)
@@ -137,7 +133,6 @@ componentDidMount(){
         newcreatedDates.push(response[i].createDate)
         newsubjects.push(response[i].subject)
         newlastDates.push(response[i].lastdate)
-        newquestions.push(response[i].questions)
         newassignmentType.push(response[i].assignmentType)
         if(response[i].message !== null && response[i].message.trim() !== '')
         newadditionalComments.push('Additional Comments : '+response[i].message)
@@ -151,7 +146,6 @@ componentDidMount(){
         createdDates: newcreatedDates,
         subjects: newsubjects,
         lastDates: newlastDates,
-        questions: newquestions,
         assignmentType: newassignmentType,
         additionalComments: newadditionalComments,
         isDataLoaded: true,
@@ -162,11 +156,6 @@ componentDidMount(){
    });
 }
 
-convertToEditorState = (object) => {
-const contentState = convertFromRaw(object)
-const editorState = EditorState.createWithContent(contentState)
-return editorState
-}
 
 handleExpand(i){
   var newExpanded =[]
@@ -174,14 +163,6 @@ handleExpand(i){
    this.setState({expanded: newExpanded});
  };
 
-renderAssignmentQuestions(index){
-  var buffer=[]
-  var questions=this.state.questions[index]
-  for(let i=0;i<questions.length;i++){
-  buffer.push(<li key={i}><RichTextEditorReadOnly editorStyle={{position: 'relative',bottom: '3.5vmin'}} editorState={this.convertToEditorState(questions[i])} /></li>)
-  }
-  return buffer;
-}
 
 shouldComponentUpdate(){
   return true
@@ -336,7 +317,7 @@ if(this.state.assignmentIds.length !== 0)
            </Row>
            </Grid>
            <CardText expandable={true} >
-            <ul>{this.renderAssignmentQuestions(i)}</ul>
+            <ViewQuestions assignmentid={this.state.assignmentIds[i]} />
           </CardText>
            <br />
          </Card>
