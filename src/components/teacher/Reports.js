@@ -52,6 +52,8 @@ constructor(){
     submittedStudents: '',
     evaluationsDone: '',
     percentOfEvaluationsDone: '',
+    studentsWorked: '',
+    percentOfStudentsWorked: '',
     isDataLoaded: false,
     notifyOptionsDialog: false,
     emailChecked: false,
@@ -82,6 +84,8 @@ componentDidMount(){
         percentStudentsSubmitted: response.percentStudentsSubmitted,
         submittedStudents: response.submitAssignment,
         evaluationsDone: response.evaluationsDone,
+        studentsWorked: response.studentsWorked,
+        percentOfStudentsWorked: response.percentOfStudentsWorked,
         percentOfEvaluationsDone: response.percentOfEvaluationsDone,
         isDataLoaded: true,
       })
@@ -303,7 +307,7 @@ return(
       <br />
       <Grid fluid>
       <Row around="xs">
-      <Col xs={10} sm={10} md={7} lg={4}>
+      <Col xs={10} sm={10} md={7} lg={5}>
       <br />
       <Card className="card">
       <Grid fluid >
@@ -322,7 +326,7 @@ return(
        </Grid>
       </Card>
       </Col>
-      <Col xs={10} sm={10} md={7} lg={4}>
+      <Col xs={10} sm={10} md={7} lg={5}>
       <br />
       <Card className="card">
       <Grid fluid >
@@ -341,7 +345,7 @@ return(
        </Grid>
       </Card>
       </Col>
-      <Col xs={10} sm={10} md={7} lg={4}>
+      <Col xs={10} sm={10} md={7} lg={5}>
       <br />
       <Card className="card">
       <Grid fluid >
@@ -355,6 +359,25 @@ return(
        <br /><br /><br />
        <span className="statsparagraph">Evaluations Done</span><br />
        <span className="stat">{this.state.evaluationsDone}/{this.state.numberOfStudentsSubmitted} </span>
+       </Col>
+       </Row>
+       </Grid>
+      </Card>
+      </Col>
+      <Col xs={10} sm={10} md={7} lg={5}>
+      <br />
+      <Card className="card">
+      <Grid fluid >
+      <Row around="xs">
+      <Col xs={5} sm={5} md={5} lg={5}>
+      <br />
+      <CircularProgressbar percentage={this.state.percentOfStudentsWorked} strokeWidth={8}/>
+       <br /><br />
+       </Col>
+       <Col xs>
+       <br /><br /><br />
+       <span className="statsparagraph">Students Started Working</span><br />
+       <span className="stat">{this.state.studentsWorked}/{this.state.totalEligibleNumberOfStudents} </span>
        </Col>
        </Row>
        </Grid>

@@ -22,7 +22,7 @@ displayQuestions(){
       <Grid fluid>
       <Row start="xs">
       <Col xs>
-      <li ><RichTextEditorReadOnly editorStyle={{position: 'relative',bottom: '6vmin'}} editorState={this.convertToEditorState(this.props.questions[i])} /></li>
+      <li ><RichTextEditorReadOnly editorStyle={{position: 'relative',bottom: '3.8vmin'}} editorState={this.convertToEditorState(this.props.questions[i])} /></li>
       <br />
       </Col>
       </Row>
