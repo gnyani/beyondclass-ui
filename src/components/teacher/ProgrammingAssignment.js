@@ -45,7 +45,7 @@ class ProgrammingAssignment extends Component{
       editorState: EditorState.createEmpty(),
       minDate: new Date(new Date().setDate(new Date().getDate()+1)),
 
-      controlledDate: new Date(new Date().setDate(new Date().getDate()+1)),
+      controlledDate: new Date(new Date().setDate(new Date().getDate()+4)),
       showTextFields: false,
       questions: [],
       questionsEditoStates: [],
