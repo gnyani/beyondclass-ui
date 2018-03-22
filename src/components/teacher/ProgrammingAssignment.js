@@ -606,7 +606,7 @@ displayQuestionBox = () => {
       <br /><br />
       </div>
       <Dialog
-            title={"Are you sure about creating this assignment with last date : "+this.state.controlledDate+", Once submitted it cannot be deleted or edited"}
+            title={"Are you sure about creating this assignment with last date : "+new Date(this.state.controlledDate)+", Once submitted it cannot be deleted or edited"}
             modal={false}
             actions={actions}
             open={this.state.submitConfirm}
