@@ -42,7 +42,9 @@ renderRows = () => {
 }
    renderInputs = () => {
      var buffer = []
-     buffer.push(<table key={1}>
+     buffer.push(
+       <div key={1} className="table">
+          <table >
            <tbody>
             <tr>
               <th>Inputs</th>
@@ -50,7 +52,8 @@ renderRows = () => {
            </tr>
            {this.renderRows()}
          </tbody>
-       </table>)
+       </table>
+       </div>)
 
    return buffer
 

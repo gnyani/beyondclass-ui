@@ -281,7 +281,7 @@ renderRows = (j) => {
     buffer.push(
       <Grid fluid key={1}>
       <Row center="xs">
-      <Col xs={10} sm ={10} md={6} lg={5}>
+      <Col xs={10} sm ={10} md={6} lg={5} className="table">
       <table >
             <tbody>
              <tr>

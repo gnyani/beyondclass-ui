@@ -82,7 +82,7 @@ componentDidMount(){
       <Row around = 'xs' top="xs">
       <Col xs={8} sm={8} md={4} lg={4}>
       <Card >
-      <CardText>
+      <CardText className="table">
       <table>
       <tbody>
           <tr>
