@@ -3,19 +3,19 @@ import { Editor } from 'react-draft-wysiwyg'
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 
-class RichTextEditor extends Component {
+class RichTextEditorToolBarOnFocus extends Component {
 
   render() {
-    const { editorState,placeholder } = this.props;
+    const { editorState,editorStyle } = this.props;
     return (
       <div>
         <Editor
-          placeholder={placeholder}
-          defaultEditorState={editorState}  editorStyle={{borderStyle: 'solid',borderWidth: '0.1px',fontSize: '24'}}
+          editorState={editorState} editorStyle={editorStyle}
+          toolbarOnFocus
           wrapperClassName="demo-wrapper"
           editorClassName="demo-editor"
-          onEditorStateChange={this.props.onEditorStateChange}
-          onContentStateChange={this.props.onContentStateChange}
+          onEditorStateChange={this.props.onEditorStateChange.bind(this,this.props.questionNumber)}
+          onContentStateChange={this.props.onContentStateChange.bind(this,this.props.questionNumber)}
           toolbar={{
             options: ['inline', 'list','blockType','image','link','embedded','fontSize', 'fontFamily','emoji','colorPicker','history'],
             inline: { inDropdown: true },
@@ -30,4 +30,4 @@ class RichTextEditor extends Component {
   }
 }
 
-export default RichTextEditor
+export default RichTextEditorToolBarOnFocus

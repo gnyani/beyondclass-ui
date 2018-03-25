@@ -3,16 +3,16 @@ import { Editor } from 'react-draft-wysiwyg'
 import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 
-class RichTextEditorReadOnly extends Component {
+class RichTextEditorToolBarOnFocus extends Component {
 
   render() {
     const { editorState,editorStyle } = this.props;
     return (
       <div>
         <Editor
-          defaultEditorState={editorState} editorStyle={editorStyle}
-          readOnly
+          editorState={editorState} editorStyle={editorStyle}
           toolbarOnFocus
+          readOnly
           toolbar={{
             options: [],
         }}
@@ -22,4 +22,4 @@ class RichTextEditorReadOnly extends Component {
   }
 }
 
-export default RichTextEditorReadOnly
+export default RichTextEditorToolBarOnFocus

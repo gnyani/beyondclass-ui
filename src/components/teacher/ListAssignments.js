@@ -14,6 +14,7 @@ import PropTypes from 'prop-types'
 import {Card, CardActions,CardText,CardHeader, CardTitle} from 'material-ui/Card'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import ViewQuestions from './ViewQuestions'
+import Edit from 'material-ui/svg-icons/image/edit.js'
 
 
 var properties = require('../properties.json');
@@ -205,17 +206,17 @@ deleteAssignment(){
 decideSubject = (i) => {
   var buffer = []
   if(this.state.savedAssignmentTypes[i] === 'THEORY')
-  buffer.push(<p>{'Subject: ' +this.state.savedAssignmentSubjects[i]}</p>)
+  buffer.push(<p key={i}>{'Subject: ' +this.state.savedAssignmentSubjects[i]}</p>)
   return buffer
 }
 
 decideAction = (i) => {
   var buffer = []
   if(this.state.savedAssignmentTypes[i] === 'THEORY')
-  buffer.push(<RaisedButton label="Continue Working" primary={true} icon={<RightIcon />}
+  buffer.push(<RaisedButton key={i} label="Continue Working" primary={true} icon={<RightIcon />}
   containerElement={<Link to={'/teacher/create/'+this.props.class+'/saved/'+this.state.savedAssignmentIds[i]}/>} />)
   else {
-    buffer.push(<RaisedButton label="Continue Working" primary={true} icon={<RightIcon />}
+    buffer.push(<RaisedButton  key={i} label="Continue Working" primary={true} icon={<RightIcon />}
    containerElement={<Link to={'/teacher/createpa/'+this.props.class+'/saved/'+this.state.savedAssignmentIds[i]}/>} />)
   }
   return buffer
@@ -269,6 +270,14 @@ listSavedAssignments = () => {
   return buffer;
   }
 
+handleEdit = (i) => {
+  if(this.state.assignmentType[i] === 'THEORY'){
+    this.context.router.history.push('/teacher/create/'+this.props.class+'/edit/'+this.state.assignmentIds[i])
+  }else{
+    notify.show("Edit for this type of assignment is still under development")
+  }
+}
+
 listAssignments(){
   var buffer = []
 if(this.state.assignmentIds.length !== 0)
@@ -282,17 +291,16 @@ if(this.state.assignmentIds.length !== 0)
       <Row start="xs">
       <Col xs={12} sm={12} md={12} lg={12} >
          <Card
-          onExpandChange={this.handleConfirmDelete.bind(this,i)}
+          onExpandChange={this.handleEdit.bind(this,i)}
           expanded={this.state.expanded[i]}
           >
-          {/*Add this icon when you are ready for deleting,not a good option to delete since students submissions will be screwed
-            showExpandableButton={true}
-            closeIcon={<Delete color="red" viewBox="0 0 20 20"/>}
-          openIcon={<Delete color="red" viewBox="0 0 20 20"/>}*/}
            <CardHeader className="cardHeader"
              title={this.props.email}
              subtitle={"Created on "+createdDate.getDate()+"-"+(createdDate.getMonth()+1)+"-"+createdDate.getFullYear()+" at "+createdDate.getHours()+":"+createdDate.getMinutes()}
              avatar={this.state.propicUrls[i]}
+             showExpandableButton={true}
+             closeIcon={<Edit color="red" viewBox="0 0 22 22"/>}
+             openIcon={<Edit color="red" viewBox="0 0 22 22"/>}
            />
 
            <CardTitle style={{textAlign:"center"}} title={this.state.subjects[i]} subtitle={"last date :"+(lastDate.getDate())+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()+" at 11:59 PM"}  />

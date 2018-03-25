@@ -19,8 +19,10 @@ componentDidMount(){
            credentials: 'include',
            method: 'GET'
         }).then(response => {
-          if(response.status === 200)
-          this.context.router.history.push('/announcements');
+          if(response.status === 200){
+            if(this.props.userrole === 'student')
+            this.context.router.history.push('/announcements');  
+          }
           else if(response.status === 404)
           this.context.router.history.push('/register');
         })

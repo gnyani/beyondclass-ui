@@ -23,7 +23,7 @@ import RichTextEditor from './RichTextEditor'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import MenuItem from 'material-ui/MenuItem'
-import RichTextEditorReadOnly from './RichTextEditorReadOnly'
+import RichTextEditorToolBarOnFocus from './RichTextEditorToolBarOnFocus'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 
 const StayVisible = styled.div`
@@ -51,7 +51,7 @@ constructor(){
     subjectValue: '',
     message: '',
     numQuestions: 1,
-    controlledDate: new Date(new Date().setDate(new Date().getDate()+1)),
+    controlledDate: new Date(new Date().setDate(new Date().getDate()+3)),
     editorState: EditorState.createEmpty(),
     contentState: '',
     questionsEditoStates: [],
@@ -62,16 +62,9 @@ constructor(){
   }
   this.renderTextField = this.renderTextField.bind(this)
   this.displayQuestions = this.displayQuestions.bind(this)
-  this.Enter = this.Enter.bind(this)
 }
 
-Enter(event){
-  if(event.key === 'Enter'){
-    this.addQuestion()
-   }
-}
-
-handleClose(){
+handleClose = () => {
   this.setState({
     submitConfirm: false,
   })
@@ -221,6 +214,30 @@ onEditorStateChange: Function = (editorState) => {
   });
 };
 
+onArrayEditorStateChange: Function = (index,editorState) => {
+  var newEditorStates = this.state.questionsEditoStates.slice()
+  newEditorStates[index].value = editorState
+  this.setState({
+    questionsEditoStates: newEditorStates
+  });
+};
+
+onArrayContentStateChange: Function = (index,contentState) => {
+  var text= ''
+  var blocks=contentState.blocks
+   for(var i=0;i<blocks.length;i++)
+   {
+     text = text + blocks[i].text
+   }
+   if(text.trim() !== ''){
+    var newQuestions = this.state.questions.slice()
+    newQuestions[index] = contentState
+    this.setState({
+      questions: newQuestions
+    })
+   }
+};
+
 onContentStateChange: Function = (contentState) => {
   var text= ''
   var blocks=contentState.blocks
@@ -307,9 +324,11 @@ displayQuestions(){
   {
   buffer.push(
     <Grid fluid key={this.state.questionsEditoStates[i].id}>
-    <Row start="xs">
+    <Row start="xs" bottom="xs">
     <Col xs={10} sm={10} md={11} lg={11}>
-    <RichTextEditorReadOnly editorStyle={{borderStyle:'solid',borderRadius:'10',borderWidth:'0.6px'}}
+    <RichTextEditorToolBarOnFocus editorStyle={{borderStyle:'solid',borderRadius:'10',borderWidth:'0.6px'}}
+    onEditorStateChange={this.onArrayEditorStateChange} onContentStateChange={this.onArrayContentStateChange}
+    questionNumber = {i}
     editorState={this.state.questionsEditoStates[i].value} />
     </Col>
     <Col xs={2} sm={2} md={1} lg={1}>
@@ -428,7 +447,7 @@ renderTextField(){
       </Row>
       </Grid>
       <Dialog
-            title={"Are you sure about creating this assignment with last date : "+this.state.controlledDate+", Once submitted it cannot be deleted or edited"}
+            title={"Are you sure about creating this assignment with last date : "+this.state.controlledDate+", Once submitted it cannot be deleted"}
             modal={false}
             actions={actions}
             open={this.state.submitConfirm}
