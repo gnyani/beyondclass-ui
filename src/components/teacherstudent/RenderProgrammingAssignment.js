@@ -253,7 +253,10 @@ saveProgrammingAssignment = (option) => {
       if(response.status === 200){
         if(option === 'autosave')
         notify.show("Your work got autosaved","success")
-        notify.show("Assignment Saved successfully","success")
+        else{
+          notify.show('Your work is saved,you can come back anytime here to continue',"success")
+          this.context.router.history.goBack()
+        }
         return response.text()
       }
       else{

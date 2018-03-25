@@ -241,7 +241,7 @@ return buffer;
       </Grid>
       <br /> <br />
       <Dialog
-            title={"Are you sure about updating this assignment with last date : "+this.state.controlledDate}
+            title={"Are you sure about updating this assignment with last date : "+new Date(this.state.controlledDate)}
             modal={false}
             actions={actions}
             open={this.state.submitConfirm}

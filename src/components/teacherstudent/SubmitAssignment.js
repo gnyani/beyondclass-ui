@@ -73,7 +73,10 @@ saveAssignment(option){
       if(response.status === 200){
         if(option === 'autosave' )
         notify.show("Your work is auto saved","success")
-        notify.show('Your work is saved,you can come back anytime here to continue',"success")
+        else{
+          notify.show('Your work is saved,you can come back anytime here to continue',"success")
+          this.context.router.history.goBack()
+        }
       }else if(response.status === 500){
         notify.show('Sorry something went wrong please try again',"error")
       }

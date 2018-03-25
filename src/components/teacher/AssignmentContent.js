@@ -446,6 +446,7 @@ renderTextField(){
       </Col>
       </Row>
       </Grid>
+      <br /><br />
       <Dialog
             title={"Are you sure about creating this assignment with last date : "+this.state.controlledDate+", Once submitted it cannot be deleted"}
             modal={false}
