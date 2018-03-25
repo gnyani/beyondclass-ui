@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {CSE,ECE,CSESyllabus,dataSourceConfig} from '../utils/Subjects.js'
+import {CSE,ECE,CSESyllabus,IT,ITSyllabus,dataSourceConfig} from '../utils/Subjects.js'
 import AutoComplete from 'material-ui/AutoComplete'
 import TextField from 'material-ui/TextField'
 
@@ -68,6 +68,33 @@ getIndex(value, arr, prop) {
     )
     }
   }
+  if(this.props.branch === 'IT')
+  {
+    if(this.props.type === 'questionpaper')
+    return (
+    <AutoComplete
+     floatingLabelText="Start Typing Subject Name"
+     filter={AutoComplete.fuzzyFilter}
+     searchText={this.state.searchText}
+     onUpdateInput={this.handleUpdateInput}
+     dataSource={IT}
+     maxSearchResults={5}
+     dataSourceConfig={dataSourceConfig}
+     />)
+  else {
+    return (
+    <AutoComplete
+     floatingLabelText="Start Typing Subject Name"
+     filter={AutoComplete.fuzzyFilter}
+     searchText={this.state.searchText}
+     onUpdateInput={this.handleUpdateInput}
+     dataSource={ITSyllabus}
+     maxSearchResults={5}
+     dataSourceConfig={dataSourceConfig}
+     />
+  )
+  }
+}
   if(this.props.branch === 'ECE')
   return (
     <AutoComplete

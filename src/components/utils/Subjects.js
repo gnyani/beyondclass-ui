@@ -27,6 +27,13 @@ export const CSESyllabus = [
   {subjectKey: 'Finishing School 2', valueKey: 'FS2'}
 ];
 
+export const IT = [
+  {subjectKey:'Machine Learning',valueKey:'ML'},
+]
+export const ITSyllabus = [
+  {subjectKey:'Machine Learning',valueKey:'ML'},
+]
+
 export const SubjectsNameLookup = {
   'OS':'Operating Systems',
   'DS':'Data Structures',
@@ -38,6 +45,7 @@ export const SubjectsNameLookup = {
   'JAVALAB':'Java Lab',
   'OSLAB':'Operating Systems Lab',
   'FS2':'Finishing School 2',
+  'ML':'Machine Learning',
 }
 
 export const ECE = [
