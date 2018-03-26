@@ -416,12 +416,18 @@ renderTextField(){
         value={this.state.numQuestions}
         onChange={this.handleNumberChange}
         style={{width: '50%'}}
+        maxHeight={200}
       >
         <MenuItem value={1}  primaryText="One" />
         <MenuItem value={2}  primaryText="Two" />
         <MenuItem value={3}  primaryText="Three" />
         <MenuItem value={4}  primaryText="Four" />
         <MenuItem value={5}  primaryText="Five" />
+        <MenuItem value={6}  primaryText="Six" />
+        <MenuItem value={7}  primaryText="Seven" />
+        <MenuItem value={8}  primaryText="Eight" />
+        <MenuItem value={9}  primaryText="Nine" />
+        <MenuItem value={10}  primaryText="Ten" />
       </SelectField>
       </Col>
       </Row>
