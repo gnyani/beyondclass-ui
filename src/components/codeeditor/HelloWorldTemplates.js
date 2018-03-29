@@ -70,6 +70,8 @@ func main() {
  //Enter your code here. Read input from STDIN. Print output to STDOUT
 }`,
 'Bash':'echo "Welcome to Beyond Class !!!"',
-'Ruby':'puts "Welcome to Beyond Class !!!"'
+'Ruby':'puts "Welcome to Beyond Class !!!"',
+'R':`myString <- "Welcome to Beyond Class !!!"
+    print ( myString)`,
 
 }

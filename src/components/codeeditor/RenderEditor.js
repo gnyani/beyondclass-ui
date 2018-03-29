@@ -58,6 +58,7 @@ class RenderEditor extends Component {
          underlineStyle={{borderColor: 'black'}}
          iconStyle={{fill:'black'}}
          autoWidth={true}
+         maxHeight={300}
        >
        {this.menuItems(modes)}
         </SelectField>

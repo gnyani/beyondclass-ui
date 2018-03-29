@@ -10,7 +10,8 @@ export const modes = [
   {name: "Groovy",value:'groovy',key:9},
   {name: "GoLang",value:'golang',key:10},
   {name: "Bash",value:'sh',key:11},
-  {name: "Ruby",value:'ruby',key:12}
+  {name: "Ruby",value:'ruby',key:12},
+  {name: "R",value:'r',key:13},
 ]
 
 export const editorModes = {
@@ -26,6 +27,7 @@ export const editorModes = {
   'GoLang': 'golang',
   'Bash':'sh',
   'Ruby':'ruby',
+  'R':'r',
 }
 
 export const hackerRankLangNotation = {
@@ -41,6 +43,7 @@ export const hackerRankLangNotation = {
   'GoLang': 'go',
   'Bash':'bash',
   'Ruby':'ruby',
+  'R':'r',
 }
 
 
