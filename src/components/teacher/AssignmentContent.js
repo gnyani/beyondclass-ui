@@ -25,6 +25,7 @@ import PropTypes from 'prop-types'
 import MenuItem from 'material-ui/MenuItem'
 import RichTextEditorToolBarOnFocus from './RichTextEditorToolBarOnFocus'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
+import IdleTimer from 'react-idle-timer'
 
 const StayVisible = styled.div`
   position: relative;
@@ -59,6 +60,9 @@ constructor(){
     saveButton: false,
     submitConfirm: false,
     isDataLoaded: false,
+    timeout: 5000,
+    isIdle: false,
+    totalActiveTime: null,
   }
   this.renderTextField = this.renderTextField.bind(this)
   this.displayQuestions = this.displayQuestions.bind(this)
@@ -70,14 +74,17 @@ handleClose = () => {
   })
 }
 
-validateSaveCreateAssignment = () => {
-  if(this.state.questions.length === 0)
+validateSaveCreateAssignment = (option) => {
+  if((this.state.questions.length === 0 && option === 'autosave') || (this.state.subject === "" && option === 'autosave')){
+    //do nothing
+  }
+  else if(this.state.questions.length === 0)
   notify.show("Please add atleast one question before you can save the assignment","warning")
   else if(this.state.subject === ""){
     notify.show("Please select the subject","warning")
   }
   else{
-    this.saveCreateAssignment()
+    this.saveCreateAssignment(option)
   }
 }
 
@@ -131,8 +138,33 @@ componentDidMount(){
         isDataLoaded:true,
       })
     }
+    this._interval = setInterval(() => {
+      if(this.state.isIdle === false)
+      this.setState({
+        totalActiveTime: this.state.totalActiveTime + 20000
+      });
+      if(this.state.totalActiveTime % 20000 === 0 )
+      {
+        this.validateSaveCreateAssignment('autosave')
+      }
+    }, 20000);
 }
-saveCreateAssignment = () => {
+
+componentWillUnmount() {
+    clearInterval(this._interval);
+}
+
+_onActive = () => {
+   this.setState({ isIdle: false });
+ }
+
+ _onIdle = () => {
+   this.setState({
+     isIdle: true,
+    });
+ }
+
+saveCreateAssignment = (option) => {
   this.setState({
     saveButton: true,
   })
@@ -157,7 +189,11 @@ saveCreateAssignment = () => {
       this.setState({
         saveButton: false,
       })
-      if(response.status === 200)
+      if(response.status === 200 && option === 'autosave')
+      {
+      notify.show("Assignment Auto-Saved successfully","success")
+     }
+      else if(response.status === 200)
       {
       notify.show("Assignment Saved successfully","success")
       this.context.router.history.goBack()
@@ -169,7 +205,7 @@ saveCreateAssignment = () => {
     this.context.router.history.push('/');
    });
 }
-submitCreateAssignment = () => {
+submitCreateAssignment = (option) => {
   this.setState({
     submitButton: true,
     submitConfirm: false,
@@ -270,7 +306,7 @@ addQuestion = () => {
     editorState:EditorState.createEmpty(),
     showTextField: false,
   })
-  }
+ }
 }
 
 
@@ -445,7 +481,7 @@ renderTextField(){
       </Row>
       <Row center='xs' middle='xs'>
       <Col xs={6} sm={6} md={4} lg={3}>
-      <RaisedButton label = "Save" primary={true} disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment} />
+      <RaisedButton label = "Save" primary={true} disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment.bind('save')} />
       </Col>
       <Col xs={6} sm={6} md={4} lg={3}>
       <RaisedButton label = "Submit" primary={true} disabled={this.state.submitButton} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
