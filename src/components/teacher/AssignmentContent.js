@@ -500,6 +500,16 @@ renderTextField(){
           >
       </Dialog>
       </div>
+      <IdleTimer
+      ref="idleTimer"
+      activeAction={this._onActive}
+      idleAction={this._onIdle}
+      timeout={this.state.timeout}
+      startOnLoad={false}
+      format="MM-DD-YYYY HH:MM:ss.SSS">
+
+      {/*<h1>Time Spent: {this.state.totalActiveTime}</h1>*/}
+      </IdleTimer>
       </StayVisible>)
     }else{
       return(<Grid fluid className="RefreshIndicator" key={1}>

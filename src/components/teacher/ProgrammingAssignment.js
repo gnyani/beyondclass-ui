@@ -53,7 +53,7 @@ constructor(){
     alloutputs:[],
     inputs: [],
     outputs: [],
-    controlledDate: new Date(new Date().setDate(new Date().getDate()+1)),
+    controlledDate: new Date(new Date().setDate(new Date().getDate()+3)),
     editorState: EditorState.createEmpty(),
     contentState: '',
     questionsEditoStates: [],
@@ -248,7 +248,7 @@ handleOutputsChange = (qindex, index, event) => {
     }
 }
 
-handleClose(){
+handleClose = () => {
   this.setState({
     submitConfirm: false,
   })
