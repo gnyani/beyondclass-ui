@@ -239,6 +239,7 @@ handleOutputsChange = (qindex, index, event) => {
        })
       }else{
        NewOutputs.splice(index,1)
+       Outputs[qindex] = NewOutputs
        var OldInputs = this.state.allinputs.slice()
        var NewInputs = OldInputs[qindex]
        NewInputs.splice(index,1)
@@ -246,6 +247,15 @@ handleOutputsChange = (qindex, index, event) => {
        this.setState({
          alloutputs: Outputs,
          allinputs: OldInputs,
+       })
+      }
+    }
+    else if(NewOutputs.length === 1){
+      if(event.target.value.trim() !== ''){
+       NewOutputs[index] = event.target.value
+       Outputs[qindex] = NewOutputs
+       this.setState({
+         alloutputs: Outputs,
        })
       }
     }

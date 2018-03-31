@@ -273,8 +273,10 @@ listSavedAssignments = () => {
 handleEdit = (i) => {
   if(this.state.assignmentType[i] === 'THEORY'){
     this.context.router.history.push('/teacher/create/'+this.props.class+'/edit/'+this.state.assignmentIds[i])
+  }else if(this.state.assignmentType[i] === 'CODING'){
+    this.context.router.history.push('/teacher/createpa/'+this.props.class+'/edit/'+this.state.assignmentIds[i])
   }else{
-    notify.show("Edit for this type of assignment is still under development")
+      notify.show("Edit for this type of assignment is still under development")
   }
 }
 

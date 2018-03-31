@@ -10,10 +10,11 @@ import FlatButton from 'material-ui/FlatButton'
 import {Media} from '../../utils/Media'
 import styled from 'styled-components'
 import Dialog from 'material-ui/Dialog'
-import { EditorState,convertFromRaw } from 'draft-js'
-import RichTextEditorToolBarOnFocus from '../RichTextEditorToolBarOnFocus'
+import { EditorState, convertFromRaw } from 'draft-js'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
+import RichTextEditorToolBarOnFocus from '../RichTextEditorToolBarOnFocus'
+import TestCases from '../TestCases'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 
 const StayVisible = styled.div`
@@ -27,9 +28,9 @@ const StayVisible = styled.div`
 
 var properties = require('../../properties.json')
 
-let id = 0;
+let id=0;
 
-class AssignmentContent extends Component{
+class EditProgrammingAssignment extends Component{
 constructor(){
   super();
   var date = new Date();
@@ -40,6 +41,8 @@ constructor(){
     questions: [],
     questionValue: '',
     message: '',
+    allinputs:[],
+    alloutputs:[],
     controlledDate: date,
     editorState: EditorState.createEmpty(),
     contentState: '',
@@ -51,12 +54,93 @@ constructor(){
   this.displayQuestions = this.displayQuestions.bind(this)
 }
 
+componentDidMount(){
+  if(this.props.assignmentid){
+  fetch('http://'+properties.getHostName+':8080/assignments/teacher/get/assignment/'+this.props.assignmentid, {
+        credentials: 'include',
+        method: 'GET'
+      }).then(response => {
+        if(response.status === 200)
+        return response.json()
+        else if (response.status === 204) {
+        }
+      }).then(response => {
+        if(response){
+         var newEditorStates = []
+        for(let i=0; i<response.questions.length;i++){
+          newEditorStates.push({id:++id,value:EditorState.createWithContent(convertFromRaw(response.questions[i]))})
+          }
+        }
+        this.setState({
+          questions: response.questions,
+          message: response.message,
+          isDataLoaded: true,
+          questionsEditoStates: newEditorStates.slice(),
+          allinputs: response.inputs,
+          alloutputs: response.outputs,
+          controlledDate: response.lastdate,
+        })
+      }).catch(response => {
+      notify.show("Please login your session expired","error");
+      this.context.router.history.push('/');
+     });
+    }else{
+      this.setState({
+        isDataLoaded:true,
+      })
+    }
+}
+
+handleInputsChange = (qindex, index, event) => {
+  var Inputs = this.state.allinputs.slice()
+  var NewInputs = Inputs[qindex]
+   NewInputs[index] = event.target.value
+   Inputs[qindex] = NewInputs
+   this.setState({
+     allinputs: Inputs,
+   })
+
+}
+
+handleOutputsChange = (qindex, index, event) => {
+    var Outputs = this.state.alloutputs.slice()
+    var NewOutputs = Outputs[qindex]
+    if(NewOutputs.length > 1){
+      if(event.target.value.trim() !== ''){
+       NewOutputs[index] = event.target.value
+       Outputs[qindex] = NewOutputs
+       this.setState({
+         alloutputs: Outputs,
+       })
+      }else{
+       NewOutputs.splice(index,1)
+       Outputs[qindex] = NewOutputs
+       var OldInputs = this.state.allinputs.slice()
+       var NewInputs = OldInputs[qindex]
+       NewInputs.splice(index,1)
+       OldInputs[qindex] = NewInputs
+       this.setState({
+         alloutputs: Outputs,
+         allinputs: OldInputs,
+       })
+      }
+    }
+    else if(NewOutputs.length === 1){
+      if(event.target.value.trim() !== ''){
+       NewOutputs[index] = event.target.value
+       Outputs[qindex] = NewOutputs
+       this.setState({
+         alloutputs: Outputs,
+       })
+      }
+    }
+}
+
 handleClose = () => {
   this.setState({
     submitConfirm: false,
   })
 }
-
 
 validateUpdateAssignment = () => {
   if(this.state.controlledDate === null)
@@ -66,6 +150,43 @@ validateUpdateAssignment = () => {
       submitConfirm: true
     })
   }
+}
+
+submitUpdateAssignment = () => {
+  this.setState({
+    buttonDisabled: true,
+    submitConfirm: false,
+  })
+  fetch('http://'+properties.getHostName+':8080/assignments/teacher/update/'+this.props.assignmentid, {
+         method: 'POST',
+         headers: {
+               'mode': 'cors',
+               'Content-Type': 'application/json'
+           },
+       credentials: 'include',
+       body: JSON.stringify({
+         lastdate: this.state.controlledDate,
+         questions: this.state.questions,
+         inputs: this.state.allinputs,
+         outputs: this.state.alloutputs,
+         message: this.state.message,
+         assignmentType: 'CODING'
+      })
+    }).then(response =>{
+      this.setState({
+        buttonDisabled: false,
+      })
+      if(response.status === 200)
+      {
+      notify.show("Assignment Updated successfully","success")
+      this.context.router.history.goBack()
+    }else{
+      notify.show("Something went wrong, please try again","error")
+    }
+    }).catch(response => {
+    notify.show("Please login your session expired","error");
+    this.context.router.history.push('/');
+   });
 }
 
 onArrayEditorStateChange: Function = (index,editorState) => {
@@ -92,75 +213,25 @@ onArrayContentStateChange: Function = (index,contentState) => {
    }
 };
 
-componentDidMount(){
-  if(this.props.assignmentid){
-  fetch('http://'+properties.getHostName+':8080/assignments/teacher/get/assignment/'+this.props.assignmentid, {
-        credentials: 'include',
-        method: 'GET'
-      }).then(response => {
-        if(response.status === 200)
-        return response.json()
-        else if (response.status === 204 || response.status === 400) {
-        }
-      }).then(response => {
-        if(response){
-         var newEditorStates = []
-        for(let i=0; i<response.questions.length;i++){
-          newEditorStates.push({id:++id,value:EditorState.createWithContent(convertFromRaw(response.questions[i]))})
-          }
-        }
-        this.setState({
-          questions: response.questions,
-          message: response.message,
-          isDataLoaded: true,
-          controlledDate: response.lastdate,
-          questionsEditoStates: newEditorStates.slice(),
-          numQuestions: response.numberOfQuesPerStudent,
-        })
-      }).catch(response => {
-      notify.show("Please login your session expired","error");
-      this.context.router.history.push('/');
-     });
-    }else{
-      this.setState({
-        isDataLoaded:true,
-      })
-    }
-}
-submitUpdateAssignment = () => {
+onEditorStateChange: Function = (editorState) => {
   this.setState({
-    submitButton: true,
-    submitConfirm: false,
-  })
-  fetch('http://'+properties.getHostName+':8080/assignments/teacher/update/'+this.props.assignmentid, {
-         method: 'POST',
-         headers: {
-               'mode': 'cors',
-               'Content-Type': 'application/json'
-           },
-       credentials: 'include',
-       body: JSON.stringify({
-         lastdate: this.state.controlledDate,
-         message: this.state.message,
-         questions: this.state.questions,
-         assignmentType: 'THEORY',
-      })
-    }).then(response =>{
-      this.setState({
-        submitButton: false,
-      })
-      if(response.status === 200)
-      {
-      notify.show("Assignment Updated successfully","success")
-      this.context.router.history.goBack()
-    }else{
-      notify.show("Something went wrong please try again","error")
-    }
-    }).catch(response => {
-    notify.show("Please login your session expired","error");
-    this.context.router.history.push('/');
+    editorState,
+  });
+};
+
+onContentStateChange: Function = (contentState) => {
+  var text= ''
+  var blocks=contentState.blocks
+   for(var i=0;i<blocks.length;i++)
+   {
+     text = text + blocks[i].text
+   }
+   this.setState({
+     contentState,
+     questionValue: text,
    });
-}
+};
+
 
 handleDateChange = (event, date) => {
   this.setState({
@@ -180,15 +251,27 @@ displayQuestions(){
   for(let i=0; i < this.state.questions.length ; i++)
   {
   buffer.push(
-    <Grid fluid key={this.state.questionsEditoStates[i].id}>
-    <Row start="xs">
+    <div key={this.state.questionsEditoStates[i].id}>
+    <p className="paragraph"> Question{i+1}</p>
+    <Grid fluid >
+    <Row start="xs" bottom="xs">
     <Col xs>
     <RichTextEditorToolBarOnFocus editorStyle={{borderStyle:'solid',borderRadius:'10',borderWidth:'0.6px'}}
     onEditorStateChange={this.onArrayEditorStateChange} onContentStateChange={this.onArrayContentStateChange}
-    editorState={this.state.questionsEditoStates[i].value} questionNumber={i} />
+    questionNumber = {i}
+    editorState={this.state.questionsEditoStates[i].value} />
+    </Col>
+    </Row>
+    <Row center="xs">
+    <Col xs={10} md={10} sm={8} lg={8}>
+    <TestCases inputs={this.state.allinputs[i]}
+    handleInputsChange={this.handleInputsChange} qindex={i}
+    outputs={this.state.alloutputs[i]}
+    handleOutputsChange={this.handleOutputsChange}/>
     </Col>
     </Row>
     </Grid>
+    </div>
   )
 }
 return buffer;
@@ -206,12 +289,12 @@ return buffer;
         primary={true}
         onTouchTap={this.handleClose}
       />]
-    if(this.state.isDataLoaded){
+if(this.state.isDataLoaded){
     return(
       <StayVisible
         {...this.props}
       >
-      <div className="TeacherAssignment">
+      <div className="ProgrammingAssignment">
       <Grid fluid >
       <Row center="xs">
       <Col xs={9} sm={9} md={6} lg={5}>
@@ -222,27 +305,27 @@ return buffer;
       </Row>
       </Grid>
       <Grid fluid>
+      <br /><br />
       <Row center="xs" bottom="xs">
-      <Col xs>
-      <DatePicker hintText="Last Date" floatingLabelText="Last Date" defaultDate={new Date(this.state.controlledDate)} minDate={this.state.minDate} onChange={this.handleDateChange} />
+      <Col xs={6} sm={6} md={4} lg={5}>
+      <DatePicker hintText="Last Date" floatingLabelText="Last Date" minDate={this.state.minDate} defaultDate={new Date(this.state.controlledDate)} onChange={this.handleDateChange} />
+      </Col>
+      <Col xs={6} sm={6} md={4} lg={4}>
+      <TextField hintText="Additional Comments" style={{width:'75%'}} value={this.state.message} floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
       </Col>
       </Row>
-      <Row center="xs">
-      <Col xs>
-      <TextField style={{width: '75%'}} value={this.state.message} hintText="Additional Comments" floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
-      </Col>
-      </Row>
+      <br />
       </Grid>
       {this.displayQuestions()}
-      <br /> <br />
       <Grid fluid>
-      <Row center='xs' middle='xs'>
+      <br />
+      <Row center="xs" middle="xs">
       <Col xs>
       <RaisedButton label = "Update" primary={true} disabled={this.state.submitButton} icon={<UpdateIcon />} onClick={this.validateUpdateAssignment} />
       </Col>
       </Row>
+      <br /><br />
       </Grid>
-      <br /> <br />
       <Dialog
             title={"Are you sure about updating this assignment with last date : "+new Date(this.state.controlledDate)}
             modal={false}
@@ -255,26 +338,26 @@ return buffer;
       </Dialog>
       </div>
       </StayVisible>)
-    }else{
-      return(<Grid fluid className="RefreshIndicator" key={1}>
-      <Row center="xs">
-      <Col xs>
-        <RefreshIndicator
-           size={50}
-           left={45}
-           top={0}
-           loadingColor="#FF9800"
-           status="loading"
-           className="refresh"
-          />
-      </Col>
-      </Row>
-      </Grid>)
-    }
+  }else{
+    return(<Grid fluid className="RefreshIndicator" key={1}>
+    <Row center="xs">
+    <Col xs>
+      <RefreshIndicator
+         size={50}
+         left={45}
+         top={0}
+         loadingColor="#FF9800"
+         status="loading"
+         className="refresh"
+        />
+    </Col>
+    </Row>
+    </Grid>)
+  }
   }
 }
-AssignmentContent.contextTypes = {
+EditProgrammingAssignment.contextTypes = {
     router: PropTypes.object
 };
 
-export default withRouter(AssignmentContent)
+export default withRouter(EditProgrammingAssignment)
