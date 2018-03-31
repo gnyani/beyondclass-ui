@@ -43,6 +43,9 @@ let id = 0;
 class AssignmentContent extends Component{
 constructor(){
   super();
+  var date = new Date();
+    date.setHours(0,0,0,0)
+    date.setDate(new Date().getDate()+3)
   this.state={
     minDate: new Date(new Date().setDate(new Date().getDate()+1)),
     questions: [],
@@ -52,7 +55,7 @@ constructor(){
     subjectValue: '',
     message: '',
     numQuestions: 1,
-    controlledDate: new Date(new Date().setDate(new Date().getDate()+3)),
+    controlledDate: date,
     editorState: EditorState.createEmpty(),
     contentState: '',
     questionsEditoStates: [],

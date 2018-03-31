@@ -42,6 +42,9 @@ let id=0;
 class ProgrammingAssignment extends Component{
 constructor(){
   super();
+  var date = new Date();
+    date.setHours(0,0,0,0)
+    date.setDate(new Date().getDate()+3)
   this.state={
     minDate: new Date(new Date().setDate(new Date().getDate()+1)),
     questions: [],
@@ -53,7 +56,7 @@ constructor(){
     alloutputs:[],
     inputs: [],
     outputs: [],
-    controlledDate: new Date(new Date().setDate(new Date().getDate()+3)),
+    controlledDate: date,
     editorState: EditorState.createEmpty(),
     contentState: '',
     questionsEditoStates: [],
