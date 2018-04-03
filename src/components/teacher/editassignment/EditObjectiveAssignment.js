@@ -1,10 +1,9 @@
 import React,{Component} from 'react'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import {notify} from 'react-notify-toast'
+import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import DatePicker from 'material-ui/DatePicker'
 import TextField from 'material-ui/TextField'
-import UpdateIcon from 'material-ui/svg-icons/action/update.js'
-import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import {Media} from '../../utils/Media'
@@ -13,8 +12,9 @@ import Dialog from 'material-ui/Dialog'
 import { EditorState, convertFromRaw } from 'draft-js'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
+import UpdateIcon from 'material-ui/svg-icons/action/update.js'
 import RichTextEditorToolBarOnFocus from '../RichTextEditorToolBarOnFocus'
-import TestCases from '../TestCases'
+import AlternateOptions from '../AlternateOptions'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 
 const StayVisible = styled.div`
@@ -30,7 +30,7 @@ var properties = require('../../properties.json')
 
 let id=0;
 
-class EditProgrammingAssignment extends Component{
+class EditObjectiveAssignment extends Component{
 constructor(){
   super();
   var date = new Date();
@@ -41,8 +41,8 @@ constructor(){
     questions: [],
     questionValue: '',
     message: '',
-    allinputs:[],
-    alloutputs:[],
+    options:[],
+    validity:[],
     controlledDate: date,
     editorState: EditorState.createEmpty(),
     contentState: '',
@@ -76,8 +76,8 @@ componentDidMount(){
           message: response.message,
           isDataLoaded: true,
           questionsEditoStates: newEditorStates.slice(),
-          allinputs: response.inputs,
-          alloutputs: response.outputs,
+          options: response.options.slice(),
+          validity: response.validity.slice(),
           controlledDate: response.lastdate,
         })
       }).catch(response => {
@@ -91,49 +91,28 @@ componentDidMount(){
     }
 }
 
-handleInputsChange = (qindex, index, event) => {
-  var Inputs = this.state.allinputs.slice()
-  var NewInputs = Inputs[qindex]
-   NewInputs[index] = event.target.value
-   Inputs[qindex] = NewInputs
-   this.setState({
-     allinputs: Inputs,
-   })
-
+handleValidityChange = (qindex, changedValidity) => {
+  if(changedValidity.length > 0){
+    var newValidity = this.state.validity.slice()
+    newValidity[qindex] = changedValidity
+    this.setState({
+      validity: newValidity
+    })
+  }
 }
 
-handleOutputsChange = (qindex, index, event) => {
-    var Outputs = this.state.alloutputs.slice()
-    var NewOutputs = Outputs[qindex]
-    if(NewOutputs.length > 1){
-      if(event.target.value.trim() !== ''){
-       NewOutputs[index] = event.target.value
-       Outputs[qindex] = NewOutputs
-       this.setState({
-         alloutputs: Outputs,
-       })
-      }else{
-       NewOutputs.splice(index,1)
-       Outputs[qindex] = NewOutputs
-       var OldInputs = this.state.allinputs.slice()
-       var NewInputs = OldInputs[qindex]
-       NewInputs.splice(index,1)
-       OldInputs[qindex] = NewInputs
-       this.setState({
-         alloutputs: Outputs,
-         allinputs: OldInputs,
-       })
-      }
-    }
-    else if(NewOutputs.length === 1){
-      if(event.target.value.trim() !== ''){
-       NewOutputs[index] = event.target.value
-       Outputs[qindex] = NewOutputs
-       this.setState({
-         alloutputs: Outputs,
-       })
-      }
-    }
+handleOptionsChange = (qindex, index, event, fourth) => {
+  var Options = this.state.options.slice()
+  var NewOptions = Options[qindex]
+  if(event.target.value.trim() !== ''){
+   NewOptions[index] = event.target.value
+   Options[qindex] = NewOptions
+ }else{
+   NewOptions.splice(index,1)
+ }
+ this.setState({
+   options: Options,
+ })
 }
 
 handleClose = () => {
@@ -152,18 +131,9 @@ validateUpdateAssignment = () => {
   }
 }
 
-handleAllInputs = (allinputs) => {
-  var newAllInputs = []
-  for (var i=0; i<allinputs.length;i++){
-    var newInputs = allinputs[i].slice(0,this.state.alloutputs[i].length)
-    newAllInputs.push(newInputs)
-  }
- return newAllInputs
-}
-
 submitUpdateAssignment = () => {
   this.setState({
-    buttonDisabled: true,
+    submitButton: true,
     submitConfirm: false,
   })
   fetch('http://'+properties.getHostName+':8080/assignments/teacher/update/'+this.props.assignmentid, {
@@ -175,22 +145,25 @@ submitUpdateAssignment = () => {
        credentials: 'include',
        body: JSON.stringify({
          lastdate: this.state.controlledDate,
-         questions: this.state.questions,
-         inputs:  this.handleAllInputs(this.state.allinputs),
-         outputs: this.state.alloutputs,
          message: this.state.message,
-         assignmentType: 'CODING'
+         questions: this.state.questions,
+         options: this.state.options,
+         validity: this.state.validity,
+         assignmentType: 'OBJECTIVE',
       })
     }).then(response =>{
       this.setState({
-        buttonDisabled: false,
+        submitButton: false,
       })
       if(response.status === 200)
       {
       notify.show("Assignment Updated successfully","success")
+      this.setState({
+        shouldRender: new Date(),
+      })
       this.context.router.history.goBack()
     }else{
-      notify.show("Something went wrong, please try again","error")
+      notify.show("Something went wrong please try again","error")
     }
     }).catch(response => {
     notify.show("Please login your session expired","error");
@@ -241,7 +214,6 @@ onContentStateChange: Function = (contentState) => {
    });
 };
 
-
 handleDateChange = (event, date) => {
   this.setState({
     controlledDate: date,
@@ -254,7 +226,6 @@ handleMessageChange = (event) => {
   })
 }
 
-
 displayQuestions(){
   var buffer=[]
   for(let i=0; i < this.state.questions.length ; i++)
@@ -264,7 +235,7 @@ displayQuestions(){
     <p className="paragraph"> Question{i+1}</p>
     <Grid fluid >
     <Row start="xs" bottom="xs">
-    <Col xs>
+    <Col xs={10} sm={10} md={11} lg={11}>
     <RichTextEditorToolBarOnFocus editorStyle={{borderStyle:'solid',borderRadius:'10',borderWidth:'0.6px'}}
     onEditorStateChange={this.onArrayEditorStateChange} onContentStateChange={this.onArrayContentStateChange}
     questionNumber = {i}
@@ -272,11 +243,11 @@ displayQuestions(){
     </Col>
     </Row>
     <Row center="xs">
-    <Col xs={10} md={10} sm={8} lg={8}>
-    <TestCases inputs={this.state.allinputs[i]}
-    handleInputsChange={this.handleInputsChange} qindex={i}
-    outputs={this.state.alloutputs[i]}
-    handleOutputsChange={this.handleOutputsChange}/>
+    <Col xs={10} md={10} sm={7} lg={5}>
+    <AlternateOptions options={this.state.options[i]}
+    handleOptionsChange={this.handleOptionsChange} qindex={i}
+    questionValidity={this.state.validity[i]}
+    handleQuestionValidityChange={this.handleValidityChange}/>
     </Col>
     </Row>
     </Grid>
@@ -286,7 +257,7 @@ displayQuestions(){
 return buffer;
 }
 
-  render(){
+render(){
     const actions = [
       <FlatButton
         label="Confirm"
@@ -303,8 +274,8 @@ if(this.state.isDataLoaded){
       <StayVisible
         {...this.props}
       >
-      <div className="ProgrammingAssignment">
-      <Grid fluid >
+      <div className="TeacherAssignment">
+      <Grid fluid>
       <Row center="xs">
       <Col xs={9} sm={9} md={6} lg={5}>
       <br /><br />
@@ -312,15 +283,14 @@ if(this.state.isDataLoaded){
       className="button" onClick={()=>{this.context.router.history.goBack()}} />
       </Col>
       </Row>
-      </Grid>
-      <Grid fluid>
-      <br /><br />
       <Row center="xs" bottom="xs">
-      <Col xs={6} sm={6} md={4} lg={5}>
-      <DatePicker hintText="Last Date" floatingLabelText="Last Date" minDate={this.state.minDate} defaultDate={new Date(this.state.controlledDate)} onChange={this.handleDateChange} />
+      <Col xs>
+      <DatePicker hintText="Last Date" minDate={this.state.minDate} defaultDate={new Date(this.state.controlledDate)} onChange={this.handleDateChange} />
       </Col>
-      <Col xs={6} sm={6} md={4} lg={4}>
-      <TextField hintText="Additional Comments" style={{width:'75%'}} value={this.state.message} floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
+      </Row>
+      <Row center="xs">
+      <Col xs>
+      <TextField style={{width: '75%'}} value={this.state.message} hintText="Additional Comments" floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
       </Col>
       </Row>
       <br />
@@ -328,9 +298,9 @@ if(this.state.isDataLoaded){
       {this.displayQuestions()}
       <Grid fluid>
       <br />
-      <Row center="xs" middle="xs">
-      <Col xs>
-      <RaisedButton label = "Update" primary={true} disabled={this.state.submitButton} icon={<UpdateIcon />} onClick={this.validateUpdateAssignment} />
+      <Row center="xs">
+      <Col xs={6} sm={6} md={4} lg={3}>
+      <RaisedButton label="Update" primary={true} disabled={this.state.buttonDisabled} icon={<UpdateIcon />} onClick={this.validateUpdateAssignment} />
       </Col>
       </Row>
       <br /><br />
@@ -365,8 +335,8 @@ if(this.state.isDataLoaded){
   }
   }
 }
-EditProgrammingAssignment.contextTypes = {
+EditObjectiveAssignment.contextTypes = {
     router: PropTypes.object
 };
 
-export default withRouter(EditProgrammingAssignment)
+export default withRouter(EditObjectiveAssignment)

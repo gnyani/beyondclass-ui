@@ -16,6 +16,7 @@ import PropTypes from 'prop-types'
 import RichTextEditorReadOnly from '../teacher/RichTextEditorReadOnly'
 import { EditorState,convertFromRaw } from 'draft-js'
 import DisplayProgrammingAssignment from './DisplayProgrammingAssignment'
+import DisplayObjectiveAssignment from './DisplayObjectiveAssignment'
 import Dialog from 'material-ui/Dialog'
 import RenderCodingAssignmentResult from './RenderCodingAssignmentResult'
 import TextField from 'material-ui/TextField'
@@ -86,6 +87,8 @@ class EvaluateAssignment extends Component{
      codingAssignmentResponse: [],
      mode: '',
      inputs: [],
+     options: [],
+     validity: [],
      outputs: [],
      userName: '',
      rollNumber: '',
@@ -126,6 +129,9 @@ class EvaluateAssignment extends Component{
              timespent: response.timespent,
              questionIndex: response.submitAssignment.questionIndex,
              inputs: response.createAssignment.inputs,
+             options: response.createAssignment.options,
+             validity: response.createAssignment.validity,
+             userValidity: response.submitAssignment.userValidity,
              outputs: response.createAssignment.outputs,
              userName: response.userName,
              rollNumber: response.rollNumber,
@@ -281,20 +287,38 @@ return buffer
          </Row>
        </Grid>  )
     }else{
-      buffer.push(
-        <Grid fluid key={1}>
-        <Row around="xs">
-        <Col xs={11} sm={11} md={9} lg={8}>
-                <div >
-                <fieldset>
-                  <legend >Insights</legend>
-                  <p> Time Spent : {this.state.timespent} </p>
-                  {this.showRemarks()}
-                  </fieldset>
-                 </div>
-        </Col>
-         </Row>
-       </Grid>  )
+     if(this.state.assignmentType === 'OBJECTIVE'){
+       buffer.push(
+         <Grid fluid key={1}>
+         <Row around="xs">
+         <Col xs={11} sm={11} md={9} lg={8}>
+                 <div >
+                 <fieldset>
+                   <legend >Insights</legend>
+                   <p> Time Spent : {this.state.timespent} </p>
+                   <p>{this.state.insight1}</p>
+                   {this.showRemarks()}
+                   </fieldset>
+                  </div>
+         </Col>
+          </Row>
+        </Grid>  )
+     }else{
+       buffer.push(
+         <Grid fluid key={1}>
+         <Row around="xs">
+         <Col xs={11} sm={11} md={9} lg={8}>
+                 <div >
+                 <fieldset>
+                   <legend >Insights</legend>
+                   <p> Time Spent : {this.state.timespent} </p>
+                   {this.showRemarks()}
+                   </fieldset>
+                  </div>
+         </Col>
+          </Row>
+        </Grid>  )
+     }
     }
     return buffer
   }
@@ -322,6 +346,9 @@ if(this.state.assignmentType ===  'THEORY')
       </Grid>
     )
    }
+ }else if(this.state.assignmentType === 'OBJECTIVE'){
+   buffer.push(<DisplayObjectiveAssignment key={1} questions={this.state.questions} options={this.state.options}
+     userValidity={this.state.userValidity} validity={this.state.validity}/>)
  }else{
    for(var i=0; i<this.state.questionIndex.length;i++){
    buffer.push(
@@ -351,7 +378,7 @@ if(this.state.assignmentType ===  'THEORY')
       <Grid fluid  >
       <Row center="xs">
       <TextField
-       value = {this.state.remarks}
+       value = {this.state.remarks || ''}
        onChange = {this.handleRemarksChange}
        style={{width: "60%"}}
        floatingLabelText = "Remarks"

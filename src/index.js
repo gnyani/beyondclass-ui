@@ -13,9 +13,10 @@ injectTapEventPlugin();
 
 ReactDOM.render(
   <HashRouter>
-  <MuiThemeProvider >
-  <div className="vertical-scroll">
-    <Notifications options={{zIndex: 5000}}/>
-    <Router className="StudentAdda"/></div>
-  </MuiThemeProvider>
-</HashRouter>, document.getElementById('router'));
+    <MuiThemeProvider >
+      <div className="vertical-scroll">
+        <Notifications options={{zIndex: 5000}}/>
+        <Router className="StudentAdda"/>
+      </div>
+    </MuiThemeProvider>
+  </HashRouter>, document.getElementById('router'));

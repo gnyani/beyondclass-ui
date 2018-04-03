@@ -215,6 +215,9 @@ decideAction = (i) => {
   if(this.state.savedAssignmentTypes[i] === 'THEORY')
   buffer.push(<RaisedButton key={i} label="Continue Working" primary={true} icon={<RightIcon />}
   containerElement={<Link to={'/teacher/create/'+this.props.class+'/saved/'+this.state.savedAssignmentIds[i]}/>} />)
+  else if(this.state.savedAssignmentTypes[i] === 'OBJECTIVE')
+  buffer.push(<RaisedButton key={i} label="Continue Working" primary={true} icon={<RightIcon />}
+  containerElement={<Link to={'/teacher/createobjectiveassignment/'+this.props.class+'/saved/'+this.state.savedAssignmentIds[i]}/>} />)
   else {
     buffer.push(<RaisedButton  key={i} label="Continue Working" primary={true} icon={<RightIcon />}
    containerElement={<Link to={'/teacher/createpa/'+this.props.class+'/saved/'+this.state.savedAssignmentIds[i]}/>} />)
@@ -275,8 +278,8 @@ handleEdit = (i) => {
     this.context.router.history.push('/teacher/create/'+this.props.class+'/edit/'+this.state.assignmentIds[i])
   }else if(this.state.assignmentType[i] === 'CODING'){
     this.context.router.history.push('/teacher/createpa/'+this.props.class+'/edit/'+this.state.assignmentIds[i])
-  }else{
-      notify.show("Edit for this type of assignment is still under development")
+  }else if(this.state.assignmentType[i] === 'OBJECTIVE'){
+   this.context.router.history.push('/teacher/createobjectiveassignment/'+this.props.class+'/edit/'+this.state.assignmentIds[i])
   }
 }
 

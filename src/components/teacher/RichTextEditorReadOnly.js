@@ -14,8 +14,8 @@ class RichTextEditorToolBarOnFocus extends Component {
           toolbarOnFocus
           readOnly
           toolbar={{
-            options: [],
-        }}
+           options: [],
+       }}
         />
       </div>
     );
