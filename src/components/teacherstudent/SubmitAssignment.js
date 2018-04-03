@@ -12,6 +12,7 @@ import IdleTimer from 'react-idle-timer'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import RenderProgrammingAssignment from './RenderProgrammingAssignment'
+import RenderObjectiveAssignment from './RenderObjectiveAssignment'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import Save from 'material-ui/svg-icons/content/save'
 import Send from 'material-ui/svg-icons/content/send'
@@ -163,21 +164,21 @@ handleAnswerChange(i,event) {
          }
        }).then(response => {
          if(response){
-          if(response.answers){
-              this.setState({
-                questions: response.questions,
-                answers: response.answers,
-                assignmentType: response.assignmentType,
-                totalActiveTime: response.timespent,
-              })
-            }else{
-              this.setState({
-                questions: response.questions,
-                assignmentType: response.assignmentType,
-              })
+            if(response.answers){
+                this.setState({
+                  questions: response.questions,
+                  answers: response.answers,
+                  assignmentType: response.assignmentType,
+                  totalActiveTime: response.timespent,
+                })
+              }else{
+                this.setState({
+                  questions: response.questions,
+                  assignmentType: response.assignmentType,
+                })
+              }
             }
-          }
-       })
+          })
 
 this._interval = setInterval(() => {
   if(this.state.isIdle === false)
@@ -284,6 +285,19 @@ else if(this.state.assignmentType === 'CODING')
       <Divider />
       <RenderProgrammingAssignment  assignmentid={this.props.assignmentid} email={this.props.loggedinuser}
       questions={this.state.questions} answers={this.state.answers} handleAnswerChange={this.handleAnswerChange}/>
+      </div>
+      </StayVisible>
+    )
+}
+else if(this.state.assignmentType === 'OBJECTIVE')
+{
+    return(
+      <StayVisible
+      {...this.props}>
+      <div className="ProgrammingAssignment">
+        <p className="paragraph">Submit Assignment</p>
+      <Divider />
+      <RenderObjectiveAssignment  assignmentid={this.props.assignmentid} email={this.props.loggedinuser}/>
       </div>
       </StayVisible>
     )

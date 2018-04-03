@@ -271,13 +271,13 @@ if(this.state.notificationChecked === false && this.state.emailChecked === false
 printNotificationOptions = () => {
   var buffer = []
   if(this.state.emailChecked === true && this.state.notificationChecked === true){
-    buffer.push(<p>***We are going to send both email and notification !!!***</p>)
+    buffer.push(<p key={1}>***We are going to send both email and notification !!!***</p>)
   }else if(this.state.emailChecked === true){
-    buffer.push(<p>***We are going to send only a email !!!***</p>)
+    buffer.push(<p key={1}>***We are going to send only a email !!!***</p>)
   }else if(this.state.notificationChecked === true){
-    buffer.push(<p>***We are going to send only a notification !!!***</p>)
+    buffer.push(<p key={1}>***We are going to send only a notification !!!***</p>)
   }else{
-    buffer.push(<p>***You should select atleast one option to notify students !!!***</p>)
+    buffer.push(<p key={1}>***You should select atleast one option to notify students !!!***</p>)
   }
   return buffer
 }

@@ -21,6 +21,11 @@ class CreateAssignment extends Component{
       </Col>
       <Col xs>
       <br />
+      <RaisedButton label="Objective Assignment" primary={true} icon={<Add />}  containerElement={<Link to={'/teacher/'+this.props.class+'/createobjectiveassignment'}/>}/>
+      <br /> <br />
+      </Col>
+      <Col xs>
+      <br />
       <RaisedButton label="Programming Assignment" primary={true} icon={<Add />}  containerElement={<Link to={'/teacher/'+this.props.class+'/createpa'}/>}/>
       <br /> <br />
       </Col>

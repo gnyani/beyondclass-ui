@@ -1,12 +1,13 @@
 import React,{Component} from 'react'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import {notify} from 'react-notify-toast'
+import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'
+import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import DatePicker from 'material-ui/DatePicker'
 import TextField from 'material-ui/TextField'
 import Add from 'material-ui/svg-icons/content/add'
 import AddBox from 'material-ui/svg-icons/content/add-box'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
-import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import SelectField from 'material-ui/SelectField'
 import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
@@ -19,9 +20,10 @@ import { EditorState, convertFromRaw } from 'draft-js'
 import RichTextEditor from './RichTextEditor'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
+import {SubjectsNameLookup} from '../utils/Subjects.js'
 import MenuItem from 'material-ui/MenuItem'
 import RichTextEditorToolBarOnFocus from './RichTextEditorToolBarOnFocus'
-import TestCases from './TestCases'
+import AlternateOptions from './AlternateOptions'
 import Save from 'material-ui/svg-icons/content/save'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import IdleTimer from 'react-idle-timer'
@@ -39,7 +41,7 @@ var properties = require('../properties.json')
 
 let id=0;
 
-class ProgrammingAssignment extends Component{
+class ObjectiveAssignment extends Component{
 constructor(){
   super();
   var date = new Date();
@@ -48,14 +50,15 @@ constructor(){
   this.state={
     minDate: new Date(new Date().setDate(new Date().getDate()+1)),
     questions: [],
+    subject: '',
     showTextField: false,
     questionValue: '',
     message: '',
     numQuestions: 1,
-    allinputs:[],
-    alloutputs:[],
-    inputs: [],
-    outputs: [],
+    options:[],
+    validity:[],
+    questionOptions: [],
+    questionValidity: [],
     controlledDate: date,
     editorState: EditorState.createEmpty(),
     contentState: '',
@@ -92,10 +95,12 @@ componentDidMount(){
         this.setState({
           questions: response.questions,
           message: response.message,
+          subject: response.subject,
           isDataLoaded: true,
           questionsEditoStates: newEditorStates.slice(),
-          allinputs: response.inputs,
-          alloutputs: response.outputs,
+          options: response.options.slice(),
+          validity: response.validity.slice(),
+          subjectValue: SubjectsNameLookup[response.subject],
           numQuestions: response.numberOfQuesPerStudent,
           controlledDate: response.lastdate,
         })
@@ -111,13 +116,13 @@ componentDidMount(){
     this._interval = setInterval(() => {
       if(this.state.isIdle === false)
       this.setState({
-        totalActiveTime: this.state.totalActiveTime + 20000
+        totalActiveTime: this.state.totalActiveTime + 1000
       });
       if(this.state.totalActiveTime % 20000 === 0 )
       {
         this.validateSaveCreateAssignment('autosave')
       }
-    }, 20000);
+     }, 1000);
 }
 
 componentWillUnmount() {
@@ -161,11 +166,12 @@ _onActive = () => {
           batch : this.props.class,
           lastdate: this.state.controlledDate,
           questions: this.state.questions,
-          inputs: this.state.allinputs,
-          outputs: this.state.alloutputs,
+          options: this.state.options,
+          validity: this.state.validity,
           message: this.state.message,
+          subject: this.state.subject,
           numberOfQuesPerStudent: this.state.numQuestions,
-          assignmentType: 'CODING'
+          assignmentType: 'OBJECTIVE'
        })
      }).then(response =>{
        this.setState({
@@ -188,77 +194,46 @@ _onActive = () => {
     });
 }
 
- handleQuestionInputsChange =  (index, event) => {
-   var OldInputs = this.state.inputs.slice()
-     OldInputs[index] = event.target.value
+ handleQuestionOptionsChange =  (index, event) => {
+   var OldOptions = this.state.questionOptions.slice()
+   if(event.target.value.trim() !== ''){
+     OldOptions[index] = event.target.value
+   }else{
+     OldOptions.splice(index,1)
+   }
    this.setState({
-     inputs: OldInputs,
+     questionOptions: OldOptions,
    })
  }
 
-handleQuestionOutputsChange = (index, event) => {
-  var OldOutputs = this.state.outputs.slice()
-  if(event.target.value.trim() !== ''){
-    OldOutputs[index] = event.target.value
+handleQuestionValidityChange = (newValidity) => {
+  this.setState({
+    questionValidity: newValidity,
+  })
+}
+
+handleValidityChange = (qindex, changedValidity) => {
+  if(changedValidity.length > 0){
+    var newValidity = this.state.validity.slice()
+    newValidity[qindex] = changedValidity
     this.setState({
-      outputs: OldOutputs,
-    })
-  }else{
-    OldOutputs.splice(index,1)
-    var OldInputs = this.state.inputs.slice()
-    OldInputs.splice(index,1)
-    this.setState({
-      inputs: OldInputs,
-      outputs: OldOutputs,
+      validity: newValidity
     })
   }
 }
 
-
-
-handleInputsChange = (qindex, index, event) => {
-  var Inputs = this.state.allinputs.slice()
-  var NewInputs = Inputs[qindex]
-   NewInputs[index] = event.target.value
-   Inputs[qindex] = NewInputs
-   this.setState({
-     allinputs: Inputs,
-   })
-
-}
-
-handleOutputsChange = (qindex, index, event) => {
-    var Outputs = this.state.alloutputs.slice()
-    var NewOutputs = Outputs[qindex]
-    if(NewOutputs.length > 1){
-      if(event.target.value.trim() !== ''){
-       NewOutputs[index] = event.target.value
-       Outputs[qindex] = NewOutputs
-       this.setState({
-         alloutputs: Outputs,
-       })
-      }else{
-       NewOutputs.splice(index,1)
-       Outputs[qindex] = NewOutputs
-       var OldInputs = this.state.allinputs.slice()
-       var NewInputs = OldInputs[qindex]
-       NewInputs.splice(index,1)
-       OldInputs[qindex] = NewInputs
-       this.setState({
-         alloutputs: Outputs,
-         allinputs: OldInputs,
-       })
-      }
-    }
-    else if(NewOutputs.length === 1){
-      if(event.target.value.trim() !== ''){
-       NewOutputs[index] = event.target.value
-       Outputs[qindex] = NewOutputs
-       this.setState({
-         alloutputs: Outputs,
-       })
-      }
-    }
+handleOptionsChange = (qindex, index, event, fourth) => {
+  var Options = this.state.options.slice()
+  var NewOptions = Options[qindex]
+  if(event.target.value.trim() !== ''){
+   NewOptions[index] = event.target.value
+   Options[qindex] = NewOptions
+ }else{
+   NewOptions.splice(index,1)
+ }
+ this.setState({
+   options: Options,
+ })
 }
 
 handleClose = () => {
@@ -267,32 +242,25 @@ handleClose = () => {
   })
 }
 
-handleAllInputs = (allinputs) => {
-  var newInputs = []
-  for (var i=0; i<allinputs.length;i++){
-    var newAllInputs = allinputs[i].slice(0,this.state.alloutputs[i].length)
-    newInputs.push(newAllInputs)
-  }
- return newInputs
-}
-
 validateCreateAssignment = () => {
-  if(this.state.controlledDate === null)
+  if(this.state.subject === '')
+  notify.show("Please select the subject of the assignment","warning")
+  else if(this.state.controlledDate === null)
   notify.show("Please select last submission date","warning")
   else if(this.state.questions.length === 0)
-  notify.show("Please Add atleast one Question","warning")
-  else if(this.state.numQuestions > this.state.questions.length)
-  notify.show("number of questions cannot be more than total number of questions","warning")
+  notify.show("Please add atleast one question","warning")
+  else if(this.state.questions.length < this.state.numQuestions)
+  notify.show("Number of Questions should be greater than or equal to the number of questions given to each student","warning")
   else {
     this.setState({
-      submitConfirm: true,
+      submitConfirm: true
     })
   }
 }
 
 submitCreateAssignment = () => {
   this.setState({
-    buttonDisabled: true,
+    submitButton: true,
     submitConfirm: false,
   })
   fetch('http://'+properties.getHostName+':8080/assignments/create', {
@@ -304,25 +272,29 @@ submitCreateAssignment = () => {
        credentials: 'include',
        body: JSON.stringify({
          email: this.props.loggedinuser,
+         subject: this.state.subject,
          batch : this.props.class,
          lastdate: this.state.controlledDate,
-         questions: this.state.questions,
-         inputs: this.handleAllInputs(this.state.allinputs),
-         outputs: this.state.alloutputs,
          message: this.state.message,
+         questions: this.state.questions,
+         options: this.state.options,
+         validity: this.state.validity,
+         assignmentType: 'OBJECTIVE',
          numberOfQuesPerStudent: this.state.numQuestions,
-         assignmentType: 'CODING'
       })
     }).then(response =>{
       this.setState({
-        buttonDisabled: false,
+        submitButton: false,
       })
       if(response.status === 200)
       {
       notify.show("Assignment Created successfully","success")
+      this.setState({
+        shouldRender: new Date(),
+      })
       this.context.router.history.goBack()
     }else{
-      notify.show("Something went wrong, please try again","error")
+      notify.show("Something went wrong please try again","error")
     }
     }).catch(response => {
     notify.show("Please login your session expired","error");
@@ -376,30 +348,32 @@ onContentStateChange: Function = (contentState) => {
 addQuestion = () => {
   var newquestions = this.state.questions.slice()
   var newquestionEditorStates = this.state.questionsEditoStates.slice()
+  var newOptions = this.state.options.slice()
+  var newValidity = this.state.validity.slice()
   var question = this.state.questionValue
+
   if(question.trim() === "")
     notify.show("You cannot add empty Question","warning")
-  else if(this.state.inputs.length === 0)
-     notify.show("Please add atleast one test case for each question","warning")
+  else if(this.state.questionOptions.length === 0){
+    notify.show("Please add atleast one option","warning")
+  }else if(this.state.questionValidity.length === 0){
+    notify.show("Please select atleast one correct answer","warning")
+  }
   else
   {
   newquestions.push(this.state.contentState)
   newquestionEditorStates.push({id: ++id,value:this.state.editorState})
-  var allinputs = this.state.allinputs.slice()
-  var alloutputs = this.state.alloutputs.slice()
-  allinputs.push(this.state.inputs)
-  alloutputs.push(this.state.outputs)
+  newOptions.push(this.state.questionOptions)
+  newValidity.push(this.state.questionValidity)
   this.setState({
     questions: newquestions,
     questionsEditoStates: newquestionEditorStates,
+    options: newOptions,
+    validity: newValidity,
     questionValue: '',
-    editorState:EditorState.createEmpty(),
-    inputs: [],
-    outputs: [],
-    input: '',
-    output: '',
-    allinputs: allinputs,
-    alloutputs: alloutputs,
+    questionOptions: [],
+    questionValidity: [],
+    editorState: EditorState.createEmpty(),
     showTextField: false,
   })
 
@@ -408,23 +382,28 @@ addQuestion = () => {
 
 deleteQuestion = (i) => {
   var newquestions = this.state.questions.slice()
-  newquestions.splice(i,1)
+  var newOptions = this.state.options.slice()
+  var newValidity = this.state.validity.slice()
   var newquestionEditorStates = this.state.questionsEditoStates.slice()
   newquestionEditorStates.splice(i,1)
-  var newallinputs = this.state.allinputs.slice()
-  newallinputs.splice(i,1)
-  var newalloutputs = this.state.alloutputs.slice()
-  newalloutputs.splice(i,1)
+  newquestions.splice(i,1)
+  newOptions.splice(i,1)
+  newValidity.splice(i,1)
   this.setState({
-    allinputs: newallinputs,
-    alloutputs: newalloutputs,
     questions: newquestions,
+    validity: newValidity,
+    options: newOptions,
     questionsEditoStates: newquestionEditorStates
   })
 }
 
 handleNumberChange = (event, index, numQuestions) => this.setState({numQuestions});
 
+handleSubjectChange = (subjectValue) => {
+  this.setState({
+    subject: subjectValue
+  })
+}
 
 handleDateChange = (event, date) => {
   this.setState({
@@ -471,11 +450,11 @@ displayQuestions(){
     </Col>
     </Row>
     <Row center="xs">
-    <Col xs={10} md={10} sm={8} lg={8}>
-    <TestCases inputs={this.state.allinputs[i]}
-    handleInputsChange={this.handleInputsChange} qindex={i}
-    outputs={this.state.alloutputs[i]}
-    handleOutputsChange={this.handleOutputsChange}/>
+    <Col xs={10} md={10} sm={7} lg={5}>
+    <AlternateOptions options={this.state.options[i]}
+    handleOptionsChange={this.handleOptionsChange} qindex={i}
+    questionValidity={this.state.validity[i]}
+    handleQuestionValidityChange={this.handleValidityChange}/>
     </Col>
     </Row>
     </Grid>
@@ -501,11 +480,11 @@ renderTextField(){
       </Col>
       </Row>
       <Row center="xs" >
-        <Col xs={10} md={10} sm={8} lg={8}>
-      <TestCases inputs={this.state.inputs}
-      handleInputsChange={this.handleQuestionInputsChange}
-      outputs={this.state.outputs}
-      handleOutputsChange={this.handleQuestionOutputsChange}
+        <Col xs={10} md={10} sm={7} lg={6}>
+      <AlternateOptions options={this.state.questionOptions}
+      handleOptionsChange={this.handleQuestionOptionsChange}
+      questionValidity={this.state.questionValidity}
+      handleQuestionValidityChange={this.handleQuestionValidityChange}
       />
       </Col>
       </Row>
@@ -535,8 +514,8 @@ if(this.state.isDataLoaded){
       <StayVisible
         {...this.props}
       >
-      <div className="ProgrammingAssignment">
-      <Grid fluid >
+      <div className="TeacherAssignment">
+      <Grid fluid>
       <Row center="xs">
       <Col xs={9} sm={9} md={6} lg={5}>
       <br /><br />
@@ -544,15 +523,17 @@ if(this.state.isDataLoaded){
       className="button" onClick={()=>{this.context.router.history.goBack()}} />
       </Col>
       </Row>
-      </Grid>
-      <Grid fluid>
-      <br /><br />
       <Row center="xs" bottom="xs">
-      <Col xs={6} sm={6} md={4} lg={5}>
-      <DatePicker hintText="Last Date" floatingLabelText="Last Date" minDate={this.state.minDate} defaultDate={new Date(this.state.controlledDate)} onChange={this.handleDateChange} />
+      <Col xs>
+      <SubjectAutoComplete type="syllabus" branch={this.props.branch} searchText={this.state.subjectValue} handleSubjectChange={this.handleSubjectChange} />
       </Col>
-      <Col xs={6} sm={6} md={4} lg={4}>
-      <TextField hintText="Additional Comments" style={{width:'75%'}} value={this.state.message} floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
+      <Col xs>
+      <DatePicker hintText="Last Date" minDate={this.state.minDate} defaultDate={new Date(this.state.controlledDate)} onChange={this.handleDateChange} />
+      </Col>
+      </Row>
+      <Row center="xs">
+      <Col xs>
+      <TextField style={{width: '75%'}} value={this.state.message} hintText="Additional Comments" floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
       </Col>
       </Row>
       <br />
@@ -564,13 +545,34 @@ if(this.state.isDataLoaded){
       <SelectField
         value={this.state.numQuestions}
         onChange={this.handleNumberChange}
-        style={{width: '50%'}}
+        style={{width: '70%'}}
+        maxHeight={200}
       >
         <MenuItem value={1}  primaryText="One" />
         <MenuItem value={2}  primaryText="Two" />
         <MenuItem value={3}  primaryText="Three" />
         <MenuItem value={4}  primaryText="Four" />
         <MenuItem value={5}  primaryText="Five" />
+        <MenuItem value={6}  primaryText="Six" />
+        <MenuItem value={7}  primaryText="Seven" />
+        <MenuItem value={8}  primaryText="Eight" />
+        <MenuItem value={9}  primaryText="Nine" />
+        <MenuItem value={10}  primaryText="Ten" />
+        <MenuItem value={11}  primaryText="Eleven" />
+        <MenuItem value={12}  primaryText="Twelve" />
+        <MenuItem value={13}  primaryText="Thirteen" />
+        <MenuItem value={14}  primaryText="Fourteen" />
+        <MenuItem value={15}  primaryText="Fifteen" />
+        <MenuItem value={16}  primaryText="Sixteen" />
+        <MenuItem value={17}  primaryText="Seventeen" />
+        <MenuItem value={18}  primaryText="Eighteen" />
+        <MenuItem value={19}  primaryText="Nineteen" />
+        <MenuItem value={20}  primaryText="Twenty" />
+        <MenuItem value={21}  primaryText="TwentyOne" />
+        <MenuItem value={22}  primaryText="TwentyTwo" />
+        <MenuItem value={23}  primaryText="TwentyThree" />
+        <MenuItem value={24}  primaryText="TwentyFour" />
+        <MenuItem value={25}  primaryText="TwentyFive" />
       </SelectField>
       </Col>
       </Row>
@@ -598,7 +600,7 @@ if(this.state.isDataLoaded){
       <br /><br />
       </Grid>
       <Dialog
-            title={"Are you sure about creating this assignment with last date : "+new Date(this.state.controlledDate)+", Once submitted it cannot be deleted"}
+            title={"Are you sure about creating this assignment with last date : "+new Date(this.state.controlledDate)+", Once submitted it cannot be deleted or edited"}
             modal={false}
             actions={actions}
             open={this.state.submitConfirm}
@@ -637,8 +639,8 @@ if(this.state.isDataLoaded){
   }
   }
 }
-ProgrammingAssignment.contextTypes = {
+ObjectiveAssignment.contextTypes = {
     router: PropTypes.object
 };
 
-export default withRouter(ProgrammingAssignment)
+export default withRouter(ObjectiveAssignment)
