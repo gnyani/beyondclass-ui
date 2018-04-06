@@ -20,7 +20,9 @@ renderOptions = () => {
           <TableRow key={i} selected={selected}>
                <TableRowColumn>{i+1}</TableRowColumn>
                <TableRowColumn>
-               <TextField key={i} value={this.props.options[i]} underlineShow={false}/>
+               <TextField key={i} value={this.props.options[i]} underlineShow={false}
+               multiLine={true}
+               style={{width:'100%'}}/>
                </TableRowColumn>
           </TableRow>
         )
@@ -29,7 +31,9 @@ renderOptions = () => {
         <TableRow key={i} >
              <TableRowColumn>{i+1}</TableRowColumn>
              <TableRowColumn>
-             <TextField key={i} value={this.props.options[i]} underlineShow={false}/>
+             <TextField key={i} value={this.props.options[i]} underlineShow={false}
+             multiLine={true}
+             style={{width:'100%'}}/>
              </TableRowColumn>
         </TableRow>
       )

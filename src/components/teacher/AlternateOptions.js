@@ -23,6 +23,8 @@ renderOptions = () => {
              <TableRowColumn>
              <TextField key={i} value={this.props.options[i] || ''} underlineShow={false}
              hintText="Start typing the option text"
+             multiLine={true}
+             style={{width:'100%'}}
              onChange={this.props.handleOptionsChange.bind(this,this.props.qindex,i)}/></TableRowColumn>
         </TableRow>
       )
@@ -33,6 +35,8 @@ renderOptions = () => {
              <TableRowColumn>
              <TextField key={i} value={this.props.options[i] || ''} underlineShow={false}
              hintText="Start typing the option text"
+             multiLine={true}
+             style={{width:'100%'}}
              onChange={this.props.handleOptionsChange.bind(this,i)}/></TableRowColumn>
         </TableRow>
       )
@@ -46,6 +50,8 @@ renderOptions = () => {
              <TableRowColumn>
              <TextField key={i} value={this.props.options[i] || ''} underlineShow={false}
              hintText="Start typing the option text"
+             multiLine={true}
+             style={{width:'100%'}}
              onChange={this.props.handleOptionsChange.bind(this,this.props.qindex,i)}/></TableRowColumn>
         </TableRow>
       )
@@ -56,6 +62,8 @@ renderOptions = () => {
              <TableRowColumn>
              <TextField key={i} value={this.props.options[i] || ''} underlineShow={false}
              hintText="Start typing the option text"
+             multiLine={true}
+             style={{width:'100%'}}
              onChange={this.props.handleOptionsChange.bind(this,i)}/></TableRowColumn>
         </TableRow>
       )
