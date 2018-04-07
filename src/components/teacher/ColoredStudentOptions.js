@@ -50,8 +50,8 @@ renderOptions = () => {
       if(valid === true){
         buffer.push(
           <TableRow key={i} selectable={false}>
-               <TableRowColumn style={{backgroundColor: '#ff3333'}}>{i+1}</TableRowColumn>
-               <TableRowColumn style={{backgroundColor: '#ff3333'}}>
+               <TableRowColumn style={{backgroundColor: 'green'}}>{i+1}</TableRowColumn>
+               <TableRowColumn style={{backgroundColor: 'green'}}>
                <TextField key={i} value={this.props.options[i]} underlineShow={false}
                multiLine={true}
                style={{width:'100%'}}/>
