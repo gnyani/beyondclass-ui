@@ -15,7 +15,11 @@ renderOptions = () => {
   var buffer = []
   for(var i=0;i<this.props.options.length;i++){
     if(typeof this.props.userValidity !== 'undefined'){
+      if(this.props.userValidity !== null)
       var selected = (this.props.userValidity.indexOf(i) > -1)
+      else {
+        selected = false
+      }
       var valid = (this.props.validity.indexOf(i) > -1)
      if(selected === true){
        if(valid === true){
@@ -87,7 +91,7 @@ renderOptions = () => {
 
 
   render(){
-    if(this.props.userValidity.length === 1){
+    if(this.props.userValidity !==null && this.props.userValidity.length === 1){
       return(
         <div>
         <Table

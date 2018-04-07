@@ -83,7 +83,10 @@ componentDidMount(){
              userValidity: userVal.slice()
            })}
          }
-     })
+     }).catch(response => {
+     notify.show("Please login your session expired","error");
+     this.context.router.history.push('/');
+    });
      this._interval = setInterval(() => {
        if(this.state.isIdle === false)
        this.setState({

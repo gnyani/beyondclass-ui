@@ -15,7 +15,11 @@ renderOptions = () => {
   var buffer = []
   for(var i=0;i<this.props.options.length+1;i++){
   if(i < this.props.options.length ){
+    if(this.props.questionValidity !== null)
     var selected = (this.props.questionValidity.indexOf(i) > -1)
+    else {
+      selected = false
+    }
     if(typeof this.props.qindex !== 'undefined'){
       buffer.push(
         <TableRow key={i} selected={selected}>
