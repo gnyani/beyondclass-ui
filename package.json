@@ -19,6 +19,7 @@
     "react-flexbox-grid": "^1.1.5",
     "react-horizontal-timeline": "^1.1.1",
     "react-idle-timer": "1.5.2",
+    "react-loadable": "^5.3.1",
     "react-notify-toast": "^0.3.0",
     "react-numeric-input": "^2.2.0",
     "react-phone-number-input": "^0.12.7",
@@ -29,7 +30,8 @@
     "react-tap-event-plugin": "^2.0.1",
     "react-textarea-autosize": "^5.2.1",
     "slick-carousel": "^1.6.0",
-    "styled-components": "^2.1.0"
+    "styled-components": "^2.1.0",
+    "webpack-bundle-analyzer": "^2.11.1"
   },
   "devDependencies": {
     "autoprefixer": "7.1.0",

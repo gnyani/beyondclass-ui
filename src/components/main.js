@@ -1,28 +1,124 @@
 import React from 'react';
+import Loadable from 'react-loadable';
+import Loading from './Loading';
 import {Switch,Route} from 'react-router-dom'
-import QpLayout from './questionpapers/QpLayout.js'
-import NotesLayout from './notes/NotesLayout.js'
-import SyllabusLayout from './syllabus/SyllabusLayout.js'
-import AnouncementsBoard from './anouncements/AnouncementsBoard.js'
-import TimeLine from './timeline/TimeLine.js'
-import CoachingCentres from './coachingcentres/CoachingCentres.js'
-import QuestionLayout from './user-questions/QuestionLayout.js'
-import TeacherComponent from './teacher/TeacherComponent.js'
-import TeacherStudentSpace from './teacherstudent/TeacherStudentSpace.js'
-import Notifications from './notifications/Notifications.js'
-import UpdateProfile from './profile/UpdateProfile.js'
-import Reports from './teacher/Reports.js'
-import SubmitAssignment from './teacherstudent/SubmitAssignment'
-import EvaluateAssignment from './teacher/EvaluateAssignment'
-import TheoryAssignment from './teacher/AssignmentContent'
-import EditTheoryAssignment from './teacher/editassignment/EditTheoryAssignment'
-import EditProgrammingAssignment from './teacher/editassignment/EditProgrammingAssignment'
-import EditObjectiveAssignment from './teacher/editassignment/EditObjectiveAssignment'
-import ProgrammingAssignment from './teacher/ProgrammingAssignment'
-import ObjectiveAssignment from './teacher/ObjectiveAssignment'
-import Submissions from './profile/Submissions'
-import CodeEditor from './codeeditor/CodeEditor'
-import ReportIssue from './issues/report-issue'
+
+const QpLayout = Loadable({
+  loader: () => import('./questionpapers/QpLayout.js'),
+  loading: Loading,
+  timeout: 10000,
+})
+const NotesLayout = Loadable({
+  loader: () => import('./notes/NotesLayout.js'),
+  loading: Loading,
+  timeout: 10000,
+})
+const SyllabusLayout = Loadable({
+  loader: () => import('./syllabus/SyllabusLayout.js'),
+  loading: Loading,
+  timeout: 10000,
+})
+const AnouncementsBoard = Loadable({
+  loader: () => import('./anouncements/AnouncementsBoard.js'),
+  loading: Loading,
+  timeout: 10000,
+})
+const TimeLine = Loadable({
+  loader: () => import('./timeline/TimeLine.js'),
+  loading: Loading,
+  timeout: 10000,
+})
+const CoachingCentres = Loadable({
+  loader: () => import('./coachingcentres/CoachingCentres.js'),
+  loading: Loading,
+  timeout: 10000,
+})
+const QuestionLayout = Loadable({
+  loader: () => import('./user-questions/QuestionLayout.js'),
+  loading: Loading,
+  timeout: 10000,
+})
+const TeacherComponent = Loadable({
+  loader: () => import('./teacher/TeacherComponent.js'),
+  loading: Loading,
+  timeout: 10000,
+})
+const TeacherStudentSpace = Loadable({
+  loader: () => import('./teacherstudent/TeacherStudentSpace.js'),
+  loading: Loading,
+  timeout: 10000,
+})
+const Notifications = Loadable({
+  loader: () => import('./notifications/Notifications.js'),
+  loading: Loading,
+  timeout: 10000,
+})
+const UpdateProfile = Loadable({
+  loader: () => import('./profile/UpdateProfile.js'),
+  loading: Loading,
+  timeout: 10000,
+})
+const Reports = Loadable({
+  loader: () => import('./teacher/Reports.js'),
+  loading: Loading,
+  timeout: 10000,
+})
+const SubmitAssignment = Loadable({
+  loader: () => import('./teacherstudent/SubmitAssignment'),
+  loading: Loading,
+  timeout: 10000,
+})
+const EvaluateAssignment = Loadable({
+  loader: () => import('./teacher/EvaluateAssignment'),
+  loading: Loading,
+  timeout: 10000,
+})
+const TheoryAssignment = Loadable({
+  loader: () => import('./teacher/AssignmentContent'),
+  loading: Loading,
+  timeout: 10000,
+})
+const EditTheoryAssignment = Loadable({
+  loader: () => import('./teacher/editassignment/EditTheoryAssignment'),
+  loading: Loading,
+  timeout: 10000,
+})
+const EditProgrammingAssignment = Loadable({
+  loader: () => import('./teacher/editassignment/EditProgrammingAssignment'),
+  loading: Loading,
+  timeout: 10000,
+})
+const EditObjectiveAssignment = Loadable({
+  loader: () => import('./teacher/editassignment/EditObjectiveAssignment'),
+  loading: Loading,
+  timeout: 10000,
+})
+const ProgrammingAssignment = Loadable({
+  loader: () => import('./teacher/ProgrammingAssignment'),
+  loading: Loading,
+  timeout: 10000,
+})
+const ObjectiveAssignment = Loadable({
+  loader: () => import('./teacher/ObjectiveAssignment'),
+  loading: Loading,
+  timeout: 10000,
+})
+const Submissions = Loadable({
+  loader: () => import('./profile/Submissions'),
+  loading: Loading,
+  timeout: 10000,
+})
+const ReportIssue = Loadable({
+  loader: () => import('./issues/report-issue'),
+  loading: Loading,
+  timeout: 10000,
+})
+
+const CodeEditor = Loadable({
+  loader: () => import('./codeeditor/CodeEditor'),
+  loading: Loading,
+  timeout: 10000,
+})
 
 export const Body =(props) => {
     return(

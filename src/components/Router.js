@@ -1,9 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import {Switch,Route} from 'react-router-dom'
-import Banner from './Banner.js';
-import DashboardLayout from './DashboardLaoyout.js'
-import Register from './registration/register.js';
+import Loadable from 'react-loadable'
+import Loading from './Loading'
 import '../styles/student-adda.css'
+
+const DashboardLayout = Loadable({
+  loader: () => import('./DashboardLaoyout.js'),
+  loading: Loading,
+  timeout: 10000,
+})
+const Register = Loadable({
+  loader: () => import('./registration/register.js'),
+  loading: Loading,
+  timeout: 10000,
+})
+const Banner = Loadable({
+  loader: () => import('./Banner'),
+  loading: Loading,
+  timeout: 10000,
+})
 
 class Router extends Component {
   render(){
