@@ -1,10 +1,22 @@
 import React,{Component} from 'react'
+import Loadable from 'react-loadable'
+import Loading from '../Loading'
 import styled from 'styled-components'
 import {Tabs, Tab} from 'material-ui/Tabs'
-import StudentTeacherAnnouncements from './StudentTeacherAnnouncements.js'
-import UnauthorizedPage from '../UnauthorizedPage.js'
 import ListAssignments from './ListAssignments'
 import {Media} from '../utils/Media'
+
+const StudentTeacherAnnouncements = Loadable({
+  loader: () => import('./StudentTeacherAnnouncements'),
+  loading: Loading,
+  timeout: 10000,
+})
+
+const UnauthorizedPage = Loadable({
+  loader: () => import('../UnauthorizedPage'),
+  loading: Loading,
+  timeout: 10000,
+})
 
 const StayVisible = styled.div`
   position: relative;

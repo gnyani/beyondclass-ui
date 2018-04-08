@@ -1,4 +1,6 @@
 import React,{Component} from 'react'
+import RefreshIndicator from 'material-ui/RefreshIndicator'
+import {Grid,Row,Col} from 'react-flexbox-grid'
 
 class Loading extends Component{
   render(){
@@ -7,7 +9,20 @@ class Loading extends Component{
   } else if (this.props.timedOut) {
     return (<div>Taking a long time...</div>)
   } else if (this.props.pastDelay) {
-    return (<div>Loading...</div>)
+    return (<Grid fluid className="RefreshIndicator" key={1}>
+    <Row center="xs">
+    <Col xs>
+      <RefreshIndicator
+         size={50}
+         left={45}
+         top={0}
+         loadingColor="#FF9800"
+         status="loading"
+         className="refresh"
+        />
+    </Col>
+    </Row>
+    </Grid>)
   } else {
     return null
   }

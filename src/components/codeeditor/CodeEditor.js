@@ -1,11 +1,18 @@
 import React,{Component} from 'react'
+import Loadable from 'react-loadable'
+import Loading from '../Loading'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import {Media} from '../utils/Media'
 import styled from 'styled-components'
 import Editor from './Editor'
 import DeveloperMode from 'material-ui/svg-icons/device/developer-mode.js'
 import BookMark from 'material-ui/svg-icons/action/bookmark.js'
-import ListSavedSnippets from './ListSavedSnippets'
+
+const ListSavedSnippets = Loadable({
+  loader: () => import('./ListSavedSnippets'),
+  loading: Loading,
+  timeout: 10000,
+})
 
 const StayVisible = styled.div`
   position: relative;
