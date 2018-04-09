@@ -4,19 +4,34 @@ import Checkbox from 'material-ui/Checkbox'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import RaisedButton from 'material-ui/RaisedButton'
 import Compile from 'material-ui/svg-icons/file/cloud-upload'
-import Inputoutput from './Inputoutput'
 import {notify} from 'react-notify-toast'
-import RenderCodingAssignmentResult from './RenderCodingAssignmentResult'
 import {HelloWorldTemplates} from './HelloWorldTemplates'
 import {editorModes,hackerRankLangNotation} from './Utils'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
-import ShowSaveTags from './ShowSaveTags'
 import Save from 'material-ui/svg-icons/content/save'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
 var properties = require('../properties.json')
+
+const ShowSaveTags = Loadable({
+  loader: () => import('./ShowSaveTags'),
+  loading: Loading,
+  timeout: 10000,
+})
+
+const RenderCodingAssignmentResult = Loadable({
+  loader: () => import('./RenderCodingAssignmentResult'),
+  loading: Loading,
+  timeout: 10000,
+})
+
+const Inputoutput = Loadable({
+  loader: () => import('./Inputoutput'),
+  loading: Loading,
+  timeout: 10000,
+})
 
 
 const defaultValue =
