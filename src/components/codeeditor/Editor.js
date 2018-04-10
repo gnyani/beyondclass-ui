@@ -1,5 +1,4 @@
 import React,{Component} from 'react'
-import RenderEditor from './RenderEditor'
 import Loadable from 'react-loadable'
 import Loading from '../Loading'
 import Checkbox from 'material-ui/Checkbox'
@@ -17,18 +16,21 @@ import PropTypes from 'prop-types'
 
 var properties = require('../properties.json')
 
+const RenderEditor = Loadable({
+  loader: () => import('./RenderEditor'),
+  loading: Loading,
+  timeout: 10000,
+})
 const ShowSaveTags = Loadable({
   loader: () => import('./ShowSaveTags'),
   loading: Loading,
   timeout: 10000,
 })
-
 const RenderCodingAssignmentResult = Loadable({
   loader: () => import('./RenderCodingAssignmentResult'),
   loading: Loading,
   timeout: 10000,
 })
-
 const Inputoutput = Loadable({
   loader: () => import('./Inputoutput'),
   loading: Loading,
