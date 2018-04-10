@@ -21,9 +21,12 @@ class Loading extends Component{
           />
       </Col>
       </Row>
+      <Row center="xs">
+      <p>Loading CodeEditor might take a while.. Please hold on..</p>
+      </Row>
       </Grid>
       <br />
-      <p>Taking longer time than expected...</p></div>)
+      </div>)
   } else if (this.props.pastDelay) {
     return (<Grid fluid className="RefreshIndicator" key={1}>
     <Row center="xs">
