@@ -5,7 +5,11 @@ import {Grid,Row,Col} from 'react-flexbox-grid'
 class Loading extends Component{
   render(){
   if (this.props.error) {
-    return (<div>Error!</div>)
+    return (<Grid>
+      <Row center = "xs">
+      <p> Please reload the page.. </p>
+      </Row>
+      </Grid>)
   } else if (this.props.timedOut) {
     return (<div>
       <Grid fluid className="RefreshIndicator" key={1}>

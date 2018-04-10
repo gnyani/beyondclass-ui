@@ -2,6 +2,8 @@ import React from 'react';
 import Loadable from 'react-loadable';
 import Loading from './Loading';
 import {Switch,Route} from 'react-router-dom'
+import TeacherStudentSpace from './teacherstudent/TeacherStudentSpace.js'
+
 
 const QpLayout = Loadable({
   loader: () => import('./questionpapers/QpLayout.js'),
@@ -40,11 +42,6 @@ const QuestionLayout = Loadable({
 })
 const TeacherComponent = Loadable({
   loader: () => import('./teacher/TeacherComponent.js'),
-  loading: Loading,
-  timeout: 10000,
-})
-const TeacherStudentSpace = Loadable({
-  loader: () => import('./teacherstudent/TeacherStudentSpace.js'),
   loading: Loading,
   timeout: 10000,
 })

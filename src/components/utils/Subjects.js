@@ -11,7 +11,8 @@ export const CSE = [
   {subjectKey: 'Design and Analysis of Algorithms',valueKey:'DAA'},
   {subjectKey: 'Mathematics - 4',valueKey:'M4'},
   {subjectKey: 'Computer Architecture' ,valueKey:'CA'},
-  {subjectKey: 'Environmental Studies',valueKey:'ES'}
+  {subjectKey: 'Environmental Studies',valueKey:'ES'},
+  {subjectKey: 'Computer Networks',valueKey:'CN'},
 ];
 
 export const CSESyllabus = [
@@ -24,6 +25,7 @@ export const CSESyllabus = [
   {subjectKey: 'Environmental Studies',valueKey:'ES'},
   {subjectKey: 'Java Lab',valueKey: 'JAVALAB'},
   {subjectKey: 'Operating Systems Lab',valueKey: 'OSLAB'},
+  {subjectKey: 'Computer Networks',valueKey:'CN'},
   {subjectKey: 'Finishing School 2', valueKey: 'FS2'}
 ];
 
@@ -46,6 +48,7 @@ export const SubjectsNameLookup = {
   'OSLAB':'Operating Systems Lab',
   'FS2':'Finishing School 2',
   'ML':'Machine Learning',
+  'CN':'Computer Networks',
 }
 
 export const ECE = [
