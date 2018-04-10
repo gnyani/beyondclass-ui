@@ -3,7 +3,7 @@ import Loadable from 'react-loadable';
 import Loading from './Loading';
 import {Switch,Route} from 'react-router-dom'
 import TeacherStudentSpace from './teacherstudent/TeacherStudentSpace.js'
-
+import SubmitAssignment from './teacherstudent/SubmitAssignment'
 
 const QpLayout = Loadable({
   loader: () => import('./questionpapers/QpLayout.js'),
@@ -57,11 +57,6 @@ const UpdateProfile = Loadable({
 })
 const Reports = Loadable({
   loader: () => import('./teacher/Reports.js'),
-  loading: Loading,
-  timeout: 10000,
-})
-const SubmitAssignment = Loadable({
-  loader: () => import('./teacherstudent/SubmitAssignment'),
   loading: Loading,
   timeout: 10000,
 })
