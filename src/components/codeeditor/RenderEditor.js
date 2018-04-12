@@ -1,20 +1,14 @@
 import React, { Component } from 'react'
-import Loadable from 'react-loadable'
-import Loading from '../Loading'
 import {modes,themes} from './Utils'
 import SelectField from 'material-ui/SelectField'
 import MenuItem from 'material-ui/MenuItem'
 import {Grid,Row,Col} from 'react-flexbox-grid'
+import  AceEditor from 'react-ace'
 import 'brace/mode/jsx'
 /*eslint-disable no-alert, no-console */
 import 'brace/ext/language_tools'
 import 'brace/ext/searchbox'
 
-const AceEditor = Loadable({
-  loader: () => import('react-ace'),
-  loading: Loading,
-  timeout: 10000,
-})
 
 modes.forEach((mode) => {
   require(`brace/mode/${mode.value}`)
