@@ -18,14 +18,19 @@ import Email from 'material-ui/svg-icons/communication/email'
 import EmailOutline from 'material-ui/svg-icons/communication/mail-outline.js'
 import Download from 'material-ui/svg-icons/file/file-download'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
+import AssignmentReturn from 'material-ui/svg-icons/action/assignment-return'
 import {Card} from 'material-ui/Card'
 import {Link} from 'react-router-dom'
 import FlatButton from 'material-ui/FlatButton'
 import { withRouter } from 'react-router'
 import Dialog from 'material-ui/Dialog'
 import Checkbox from 'material-ui/Checkbox'
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import PropTypes from 'prop-types'
 import {transparent} from 'material-ui/styles/colors'
+import {grey400} from 'material-ui/styles/colors'
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
 
 var properties = require('../properties.json');
 
@@ -37,6 +42,17 @@ const StayVisible = styled.div`
     margin-left: 0px;
   `}
 `
+
+const iconButtonElement = (
+  <IconButton
+    touch={true}
+    tooltip="more"
+    tooltipPosition="bottom-left"
+  >
+    <MoreVertIcon color={grey400} />
+  </IconButton>
+);
+
 
 class Reports extends Component{
 
@@ -58,8 +74,67 @@ constructor(){
     notifyOptionsDialog: false,
     emailChecked: false,
     notificationChecked: true,
+    indexToActivate: 1000,
+    confirmActivate: false,
   }
   this.renderListItems = this.renderListItems.bind(this)
+}
+
+
+getRightIconMenu = (i) => {
+  var rightIconMenu = (
+    <IconMenu iconButtonElement={iconButtonElement}>
+      <Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} >
+      <MenuItem
+        leftIcon={<EvaluateIcon color="red" />}
+        >
+        Evaluate
+      </MenuItem>
+     </Link>
+      <MenuItem
+        leftIcon={<AssignmentReturn color="blue" />}
+        onClick={this.confirmActivateAssignment.bind(this,i)}
+        >
+        ReActivate
+      </MenuItem>
+    </IconMenu>
+  );
+
+return rightIconMenu
+}
+
+confirmActivateAssignment = (i) => {
+  if(this.state.percentdaysCompleted === 100){
+    notify.show("This Assignment has already expired, you cannot ReActivate a expired assignment","warning")
+  }
+  else{
+    this.setState({
+      indexToActivate: i,
+      confirmActivate: true,
+    })
+  }
+}
+
+reActivateAssignment = () => {
+  this.handleClose()
+  fetch('http://'+properties.getHostName+':8080/assignments/teacher/activate/'+this.props.assignmentid, {
+         method: 'POST',
+         headers: {
+               'mode': 'cors',
+               'Content-Type': 'application/json'
+           },
+       credentials: 'include',
+       body: this.state.submittedStudents[this.state.indexToActivate].email
+    }).then(response =>{
+      if(response.status === 200){
+      notify.show("Assignment Activated Successfully","success")
+    }else if(response.status === 204){
+      notify.show("Assignment Not Found, Contact Admin","error")
+    }
+    }).catch(response => {
+    notify.show("Please login your session expired","error");
+    this.context.router.history.push('/');
+   });
 }
 
 componentDidMount(){
@@ -183,14 +258,7 @@ renderListItems(){
  buffer.push(<div key={i}><ListItem
         primaryText={this.state.submittedStudents[i].email}
         leftAvatar={<Avatar src={this.state.submittedStudents[i].propicurl} />}
-        rightIconButton={<IconButton
-                        touch={true}
-                        tooltip="Evaluate"
-                        tooltipPosition="bottom-left"
-                        containerElement={<Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} />}
-                        >
-                        <EvaluateIcon viewBox="0 0 22 22" color="green" />
-                        </IconButton>}
+        rightIconButton={this.getRightIconMenu(i)}
     containerElement={<Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} />}
     secondaryText={<p>Submitted on {submittedDate.getDate()+"-"+(submittedDate.getMonth()+1)+"-"+submittedDate.getFullYear()+" at "+submittedDate.getHours()+":"+submittedDate.getMinutes()}</p>}
     />
@@ -201,13 +269,7 @@ else if(this.state.submittedStudents[i].status === 'REJECTED')
     buffer.push(<div key={i}><ListItem
            primaryText={this.state.submittedStudents[i].email}
            leftAvatar={<Avatar src={this.state.submittedStudents[i].propicurl} />}
-           rightIconButton={<IconButton
-                           touch={true}
-                           tooltip="Rejected"
-                           tooltipPosition="bottom-left"
-                           >
-                           <RejectIcon color="red" />
-                           </IconButton>}
+           rightIconButton={this.getRightIconMenu(i)}
           containerElement={<Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} />}
        secondaryText={<p>Submitted on {submittedDate.getDate()+"-"+(submittedDate.getMonth()+1)+"-"+submittedDate.getFullYear()+" at "+submittedDate.getHours()+":"+submittedDate.getMinutes()}</p>}
        />
@@ -285,6 +347,7 @@ printNotificationOptions = () => {
 handleClose = () => {
   this.setState({
     notifyOptionsDialog: false,
+    confirmActivate: false,
   })
 }
   render(){
@@ -299,6 +362,18 @@ handleClose = () => {
         primary={true}
         onTouchTap={this.handleClose}
       />]
+
+      const actions1 = [
+        <FlatButton
+          label="Confirm"
+          primary={true}
+          onTouchTap={this.reActivateAssignment}
+        />,
+        <FlatButton
+          label="Cancel"
+          primary={true}
+          onTouchTap={this.handleClose}
+        />]
 if(this.state.isDataLoaded)
 return(
       <StayVisible
@@ -427,6 +502,17 @@ return(
           {this.printNotificationOptions()}
           </Row>
           </Grid>
+      </Dialog>
+
+      <Dialog
+            title="Are you sure about re-activating the assignment for this student"
+            modal={false}
+            actions={actions1}
+            open={this.state.confirmActivate}
+            autoScrollBodyContent={true}
+            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            onRequestClose={this.handleClose}
+          >
       </Dialog>
       </div>
       </StayVisible>)
