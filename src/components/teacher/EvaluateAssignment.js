@@ -10,6 +10,7 @@ import FlatButton from 'material-ui/FlatButton'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import RejectIcon from 'material-ui/svg-icons/navigation/close'
+import RaisedButton from 'material-ui/RaisedButton'
 import NumericInput from 'react-numeric-input'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
@@ -18,6 +19,7 @@ import { EditorState,convertFromRaw } from 'draft-js'
 import DisplayProgrammingAssignment from './DisplayProgrammingAssignment'
 import DisplayObjectiveAssignment from './DisplayObjectiveAssignment'
 import Dialog from 'material-ui/Dialog'
+import Download from 'material-ui/svg-icons/file/file-download'
 import RenderCodingAssignmentResult from './RenderCodingAssignmentResult'
 import TextField from 'material-ui/TextField'
 import { get } from 'lodash'
@@ -287,6 +289,18 @@ return buffer
          </Row>
        </Grid>  )
     }else{
+      var src = 'http://'+properties.getHostName+':8080/assignments/get/questions/'+this.state.assignmentid
+      buffer.push(
+        <Grid fluid key={0}>
+          <br /><br />
+        <Row around="xs">
+        <form method="get" action={src}>
+          <RaisedButton type="submit" primary={true} label="Download All Questions" className="download" icon={<Download />}/>
+        </form>
+        </Row>
+        <br /><br />
+       </Grid>
+      )
      if(this.state.assignmentType === 'OBJECTIVE'){
        buffer.push(
          <Grid fluid key={1}>
