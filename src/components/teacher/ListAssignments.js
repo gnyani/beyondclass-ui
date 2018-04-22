@@ -13,6 +13,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import {Card, CardActions,CardText,CardHeader, CardTitle} from 'material-ui/Card'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
+import Download from 'material-ui/svg-icons/file/file-download'
 import ViewQuestions from './ViewQuestions'
 import Edit from 'material-ui/svg-icons/image/edit.js'
 
@@ -291,6 +292,7 @@ if(this.state.assignmentIds.length !== 0)
   for(let i=0; i<this.state.assignmentIds.length; i++){
     var lastDate = new Date(this.state.lastDates[i])
     var createdDate = new Date(this.state.createdDates[i])
+    var src = 'http://'+properties.getHostName+':8080/assignments/get/questions/'+this.state.assignmentIds[i]
     buffer.push(
       <Grid fluid key={i}>
       <Row start="xs">
@@ -326,6 +328,13 @@ if(this.state.assignmentIds.length !== 0)
               <RaisedButton label="View Reports" primary={true} icon={<ViewReport />}
                containerElement={<Link to={'/teacher/reports/view/'+this.state.assignmentIds[i]}/>} />
            </CardActions>
+           </Col>
+           <Col xs>
+             <CardActions>
+               <form method="get" action={src}>
+                 <RaisedButton type="submit" primary={true} label="Download Questions" className="download" icon={<Download />}/>
+               </form>
+             </CardActions>
            </Col>
            </Row>
            </Grid>
