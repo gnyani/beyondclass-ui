@@ -33,7 +33,7 @@ class CreateAssignment extends Component{
       </Grid>
       <Divider />
       <br />
-      <ListAssignments class={this.props.class} email={this.props.email}  branch={this.props.branch}/>
+      <ListAssignments batches={this.props.batches} class={this.props.class} email={this.props.email}  branch={this.props.branch}/>
       </div>)
   }
 }

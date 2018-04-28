@@ -41,7 +41,7 @@ class TeacherComponent extends Component{
         inkBarStyle={{backgroundColor:"#FFA107"}}
       >
       <Tab label="Assignments" value="assignments" buttonStyle={{backgroundColor: '#4d86cf'}}>
-       <CreateAssignment email={this.props.loggedinuser} branch={this.props.branch} class={this.props.class} key={this.props.class}/>
+       <CreateAssignment batches={this.props.batches} email={this.props.loggedinuser} branch={this.props.branch} class={this.props.class} key={this.props.class}/>
       </Tab>
         <Tab label="Announce" value="announce" buttonStyle={{backgroundColor: '#4d86cf'}}>
             <TeacherAnnouncement class={this.props.class} key={this.props.class}/>

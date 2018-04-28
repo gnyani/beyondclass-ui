@@ -127,6 +127,7 @@ componentDidMount(){
           questions: response.questions,
           message: response.message,
           subject: response.subject,
+          controlledDate: response.lastdate,
           isDataLoaded: true,
           subjectValue: SubjectsNameLookup[response.subject],
           questionsEditoStates: newEditorStates.slice(),

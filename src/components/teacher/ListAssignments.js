@@ -16,9 +16,27 @@ import RefreshIndicator from 'material-ui/RefreshIndicator'
 import Download from 'material-ui/svg-icons/file/file-download'
 import ViewQuestions from './ViewQuestions'
 import Edit from 'material-ui/svg-icons/image/edit.js'
+import Settings from 'material-ui//svg-icons/action/settings-applications.js'
+import IconMenu from 'material-ui/IconMenu'
+import MenuItem from 'material-ui/MenuItem'
+import IconButton from 'material-ui/IconButton'
+import Copy from 'material-ui/svg-icons/content/content-copy'
+import ListBatches from './ListBatches.js'
 
 
 var properties = require('../properties.json');
+
+const styles = {
+  mediumIcon: {
+    width: 48,
+    height: 48,
+  },
+  medium: {
+    width: 96,
+    height: 96,
+    padding: 24,
+  }
+}
 class ListAssignments extends Component{
 
 constructor(){
@@ -38,7 +56,11 @@ constructor(){
    assignmentType: [],
    deleteConfirm: false,
    isDataLoaded: false,
+   selectBatchDialog: false,
    index: '',
+   newBatches: [],
+   batchIndex: null,
+   showRefreshIndicator: false,
   }
   this.listAssignments = this.listAssignments.bind(this)
   this.deleteAssignment = this.deleteAssignment.bind(this)
@@ -165,6 +187,11 @@ handleExpand(i){
    this.setState({expanded: newExpanded});
  };
 
+updateBatchSelection = (batches) => {
+  this.setState({
+    batchIndex: batches[0]
+  })
+}
 
 shouldComponentUpdate(){
   return true
@@ -178,7 +205,7 @@ handleConfirmDelete(i){
 }
 
 handleClose = () => {
-  this.setState({deleteConfirm: false});
+  this.setState({deleteConfirm: false, selectBatchDialog: false});
 };
 
 deleteAssignment(){
@@ -224,6 +251,16 @@ decideAction = (i) => {
    containerElement={<Link to={'/teacher/createpa/'+this.props.class+'/saved/'+this.state.savedAssignmentIds[i]}/>} />)
   }
   return buffer
+}
+
+decideRedirectAssignment = (id,type,batch) => {
+  if(type === 'THEORY')
+  this.context.router.history.push('/teacher/create/'+batch+'/saved/'+id)
+  else if(type === 'OBJECTIVE')
+  this.context.router.history.push('/teacher/createobjectiveassignment/'+batch+'/saved/'+id)
+  else{
+    this.context.router.history.push('/teacher/createpa/'+batch+'/saved/'+id)
+  }
 }
 
 listSavedAssignments = () => {
@@ -274,6 +311,7 @@ listSavedAssignments = () => {
   return buffer;
   }
 
+
 handleEdit = (i) => {
   if(this.state.assignmentType[i] === 'THEORY'){
     this.context.router.history.push('/teacher/create/'+this.props.class+'/edit/'+this.state.assignmentIds[i])
@@ -282,6 +320,48 @@ handleEdit = (i) => {
   }else if(this.state.assignmentType[i] === 'OBJECTIVE'){
    this.context.router.history.push('/teacher/createobjectiveassignment/'+this.props.class+'/edit/'+this.state.assignmentIds[i])
   }
+}
+
+submitDuplicateAssignmentRequest = () => {
+  var batch = this.state.newBatches[this.state.batchIndex]
+  this.setState({
+    showRefreshIndicator: true
+  })
+
+  fetch('http://'+properties.getHostName+':8080/assignments/teacher/duplicate/'+this.state.assignmentIds[this.state.activeIndex], {
+         method: 'POST',
+         headers: {
+               'mode': 'cors',
+               'Content-Type': 'application/json'
+           },
+       credentials: 'include',
+       body: batch,
+    }).then(response => {
+      if(response.status === 201){
+        return response.json()
+      }else{
+        notify.show("Sorry something went wrong","error")
+      }
+    }).then(response => {
+        this.decideRedirectAssignment(response.assignmentid,response.assignmentType,response.batch)
+    })
+}
+
+selectBatch = (i) => {
+  var newBatches = this.props.batches.slice()
+  var index = this.props.batches.indexOf(this.props.class)
+  if(index > -1){
+  newBatches.splice(index,1)
+  }
+    this.setState({
+      activeIndex: i,
+      newBatches,
+      selectBatchDialog: true,
+  })
+}
+
+downloadQuestions = () => {
+  document.getElementById("form_download_id").submit()
 }
 
 listAssignments(){
@@ -317,7 +397,7 @@ if(this.state.assignmentIds.length !== 0)
            <p>{this.state.additionalComments[i]}</p>
            </CardText>
           <Grid fluid>
-          <Row center="xs">
+          <Row center="xs" middle="xs">
           <Col xs>
            <CardActions>
             <RaisedButton label="View Questions" primary={true} icon={<View />} onClick={this.handleExpand.bind(this,i)}/>
@@ -329,13 +409,25 @@ if(this.state.assignmentIds.length !== 0)
                containerElement={<Link to={'/teacher/reports/view/'+this.state.assignmentIds[i]}/>} />
            </CardActions>
            </Col>
-           <Col xs>
+           <Col xs={3} sm={3} md={3} lg={3} >
              <CardActions>
-               <form method="get" action={src}>
-                 <RaisedButton type="submit" primary={true} label="Download Questions" className="download" icon={<Download />}/>
-               </form>
+               <IconMenu
+                  iconButtonElement={<IconButton
+                    iconStyle={styles.mediumIcon}
+                    style={styles.medium}
+                    >
+                    <Settings />
+                    </IconButton>}
+                >
+                <form method="get" action={src} id="form_download_id">
+                  <MenuItem primaryText="Download Questions" leftIcon={<Download color="blue"/>} onClick={this.downloadQuestions.bind(this)}/>
+                </form>
+                  <MenuItem primaryText="Duplicate" leftIcon={<Copy color="red" />} onClick={this.selectBatch.bind(this,i)}/>
+                </IconMenu>
+
              </CardActions>
            </Col>
+
            </Row>
            </Grid>
            <CardText expandable={true} >
@@ -383,6 +475,20 @@ const actions1 = [
       onTouchTap={this.deleteAssignment}
     />,
   ]
+
+  const actions = [
+      <FlatButton
+        label="Cancel"
+        primary={true}
+        onTouchTap={this.handleClose}
+      />,
+      <FlatButton
+        label="Confirm"
+        primary={true}
+        onTouchTap={this.submitDuplicateAssignmentRequest}
+      />,
+    ]
+
     return(
       <div className="TeacherAssignment">
       {this.listSavedAssignments()}
@@ -396,6 +502,17 @@ const actions1 = [
             titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
             onRequestClose={this.handleClose}
           >
+      </Dialog>
+      <Dialog
+            title="Select the batch to duplicate the assignment"
+            modal={true}
+            actions={actions}
+            open={this.state.selectBatchDialog}
+            autoScrollBodyContent={true}
+            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            onRequestClose={this.handleClose}
+          >
+          <ListBatches batches={this.state.newBatches} showRefreshIndicator={this.state.showRefreshIndicator} updateBatchSelection={this.updateBatchSelection}/>
       </Dialog>
       </div>
     )

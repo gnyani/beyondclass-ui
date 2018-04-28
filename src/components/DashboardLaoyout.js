@@ -400,6 +400,7 @@ notificationsCount = {this.state.notificationsCount}
 lastName = {this.state.lastName}
 branch = {this.state.branch}
 username = {this.state.username}
+batches = {this.state.batches}
 dob={this.state.dob}
 />
 </div>
