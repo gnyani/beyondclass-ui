@@ -4,7 +4,10 @@ import FlatButton from 'material-ui/FlatButton'
 import {Card,CardTitle,CardHeader,CardActions,CardText} from 'material-ui/Card'
 import {Link} from 'react-router-dom'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
+import FloatingActionButton from 'material-ui/FloatingActionButton'
+import Download from 'material-ui/svg-icons/file/file-download'
 
+var properties = require('../properties.json');
 
 class ListSubmissions extends Component{
 
@@ -16,6 +19,7 @@ renderSubmittedAssignments(){
     buffer.push(<p className="paragraph" key={submissions.length+1}> Your submissions </p>)
     for(let i=0; i<submissions.length ; i++){
       var date = new Date(submissions[i].submissionDate)
+      var src = 'http://'+properties.getHostName+':8080/assignments/get/submission/'+assignments[i].assignmentid+'*'+submissions[i].email
       if(submissions[i].status==='ACCEPTED')
       buffer.push(
            <Grid fluid key={i}>
@@ -32,13 +36,20 @@ renderSubmittedAssignments(){
            </CardText>
            <CardActions>
            <Grid fluid>
-           <Row center="xs">
+           <Row end="xs" top="xs">
            <Col xs className="EvaluateAssignment">
            <FlatButton label="View Assignment" className="button"
            containerElement={
              <Link to={'/teacher/assignment/'+assignments[i].assignmentid+'*'+submissions[i].email+'/evaluate'} />
            }/>
            <br /><br />
+           </Col>
+           <Col xs={3} sm={3} md={3} lg={4}>
+            <form method="get" action={src}>
+             <FloatingActionButton mini={true} type="submit">
+               <Download />
+             </FloatingActionButton>
+           </form>
            </Col>
            </Row>
            </Grid>
@@ -65,13 +76,20 @@ renderSubmittedAssignments(){
              </CardText>
              <CardActions>
              <Grid fluid>
-             <Row center="xs">
+             <Row end="xs" top="xs">
              <Col xs className="EvaluateAssignment">
              <FlatButton label="View Assignment" className="button"
              containerElement={
                <Link to={'/teacher/assignment/'+assignments[i].assignmentid+'*'+submissions[i].email+'/evaluate'} />
              }/>
              <br /><br />
+             </Col>
+             <Col xs={3} sm={3} md={3} lg={4}>
+               <form method="get" action={src}>
+               <FloatingActionButton type="submit" mini={true}>
+                 <Download />
+               </FloatingActionButton>
+             </form>
              </Col>
              </Row>
              </Grid>

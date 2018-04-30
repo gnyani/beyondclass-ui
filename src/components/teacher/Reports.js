@@ -10,7 +10,7 @@ import {notify} from 'react-notify-toast'
 import {List, ListItem} from 'material-ui/List'
 import IconButton from 'material-ui/IconButton'
 import {EvaluateIcon} from '../../styledcomponents/SvgIcons'
-//import RejectIcon from 'material-ui/svg-icons/navigation/close'
+import RejectIcon from 'material-ui/svg-icons/navigation/close'
 import Notify from 'material-ui/svg-icons/social/notifications-active'
 import NotifcationsOff from 'material-ui/svg-icons/social/notifications-off'
 import Notifications from 'material-ui/svg-icons/social/notifications'
@@ -82,6 +82,7 @@ constructor(){
 
 
 getRightIconMenu = (i) => {
+  var src = 'http://'+properties.getHostName+':8080/assignments/get/submission/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email
   var rightIconMenu = (
     <IconMenu iconButtonElement={iconButtonElement}>
       <Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} >
@@ -97,6 +98,14 @@ getRightIconMenu = (i) => {
         >
         ReActivate
       </MenuItem>
+      <form method="get" action={src} id="submission_download_id">
+      <MenuItem
+        leftIcon={<Download color="red" />}
+        onClick={this.downloadSubmission.bind(this,i)}
+        >
+        Download
+      </MenuItem>
+      </form>
     </IconMenu>
   );
 
@@ -113,6 +122,10 @@ confirmActivateAssignment = (i) => {
       confirmActivate: true,
     })
   }
+}
+
+downloadSubmission = (i) => {
+  document.getElementById("submission_download_id").submit()
 }
 
 reActivateAssignment = () => {
@@ -255,37 +268,80 @@ renderListItems(){
   {
     var submittedDate = new Date(this.state.submittedStudents[i].submissionDate)
   if(this.state.submittedStudents[i].status==='PENDING_APPROVAL')
- buffer.push(<div key={i}><ListItem
-        primaryText={this.state.submittedStudents[i].email}
-        leftAvatar={<Avatar src={this.state.submittedStudents[i].propicurl} />}
-        rightIconButton={this.getRightIconMenu(i)}
+ buffer.push(<div key={i}>
+   <Grid fluid className="nogutter">
+   <Row around="xs" middle="xs">
+   <Col xs>
+   <ListItem
+    primaryText={this.state.submittedStudents[i].email}
+    leftAvatar={<Avatar src={this.state.submittedStudents[i].propicurl} />}
+    rightIconButton={
+      <IconButton
+      touch={true}
+      tooltip="Evaluate"
+      tooltipPosition="bottom-left"
+      >
+      <EvaluateIcon color="green" viewBox="0 0 22 22"/>
+      </IconButton>}
     containerElement={<Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} />}
     secondaryText={<p>Submitted on {submittedDate.getDate()+"-"+(submittedDate.getMonth()+1)+"-"+submittedDate.getFullYear()+" at "+submittedDate.getHours()+":"+submittedDate.getMinutes()}</p>}
     />
-    <Divider inset={true} />
+      <Divider inset={true} />
+      </Col>
+        <Col xs={2} sm={2} md={2} lg={1}>
+          {this.getRightIconMenu(i)}
+        </Col>
+      </Row>
+     </Grid>
     </div>)
 else if(this.state.submittedStudents[i].status === 'REJECTED')
 {
-    buffer.push(<div key={i}><ListItem
+    buffer.push(<div key={i}>
+      <Grid fluid className="nogutter">
+      <Row around="xs" middle="xs">
+      <Col xs>
+      <ListItem
            primaryText={this.state.submittedStudents[i].email}
            leftAvatar={<Avatar src={this.state.submittedStudents[i].propicurl} />}
-           rightIconButton={this.getRightIconMenu(i)}
+           rightIconButton={
+             <IconButton
+             touch={true}
+             tooltip="Evaluate"
+             tooltipPosition="bottom-left"
+             >
+             <RejectIcon color="red" viewBox="0 0 22 22"/>
+             </IconButton>}
           containerElement={<Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} />}
-       secondaryText={<p>Submitted on {submittedDate.getDate()+"-"+(submittedDate.getMonth()+1)+"-"+submittedDate.getFullYear()+" at "+submittedDate.getHours()+":"+submittedDate.getMinutes()}</p>}
+          secondaryText={<p>Submitted on {submittedDate.getDate()+"-"+(submittedDate.getMonth()+1)+"-"+submittedDate.getFullYear()+" at "+submittedDate.getHours()+":"+submittedDate.getMinutes()}</p>}
        />
-       <Divider inset={true} />
-       </div>)
+         <Divider inset={true} />
+     </Col>
+       <Col xs={2} sm={2} md={2} lg={1}>
+         {this.getRightIconMenu(i)}
+       </Col>
+     </Row>
+    </Grid>
+    </div>)
     }
     else {
-      buffer.push(<div key={i}><ListItem
-         primaryText={this.state.submittedStudents[i].email}
-         leftAvatar={<Avatar src={this.state.submittedStudents[i].propicurl} />}
-         rightAvatar={<Avatar color='purple' backgroundColor={transparent}
-            > {this.state.submittedStudents[i].marksGiven} </Avatar>}
-         containerElement={<Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} />}
-         secondaryText={<p>Submitted on {submittedDate.getDate()+"-"+(submittedDate.getMonth()+1)+"-"+submittedDate.getFullYear()+" at "+submittedDate.getHours()+":"+submittedDate.getMinutes()}</p>}
-
-         />
+      buffer.push(<div key={i}>
+        <Grid fluid className="nogutter">
+          <Row around="xs" middle="xs">
+            <Col xs>
+              <ListItem
+               primaryText={this.state.submittedStudents[i].email}
+               leftAvatar={<Avatar src={this.state.submittedStudents[i].propicurl} />}
+               rightAvatar={<Avatar color='purple' backgroundColor={transparent}
+                  > {this.state.submittedStudents[i].marksGiven} </Avatar>}
+               containerElement={<Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} />}
+               secondaryText={<p>Submitted on {submittedDate.getDate()+"-"+(submittedDate.getMonth()+1)+"-"+submittedDate.getFullYear()+" at "+submittedDate.getHours()+":"+submittedDate.getMinutes()}</p>}
+               />
+            </Col>
+            <Col xs={2} sm={2} md={2} lg={1}>
+              {this.getRightIconMenu(i)}
+            </Col>
+          </Row>
+        </Grid>
          <Divider inset={true} />
          </div>)
     }
