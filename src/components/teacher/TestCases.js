@@ -16,7 +16,7 @@ class TestCases extends Component{
 renderOptions = () => {
   var buffer = []
   var greatersize = this.props.outputs.length;
-  for(var i=0;i<greatersize+1;i++){
+  for(var i=0;i< Math.min(greatersize+1,4) ;i++){
     if(typeof this.props.qindex !== 'undefined'){
       buffer.push(
         <TableRow key={i} selectable={false}>

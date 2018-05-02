@@ -58,7 +58,6 @@ constructor(){
    isDataLoaded: false,
    selectBatchDialog: false,
    index: '',
-   newBatches: [],
    batchIndex: null,
    showRefreshIndicator: false,
   }
@@ -323,7 +322,7 @@ handleEdit = (i) => {
 }
 
 submitDuplicateAssignmentRequest = () => {
-  var batch = this.state.newBatches[this.state.batchIndex]
+  var batch = this.props.batches[this.state.batchIndex]
   this.setState({
     showRefreshIndicator: true
   })
@@ -348,14 +347,8 @@ submitDuplicateAssignmentRequest = () => {
 }
 
 selectBatch = (i) => {
-  var newBatches = this.props.batches.slice()
-  var index = this.props.batches.indexOf(this.props.class)
-  if(index > -1){
-  newBatches.splice(index,1)
-  }
     this.setState({
       activeIndex: i,
-      newBatches,
       selectBatchDialog: true,
   })
 }
@@ -512,7 +505,7 @@ const actions1 = [
             titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
             onRequestClose={this.handleClose}
           >
-          <ListBatches batches={this.state.newBatches} showRefreshIndicator={this.state.showRefreshIndicator} updateBatchSelection={this.updateBatchSelection}/>
+          <ListBatches batches={this.props.batches} showRefreshIndicator={this.state.showRefreshIndicator} updateBatchSelection={this.updateBatchSelection}/>
       </Dialog>
       </div>
     )
