@@ -57,6 +57,7 @@ constructor(){
    deleteConfirm: false,
    isDataLoaded: false,
    selectBatchDialog: false,
+   selectBatchDialogWhenOneBatch: false,
    index: '',
    batchIndex: null,
    showRefreshIndicator: false,
@@ -204,7 +205,7 @@ handleConfirmDelete(i){
 }
 
 handleClose = () => {
-  this.setState({deleteConfirm: false, selectBatchDialog: false});
+  this.setState({deleteConfirm: false, selectBatchDialog: false,selectBatchDialogWhenOneBatch: false});
 };
 
 deleteAssignment(){
@@ -347,10 +348,17 @@ submitDuplicateAssignmentRequest = () => {
 }
 
 selectBatch = (i) => {
+  if(this.props.batches.length > 1){
     this.setState({
       activeIndex: i,
       selectBatchDialog: true,
   })
+}else{  
+  this.setState({
+    activeIndex: i,
+    selectBatchDialogWhenOneBatch: true,
+  })
+}
 }
 
 downloadQuestions = () => {
@@ -482,6 +490,13 @@ const actions1 = [
       />,
     ]
 
+    const actions2 = [
+        <FlatButton
+          label="Close"
+          primary={true}
+          onTouchTap={this.handleClose}
+        />
+      ]
     return(
       <div className="TeacherAssignment">
       {this.listSavedAssignments()}
@@ -506,6 +521,16 @@ const actions1 = [
             onRequestClose={this.handleClose}
           >
           <ListBatches batches={this.props.batches} showRefreshIndicator={this.state.showRefreshIndicator} updateBatchSelection={this.updateBatchSelection}/>
+      </Dialog>
+      <Dialog
+            title="You cannot duplicate the assignment,since you have only 1 class listed"
+            modal={true}
+            actions={actions2}
+            open={this.state.selectBatchDialogWhenOneBatch}
+            autoScrollBodyContent={true}
+            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            onRequestClose={this.handleClose}
+          >
       </Dialog>
       </div>
     )

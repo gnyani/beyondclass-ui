@@ -28,7 +28,6 @@ shouldComponentUpdate(nextProps, nextState){
 }
 
   render(){
-    console.log("batch index"+this.props.showRefreshIndicator)
     if(this.props.showRefreshIndicator === false)
     return(
       <div>
