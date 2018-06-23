@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton'
 import {notify} from 'react-notify-toast';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import {FileFileUpload,AttachFile} from '../../styledcomponents/SvgIcons.js'
-import UnauthorizedPage from '../UnauthorizedPage.js'
+import {FileFileUpload,AttachFile} from '../../../styledcomponents/SvgIcons.js'
+import UnauthorizedPage from '../../UnauthorizedPage.js'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import Divider from 'material-ui/Divider'
 import TextField from 'material-ui/TextField'
-import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'
+import SubjectAutoComplete from '../../utils/SubjectAutoComplete.js'
 import CircularProgress from 'material-ui/CircularProgress'
+import ListHandouts from './ListHandouts.js'
 
-var properties = require('../properties.json');
+var properties = require('../../properties.json');
 
 const styles = {
   uploadButton: {
@@ -31,7 +32,7 @@ const styles = {
   },
 };
 
-class NotesUpload extends Component{
+class ShareHandouts extends Component{
 
   constructor(props) {
     super(props);
@@ -71,7 +72,7 @@ handleCommentChange = (event) => {
     }
     else{
       this.setState({ buttonDisabled: true,uploadStarted: true });
-      fetch('http://'+properties.getHostName+':8080/user/notes/upload', {
+      fetch('http://'+properties.getHostName+':8080/teacher/handouts/upload', {
              method: 'POST',
              headers: {
                    'mode': 'cors',
@@ -79,6 +80,8 @@ handleCommentChange = (event) => {
                },
            credentials: 'include',
            body: JSON.stringify({
+             batch: this.props.class,
+             branch: this.props.branch,
              subject: this.state.subject,
              file : this.state.filebase64,
              comment: this.state.comment,
@@ -97,6 +100,9 @@ handleCommentChange = (event) => {
              response : response,
              buttonDisabled  : false,
              imagePreviewUrl: '',
+             batch: '',
+             branch: '',
+             subject: '',
              file: '',
              comment: '',
              uploadStarted: false,
@@ -151,7 +157,7 @@ handleCommentChange = (event) => {
     if (imagePreviewUrl) {
       $imagePreview = (<iframe  title="preview pdf "src={imagePreviewUrl} className="iframe"/>);
     }
-    if(this.props.userrole==="student")
+    if(this.props.userrole==="teacher")
     {
     return (
     <div>
@@ -209,12 +215,13 @@ handleCommentChange = (event) => {
 
       <div className="NotesUpload">
       <br />
-      <br />
       <div className="Position">
       {$imagePreview}
       </div>
       <br />
-      <br />
+      </div>
+      <div>
+        <ListHandouts batch={this.props.class} userrole={this.props.userrole}/>
       </div>
   </div>
     )
@@ -223,7 +230,7 @@ handleCommentChange = (event) => {
   }
 }
 }
-NotesUpload.contextTypes = {
+ShareHandouts.contextTypes = {
     router: PropTypes.object
 };
-export default withRouter(NotesUpload)
+export default withRouter(ShareHandouts)

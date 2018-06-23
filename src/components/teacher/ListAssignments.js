@@ -353,7 +353,7 @@ selectBatch = (i) => {
       activeIndex: i,
       selectBatchDialog: true,
   })
-}else{  
+}else{
   this.setState({
     activeIndex: i,
     selectBatchDialogWhenOneBatch: true,
@@ -523,7 +523,7 @@ const actions1 = [
           <ListBatches batches={this.props.batches} showRefreshIndicator={this.state.showRefreshIndicator} updateBatchSelection={this.updateBatchSelection}/>
       </Dialog>
       <Dialog
-            title="You cannot duplicate the assignment,since you have only 1 class listed"
+            title="You cannot duplicate the assignment since you have only 1 class listed"
             modal={true}
             actions={actions2}
             open={this.state.selectBatchDialogWhenOneBatch}

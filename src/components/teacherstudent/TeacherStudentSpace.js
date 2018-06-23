@@ -4,6 +4,7 @@ import Loading from '../Loading'
 import styled from 'styled-components'
 import {Tabs, Tab} from 'material-ui/Tabs'
 import ListAssignments from './ListAssignments'
+import ListHandouts from './ListHandoutsStudent'
 import {Media} from '../utils/Media'
 
 const StudentTeacherAnnouncements = Loadable({
@@ -58,6 +59,9 @@ class TeacherStudentSpace extends Component{
       </Tab>
         <Tab label="Announcements" value="announcements" buttonStyle={{backgroundColor: '#4d86cf'}}>
             <StudentTeacherAnnouncements class={this.props.startyear+'-'+this.props.section} />
+        </Tab>
+        <Tab label="Handouts" value="handouts" buttonStyle={{backgroundColor: '#4d86cf'}}>
+            <ListHandouts class={this.props.startyear+'-'+this.props.section} userrole={this.props.userrole} branch={this.props.branch}/>
         </Tab>
       </Tabs>
       </div>

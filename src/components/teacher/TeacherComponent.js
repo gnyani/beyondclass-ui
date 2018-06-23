@@ -1,8 +1,9 @@
 import React,{Component} from 'react';
 import styled from 'styled-components';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import TeacherAnnouncement from './TeacherAnnouncement.js';
-import CreateAssignment from './CreateAssignment.js';
+import TeacherAnnouncement from './TeacherAnnouncement.js'
+import ShareHandouts from './sharehandouts/ShareHandouts.js'
+import CreateAssignment from './CreateAssignment.js'
 import UnauthorizedPage from '../UnauthorizedPage.js'
 import {Media} from '../utils/Media'
 
@@ -45,6 +46,9 @@ class TeacherComponent extends Component{
       </Tab>
         <Tab label="Announce" value="announce" buttonStyle={{backgroundColor: '#4d86cf'}}>
             <TeacherAnnouncement class={this.props.class} key={this.props.class}/>
+        </Tab>
+        <Tab label="Handouts" value="handouts" buttonStyle={{backgroundColor: '#4d86cf'}}>
+           <ShareHandouts class={this.props.class} key={this.props.class} userrole={this.props.userrole} branch={this.props.branch}/>
         </Tab>
       </Tabs>
       </div>
