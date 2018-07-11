@@ -4,7 +4,6 @@ import MenuItem from 'material-ui/MenuItem'
 import {Grid, Row, Col} from 'react-flexbox-grid'
 
 const years = [
-  {text: "Select*", value: 0},
   {text:new Date().getFullYear(), value: 1},
   {text:new Date().getFullYear()-1,value: 2},
   {text:new Date().getFullYear()-2,value: 3},
@@ -18,7 +17,7 @@ class DisplayBatches extends Component{
    return years.map((years) => (
      <MenuItem
        key={years.value}
-       value={years.value}
+       value={years.text}
        primaryText={years.text}
      />
    ));
@@ -27,8 +26,7 @@ class DisplayBatches extends Component{
     return(
       <div>
       <Grid fluid>
-      <Row around="xs">
-      <Col xs>
+      <Row center="xs">
       <SelectField
        floatingLabelText="Start Year"
        value={this.props.year}
@@ -41,8 +39,10 @@ class DisplayBatches extends Component{
      >
      {this.yearMenuItems()}
       </SelectField>
-      </Col>
-      <Col xs>
+      </Row>
+      </Grid>
+      <Grid fluid>
+      <Row center="xs">
       <SelectField
        floatingLabelText="Section"
        value={this.props.section}
@@ -53,13 +53,12 @@ class DisplayBatches extends Component{
        autoWidth={true}
        maxHeight={300}
      >
-          <MenuItem value={0} primaryText="Select*" />
+          <MenuItem value="0" primaryText="Select*" />
           <MenuItem value="A" primaryText="A" />
           <MenuItem value="B" primaryText="B" />
           <MenuItem value="C" primaryText="C" />
           <MenuItem value="D" primaryText="D" />
       </SelectField>
-      </Col>
       </Row>
       </Grid>
       </div>

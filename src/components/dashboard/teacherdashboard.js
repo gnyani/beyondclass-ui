@@ -5,24 +5,23 @@ import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import Add from 'material-ui/svg-icons/content/add'
 import Dialog from 'material-ui/Dialog'
+import {notify} from 'react-notify-toast';
 import DisplayBatches from './DisplayBatches'
-import {LocationCity} from '../../styledcomponents/SvgIcons.js'
 import Badge from 'material-ui/Badge';
 import People from 'material-ui/svg-icons/social/people.js'
 
+var properties = require('../properties.json');
 
 class TeacherDashboard extends Component{
 
   constructor(props){
-
     super(props);
     this.state={
       selected: '',
       addClassDialog: false,
-      year: 0,
-      section: 0,
+      year: new Date().getFullYear(),
+      section: "0",
     }
-    console.log(props.studentCountList)
     this.isActive = this.isActive.bind(this)
   }
   onChangeSelected(value){
@@ -53,6 +52,32 @@ class TeacherDashboard extends Component{
       return (value === this.state.selected)?'Active':'';
   }
 
+  addClass = () => {
+    fetch('http://'+properties.getHostName+':8080/teacher/addclass', {
+           method: 'POST',
+           headers: {
+                 'mode': 'cors',
+                 'Content-Type': 'application/json'
+             },
+         credentials: 'include',
+         body: JSON.stringify({
+           year: this.state.year,
+           section: this.state.section,
+         })
+       }).then(response => {
+         if(response.status === 200){
+           notify.show("Batch added successfully","success")
+           return response
+         }else{
+           notify.show("Something went wrong","error")
+         }
+       }).then(response => {
+         if(response.status === 200){
+
+         }
+       })
+  }
+
   menuItems(batches) {
     return batches.map((batches,index) => (
     <div key={index}>  <div  className={this.isActive(this.props.batches[index])}>
@@ -71,7 +96,7 @@ class TeacherDashboard extends Component{
                padding: "0px 24px 12px 12px"
              }}
            >
-             <People color={"white"} viewBox={0,0,50,50}/>
+             <People color={"white"} viewBox="0 0 30 30"/>
            </Badge>}
           onClick={this.props.handleMobileToggle}
           className="drawerFont"
@@ -109,6 +134,7 @@ class TeacherDashboard extends Component{
                 title="Select batch to add"
                 modal={false}
                 actions={actions}
+                style={{marginLeft: "25%", width: "50%"}}
                 open={this.state.addClassDialog}
                 titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
                 onRequestClose={this.handleClose}
