@@ -1,6 +1,5 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
-import {red500} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
 import FlatButton from 'material-ui/FlatButton';
 import Add from 'material-ui/svg-icons/content/add'
@@ -19,7 +18,7 @@ class TeacherDashboard extends Component{
     this.state={
       selected: '',
       addClassDialog: false,
-      year: new Date().getFullYear(),
+      year: "Select*",
       section: "0",
     }
     this.isActive = this.isActive.bind(this)
@@ -53,29 +52,37 @@ class TeacherDashboard extends Component{
   }
 
   addClass = () => {
-    fetch('http://'+properties.getHostName+':8080/teacher/addclass', {
-           method: 'POST',
-           headers: {
-                 'mode': 'cors',
-                 'Content-Type': 'application/json'
-             },
-         credentials: 'include',
-         body: JSON.stringify({
-           year: this.state.year,
-           section: this.state.section,
-         })
-       }).then(response => {
-         if(response.status === 200){
-           notify.show("Batch added successfully","success")
-           return response
-         }else{
-           notify.show("Something went wrong","error")
-         }
-       }).then(response => {
-         if(response.status === 200){
-
-         }
-       })
+    var batch = this.state.year+'-'+this.state.section
+    if(this.state.year === "Select*" || this.state.section === "0"){
+      notify.show("Please select both start year and section", "warning")
+    }else if(this.props.batches.includes(batch)){
+      notify.show("You cannot add the same batch", "warning")
+    }
+    else{
+      fetch('http://'+properties.getHostName+':8080/teacher/addclass', {
+             method: 'POST',
+             headers: {
+                   'mode': 'cors',
+                   'Content-Type': 'application/json'
+               },
+           credentials: 'include',
+           body: JSON.stringify({
+             year: this.state.year,
+             section: this.state.section,
+           })
+         }).then(response => {
+           if(response.status === 200){
+             notify.show("Batch added successfully","success")
+             return response
+           }else{
+             notify.show("Something went wrong","error")
+           }
+         }).then(response => {
+           if(response.status === 200){
+            window.location.reload()
+           }
+        })
+    }
   }
 
   menuItems(batches) {
@@ -83,7 +90,7 @@ class TeacherDashboard extends Component{
     <div key={index}>  <div  className={this.isActive(this.props.batches[index])}>
          <Link to={'/teacher/'+this.props.batches[index]}  width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,this.props.batches[index])} >
           <MenuItem
-          primaryText={'\n'+ 'Class  '+this.props.batches[index]}
+          primaryText={'Class  '+this.props.batches[index]}
           innerDivStyle={{
             paddingTop: "5px",
           }}
