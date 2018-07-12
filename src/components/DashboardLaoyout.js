@@ -27,7 +27,7 @@ class DashboardLaoyout extends Component{
     this.state = {
       open : true,
       docked: true,
-      width : 250,
+      width : 230,
       propiclink : '',
       username : '',
       branch:'',
@@ -40,6 +40,7 @@ class DashboardLaoyout extends Component{
       userrole: '',
       loggedinuseremail: '',
       batches: [],
+      studentCountList: [],
       startyear: 0,
       section: '',
       notificationsCount: 0,
@@ -194,7 +195,9 @@ dashboard(){
   if(this.state.userrole === 'student'){
     return(<StudentDashboard width={this.state.width} handleMobileToggle={this.handleMobileToggle}/>)
   }else if(this.state.userrole === 'teacher'){
-    return(<TeacherDashboard width={this.state.width} batches={this.state.batches} handleMobileToggle={this.handleMobileToggle}/>)
+    return(<TeacherDashboard width={this.state.width} batches={this.state.batches}
+       studentCountList={this.state.studentCountList}
+       handleMobileToggle={this.handleMobileToggle}/>)
   }
 }
 
@@ -226,6 +229,7 @@ componentDidMount(){
               dob: response.dob,
               section: response.section,
               batches: response.batches,
+              studentCountList:response.studentCountList
           },function(){
             this.getNotificationCount()
           })
