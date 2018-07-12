@@ -27,7 +27,7 @@ class DashboardLaoyout extends Component{
     this.state = {
       open : true,
       docked: true,
-      width : 230,
+      width : 240,
       propiclink : '',
       username : '',
       branch:'',
