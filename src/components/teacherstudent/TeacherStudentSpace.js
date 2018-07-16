@@ -52,15 +52,15 @@ class TeacherStudentSpace extends Component{
       <Tabs
         value={this.state.value}
         onChange={this.handleChange}
-        inkBarStyle={{backgroundColor:"#FFA107"}}
+        inkBarStyle={{backgroundColor:"#30b55b", height: "0.25em"}}
       >
-      <Tab label="Assignments" value="assignments" buttonStyle={{backgroundColor: '#4d86cf'}}>
+      <Tab label="Assignments" value="assignments" buttonStyle={{backgroundColor: '#39424d', textTransform: 'none', fontSize:'1.3em'}}>
         <ListAssignments email={this.props.loggedinuser}   />
       </Tab>
-        <Tab label="Announcements" value="announcements" buttonStyle={{backgroundColor: '#4d86cf'}}>
+        <Tab label="Announcements" value="announcements" buttonStyle={{backgroundColor: '#39424d', textTransform: 'none', fontSize:'1.3em'}}>
             <StudentTeacherAnnouncements class={this.props.startyear+'-'+this.props.section} />
         </Tab>
-        <Tab label="Handouts" value="handouts" buttonStyle={{backgroundColor: '#4d86cf'}}>
+        <Tab label="Handouts" value="handouts" buttonStyle={{backgroundColor: '#39424d', textTransform: 'none', fontSize:'1.3em'}}>
             <ListHandouts class={this.props.startyear+'-'+this.props.section} userrole={this.props.userrole} branch={this.props.branch}/>
         </Tab>
       </Tabs>

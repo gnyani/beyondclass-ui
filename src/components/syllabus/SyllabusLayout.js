@@ -36,8 +36,9 @@ class SyllabusLayout extends Component{
       <Tabs
         value={this.state.value}
         onChange={this.handleChange}
+        inkBarStyle={{backgroundColor:"#30b55b", height: "0.25em"}}
       >
-        <Tab label="Syllabus-Archive" value="Syllabus Archive" style={{backgroundColor: '#4d86cf'}}
+        <Tab label="Syllabus Archive" value="Syllabus Archive" style={{backgroundColor: '#39424d', textTransform: "none", fontSize:"1em"}}
          buttonStyle={{cursor: "default"}} disableTouchRipple={true} icon={<ContentArchive />}>
           <div>
             <DefaultSyllabus userrole={this.props.userrole} />

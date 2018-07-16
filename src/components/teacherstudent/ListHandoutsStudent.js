@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import {notify} from 'react-notify-toast';
-import {lightBlue300} from 'material-ui/styles/colors';
 import {ActionViewArray,FileFileDownload,NavigationFullscreen} from '../../styledcomponents/SvgIcons.js'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -43,9 +42,9 @@ class ListHandoutsStudent extends Component{
       <CardHeader
         key={src}
         className="cardHeaderwithTopBorder"
-        title="Uploaded By"
+        title={src.split('-')[7]}
         avatar={this.state.profilePicUrl}
-        subtitle={src.split('-')[7]+" on "+ date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}
+        subtitle={ date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}
       />
     )
     return buffer
@@ -74,12 +73,12 @@ class ListHandoutsStudent extends Component{
                 <Row center="xs">
                 <Col xs>
                   <form method="post" action={src+"/download"}>
-                  <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color={lightBlue300} />}/>
+                  <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color='#30b55b' />}/>
                   </form>
                  </Col>
                 <Col xs>
                   <form method="get" action={src}>
-                  <FlatButton type="submit" label="View" fullWidth={true} icon={<NavigationFullscreen color={lightBlue300} />}/>
+                  <FlatButton type="submit" label="View" fullWidth={true} icon={<NavigationFullscreen color='#30b55b' />}/>
                   </form>
                  </Col>
                   </Row>

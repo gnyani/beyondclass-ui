@@ -85,7 +85,7 @@ componentDidMount(){
       <CardText className="table">
       <table>
       <tbody>
-          <tr>
+          <tr style={{color: '#30b55b'}}>
             <th>Status</th>
             <th>Count</th>
           </tr>
@@ -110,7 +110,8 @@ componentDidMount(){
       <Col xs={8} sm={8} md={4} lg={3}>
       <Card >
       <CardHeader
-      title="Total Assignments Submitted" style={{backgroundColor: 'lightgrey', fontWeight: 'bold'}}/>
+      title="Total Assignments Submitted" style={{backgroundColor: 'lightgrey',fontWeight: 'bold'}}
+      />
       <CardTitle title={this.state.totalCount} style={{textAlign:'center'}} />
       </Card>
       <br />
@@ -118,7 +119,8 @@ componentDidMount(){
       <Col xs={8} sm={8} md={4} lg={3}>
       <Card >
       <CardHeader
-      title="Total Points" style={{backgroundColor: 'lightgrey', fontWeight: 'bold'}}/>
+      title="Total Points" style={{backgroundColor: 'lightgrey', fontWeight: 'bold'}}
+      />
       <CardTitle title={this.state.totalPoints} style={{textAlign:'center'}} />
       </Card>
       <br /><br />

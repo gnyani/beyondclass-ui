@@ -46,7 +46,7 @@ renderSubmittedAssignments(){
            </Col>
            <Col xs={3} sm={3} md={3} lg={4}>
             <form method="get" action={src}>
-             <FloatingActionButton mini={true} type="submit">
+             <FloatingActionButton mini={true} type="submit" backgroundColor={'#30b55b'}>
                <Download />
              </FloatingActionButton>
            </form>
@@ -86,7 +86,7 @@ renderSubmittedAssignments(){
              </Col>
              <Col xs={3} sm={3} md={3} lg={4}>
                <form method="get" action={src}>
-               <FloatingActionButton type="submit" mini={true}>
+               <FloatingActionButton type="submit" mini={true} backgroundColor={'#30b55b'}>
                  <Download />
                </FloatingActionButton>
              </form>

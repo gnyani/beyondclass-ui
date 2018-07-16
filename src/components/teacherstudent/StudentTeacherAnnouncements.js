@@ -2,7 +2,11 @@ import React,{Component} from 'react'
 import {notify} from 'react-notify-toast'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import { withRouter } from 'react-router'
+import {ChatOutline} from '../../styledcomponents/SvgIcons.js'
+import {List, ListItem} from 'material-ui/List'
 import PropTypes from 'prop-types'
+import Avatar from 'material-ui/Avatar'
+import Divider from 'material-ui/Divider'
 
 var properties = require('../properties.json');
 
@@ -14,26 +18,33 @@ class StudentTeacherAnnouncements extends Component{
       announcements: [],
       teachernames: [],
       announcementIds: [],
+      profilePictures: [],
     }
   }
 
-  list(buffer){
-
+  listItems = () => {
+ var buffer = []
     if(this.state.announcements.length === 0)
-    buffer.push(<p key={1} className="messageStyle" style={{textAlign:"center"}}>You are all caught up, you don't have any announcements yet</p>)
+    buffer.push(<p key={1} className="heading">You are all caught up, you don't have any announcements yet</p>)
     else{
     for (let i=0;i<this.state.announcements.length;i++){
         var date = new Date(parseInt(this.state.announcementIds[i].split('-')[6],10))
       buffer.push(
                     <Grid fluid key={i} className="nogutter">
                     <Row >
-                    <Col xs={12} sm={12} md={12} lg={12}>
-                    <li >
-                    <p className="name"> <span className="fontStyle">{this.state.teachernames[i]}: </span>
-                    <span className="messageStyle">{this.state.announcements[i]}</span>
-                    <span className="dateStyle">{" "+date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()} </span>
-                    </p>
-                    </li>
+                    <Col xs>
+                      <ListItem
+                       className="listPrimaryText"
+                       leftAvatar={<Avatar src={this.state.profilePictures[i]} />}
+                       disabled={true}
+                       primaryText={this.state.teachernames[i]}
+                       secondaryText={<p style={{fontWeight: 'lighter'}}>
+                         <span style={{color: "black"}}>{this.state.announcements[i]}</span><br />
+                         Posted on {date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}
+                       </p>}
+                       secondaryTextLines={2}
+                       />
+                     <Divider inset={true} />
                     </Col>
                     </Row>
                     </Grid>
@@ -56,14 +67,18 @@ class StudentTeacherAnnouncements extends Component{
             var newmessage = []
             var newannouncementIds =[]
             var newTeacherNames = []
+            var newProfilePictures = []
             for(let i=0;i<response.content.length;i++)
              { newmessage.push(response.content[i].message)
                newannouncementIds.push(response.content[i].announcementid)
-               newTeacherNames.push(response.content[i].posteduser.firstName+response.content[i].posteduser.lastName)}
+               newTeacherNames.push(response.content[i].posteduser.firstName+response.content[i].posteduser.lastName)
+               newProfilePictures.push(response.content[i].posteduser.normalpicUrl   || response.content[i].posteduser.googlepicUrl )
+             }
              this.setState({
                  announcementIds: newannouncementIds,
                  announcements: newmessage,
                  teachernames: newTeacherNames,
+                 profilePictures: newProfilePictures,
                  total: response.totalPages
            })
           }).catch(response => {
@@ -77,13 +92,28 @@ class StudentTeacherAnnouncements extends Component{
   }
 
   render(){
-    var buffer = [];
     return(
       <div className="announcements">
-      <h2 className="paragraph">Announcements from your teachers</h2>
-      <div  className="container">
-         <ul style={{color:  '#cccccc'}}>{this.list(buffer)}</ul>
-       </div>
+        <Grid fluid>
+        <Row  center="xs" middle="xs">
+        <Col  xs={2} sm={2} md={2} lg={1}>
+          <ChatOutline style={{height:'3em', width: '3em', marginTop: '0.5em', marginLeft: '1em', color:'#30b55b'}}/>
+        </Col>
+        <Col xs={8} sm={8} md={8} lg={7}>
+        <h2 className="heading">Announcements from your teachers</h2>
+        </Col>
+        </Row>
+        </Grid>
+        <Grid fluid className="nogutter">
+        <Row center="xs" >
+        <Col xs={12} sm={12} md={10} lg={8}>
+        <List>
+              {this.listItems()}
+        </List>
+        </Col>
+        </Row>
+        </Grid>
+
       </div>
     )
   }

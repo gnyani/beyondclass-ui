@@ -38,8 +38,9 @@ class QpLayout extends Component{
       <Tabs
         value={this.state.value}
         onChange={this.handleChange}
+        inkBarStyle={{backgroundColor:"#30b55b", height: "0.25em"}}
       >
-        <Tab label="Question-Papers-Archive" value="QuestionPaperArchive" style={{backgroundColor: '#4d86cf'}}
+        <Tab label="Question Papers Archive" value="QuestionPaperArchive" style={{backgroundColor: '#39424d', textTransform:"none", fontSize: '1em'}}
          buttonStyle={{cursor: "default"}} disableTouchRipple={true} icon={<ContentArchive />}>
           <div>
             <DefaultQp userrole={this.props.userrole} />

@@ -3,7 +3,6 @@ import SelectField from 'material-ui/SelectField';
 import Divider from 'material-ui/Divider';
 import {notify} from 'react-notify-toast';
 import MenuItem from 'material-ui/MenuItem';
-import {lightBlue300} from 'material-ui/styles/colors';
 import {Card, CardActions, CardHeader, CardMedia} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import { withRouter } from 'react-router'
@@ -38,7 +37,7 @@ class DefaultQp extends Component{
 validateAndFetch(){
   if(this.state.branch === 1 || this.state.year === 1 || this.state.subject === 1)
   {
-    notify.show("please select Branch,Year and Subject","warning");
+    notify.show("please select branch,year and subject","warning");
   }
   else{
     this.fetchQp();
@@ -62,7 +61,7 @@ fetchQp(){
      }).then(response => {
        if(response.status === 200)
        {
-         notify.show("Retrieval Successful","success");
+         notify.show("Retrieval successful","success");
         return response.text();
        }else if(response.status === 404){
          notify.show("No records found for this year","error")
@@ -113,12 +112,12 @@ var buffer = []
                 <Row between="xs">
                 <Col xs>
                 <form method="post" action={this.state.response+"/download"}>
-                <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color={lightBlue300} />}/>
+                <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color='#30b55b' />}/>
                 </form>
                 </Col>
                 <Col xs>
                 <form method="post" action={this.state.response}>
-                <FlatButton type="submit" label="Full View" fullWidth={true}  icon={<NavigationFullscreen color={lightBlue300} />}/>
+                <FlatButton type="submit" label="Full View" fullWidth={true}  icon={<NavigationFullscreen color='#30b55b' />}/>
                 </form>
                 </Col>
                 </Row>

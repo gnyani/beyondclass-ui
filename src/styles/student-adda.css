@@ -1,11 +1,3 @@
-@font-face {
-  font-family: "studentAdda";
-  src:
-    url("./fonts/chalkduster.woff") format("woff"), /* Modern Browsers */
-    url("./fonts/chalkduster.woff2") format("woff2"); /* Modern Browsers */
-  font-weight: normal;
-  font-style: normal;
-}
 .material-icons {font-family: 'Material Icons';font-weight: normal;font-style: normal;font-size: 24px;  /* Preferred icon size */display: inline-block;line-height: 1;text-transform: none;letter-spacing: normal;word-wrap: normal;white-space: nowrap;direction: ltr;/* Support for all WebKit browsers. */-webkit-font-smoothing: antialiased;/* Support for Safari and Chrome. */text-rendering: optimizeLegibility;/* Support for Firefox. */-moz-osx-font-smoothing: grayscale;/* Support for IE. */font-feature-settings: 'liga';color:#8a7a7a;}
 .StudentAdda{ margin: 0;padding: 0;border: 0;font-size: 15px;vertical-align: baseline;background: transparent;}
 body,html {height: 100%;width:100%;overflow: hidden;margin: 0;outline: 0;margin: 0;padding: 0;min-width:initial;}
@@ -21,44 +13,40 @@ body .container{border: 2vmin solid rgb(123, 76, 16);background: rgba(20, 21, 18
 .image-upload > input{    display: none;}
 .image-upload img{cursor: pointer;}
 .announcements{text-align: center;width: 100%;}
-.announcements .container li .name{ text-align: left;text-transform: capitalize;font-family:"Comic Sans MS",sans-serif ;
-          margin: 0;}
 .nogutter {margin: 0 !important;padding: 0 !important;width: 100% !important;}
 
-.announcements .heading{padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
-               font-size: 4vmin;letter-spacing: 0.08vmin;color: rgb(162,35,142);margin-right: 15vmin;}
-.announcements .fontStyle{  font-family: "studentAdda",sans-serif;font-size: 3.5vmin;font-style: italic;
+.announcements .heading{padding: 0.1%;font-family:'Roboto', sans-serif;font-weight: normal;
+               font-size: 4vmin;letter-spacing: 0.08vmin;color: #39424d;margin-right: 15vmin;}
+.announcements .fontStyle{  font-family: 'Roboto', sans-serif;font-size: 3.5vmin;font-style: italic;
                             font-weight: 100;letter-spacing: 0.08vmin;color: #da7373;}
-.announcements .messageStyle{   font-family: "studentAdda",sans-serif;font-size:3vmin;font-style: italic;font-weight: 50;
+.announcements .messageStyle{   font-family: 'Roboto',sans-serif;font-size:3vmin;font-style: italic;font-weight: 50;
                                color: rgba(255, 255, 254, 0.78);text-transform: capitalize;letter-spacing: 0.06vmin;}
 .announcements .dateStyle {position: relative;float: right;top:1vmin;right: 1vmin;color: #da7373}
 .announcements .dateStyleTeacher {position: relative;float: right;top:1vmin;right: 1vmin;color: #bbbbbb}
-.announcements .image{width: 4vmax;height: 4vmax ;border-radius: 50% }
-
-.announcements .imagepreview{width: 40%;height: 40%;}
-
-.announcements .paragraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
-               font-size: 4vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
-.announcements .note{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: lighter;
-               font-size: 2.5vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
+.announcements .listPrimaryText {text-align: left !important; cursor: default !important;
+  font-family: 'Roboto', sans-serif !important;font-weight: bold !important;}
+.announcements .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: normal;
+               font-size: 4vmin;letter-spacing: 0.1vmin;color: #39424d}
+.announcements .note{text-align: center;font-family: 'Roboto',sans-serif;font-weight: lighter;
+               font-size: 2.5vmin;letter-spacing: 0.1vmin;color: #39424d}
 
 .announcements .deleteSpan{float:right; margin-right: 1.5em;}
 .input{ float: left !important;margin-left: 10%;width: 65% !important;border: 0px !important;padding: 5px 0px !important;margin-bottom: 20px !important;}
-.AnnounceButton{ box-shadow: 1px 2px 8px 0px black;margin-right: 3% !important; border-radius: 1em !important;
-                 background-color: rgb(162,35,142) !important; color: rgb(255,255,255) !important;}
+.AnnounceButton{ box-shadow: 1px 2px 8px 0px grey;margin-right: 3% !important; border-radius: 1em !important;
+                 background-color: #30b55b !important; color: rgb(255,255,255) !important;}
 .vertical-scroll{height:101vh;overflow-y: auto; width: 100%;overflow-x: hidden;}
 ::-webkit-scrollbar { width: 0.4em;border-radius: 0.4em;}
 ::-webkit-scrollbar-thumb {background-color: darkgrey;border-radius: 0.5em; outline: 0.1em solid slategrey;}
 .QuestionPapers .image{width: 100%;height: 50vh}
 .QuestionPapers .h4{width:100%;text-align: center;}
 .QuestionPapers .fetchButton{box-shadow: 1px 2px 8px 0px black;margin-left: 20% !important;border-radius: 1em !important;
-                 background-color: rgb(124,109,174) !important; color: rgb(255,255,255) !important;}
+                 background-color: #30b55b !important; color: rgb(255,255,255) !important;}
 .QuestionPapers .button{margin: 0 calc(39%) !important;box-shadow: 1px 2px 8px 0px black;margin-right: 3% !important; border-radius: 1em !important;
                  background-color: rgb(124,109,174) !important; color: rgb(255,255,255) !important;}
 .Syllabus .paper {margin-left:18% !important; width: 60% !important;}
 .Syllabus .h4{width:100%;text-align: center;}
 .Syllabus .fetchButton{box-shadow: 1px 2px 8px 0px black;border-radius: 1em !important;
-                 background-color: rgb(124,109,174) !important; color: rgb(255,255,255) !important;}
+                 background-color: #30b55b !important; color: rgb(255,255,255) !important;}
 .Syllabus .button{margin: 0 calc(39%);}
 .AssignUpload .iframe{width:60%;height: 350px;}
 .AssignUpload .Position{text-align: center;}
@@ -77,7 +65,7 @@ body .container{border: 2vmin solid rgb(123, 76, 16);background: rgba(20, 21, 18
 .coachingcentres .fetchButton{box-shadow: 1px 2px 8px 0px black;border-radius: 1em !important;
                  background-color: rgb(124,109,174) !important; color: rgb(255,255,255) !important;}
 .timeline .PostButton{box-shadow: 1px 2px 8px 0px black; border-radius: 1em !important;
-                 background-color: rgb(124,109,174) !important; color: rgb(255,255,255) !important;}
+                 background-color: #30b55b !important; color: rgb(255,255,255) !important;}
 .timeline .fontStyle{  font-size: 1em;font-style: italic;
                            font-weight: 100;letter-spacing: 0.1em;color: rgb(1,175,173)}
 .timeline .messageStyle{   font-family: "Comic Sans MS",sans-serif;font-size:0.8em;letter-spacing: 0.08em;font-style: italic;font-weight: 50;
@@ -93,21 +81,21 @@ body .container{border: 2vmin solid rgb(123, 76, 16);background: rgba(20, 21, 18
                  letter-spacing: 0.07em;color: rgb(51,138,150)}
 .intro .subheading{text-align: center;font-family: "Comic Sans MS",sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: italic;
                    color:rgb(221,93,93);position: relative; bottom: 1.3em}
-.intro .h4{text-align: center;font-family: "studentAdda", fantasy,sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: normal;}
+.intro .h4{text-align: center;font-family: 'Roboto',sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: normal;}
 .intro .image{ border-radius: 20%;height: 28%;   width : 20%;margin-left: 40%}
-.personalinfo .h4{font-family: "Arial", sans-serif; font-weight: normal; color: #2196F3}
+.personalinfo .h4{font-family: 'Roboto', sans-serif; font-weight: normal; color: #2196F3}
 /*.personalinfo .RadioButtonGroup{margin-left: 40% !important; }*/
 /*.personalinfo .RadioButton{display: inline-block !important;}*/
-.classdetails .h4{font-family: "Arial", sans-serif; font-weight: normal; color: #2196F3}
+.classdetails .h4{font-family: 'Roboto', sans-serif; font-weight: normal; color: #2196F3}
 .classdetails .textfield{margin-left: 5% !important;}
-.Active{  background-color: #696969;}
-.NotesUpload .uploadbutton{background-color: #2196F3 !important;color: white!important;border-radius: 1vmax!important;}
-.NotesUpload .paragraph{text-align: center; font-family: "Comic Sans MS",sans-serif;font-size:1.2em;font-style: italic;font-weight: 100;
+.Active{ color: #30b55b !important;}
+.NotesUpload .uploadbutton{background-color: #30b55b !important;color: white!important;border-radius: 1vmax!important; text-transform: none !important; }
+.NotesUpload .paragraph{text-align: center; font-family: 'Roboto',sans-serif;font-size:1.2em;font-style: italic;font-weight: 100;
                          color: rgb(247,166,25);letter-spacing: 0.04em;}
 .NotesUpload .Position{text-align: center;}
 .NotesUpload .iframe{width:60%;height: 350px;}
-.NotesList .nextButton {background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
-.Unauthorized {margin-top: 5%;text-align: center;text-align: center;font-family: "studentAdda", fantasy,sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: normal;}
+.NotesList .nextButton {background-color: #30b55b !important;color: white!important;border-radius: 1em!important; text-transform: none !important;}
+.Unauthorized {margin-top: 5%;text-align: center;text-align: center;font-family: 'Roboto',sans-serif;letter-spacing: 0.03em;font-weight: 100;font-style: normal;}
 .Unauthorized .backHome {color: white!important; background-color: #2196F3 !important; border-radius: 1em !important;}
 .userQuestion{text-align: center;}
 .Notifications {width:70%;margin-left:15%;}
@@ -116,29 +104,29 @@ body .container{border: 2vmin solid rgb(123, 76, 16);background: rgba(20, 21, 18
 }
 .question{font-weight: bolder;}
 .studentAddaLogoContainer{margin-top: 1vmin;color: rgb(245, 124, 0);background-color: rgb(26, 35, 126);user-select: none;display: inline-flex;align-items: center;justify-content: center;font-size: 3.5vmin;border-radius: 50%;height: 45px;width: 45px;}
-.text{text-align: center;font-family: "studentAdda",fantasy,sans-serif;font-size: 3.5vmin;letter-spacing: 0.5vmin;font-weight: 100;}
-.studentAddaLogo{margin-top: 0.4vmin;color: rgb(245, 124, 0);background-color: rgb(26, 35, 126);user-select: none;display: inline-flex;align-items: center;justify-content: center;font-size: 3.5vmin;border-radius: 50%;height: 45px;width: 45px;}
+.text{text-align: center;font-family: 'Roboto',sans-serif;font-size: 3.5vmin;letter-spacing: 0.5vmin;font-weight: 100;}
+.studentAddaLogo{margin-top: 0.4vmin;color: white;background-color: #30b55b;user-select: none;display: inline-flex;align-items: center;justify-content: center;font-size: 3.5vmin;border-radius: 50%;height: 45px;width: 45px;}
 .signupButton{width: 65%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
-.UpdateProfile .button {margin-left: 40% !important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
+.UpdateProfile .button {margin-left: 40% !important;background-color: #30b55b !important;color: white!important;border-radius: 1em!important;}
 /*profilePicChange*/
 .img__wrap {position: relative;border-radius:50%;margin-left: 20%;margin-top: 12%;height: 18vmin;width: 18vmin;}
 .img__img{border-radius:50%;height:18vmin;width:18vmin;}
-.img__description_layer {position: absolute;top: 0;bottom: 0;left: 0;right: 0;border-radius:50%;background: rgba(36, 62, 206, 0.6);color: #fff;visibility: hidden;opacity: 0;display: flex;align-items: center;justify-content: center;/* transition effect. not necessary */transition: opacity .2s, visibility .2s;}
+.img__description_layer {position: absolute;top: 0;bottom: 0;left: 0;right: 0;border-radius:50%;background: #30b55b ;color: #fff;visibility: hidden;opacity: 0;display: flex;align-items: center;justify-content: center;/* transition effect. not necessary */transition: opacity .2s, visibility .2s;}
 .img__wrap:hover .img__description_layer {visibility: visible;opacity: 1;cursor: pointer;}
 .img__description {transition: .2s;padding:18%;font-size: 3vmin;transform: translateY(1em);}
 .img__wrap:hover .img__description {transform: translateY(0);}
-.DisplayAssignmentQuestions .list{font-family: "studentAdda",fantasy,sans-serif;font-size: 3.5vmin;letter-spacing: 0.5vmin;font-weight: 100;color: black;
+.DisplayAssignmentQuestions .list{font-family: 'Roboto',sans-serif;font-size: 3.5vmin;letter-spacing: 0.5vmin;font-weight: 100;color: black;
         text-transform: capitalize;}
 .DisplayAssignmentQuestions .answerArea{
 width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 2px solid #ccc; border-radius: 4px;background-color: #f8f8f8;
-	font-family: "studentAdda",fantasy,sans-serif;font-size: 2vmin; text-transform: capitalize;}
+	font-family: 'Roboto',sans-serif;font-size: 2vmin; text-transform: capitalize;}
 .TeacherAssignment .displayQuestions{
     letter-spacing: 0.5vmin;text-transform: capitalize;}
-.TeacherAssignment .paragraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
-               font-size: 4vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
+.TeacherAssignment .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: normal;
+               font-size: 4vmin;letter-spacing: 0.1vmin;color: #39424d}
 .TeacherAssignment .button{width: 40%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
-.Reports .paragraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: lighter;
-               font-size: 3vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
+.Reports .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: lighter;
+               font-size: 3vmin;letter-spacing: 0.1vmin;color:#39424d}
 .Reports .statsparagraph{font-size: 3.5vmin;letter-spacing: 0.1vmin;font-weight: normal;}
 .Reports .stat{font-size: 5vmin;letter-spacing: 0.1vmin;font-weight: bold;;}
 .Reports .card{background-color:#455A64 !important;color: #CCCCCC !important}
@@ -148,33 +136,33 @@ width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 
                font-size: 4vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
 .EvaluateAssignment .displayQuestions{text-transform: capitalize !important;}
 .EvaluateAssignment .displayAnswers{text-transform: capitalize !important; font-weight: 400;}
-.EvaluateAssignment .button{width: 40%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
+.EvaluateAssignment .button{width: 40%!important;  border: 1px solid #30b55b !important;
+  background-color: #fbfbfb !important;color: #30b55b !important;border-radius: 1em!important;}
 .EvaluateAssignment .insightsBorder{padding-left: 2%;padding-top: 0.5%;padding-bottom: 1%;padding-right: 1%;outline-color:black;outline-style:dashed;}
 .cardHeader {background-color: lightgrey !important;}
 .cardHeaderwithTopBorder {background-color: lightgrey;border-top-left-radius: 1.5em;border-top-right-radius: 1.5em;}
-.drawerFont {color: #EEEEEE !important}
-.Editor .paragraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: lighter;
+.Editor .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: lighter;
                font-size: 3vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
 .Editor .testcases{border: 2px solid #765942;border-radius: 10px;margin-right: 50%;font-size: 2vmin;resize: none;}
 .Editor .tabs{width: 60% !important;margin-left: 20% !important}
 .ProgrammingAssignment .testcases{border: 2px solid #765942;border-radius: 10px;font-size: 2vmin;width: 100%;resize: none;}
-.ProgrammingAssignment .paragraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: bold;
+.ProgrammingAssignment .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: bold;
                font-size: 3vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
-.ProgrammingAssignment .testcaseparagraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: bold;
+.ProgrammingAssignment .testcaseparagraph{text-align: center;font-family: 'Roboto',sans-serif;ont-weight: bold;
                font-size: 2vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
 .ProgrammingAssignment .testcasesDisplay{border: 2px solid #765942;border-radius: 5px;font-size: 2vmin;width: 100%;resize: none;}
 .ProgrammingAssignment .button{width: 40%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
-.report-issue .heading{padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
+.report-issue .heading{padding: 0.1%;font-family: 'Roboto',sans-serif;font-weight: normal;
                font-size: 3.5vmin;letter-spacing: 0.06vmin;color: rgb(162,35,142);}
 .report-issue .submit{background-color: #2196F3 !important;color: white!important;border-radius: 1vmax!important;}
 .report-issue .image{width:60%;height: 60%;text-align: center;}
 .renderCodingAssignment .positionSummary{width: 70%;margin-left: 15%}
 .renderCodingAssignment .summaryParagraph{text-align: left;font-family: Helvetica Neue,Helvetica,Arial,sans-serif; }
-.SavedSnippets .paragraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: lighter;
+.SavedSnippets .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: lighter;
                font-size: 3vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
-.ListHandouts .paragraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
-                              font-size: 4vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
-.ListHandouts .iframe{width:60%;height: 350px;}                              
+.ListHandouts .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: normal;
+                              font-size: 4vmin;letter-spacing: 0.1vmin;color: #39424d}
+.ListHandouts .iframe{width:60%;height: 350px;}
 
 legend {
     text-align: left;

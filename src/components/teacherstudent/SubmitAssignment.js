@@ -1,21 +1,17 @@
 import React,{Component} from  'react'
 import styled from 'styled-components'
-import {notify} from 'react-notify-toast'
 import {Media} from '../utils/Media'
 import Divider from 'material-ui/Divider'
 import {Grid,Row,Col} from 'react-flexbox-grid'
-import RaisedButton from 'material-ui/RaisedButton'
 import DisplayAssignmentQuestions from './DisplayAssignmentQuestions.js'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
-import IdleTimer from 'react-idle-timer'
-import Dialog from 'material-ui/Dialog'
-import FlatButton from 'material-ui/FlatButton'
+import {notify} from 'react-notify-toast'
 import RenderProgrammingAssignment from './RenderProgrammingAssignment'
 import RenderObjectiveAssignment from './RenderObjectiveAssignment'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
-import Save from 'material-ui/svg-icons/content/save'
-import Send from 'material-ui/svg-icons/content/send'
+
+var properties = require('../properties.json');
 
 const StayVisible = styled.div`
   position: relative;
@@ -25,205 +21,36 @@ const StayVisible = styled.div`
     margin-left: 0px;
   `}
 `
-var properties = require('../properties.json');
 
 class SubmitAssignment extends Component{
 
 constructor(){
   super();
   this.state={
-    questions: [],
-    answers: [],
-    timeout: 5000,
-     remaining: null,
-     isIdle: false,
-     totalActiveTime: null,
-     assignmentType: '',
-     confirmSubmitDialog: false,
-  }
-     this.handleAnswerChange = this.handleAnswerChange.bind(this);
-     this.saveOrSubmit = this.saveOrSubmit.bind(this);
-}
-
-saveOrSubmit(option){
-  if(this.isValidForSaveOrSubmit()){
-    if(option === 'save'){
-      this.saveAssignment()
-    }else {
-      this.submitAssignment()
-    }
-  }else{
-    notify.show("please attempt atlease one answer","warning")
+   assignmentType: ''
   }
 }
-saveAssignment(option){
-  fetch('http://'+properties.getHostName+':8080/assignments/student/save', {
-         method: 'POST',
-         headers: {
-               'mode': 'cors',
-               'Content-Type': 'application/json'
-           },
-       credentials: 'include',
-       body: JSON.stringify({
-         email: this.props.loggedinuser,
-         tempassignmentid: this.props.assignmentid,
-         answers: this.state.answers,
-         timespent: this.state.totalActiveTime,
-      })
-    }).then(response => {
-      if(response.status === 200){
-        if(option === 'autosave' )
-        notify.show("Your work is auto saved","success")
-        else{
-          notify.show('Your work is saved,you can come back anytime here to continue',"success")
-          this.context.router.history.goBack()
-        }
-      }else if(response.status === 500){
-        notify.show('Sorry something went wrong please try again',"error")
-      }
-    }).catch(response => {
-    notify.show("Please login your session expired","error");
-    this.context.router.history.push('/');
-   });
-}
-submitAssignment(){
-  fetch('http://'+properties.getHostName+':8080/assignments/student/submit', {
-         method: 'POST',
-         headers: {
-               'mode': 'cors',
-               'Content-Type': 'application/json'
-           },
-       credentials: 'include',
-       body: JSON.stringify({
-         email: this.props.loggedinuser,
-         tempassignmentid: this.props.assignmentid,
-         answers: this.state.answers,
-         timespent: this.state.totalActiveTime,
-      })
-    }).then(response => {
-      if(response.status === 200){
-        notify.show('Your Assignment got submitted successfully',"success")
-        this.context.router.history.goBack()
-      }else if(response.status === 500){
-        notify.show('Sorry something went wrong please try again',"error")
-      }
-    }).catch(response => {
-    notify.show("Please login your session expired","error");
-    this.context.router.history.push('/');
-   });
-}
-isValidForSaveOrSubmit = () => {
-  var flag = false
-  for(let i=0 ; i < this.state.answers.length ; i++)
-  {
-    let answer = this.state.answers[i].trim()
-    if(answer !== ''){
-      flag = true
-    }
-  }
-  return flag
-}
 
-handleDialogOpen = () => {
-  this.setState({
-    confirmSubmitDialog: true,
-  })
-}
-handleClose = () => {
-  this.setState({
-    confirmSubmitDialog: false,
-  })
-}
 
-handleAnswerChange(i,event) {
-  var newAnswers = this.state.answers.slice()
-  newAnswers[i] = event.target.value
-  this.setState({
-    answers: newAnswers,
-  })
-}
-
-  componentDidMount(){
-    fetch('http://'+properties.getHostName+':8080/assignments/get/'+this.props.assignmentid, {
-           method: 'POST',
-           credentials: 'include',
-           headers: {
-               'mode': 'cors',
-               'Content-Type': 'application/json'
-             },
-           body: this.props.loggedinuser,
-       }).then(response => {
-         if(response.status === 200)
-         return response.json()
-         else if(response.status === 403){
-           notify.show("You might have already submitted the assignment or the assignment got expired","warning")
-           this.context.router.history.goBack()
-         }
-         else{
-           notify.show("something is not right","error")
-         }
-       }).then(response => {
-         if(response){
-            if(response.answers){
-                this.setState({
-                  questions: response.questions,
-                  answers: response.answers,
-                  assignmentType: response.assignmentType,
-                  totalActiveTime: response.timespent,
-                })
-              }else{
-                this.setState({
-                  questions: response.questions,
-                  assignmentType: response.assignmentType,
-                })
-              }
-            }
+componentDidMount(){
+  fetch('http://'+properties.getHostName+':8080/assignments/get/assignmenttype/'+this.props.assignmentid, {
+          credentials: 'include',
+           method: 'GET',
+        }).then(response => {
+          if(response.status === 200)
+          return response.text()
+          else if(response.status === 403){
+            notify.show("Assignment not found", "error")
+          }
+        }).then(response => {
+          this.setState({
+            assignmentType: response
           })
-
-this._interval = setInterval(() => {
-  if(this.state.isIdle === false)
-  this.setState({
-    totalActiveTime: this.state.totalActiveTime + 1000
-  });
-  if(this.state.totalActiveTime % 30000 === 0 && this.state.assignmentType === 'THEORY')
-  {
-    this.saveAssignment('autosave')
-  }
- }, 1000);
-
+        })
 }
-
-
-componentWillUnmount() {
-    clearInterval(this._interval);
-}
-
-_onActive = () => {
-   this.setState({ isIdle: false });
- }
-
- _onIdle = () => {
-   this.setState({
-     isIdle: true,
-    });
- }
-
 
   render(){
-
-    const actions = [
-      <FlatButton
-        label="Submit"
-        primary={true}
-        onTouchTap={this.saveOrSubmit.bind(this,'submit')}
-      />,
-      <FlatButton
-        label="Cancel"
-        primary={true}
-        onTouchTap={this.handleClose}
-      />]
-
-    if(this.state.assignmentType === 'THEORY')
+    if(this.state.assignmentType === '"THEORY"')
     {
     return(
       <StayVisible
@@ -231,51 +58,16 @@ _onActive = () => {
       <div className="announcements">
         <p className="paragraph">Submit Assignment</p>
       <Divider />
-      <DisplayAssignmentQuestions questions={this.state.questions} answers={this.state.answers} handleAnswerChange={this.handleAnswerChange}/>
+      <DisplayAssignmentQuestions email={this.props.loggedinuser} assignmentid={this.props.assignmentid}
+        onArrayEditorStateChange={this.onArrayEditorStateChange}
+        onArrayContentStateChange={this.onArrayContentStateChange}/>
       </div>
-      <Grid fluid>
-      <Row start="xs">
-      <Col xs={11} sm={11}  md={10} lg={10}>
-      <Grid fluid className="nogutter">
-      <Row end="xs" top="xs">
-      <Col lg={8}>
-      <RaisedButton label="Save" primary = {true} icon={<Save />} onClick={this.saveOrSubmit.bind(this,'save')}/>
-      </Col>
-      <Col lg={2}>
-      <RaisedButton label="Submit" primary = {true} icon={<Send />} onClick={this.handleDialogOpen}/>
-      </Col>
-      </Row>
-      </Grid>
-      </Col>
-      </Row>
-      </Grid>
-      <Dialog
-            title="Are you sure you want to submit this assignment ?"
-            modal={false}
-            actions={actions}
-            open={this.state.confirmSubmitDialog}
-            autoScrollBodyContent={true}
-            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
-            onRequestClose={this.handleClose}
-          >
-      </Dialog>
-
-  <IdleTimer
-  ref="idleTimer"
-  activeAction={this._onActive}
-  idleAction={this._onIdle}
-  timeout={this.state.timeout}
-  startOnLoad={false}
-  format="MM-DD-YYYY HH:MM:ss.SSS">
-
-  {/*<h1>Time Spent: {this.state.totalActiveTime}</h1>*/}
-  </IdleTimer>
  <br /><br />
       </StayVisible>
     )
 }
 
-else if(this.state.assignmentType === 'CODING')
+else if(this.state.assignmentType === '"CODING"')
 {
     return(
       <StayVisible
@@ -284,12 +76,12 @@ else if(this.state.assignmentType === 'CODING')
         <p className="paragraph">Submit Assignment</p>
       <Divider />
       <RenderProgrammingAssignment  assignmentid={this.props.assignmentid} email={this.props.loggedinuser}
-      questions={this.state.questions} answers={this.state.answers} handleAnswerChange={this.handleAnswerChange}/>
+      questions={this.state.questions}/>
       </div>
       </StayVisible>
     )
 }
-else if(this.state.assignmentType === 'OBJECTIVE')
+else if(this.state.assignmentType === '"OBJECTIVE"')
 {
     return(
       <StayVisible

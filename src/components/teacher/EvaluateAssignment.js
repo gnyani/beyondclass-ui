@@ -127,6 +127,7 @@ class EvaluateAssignment extends Component{
            this.setState({
              questions:response.submittedQuestions,
              answers:response.submitAssignment.answers,
+             answersContentStates: response.submitAssignment.answersContentStates,
              assignmentType: response.createAssignment.assignmentType,
              timespent: response.timespent,
              questionIndex: response.submitAssignment.questionIndex,
@@ -351,7 +352,7 @@ if(this.state.assignmentType ===  'THEORY')
        <Card>
       <CardTitle className="displayQuestions" title={<RichTextEditorReadOnly editorState={this.convertToEditorState(this.state.questions[i])} />} />
       <CardText className="displayAnswers">
-      {'Ans: '+this.state.answers[i]}
+      <RichTextEditorReadOnly editorState={this.convertToEditorState(this.state.answersContentStates[i])} editorStyle={{height: '180px'}}/>
       </CardText>
       </Card>
       <br /><br />
