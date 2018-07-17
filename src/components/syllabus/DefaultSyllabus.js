@@ -163,7 +163,8 @@ handleChange = (event, index, branch) => this.setState({branch});
        <Grid fluid>
        <Row around="xs" middle="xs">
        <Col  xs={12} sm={12} md={3} lg={3}>
-       <FlatButton label="Fetch" value="Fetch" primary={true} className="fetchButton" onTouchTap={this.validateAndFetch} />
+       <FlatButton label="Fetch" value="Fetch" primary={true} labelStyle={{textTransform: "none", fontSize: '1em'}}
+         className="fetchButton" onTouchTap={this.validateAndFetch} />
        </Col>
        </Row>
        </Grid>

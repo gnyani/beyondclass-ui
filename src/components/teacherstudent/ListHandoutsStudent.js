@@ -156,7 +156,8 @@ if(this.props.userrole==="student"){
      <br />
       </Col>
       <Col xs={6} sm={6} md={4} lg={2} className="NotesList">
-      <FlatButton type="submit" label="View" disabled={this.state.buttonDisabled} icon={<ActionViewArray color="white"/>} className="nextButton" onClick={this.loadHandouts} />
+      <FlatButton type="submit" label="View" labelStyle={{textTransform: "none", fontSize: '1em'}}
+        disabled={this.state.buttonDisabled} icon={<ActionViewArray color="white"/>} className="nextButton" onClick={this.loadHandouts} />
       <br />
       </Col>
       </Row>

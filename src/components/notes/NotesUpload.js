@@ -168,6 +168,7 @@ handleCommentChange = (event) => {
         label="Choose a PDF file"
         icon={<AttachFile />}
         primary={true}
+        labelStyle={{textTransform: "none", fontSize: '1em'}}
         style={styles.uploadButton}
         containerElement="label"
         >
@@ -199,7 +200,8 @@ handleCommentChange = (event) => {
           <Row around="xs">
           <Col xs={12} sm={12} md={10} lg={8}>
           <form className="Position" onSubmit={this._handleSubmit}>
-          <FlatButton type="submit" label="Upload File"  className="uploadbutton" icon={<FileFileUpload color="white"/>} disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
+          <FlatButton type="submit" label="Upload File"  className="uploadbutton"  labelStyle={{textTransform: "none", fontSize: '1em'}}
+            icon={<FileFileUpload color="white"/>} disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
           </form>
           <br /><br />
           <Divider />

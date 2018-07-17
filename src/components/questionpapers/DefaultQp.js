@@ -178,7 +178,8 @@ var buffer = []
        <br />
        </Col>
        <Col xs={12} sm={10} md={5} lg={5}>
-        <FlatButton label="Fetch" className="fetchButton" value="Fetch" primary={true} onTouchTap={this.validateAndFetch} />
+        <FlatButton label="Fetch" className="fetchButton" labelStyle={{textTransform: "none", fontSize: '1em'}}
+          value="Fetch" primary={true} onTouchTap={this.validateAndFetch} />
         </Col>
        </Row>
        </Grid>

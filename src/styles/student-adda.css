@@ -32,7 +32,7 @@ body .container{border: 2vmin solid rgb(123, 76, 16);background: rgba(20, 21, 18
 
 .announcements .deleteSpan{float:right; margin-right: 1.5em;}
 .input{ float: left !important;margin-left: 10%;width: 65% !important;border: 0px !important;padding: 5px 0px !important;margin-bottom: 20px !important;}
-.AnnounceButton{ box-shadow: 1px 2px 8px 0px grey;margin-right: 3% !important; border-radius: 1em !important;
+.AnnounceButton{ box-shadow: 1px 2px 8px 0px grey;margin-right: 3% !important; border-radius: 1em !important; text-transform: none !important;
                  background-color: #30b55b !important; color: rgb(255,255,255) !important;}
 .vertical-scroll{height:101vh;overflow-y: auto; width: 100%;overflow-x: hidden;}
 ::-webkit-scrollbar { width: 0.4em;border-radius: 0.4em;}

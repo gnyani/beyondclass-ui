@@ -23,7 +23,7 @@ var properties = require('../properties.json');
 
 const StayVisible = styled.div`
   position: relative;
-  margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
+  margin-left: ${(props) => (props.open) ? `${props.width}px` : ''};
   transition: margin .1s;
   ${Media.handheld`
     margin-left: 0px;
@@ -330,8 +330,8 @@ return(
      onKeyPress={this.Enter}
      />
 
-    <FlatButton label="Announce" type="submit"  disabled={this.state.buttonDisabled}
-     className="AnnounceButton" onTouchTap={this.handleSubmit}/>
+   <FlatButton label="Announce" type="submit"  labelStyle={{textTransform: "none", fontSize: '1em'}} disabled={this.state.buttonDisabled}
+     className="AnnounceButton" onTouchTap={this.handleSubmit} />
      <Dialog
            title="Are you sure you want to Delete this anouncement"
            modal={false}

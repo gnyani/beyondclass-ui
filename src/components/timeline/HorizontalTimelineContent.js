@@ -715,6 +715,7 @@ getLikedUsers(i){
         label="Attach an Image"
         style={styles.uploadButton}
         primary={true}
+        labelStyle={{textTransform: "none", fontSize: '1em'}}
         containerElement="label"
         icon={<AttachFile />}
         >
@@ -723,7 +724,8 @@ getLikedUsers(i){
         <br /><br />
        </Col>
         <Col xs={12} sm ={8} md={4} lg={4}>
-        <FlatButton  className="PostButton" type="submit" label="Post"  disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
+        <FlatButton  className="PostButton"  labelStyle={{textTransform: "none", fontSize: '1em'}}
+          type="submit" label="Post"  disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
         </Col>
         </Row>
         </Grid>
