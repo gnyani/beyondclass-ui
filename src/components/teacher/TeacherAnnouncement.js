@@ -4,8 +4,10 @@ import FlatButton from 'material-ui/FlatButton';
 import Pagination from 'material-ui-pagination';
 import {notify} from 'react-notify-toast';
 import IconButton from 'material-ui/IconButton';
-import Delete from 'material-ui/svg-icons/action/delete'
-import Dialog from 'material-ui/Dialog';
+import {DeleteOutline} from '../../styledcomponents/SvgIcons'
+import Dialog from 'material-ui/Dialog'
+import {List, ListItem} from 'material-ui/List'
+import Avatar from 'material-ui/Avatar'
 import {Grid,Row,Col} from 'react-flexbox-grid';
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
@@ -24,6 +26,7 @@ class TeacherAnnouncement extends Component{
       DeleteConfirm: false,
       currentIndex: '',
       announcementids: [],
+      profilePictures: [],
       buttonDisabled: false,
     }
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -85,23 +88,30 @@ class TeacherAnnouncement extends Component{
      }
   }
 
- list(buffer){
+ list = () => {
+   var buffer=[]
    if(this.state.announcements.length !== 0)
    {
+     buffer.push(<h2 className="heading" key={5}> Your announcements for class {this.props.class}</h2>)
    for (let i=0;i<this.state.announcements.length;i++){
      var date = new Date(parseInt(this.state.announcementIds[i].split('-')[6],10))
      buffer.push(
                    <Grid fluid key={i} className="noGutter">
                    <Row middle="xs">
-                   <Col xs={10} sm={10} md={10} lg={10}>
-                   <li >
-                   <p className="name"> <span className="fontStyle">{this.state.announcements[i]}</span>
-                   <span className="dateStyleTeacher">{date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()} </span>
-                   </p>
-                   </li>
+                   <Col xs>
+                     <ListItem
+                      className="listPrimaryText"
+                      leftAvatar={<Avatar src={this.state.profilePictures[i]} />}
+                      disabled={true}
+                      primaryText={this.state.announcements[i]}
+                      secondaryText={<p style={{fontWeight: 'lighter'}}>
+                        Posted on {date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}
+                      </p>}
+                      secondaryTextLines={2}
+                      />
                    </Col>
                    <Col xs={1} sm={1} md={1} lg={1}>
-                   <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><Delete color='#bbbbbb' viewBox='0 0 20 20'/></IconButton>
+                   <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><DeleteOutline color='red' /></IconButton>
                    </Col>
                    </Row>
                    </Grid>
@@ -110,7 +120,7 @@ class TeacherAnnouncement extends Component{
       }
  }
  else{
-   buffer.push(<p className="name" key={1}><span className="fontStyle">
+   buffer.push(<p className="name" key={1}><span className="paragraph">
                 You did not make any announcements to this class yet !!!
                </span></p>)
  }
@@ -129,12 +139,16 @@ class TeacherAnnouncement extends Component{
           }).then(response => {
             var newmessage = []
             var newannouncementIds =[]
+            var newProfilePictures = []
             for(let i=0;i<response.content.length;i++)
              { newmessage.push(response.content[i].message)
-               newannouncementIds.push(response.content[i].announcementid)}
+               newannouncementIds.push(response.content[i].announcementid)
+               newProfilePictures.push(response.content[i].posteduser.normalpicUrl || response.content[i].posteduser.googlepicUrl)
+             }
              this.setState({
                  announcementIds: newannouncementIds,
                  announcements: newmessage,
+                 profilePictures: newProfilePictures,
                  total: response.totalPages
            })
           }).catch(response => {
@@ -198,7 +212,6 @@ class TeacherAnnouncement extends Component{
   }
 
   render(){
-    var buffer=[];
     const actions = [
       <FlatButton
         label="Confirm"
@@ -215,17 +228,22 @@ class TeacherAnnouncement extends Component{
       <Row around="xs">
       <Col xs={12} sm={12} md={10} lg={10}>
       <div className="announcements">
-      <h2 className="heading"> Your Announcements for class {this.props.class}</h2>
-      <div  className="container page">
-         <ul style={{color:  '#cccccc'}}> {this.list(buffer)} </ul>
+      <List>
+              {this.list()}
+      </List>
        </div>
        <br />
-       <Pagination
-       total = { this.state.total }
-       current = { this.state.number }
-       display = { this.state.display }
-       onChange = { this.handlePageChange}
-       />
+       <Grid fluid>
+        <Row center="xs">
+          <Pagination
+          total = { this.state.total }
+          current = { this.state.number }
+          display = { this.state.display }
+          onChange = { this.handlePageChange}
+          />
+        </Row>
+       </Grid>
+
        <TextField
         value = {this.state.message}
         onChange = {this.handleMessageChange}
@@ -235,7 +253,9 @@ class TeacherAnnouncement extends Component{
         />
 
        <FlatButton label="Announce" type="submit"  disabled={this.state.buttonDisabled}
+         labelStyle = {{textTransform: 'none', fontSize: '1em'}}
         className="AnnounceButton" onTouchTap={this.handleSubmit}/>
+
 
         <Dialog
               title="Are you sure you want to Delte this anouncement"
@@ -247,7 +267,6 @@ class TeacherAnnouncement extends Component{
               onRequestClose={this.handleClose}
             >
         </Dialog>
-      </div>
       </Col>
       </Row>
       </Grid>

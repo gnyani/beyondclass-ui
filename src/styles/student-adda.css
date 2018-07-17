@@ -159,7 +159,7 @@ width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 
 .renderCodingAssignment .positionSummary{width: 70%;margin-left: 15%}
 .renderCodingAssignment .summaryParagraph{text-align: left;font-family: Helvetica Neue,Helvetica,Arial,sans-serif; }
 .SavedSnippets .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: lighter;
-               font-size: 3vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
+               font-size: 3vmin;letter-spacing: 0.1vmin;color: '#30b55b'}
 .ListHandouts .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: normal;
                               font-size: 4vmin;letter-spacing: 0.1vmin;color: #39424d}
 .ListHandouts .iframe{width:60%;height: 350px;}

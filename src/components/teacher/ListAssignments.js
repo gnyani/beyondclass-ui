@@ -1,12 +1,11 @@
 import React,{Component} from 'react'
 import {notify} from 'react-notify-toast'
 import {Grid,Row,Col} from 'react-flexbox-grid'
-import Delete from 'material-ui/svg-icons/action/delete'
+import {DeleteOutline} from '../../styledcomponents/SvgIcons'
 import View from 'material-ui/svg-icons/action/view-list'
 import ViewReport from 'material-ui/svg-icons/content/content-paste'
 import RightIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
 import {Link} from 'react-router-dom'
-import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 import { withRouter } from 'react-router'
@@ -234,20 +233,27 @@ deleteAssignment(){
 decideSubject = (i) => {
   var buffer = []
   if(this.state.savedAssignmentTypes[i] === 'THEORY')
-  buffer.push(<p key={i}>{'Subject: ' +this.state.savedAssignmentSubjects[i]}</p>)
+  buffer.push(<p key={i}>{<b>'Subject: '</b> +this.state.savedAssignmentSubjects[i]}</p>)
   return buffer
 }
 
 decideAction = (i) => {
   var buffer = []
   if(this.state.savedAssignmentTypes[i] === 'THEORY')
-  buffer.push(<RaisedButton key={i} label="Continue Working" primary={true} icon={<RightIcon />}
+  buffer.push(<FlatButton key={i} label="Continue Working"
+  labelStyle={{textTransform: 'none', fontSize: '1em'}}
+  style={{verticalAlign: 'middle',border: "0.08em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+  icon={<RightIcon />}
   containerElement={<Link to={'/teacher/create/'+this.props.class+'/saved/'+this.state.savedAssignmentIds[i]}/>} />)
   else if(this.state.savedAssignmentTypes[i] === 'OBJECTIVE')
-  buffer.push(<RaisedButton key={i} label="Continue Working" primary={true} icon={<RightIcon />}
+  buffer.push(<FlatButton key={i} label="Continue Working" labelStyle={{textTransform: 'none', fontSize: '1em'}}
+  style={{verticalAlign: 'middle',border: "0.08em solid #30b55b",color: "#30b55b",borderRadius: '1vmax', textTransform: 'none'}}
+  icon={<RightIcon />}
   containerElement={<Link to={'/teacher/createobjectiveassignment/'+this.props.class+'/saved/'+this.state.savedAssignmentIds[i]}/>} />)
   else {
-    buffer.push(<RaisedButton  key={i} label="Continue Working" primary={true} icon={<RightIcon />}
+    buffer.push(<FlatButton  key={i} label="Continue Working" labelStyle={{textTransform: 'none',fontSize: '1em'}}
+    style={{verticalAlign: 'middle',border: "0.08em solid #30b55b",color: "#30b55b",borderRadius: '1vmax', textTransform: 'none'}}
+    icon={<RightIcon />}
    containerElement={<Link to={'/teacher/createpa/'+this.props.class+'/saved/'+this.state.savedAssignmentIds[i]}/>} />)
   }
   return buffer
@@ -267,7 +273,7 @@ listSavedAssignments = () => {
   var buffer = []
   if(this.state.savedAssignmentIds.length !== 0)
   {
-    buffer.push(<p className="paragraph" key={this.state.savedAssignmentIds.length+1}>Your Draft Assigments for class {this.props.class} </p>)
+    buffer.push(<p className="paragraph" key={this.state.savedAssignmentIds.length+1}>Your draft assigments for class {this.props.class} </p>)
     for(let i=0; i<this.state.savedAssignmentIds.length; i++){
       var createdDate = new Date(this.state.savedCreatedDates[i])
       buffer.push(
@@ -282,11 +288,11 @@ listSavedAssignments = () => {
                subtitle={"Saved on "+createdDate.getDate()+"-"+(createdDate.getMonth()+1)+"-"+createdDate.getFullYear()+" at "+createdDate.getHours()+":"+createdDate.getMinutes()}
                avatar={this.state.propicUrls[i]}
                showExpandableButton={true}
-               closeIcon={<Delete color="red" viewBox="0 0 20 20"/>}
-               openIcon={<Delete color="red" viewBox="0 0 20 20"/>}
+               closeIcon={<DeleteOutline color="red" />}
+               openIcon={<DeleteOutline color="red" />}
              />
              <CardText style={{textAlign:"center"}}>
-             <p>{'AssignmentType: ' +this.state.savedAssignmentTypes[i]}</p>
+             <p><b>Assignment Type: </b> {this.state.savedAssignmentTypes[i]}</p>
              <br />
              {this.decideSubject(i)}
              </CardText>
@@ -369,7 +375,7 @@ listAssignments(){
   var buffer = []
 if(this.state.assignmentIds.length !== 0)
 {
-  buffer.push(<p className="paragraph" key={this.state.assignmentIds.length+1}>Your Assigments for class {this.props.class} </p>)
+  buffer.push(<p className="paragraph" key={this.state.assignmentIds.length+1}>Your assigments for class {this.props.class} </p>)
   for(let i=0; i<this.state.assignmentIds.length; i++){
     var lastDate = new Date(this.state.lastDates[i])
     var createdDate = new Date(this.state.createdDates[i])
@@ -387,13 +393,13 @@ if(this.state.assignmentIds.length !== 0)
              subtitle={"Created on "+createdDate.getDate()+"-"+(createdDate.getMonth()+1)+"-"+createdDate.getFullYear()+" at "+createdDate.getHours()+":"+createdDate.getMinutes()}
              avatar={this.state.propicUrls[i]}
              showExpandableButton={true}
-             closeIcon={<Edit color="red" viewBox="0 0 22 22"/>}
-             openIcon={<Edit color="red" viewBox="0 0 22 22"/>}
+             closeIcon={<Edit  />}
+             openIcon={<Edit  />}
            />
 
            <CardTitle style={{textAlign:"center"}} title={this.state.subjects[i]} subtitle={"last date :"+(lastDate.getDate())+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()+" at 11:59 PM"}  />
            <CardText style={{textAlign:"center"}}>
-           <p>{'AssignmentType: ' +this.state.assignmentType[i]}</p>
+           <p><b>AssignmentType: </b> {this.state.assignmentType[i]}</p>
            <br />
            <p>{this.state.additionalComments[i]}</p>
            </CardText>
@@ -401,12 +407,18 @@ if(this.state.assignmentIds.length !== 0)
           <Row center="xs" middle="xs">
           <Col xs>
            <CardActions>
-            <RaisedButton label="View Questions" primary={true} icon={<View />} onClick={this.handleExpand.bind(this,i)}/>
+            <FlatButton label="View Questions"
+              labelStyle={{textTransform: 'none',fontSize: '1em'}}
+              style={{verticalAlign: 'middle',border: "0.08em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+              icon={<View />} onClick={this.handleExpand.bind(this,i)}/>
             </CardActions>
           </Col>
           <Col xs>
             <CardActions>
-              <RaisedButton label="View Reports" primary={true} icon={<ViewReport />}
+              <FlatButton label="View Reports"
+                labelStyle={{textTransform: 'none',fontSize: '1em'}}
+                style={{verticalAlign: 'middle',backgroundColor: "#30b55b", color: 'white'}}
+                icon={<ViewReport />}
                containerElement={<Link to={'/teacher/reports/view/'+this.state.assignmentIds[i]}/>} />
            </CardActions>
            </Col>
@@ -421,9 +433,9 @@ if(this.state.assignmentIds.length !== 0)
                     </IconButton>}
                 >
                 <form method="get" action={src} id="form_download_id">
-                  <MenuItem primaryText="Download Questions" leftIcon={<Download color="blue"/>} onClick={this.downloadQuestions.bind(this)}/>
+                  <MenuItem primaryText="Download Questions" leftIcon={<Download />} onClick={this.downloadQuestions.bind(this)}/>
                 </form>
-                  <MenuItem primaryText="Duplicate" leftIcon={<Copy color="red" />} onClick={this.selectBatch.bind(this,i)}/>
+                  <MenuItem primaryText="Duplicate" leftIcon={<Copy  />} onClick={this.selectBatch.bind(this,i)}/>
                 </IconMenu>
 
              </CardActions>
@@ -443,7 +455,7 @@ if(this.state.assignmentIds.length !== 0)
   )
 }
 }else if(this.state.isDataLoaded){
-  buffer.push(<p className="paragraph" key={1}>You did not give any Assigments to this class yet </p>)
+  buffer.push(<p className="paragraph" key={1}>You did not give any Assigments to this class yet !!!</p>)
 }else{
   buffer.push(<Grid fluid className="RefreshIndicator" key={1}>
   <Row center="xs">

@@ -85,7 +85,7 @@ else{
        </ToolbarGroup>
        <ToolbarGroup>
        <IconButton  tooltip="Report Issue" containerElement={<Link to="/report/issue" />} >
-         <BugOutline color="black" />
+         <BugOutline color="white" />
        </IconButton>
        <div style={{position: 'relative', right: '1.5em'}}>
          <IconButton  tooltip="Logout"  onTouchTap={props.logout}>

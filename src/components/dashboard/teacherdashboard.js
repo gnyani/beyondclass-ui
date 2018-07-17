@@ -98,12 +98,12 @@ class TeacherDashboard extends Component{
             <Badge
              badgeContent={this.props.studentCountList[batches]}
              primary={true}
-             badgeStyle={{ width: "24px", height: "24px"}}
+             badgeStyle={{ width: "24px", height: "24px", backgroundColor: '#30b55b'}}
              style={{
                padding: "0px 24px 12px 12px"
              }}
            >
-             <People color={"white"} viewBox="0 0 30 30"/>
+             <People color='#39424d' viewBox="0 0 30 30"/>
            </Badge>}
           onClick={this.props.handleMobileToggle}
           className="drawerFont"
@@ -135,7 +135,8 @@ class TeacherDashboard extends Component{
     return(
       <div>
         {this.menuItems(this.props.batches)}
-        <FlatButton type="button" label="Add Batch" fullWidth={true}  icon={<Add color={"white"}/>}
+        <FlatButton type="button" label="Add Batch" fullWidth={true}
+          icon={<Add color="#30b55b"/>} labelStyle={{textTransform: 'none'}}
           className="drawerFont" onClick={this.openDialog}/>
           <Dialog
                 title="Select batch to add"
