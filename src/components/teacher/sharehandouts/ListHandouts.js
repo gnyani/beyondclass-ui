@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import {notify} from 'react-notify-toast';
-import {lightBlue300} from 'material-ui/styles/colors';
 import {ActionViewArray,FileFileDownload,NavigationFullscreen,NavigationClose} from '../../../styledcomponents/SvgIcons.js'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -11,7 +10,6 @@ import { withRouter } from 'react-router'
 import {redA700} from 'material-ui/styles/colors'
 import PropTypes from 'prop-types'
 import Dialog from 'material-ui/Dialog'
-import RaisedButton from 'material-ui/RaisedButton'
 
 var properties = require('../../properties.json');
 
@@ -80,12 +78,12 @@ class ListHandouts extends Component{
                 <Row center="xs">
                 <Col xs>
                   <form method="post" action={src+"/download"}>
-                  <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color={lightBlue300} />}/>
+                  <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color="#30b55b"/>}/>
                   </form>
                  </Col>
                 <Col xs>
                   <form method="get" action={src}>
-                  <FlatButton type="submit" label="View" fullWidth={true} icon={<NavigationFullscreen color={lightBlue300} />}/>
+                  <FlatButton type="submit" label="View" fullWidth={true} icon={<NavigationFullscreen color="#30b55b" />}/>
                   </form>
                  </Col>
                   </Row>
@@ -202,7 +200,9 @@ if(this.props.userrole==="teacher"){
      <Grid fluid className="nogutter">
      <br />
      <Row center="xs">
-     <RaisedButton label="View Handouts" primary={true} icon={<ActionViewArray />} onClick={this.loadHandouts}/>
+     <FlatButton label="View Handouts" labelStyle={{textTransform: 'none'}}
+       style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+       primary={true} icon={<ActionViewArray />} onClick={this.loadHandouts}/>
      </Row>
      <Row around="xs">
      {this.displayNotes()}

@@ -7,19 +7,23 @@ import IconButton from 'material-ui/IconButton';
 import Pagination from 'material-ui-pagination';
 import Dialog from 'material-ui/Dialog';
 import{Row,Grid,Col} from 'react-flexbox-grid';
+import {ChatOutline} from '../../styledcomponents/SvgIcons.js'
+import {List, ListItem} from 'material-ui/List'
+import Divider from 'material-ui/Divider'
 import '../../styles/student-adda.css';
 import UnauthorizedPage from '../UnauthorizedPage.js'
 import {Media} from '../utils/Media'
 import { withRouter } from 'react-router'
+import Avatar from 'material-ui/Avatar'
 import PropTypes from 'prop-types'
-import Delete from 'material-ui/svg-icons/action/delete'
+import {DeleteOutline} from '../../styledcomponents/SvgIcons'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 
 var properties = require('../properties.json');
 
 const StayVisible = styled.div`
   position: relative;
-  margin-left: ${(props) => (props.open) ? `${props.width}px` : 'none'};
+  margin-left: ${(props) => (props.open) ? `${props.width}px` : ''};
   transition: margin .1s;
   ${Media.handheld`
     margin-left: 0px;
@@ -37,6 +41,7 @@ class AnouncementsBoard extends Component{
       response:'',
       useremails: [],
       announcementIds: [],
+      profilePictures: [],
       DeleteConfirm: false,
       total: 3,
       display: 7,
@@ -45,7 +50,6 @@ class AnouncementsBoard extends Component{
       buttonDisabled: false,
       isDataLoaded: false,
     }
-    this.list = this.list.bind(this);
     this.handleClose = this.handleClose.bind(this)
     this.populateData = this.populateData.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -87,7 +91,7 @@ handleSubmit(){
          number : 1,
          message: '',
        },function(){this.componentDidMount()})
-       notify.show("Anouncement uploaded successfully","success")
+       notify.show("Announcement posted successfully","success")
      }).catch(response => {
      notify.show("Please login before posting an announcement","error");
      this.context.router.history.push('/');
@@ -101,71 +105,84 @@ handleDialogOpen(i){
   })
 }
 
-list(buffer){
-  var i=0;
-if(this.state.isDataLoaded)
-  {
-  if(this.state.users.length === 0){
-    buffer.push(<p className="name" key={1}><span className="messageStyle">
-                 You are all caught up,You Don't Have Any Announcements Yet !!!
-                </span></p>)
+listItems = () =>{
+  var buffer = []
+  if(this.state.isDataLoaded)
+    {
+    if(this.state.users.length === 0){
+      buffer.push(<h4>You don't have any announcements yet !!! </h4>)
+    }else{
+      for (var i=0;i<this.state.users.length;i++){
+        var date = new Date(parseInt(this.state.announcementIds[i].split('-')[7],10))
+      if(this.state.useremails[i] === this.props.loggedinuser)
+      {
+      buffer.push( <Grid fluid key={i}  className="nogutter">
+                   <Row around="xs">
+                   <Col xs>
+                     <ListItem
+                      className="listPrimaryText"
+                      disabled={true}
+                      primaryText={this.state.users[i]}
+                      leftAvatar={<Avatar src={this.state.profilePictures[i]} />}
+                      rightIconButton={
+                        <IconButton
+                        touch={true}
+                        onClick = {this.handleDialogOpen.bind(this,i)}
+                        >
+                        <DeleteOutline color='red' />
+                        </IconButton>}
+                      secondaryText={<p style={{fontWeight: 'lighter'}}>
+                        <span style={{color: "black"}}>{this.state.messages[i]}</span><br />
+                        Posted On {date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}
+                      </p>}
+                      secondaryTextLines={2}
+                      />
+                    <Divider inset={true} />
+                    </Col>
+                  </Row>
+                  </Grid>
+                 )
+      }
+    else{
+      buffer.push(<Grid fluid key={i} className="nogutter">
+                   <Row around="xs">
+                   <Col xs>
+                     <ListItem
+                      className="listPrimaryText"
+                      leftAvatar={<Avatar src={this.state.profilePictures[i]} />}
+                      disabled={true}
+                      primaryText={this.state.users[i]}
+                      secondaryText={<p style={{fontWeight: 'lighter'}}>
+                        <span style={{color: "black"}}>{this.state.messages[i]}</span><br />
+                        Posted on {date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}
+                      </p>}
+                      secondaryTextLines={2}
+                      />
+                    <Divider inset={true} />
+                    </Col>
+                    </Row>
+                    </Grid>
+                 )
+    }
+    }
+    }
+  }else{
+    buffer.push(<Grid fluid className="RefreshIndicator" key={1}>
+    <Row center="xs">
+    <Col xs>
+      <RefreshIndicator
+         size={50}
+         left={45}
+         top={0}
+         loadingColor="#FF9800"
+         status="loading"
+         className="refresh"
+        />
+    </Col>
+    </Row>
+    </Grid>)
   }
-  else{
-  for (i=0;i<this.state.users.length;i++){
-    var date = new Date(parseInt(this.state.announcementIds[i].split('-')[7],10))
-  if(this.state.useremails[i] === this.props.loggedinuser)
-  {
-  buffer.push( <Grid fluid key={i}  className="nogutter">
-               <Row middle="xs">
-               <Col xs={10} sm={10} md={11} lg={11}>
-               <li >
-                <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span>
-                <span className="messageStyle">{this.state.messages[i]}</span>
-                <span className="dateStyle">{" "+date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}</span>
-                </p></li>
-                </Col>
-               <Col xs={2} md={1} sm={2} lg={1}>
-                <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><Delete color='#bbbbbb' viewBox='0 0 20 20'/></IconButton>
-              </Col>
-              </Row>
-              </Grid>
-             )
-  }
-else{
-  buffer.push(<Grid fluid key={i} className="nogutter">
-               <Row >
-               <Col xs={10} sm={10} md={11} lg={11}>
-               <li>
-                <p className="name"> <span className="fontStyle">{this.state.users[i]}: </span>
-                 <span className="messageStyle">{this.state.messages[i]}</span>
-                 <span className="dateStyle">{" "+date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}</span>
-                 </p>
-                </li>
-                </Col>
-                </Row>
-                </Grid>
-             )
-}
-}
-}
-}
-else{
-  buffer.push(<Grid fluid className="RefreshIndicator" key={1}>
-  <Row center="xs">
-  <Col xs>
-    <RefreshIndicator
-       size={50}
-       left={45}
-       top={0}
-       loadingColor="#FF9800"
-       status="loading"
-       className="refresh"
-      />
-  </Col>
-  </Row>
-  </Grid>)
-}
-  return buffer
+  return buffer;
 }
 
 populateData(pageNumber){
@@ -183,18 +200,21 @@ populateData(pageNumber){
           var newuser = []
           var newuseremails = []
           var newannouncementIds = []
+          var newProfilePictures = []
           for(let i=0;i<response.content.length;i++)
            {
              newmessage.push(response.content[i].message)
              newuser.push(response.content[i].username)
              newuseremails.push(response.content[i].posteduser.email)
              newannouncementIds.push(response.content[i].announcementid)
+             newProfilePictures.push(response.content[i].posteduser.normalpicUrl || response.content[i].posteduser.googlepicUrl)
           }
            this.setState({
                users: newuser,
                messages: newmessage,
                useremails: newuseremails,
                announcementIds : newannouncementIds,
+               profilePictures: newProfilePictures,
                total: response.totalPages,
                isDataLoaded: true,
          })
@@ -253,7 +273,6 @@ DeleteAnnouncement(){
       this.handleClose()
 }
 render(){
-var buffer=[];
 const actions = [
   <FlatButton
     label="Confirm"
@@ -275,21 +294,21 @@ return(
 <div className="announcements">
     <Grid fluid>
     <Row  center="xs" middle="xs">
-    <Col  xs={2} sm={2} md={2} lg={2}>
-    <img  className="image" src={require('../../styledcomponents/images/announcements.jpeg')} alt=""/>
+    <Col  xs={2} sm={2} md={2} lg={1}>
+      <ChatOutline style={{height:'3em', width: '3em', marginTop: '0.5em', marginLeft: '1em', color:'#30b55b'}}/>
     </Col>
-    <Col xs={8} sm={8} md={8} lg={6}>
+    <Col xs={8} sm={8} md={8} lg={5}>
     <h2 className="heading">Announcement Board</h2>
     </Col>
     </Row>
     </Grid>
 
     <Grid fluid className="nogutter">
-    <Row center="xs" middle="xs">
-    <Col xs={12} sm={12} md={10} lg={11}>
-   <div  className="container" >
-      <ul style={{color:  '#cccccc'}}> {this.list(buffer)} </ul>
-    </div>
+    <Row center="xs" >
+    <Col xs={12} sm={12} md={10} lg={8}>
+    <List>
+          {this.listItems()}
+    </List>
     </Col>
     </Row>
     </Grid>
@@ -306,13 +325,13 @@ return(
     <TextField
      value = {this.state.message}
      onChange = {this.handleChange}
-     hintText = "Give an anouncement"
+     hintText = "Give an announcement"
      className="input"
      onKeyPress={this.Enter}
      />
 
-    <FlatButton label="Announce" type="submit"  disabled={this.state.buttonDisabled}
-     className="AnnounceButton" onTouchTap={this.handleSubmit}/>
+   <FlatButton label="Announce" type="submit"  labelStyle={{textTransform: "none", fontSize: '1em'}} disabled={this.state.buttonDisabled}
+     className="AnnounceButton" onTouchTap={this.handleSubmit} />
      <Dialog
            title="Are you sure you want to Delete this anouncement"
            modal={false}

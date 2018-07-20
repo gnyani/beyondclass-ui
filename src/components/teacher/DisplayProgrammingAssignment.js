@@ -2,7 +2,7 @@ import React,{Component} from 'react'
 import {Card, CardTitle, CardText,CardActions} from 'material-ui/Card'
 import RichTextEditorReadOnly from '../teacher/RichTextEditorReadOnly'
 import {Grid,Row,Col} from 'react-flexbox-grid'
-import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import View from 'material-ui/svg-icons/action/view-list'
 import { EditorState,convertFromRaw } from 'draft-js'
 import AceEditor from 'react-ace'
@@ -89,7 +89,9 @@ renderRows = () => {
      <Grid fluid>
      <Row center="xs">
      <Col xs>
-      <RaisedButton label="View Code" primary={true} icon={<View />} onClick={this.handleExpand.bind(this)}/>
+      <FlatButton label="View Code" labelStyle={{textTransform: 'none'}}
+        style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+         icon={<View />} onClick={this.handleExpand.bind(this)}/>
       </Col>
       </Row>
       </Grid>

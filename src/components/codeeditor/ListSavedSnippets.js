@@ -4,12 +4,11 @@ import {Grid,Row,Col} from 'react-flexbox-grid'
 import {notify} from 'react-notify-toast'
 import {Card, CardHeader, CardText, CardActions} from 'material-ui/Card'
 import Chip from 'material-ui/Chip'
-import RaisedButton from 'material-ui/RaisedButton'
 import View from 'material-ui/svg-icons/action/view-list'
 import FlatButton from 'material-ui/FlatButton'
 import AceEditor from 'react-ace'
 import Dialog from 'material-ui/Dialog'
-import Delete from 'material-ui/svg-icons/action/delete'
+import {DeleteOutline} from '../../styledcomponents/SvgIcons'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
@@ -35,7 +34,7 @@ constructor(){
     expanded: [],
     confirmDelete: false,
     deleteid: '',
-    responseStatus : ''
+    responseStatus : '',
   }
 }
 
@@ -122,6 +121,22 @@ deleteCodeSnippet = () => {
     this.handleClose()
 }
 
+getProfilePic = (response) =>{
+  var buffer = ""
+  if(response.postedUser !== null){
+    buffer = response.postedUser.normalpicUrl || response.postedUser.googlepicUrl
+  }
+  return buffer
+}
+
+displayComments = (response) => {
+  var buffer = []
+  if(response.description){
+  buffer.push( <p><b> Comments: </b>{response.description}</p>)
+  }
+  return buffer
+}
+
 renderSnippets = () => {
   var buffer = []
   var response = this.state.response
@@ -136,16 +151,17 @@ renderSnippets = () => {
          expanded={this.state.expanded[i]}>
            <CardHeader
              title={'Language '+response[i].language}
+             avatar={this.getProfilePic(response[i])}
              subtitle={'Saved on '+date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}
              titleStyle={{fontStyle: "bold", fontSize: "2.5vmin", fontWeight: "5",textTransform: 'capitalize'}}
              showExpandableButton={true}
-             openIcon={<Delete color="red"/>}
-             closeIcon={<Delete color="red"/>}
+             openIcon={<DeleteOutline color="red"/>}
+             closeIcon={<DeleteOutline color="red"/>}
            />
            <CardText>
            <Grid fluid>
             <Row center="xs">
-           <p><b> Comments: </b>{response[i].description}</p>
+           {this.displayComments(response[i])}
             </Row>
            <Row center="xs">
                 <p><b>Tags</b></p>
@@ -159,7 +175,8 @@ renderSnippets = () => {
            <Grid fluid>
            <Row center="xs">
            <Col xs>
-            <RaisedButton label="View Code" primary={true} icon={<View />} onClick={this.handleExpand.bind(this,i)}/>
+            <FlatButton label="View Code" style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+               icon={<View />} onClick={this.handleExpand.bind(this,i)}/>
             </Col>
             </Row>
             </Grid>
@@ -220,7 +237,7 @@ handleClose = () => {
       <div className="SavedSnippets">
       <br />
       <Grid fluid>
-      <Row center="xs">
+      <Row around="xs">
       <Col xs={11} sm={11} md={8} lg={8}>
       {this.renderSnippets()}
       </Col>

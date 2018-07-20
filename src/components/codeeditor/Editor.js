@@ -340,15 +340,19 @@ buffer.push(
   label="Test Against Custom Input"
   checked={this.state.checked}
   onCheck={this.updateCheck}
+  labelStyle={{color: "#30b55b"}}
   style={{maxWidth: 250 }}
 />
       {this.showInputTextArea()}
 </Col>
 <Col xs={6} sm={6} md={3} lg={3}>
-<RaisedButton label = "Save" primary={true}  icon={<Save />} onClick={this.openSaveDialog}/>
+<FlatButton label = "Save" primary={true} labelStyle={{color: "white", textTransform: "none", fontSize: '1em'}}
+  style={{backgroundColor: '#30b55b'}}
+  icon={<Save  color="white"/>} onClick={this.openSaveDialog}/>
 </Col>
 <Col xs={6} sm={6} md={3} lg={3}>
-<RaisedButton label = "Compile & Run" primary={true} disabled={this.state.buttonDisabled} icon={<Compile />} onClick={this.submitRequest}/>
+<FlatButton label = "Compile & Run" style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+  disabled={this.state.buttonDisabled} icon={<Compile />} onClick={this.submitRequest}/>
 </Col>
 </Row>
 </Grid>
@@ -372,7 +376,8 @@ else if(this.props.state==="Assignment"){
     <Grid fluid className="nogutter">
     <Row center="xs" top="xs">
     <Col xs>
-    <RaisedButton label="Compile & Run" primary = {true}  icon={<Compile />} disabled={this.state.buttonDisabled} onClick={this.compileAndRun}/>
+    <RaisedButton label="Compile & Run"  icon={<Compile />} style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+      disabled={this.state.buttonDisabled} onClick={this.compileAndRun}/>
     </Col>
     </Row>
     </Grid>

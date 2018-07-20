@@ -4,7 +4,6 @@ import Divider from 'material-ui/Divider';
 import SelectField from 'material-ui/SelectField';
 import {notify} from 'react-notify-toast';
 import MenuItem from 'material-ui/MenuItem';
-import {lightBlue300} from 'material-ui/styles/colors';
 import {Card, CardActions, CardHeader, CardMedia} from 'material-ui/Card';
 import {FileFileDownload,NavigationFullscreen} from '../../styledcomponents/SvgIcons.js';
 import '../../styles/student-adda.css';
@@ -64,7 +63,7 @@ fetchSyllabus(){
          notify.show("Retrieval Successful","success");
           return response.text();
        }else if(response.status === 404){
-         notify.show("No records found for this subject","error")
+         notify.show("No records found for this subject","warning")
        }
        else{
          let myColor = { background: '#0E1717', text: "#FFFFFF",zDepth:'20'};
@@ -109,12 +108,12 @@ displaySyllabus = () => {
                 <Row between="xs">
                 <Col xs>
                 <form method="post" action={this.state.response+"/download"}>
-                <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color={lightBlue300} />}/>
+                <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color='#30b55b' />}/>
                 </form>
                 </Col>
                 <Col xs>
                 <form method="post" action={this.state.response}>
-                <FlatButton type="submit" label="Full View" fullWidth={true}  icon={<NavigationFullscreen color={lightBlue300} />}/>
+                <FlatButton type="submit" label="Full View" fullWidth={true}  icon={<NavigationFullscreen color='#30b55b' />}/>
                 </form>
                 </Col>
                 </Row>
@@ -164,7 +163,8 @@ handleChange = (event, index, branch) => this.setState({branch});
        <Grid fluid>
        <Row around="xs" middle="xs">
        <Col  xs={12} sm={12} md={3} lg={3}>
-       <FlatButton label="Fetch" value="Fetch" primary={true} className="fetchButton" onTouchTap={this.validateAndFetch} />
+       <FlatButton label="Fetch" value="Fetch" primary={true} labelStyle={{textTransform: "none", fontSize: '1em'}}
+         className="fetchButton" onTouchTap={this.validateAndFetch} />
        </Col>
        </Row>
        </Grid>

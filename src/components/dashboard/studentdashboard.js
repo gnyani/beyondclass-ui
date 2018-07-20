@@ -1,11 +1,11 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
-import {blue500, red500} from 'material-ui/styles/colors';
 import MenuItem from 'material-ui/MenuItem';
 import Submissions from 'material-ui/svg-icons/action/assessment'
 import Code from 'material-ui/svg-icons/action/code'
+import School from 'material-ui/svg-icons/social/school.js'
 import {ImageCollectionsBookmark,ActionBook,AvLibraryBooks,
-       ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool,DeveloperBoard,QuestionAnswer} from '../../styledcomponents/SvgIcons.js'
+       ActionSpeakerNotes,AvMovie,ActionTimeline,SocialSchool,QuestionAnswer} from '../../styledcomponents/SvgIcons.js'
 
 
 class StudentDashboard extends Component{
@@ -13,7 +13,7 @@ class StudentDashboard extends Component{
 constructor(){
   super();
   this.state={
-    selected: '',
+    selected: 'announcements',
   }
   this.isActive = this.isActive.bind(this)
 }
@@ -25,110 +25,103 @@ onChangeSelected(value){
 isActive(value){
     return (value === this.state.selected)?'Active':'';
 }
+
+getColor = (view) => {
+  var buffer
+  if(view === "Active" )
+   buffer = '#30b55b'
+
+  return buffer
+}
   render(){
     return(
       <div>
-      <div className={this.isActive('submissions')}>
         <Link to='/submissions'  width={this.props.width} style={{ textDecoration: 'none'}} onClick={this.onChangeSelected.bind(this,"submissions")} >
           <MenuItem
-          primaryText={'Your Submissions'}
-          leftIcon={<Submissions color={red500}/>}
+          className={this.isActive('submissions')}
+          primaryText={'Submissions'}
+          leftIcon={<Submissions color={this.getColor(this.isActive('submissions'))}/>}
           onClick={this.props.handleMobileToggle}
-          className="drawerFont"
           />
-        </Link></div>
-      <div className={this.isActive('announcements')}>
+        </Link>
         <Link to='/announcements'  width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"announcements")} >
           <MenuItem
-          primaryText={'AnouncementsBoard'}
-          leftIcon={<ActionSpeakerNotes color={blue500}/>}
+          className={this.isActive('announcements')}
+          primaryText={'Announcements'}
+          leftIcon={<ActionSpeakerNotes color={this.getColor(this.isActive('announcements'))}/>}
           onClick={this.props.handleMobileToggle}
-          className="drawerFont"
           />
-        </Link></div>
-      <div className={this.isActive('TeacherStudentSpace')}>
+        </Link>
         <Link to='/teacherstudentspace'  width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"TeacherStudentSpace")} >
           <MenuItem
-          primaryText={'TeacherStudentSpace'}
-          leftIcon={<DeveloperBoard color={red500}/>}
+          className={this.isActive('TeacherStudentSpace')}
+          primaryText={'Academics'}
+          leftIcon={<School color={this.getColor(this.isActive('TeacherStudentSpace'))}/>}
           onClick={this.props.handleMobileToggle}
-          className="drawerFont"
           />
-        </Link></div>
-      <div className={this.isActive('timeline')}>
+        </Link>
           <Link to='/timeline' width={this.props.width}  style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"timeline")}>
             <MenuItem
+            className={this.isActive('timeline')}
             primaryText={'Timeline'}
-            leftIcon={<ActionTimeline color={blue500}/>}
+            leftIcon={<ActionTimeline color={this.getColor(this.isActive('timeline'))}/>}
             onClick={this.props.handleMobileToggle}
-            className="drawerFont"
             />
           </Link>
-          </div>
-      <div  className={this.isActive('questionpaper')}>
       <Link to='/questionpaper' width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"questionpaper")}>
           <MenuItem
           primaryText={'QuestionPaper'}
-          leftIcon={<ActionBook color={red500}/>}
+          leftIcon={<ActionBook color={this.getColor(this.isActive('questionpaper'))}/>}
+          className={this.isActive('questionpaper')}
           onClick={this.props.handleMobileToggle}
-          className="drawerFont"
           />
         </Link>
-      </div>
-      <div  className={this.isActive('syllabus')}>
       <Link to='/syllabus' width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"syllabus")}>
           <MenuItem primaryText={'Syllabus'}
-            leftIcon={<AvLibraryBooks color={blue500} />}
+            leftIcon={<AvLibraryBooks  color={this.getColor(this.isActive('syllabus'))}/>}
+            className={this.isActive('syllabus')}
             onClick={this.props.handleMobileToggle}
-            className="drawerFont"
           />
           </Link>
-          </div>
-      <div  className={this.isActive('notes')}>
       <Link to='/notes' width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"notes")}>
               <MenuItem primaryText={'Share Notes'}
-                leftIcon={<ImageCollectionsBookmark color={red500} />}
+                leftIcon={<ImageCollectionsBookmark  color={this.getColor(this.isActive('notes'))}/>}
                 onClick={this.props.handleMobileToggle}
-                className="drawerFont"
+                className={this.isActive('notes')}
               />
         </Link>
-      </div>
-      <div className={this.isActive('codeeditor')}>
         <Link to='/codeeditor'  width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"codeeditor")} >
           <MenuItem
           primaryText={'Code Editor'}
-          leftIcon={<Code color={blue500}/>}
+          leftIcon={<Code color={this.getColor(this.isActive('codeeditor'))}/>}
+          className={this.isActive('codeeditor')}
           onClick={this.props.handleMobileToggle}
-          className="drawerFont"
           />
-        </Link></div>
-        {/*    <div className={this.isActive('entertainment')}>
-                    <Link to="/entertainment" width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"entertainment")}>
+        </Link>
+        {/*
+                <Link to="/entertainment" width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"entertainment")}>
                       <MenuItem primaryText={'Entertainment'}
                         leftIcon={<AvMovie color={blue500} />}
                         onClick={this.props.handleMobileToggle}
+                        className={this.isActive('entertainment')}
                       />
                     </Link>
-            </div>
             <Divider />
-      <div  className={this.isActive('coachingcentres')}>
               <Link to="/coachingcentres" width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,"coachingcentres")}>
                 <MenuItem primaryText={'Coaching-Centres'}
                   leftIcon={<SocialSchool color={red500} />}
                   onClick={this.props.handleMobileToggle}
-                  className="drawerFont"
+                  className={this.isActive('coachingcentres')}
                 />
               </Link>
-          </div>
-            <div className={this.isActive('Forum')}>
             <Link to='/UserQuestions' width={this.props.width} style={{ textDecoration: 'none' }}  onClick={this.onChangeSelected.bind(this,"Forum")} >
                   <MenuItem
                   primaryText={'Forum'}
                   leftIcon={<QuestionAnswer color={blue500}/>}
                   onClick={this.props.handleMobileToggle}
-                  className="drawerFont"
+                  className={this.isActive('Forum')}
                   />
-                </Link></div>*/}
+                </Link>*/}
 
       </div>
     )

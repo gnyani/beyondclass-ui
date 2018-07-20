@@ -33,7 +33,8 @@ const StayVisible = styled.div`
 const styles = {
   uploadButton: {
     verticalAlign: 'middle',
-    border: "0.1vmin solid #4DD0E1",
+    border: "0.05em solid #30b55b",
+    color: "#30b55b",
     borderRadius: '1vmax'
   }
 }

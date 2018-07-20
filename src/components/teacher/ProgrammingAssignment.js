@@ -8,7 +8,6 @@ import AddBox from 'material-ui/svg-icons/content/add-box'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import SelectField from 'material-ui/SelectField'
-import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import Delete from 'material-ui/svg-icons/action/delete'
 import IconButton from 'material-ui/IconButton'
@@ -540,8 +539,10 @@ if(this.state.isDataLoaded){
       <Row center="xs">
       <Col xs={9} sm={9} md={6} lg={5}>
       <br /><br />
-      <FlatButton key={1} label="Go Back"   alt="loading" icon={<NavigationArrowBack color="white"/>}
-      className="button" onClick={()=>{this.context.router.history.goBack()}} />
+      <FlatButton key={1} label="Go Back"   labelStyle={{textTransform: 'none'}}
+        style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+        alt="loading" icon={<NavigationArrowBack />}
+       onClick={()=>{this.context.router.history.goBack()}} />
       </Col>
       </Row>
       </Grid>
@@ -582,17 +583,23 @@ if(this.state.isDataLoaded){
       <br /><br />
       {this.renderTextField()}
       <br /><br />
-      <RaisedButton label="Add Question" primary={true} icon={<Add />} onClick={this.handleShowTextField} />
+      <FlatButton label="Add Question" labelStyle={{textTransform: 'none'}}
+        style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+         icon={<Add />} onClick={this.handleShowTextField} />
       <br /><br />
       </Col>
       </Row>
       <br />
       <Row center="xs">
       <Col xs={6} sm={6} md={4} lg={3}>
-      <RaisedButton label = "Save" primary={true} disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment.bind('save')} />
+      <FlatButton label = "Save" labelStyle={{textTransform: 'none'}}
+        style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+        primary={true} disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment.bind('save')} />
       </Col>
       <Col xs={6} sm={6} md={4} lg={3}>
-      <RaisedButton label="Submit" primary={true} disabled={this.state.buttonDisabled} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
+      <FlatButton label="Submit" labelStyle={{textTransform: 'none'}}
+        style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+        primary={true} disabled={this.state.buttonDisabled} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
       </Col>
       </Row>
       <br /><br />

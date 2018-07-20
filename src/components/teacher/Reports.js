@@ -87,20 +87,20 @@ getRightIconMenu = (i) => {
     <IconMenu iconButtonElement={iconButtonElement}>
       <Link to={'/teacher/assignment/'+this.props.assignmentid+'*'+this.state.submittedStudents[i].email+'/evaluate'} >
       <MenuItem
-        leftIcon={<EvaluateIcon color="red" />}
+        leftIcon={<EvaluateIcon  />}
         >
         Evaluate
       </MenuItem>
      </Link>
       <MenuItem
-        leftIcon={<AssignmentReturn color="blue" />}
+        leftIcon={<AssignmentReturn  />}
         onClick={this.confirmActivateAssignment.bind(this,i)}
         >
         ReActivate
       </MenuItem>
       <form method="get" action={src} id="submission_download_id">
       <MenuItem
-        leftIcon={<Download color="red" />}
+        leftIcon={<Download  />}
         onClick={this.downloadSubmission.bind(this,i)}
         >
         Download
@@ -218,8 +218,9 @@ nonZeroSubmissions = () => {
         <Row center="xs">
         <Col xs={9} sm={9} md={6} lg={5}>
         <br /><br />
-        <FlatButton key={1} label="Go Back" labelStyle={{textTransform: "none"}}  alt="loading" icon={<NavigationArrowBack color="white"/>}
-                 className="button" onClick={()=>{this.context.router.history.goBack()}} />
+        <FlatButton key={1} label="Go Back" labelStyle={{textTransform: "none"}}
+          alt="loading" icon={<NavigationArrowBack color="#30b55b"/>}
+          className="button" onClick={()=>{this.context.router.history.goBack()}} />
         </Col>
         </Row>
         </Grid>)

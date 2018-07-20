@@ -43,10 +43,10 @@ class CodeEditor extends Component{
       {...this.props}
       >
       <Tabs
-      inkBarStyle={{backgroundColor:"#FFA107"}}
+      inkBarStyle={{backgroundColor:"#30b55b", height: "0.25em"}}
       >
             <Tab label="Editor"
-            buttonStyle={{backgroundColor: '#4d86cf'}}
+            buttonStyle={{backgroundColor: '#39424d',  textTransform: "none", fontSize: '1em'}}
             icon={<DeveloperMode />}
             >
               <div>
@@ -54,7 +54,7 @@ class CodeEditor extends Component{
               </div>
             </Tab>
             <Tab label="Snippets"
-            buttonStyle={{backgroundColor: '#4d86cf'}}
+            buttonStyle={{backgroundColor: '#39424d',  textTransform: "none", fontSize: '1em'}}
             icon={<BookMark />}>
               <div>
                <ListSavedSnippets key={this.state.reloadList} {...this.props}/>

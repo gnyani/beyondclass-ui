@@ -10,7 +10,6 @@ import FlatButton from 'material-ui/FlatButton'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import RejectIcon from 'material-ui/svg-icons/navigation/close'
-import RaisedButton from 'material-ui/RaisedButton'
 import NumericInput from 'react-numeric-input'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
@@ -127,6 +126,7 @@ class EvaluateAssignment extends Component{
            this.setState({
              questions:response.submittedQuestions,
              answers:response.submitAssignment.answers,
+             answersContentStates: response.submitAssignment.answersContentStates,
              assignmentType: response.createAssignment.assignmentType,
              timespent: response.timespent,
              questionIndex: response.submitAssignment.questionIndex,
@@ -295,7 +295,9 @@ return buffer
           <br /><br />
         <Row around="xs">
         <form method="get" action={src}>
-          <RaisedButton type="submit" primary={true} label="Download All Questions" className="download" icon={<Download />}/>
+          <FlatButton type="submit" labelStyle={{textTransform: 'none'}}
+            style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+            primary={true} label="Download All Questions" className="download" icon={<Download />}/>
         </form>
         </Row>
         <br /><br />
@@ -351,7 +353,7 @@ if(this.state.assignmentType ===  'THEORY')
        <Card>
       <CardTitle className="displayQuestions" title={<RichTextEditorReadOnly editorState={this.convertToEditorState(this.state.questions[i])} />} />
       <CardText className="displayAnswers">
-      {'Ans: '+this.state.answers[i]}
+      <RichTextEditorReadOnly editorState={this.convertToEditorState(this.state.answersContentStates[i])} editorStyle={{height: '180px'}}/>
       </CardText>
       </Card>
       <br /><br />
@@ -415,16 +417,17 @@ if(this.state.assignmentType ===  'THEORY')
       <Grid fluid >
           <Row center="xs">
           <Col xs={11} sm={11} md={6} lg={4}>
-          <FlatButton className="button" label="Accept" icon={<CheckIcon color="white"/>} onClick={this.openAcceptAssignmentDialog.bind(this)}/>
+          <FlatButton className="button" label="Accept" icon={<CheckIcon color="#30b55b"/>} onClick={this.openAcceptAssignmentDialog.bind(this)}/>
           </Col>
           <Col xs={11} sm={11} md={6} lg={4}>
-          <FlatButton className="button" label="Reject" icon={<RejectIcon color="white"/>} onClick={this.openRejectAssignmentDialog.bind(this)}/>
+          <FlatButton className="button" label="Reject" icon={<RejectIcon color="#30b55b"/>} onClick={this.openRejectAssignmentDialog.bind(this)}/>
           </Col>
           </Row>
           <br /><br />
           <Row center="xs">
           <Col xs={9} sm={9} md={6} lg={5}>
-          <FlatButton key={1} label="Go Back" labelStyle={{textTransform: "none"}}  alt="loading" icon={<NavigationArrowBack color="white"/>}
+          <FlatButton key={1} label="Go Back" labelStyle={{textTransform: "none"}}  alt="loading"
+            icon={<NavigationArrowBack color="#30b55b"/>}
                    className="button" onClick={()=>{this.context.router.history.goBack()}} />
           </Col>
           </Row>
@@ -436,7 +439,8 @@ if(this.state.assignmentType ===  'THEORY')
         <Grid fluid key={1}>
         <Row center="xs">
         <Col xs={9} sm={9} md={6} lg={5}>
-        <FlatButton key={1} label="Go Back" labelStyle={{textTransform: "none"}}  alt="loading" icon={<NavigationArrowBack color="white"/>}
+        <FlatButton key={1} label="Go Back" labelStyle={{textTransform: "none"}}  alt="loading"
+          icon={<NavigationArrowBack color="#30b55b"/>}
                  className="button" onClick={()=>{this.context.router.history.goBack()}} />
         <br /><br />
         </Col>
@@ -483,7 +487,8 @@ const actions = [
       <Grid fluid>
       <Row center="xs">
       <Col xs={9} sm={9} md={6} lg={5}>
-      <FlatButton key={1} label="Go Back" labelStyle={{textTransform: "none"}}  alt="loading" icon={<NavigationArrowBack color="white"/>}
+      <FlatButton key={1} label="Go Back" labelStyle={{textTransform: "none"}}  alt="loading"
+        icon={<NavigationArrowBack color="#30b55b"/>}
                className="button" onClick={()=>{this.context.router.history.goBack()}} />
       </Col>
       </Row>

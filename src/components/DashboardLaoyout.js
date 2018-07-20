@@ -5,7 +5,6 @@ import Drawer from 'material-ui/Drawer';
 import {NavAppBar} from '../styledcomponents/NavAppBar.js'
 import {notify} from 'react-notify-toast';
 import { withRouter } from 'react-router';
-import {lightBlue100,blue500} from 'material-ui/styles/colors';
 import '../styles/student-adda.css';
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import PropTypes from 'prop-types';
@@ -127,7 +126,11 @@ uploadProPic(){
          imageDialog: false,
          file: '',
        },function OnstateChange(){
+         if(this.state.userrole === 'student')
          this.postTimeline()
+         else{
+           window.location.reload()
+         }
        })
      }).catch(response => {
      notify.show("Please login your session expired","error");
@@ -338,7 +341,7 @@ else
      userrole = {this.state.userrole}
      notificationsCount = {this.state.notificationsCount}
      />
-    <Drawer open={this.state.open} docked={this.state.docked} containerStyle={{backgroundColor: '#082d51'}}
+   <Drawer open={this.state.open} docked={this.state.docked} containerStyle={{backgroundColor: '#ededed'}}
        width = {this.state.width} onRequestChange={(open) => this.setState({open})}>
     <div className="image-upload UserImageContainer">
     <label htmlFor="file-input">
@@ -355,7 +358,7 @@ else
     <br />
     <br />
     <Link to='/updateprofile'>
-    <FlatButton label="Update Profile" labelStyle={{color: '#EEEEEE'}} onClick={this.handleMobileToggle} hoverColor ={lightBlue100} fullWidth={true} icon={<AddImageIcon  color={blue500}/>}/>
+    <FlatButton label="Update Profile" labelStyle={{color: '#39424d', textTransform: 'none'}} onClick={this.handleMobileToggle}  fullWidth={true} icon={<AddImageIcon  />}/>
     </Link>
     <br />
 

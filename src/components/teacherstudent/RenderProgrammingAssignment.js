@@ -38,6 +38,7 @@ constructor(){
      isIdle: false,
      changeLangDialog: false,
      totalActiveTime: null,
+     questions: [],
      i: '',
      value: '',
   }
@@ -150,6 +151,7 @@ componentDidMount(){
        this.setState({
          languageValue: mode.slice(),
          language: language,
+         questions: response.questions.slice(),
          mode: mode,
          source: source,
          theme: theme,
@@ -202,7 +204,7 @@ _onActive = () => {
             },
         credentials: 'include',
         body: JSON.stringify({
-          questions:this.props.questions.slice(),
+          questions:this.state.questions.slice(),
           source: this.state.source.slice(),
           language: this.state.mode.slice(),
           langcode: langcode,
@@ -296,18 +298,18 @@ handleClose = () => {
 
 displayQuestions(){
   var buffer =[]
-  for(var i =0;i<this.props.questions.length;i++)
+  for(var i =0;i<this.state.questions.length;i++)
   {
     buffer.push(<div key={i}>
       <Grid fluid>
       <Row center="xs">
       <Col xs>
-    <RichTextEditorReadOnly editorStyle={{borderStyle:'solid',borderWidth:'0.1px'}} editorState={this.convertToEditorState(this.props.questions[i])} />
+    <RichTextEditorReadOnly editorStyle={{borderStyle:'solid',borderWidth:'0.1px'}} editorState={this.convertToEditorState(this.state.questions[i])} />
       <br />
       </Col>
       </Row>
       </Grid>
-    <Editor state={"Assignment"} question={this.props.questions[i]}  email={this.props.email}  assignmentid={this.props.assignmentid}
+    <Editor state={"Assignment"} question={this.state.questions[i]}  email={this.props.email}  assignmentid={this.props.assignmentid}
             languageValue={this.state.languageValue[i]} setMode={this.setModeConfirm.bind(this,i)} setTheme={this.setTheme.bind(this,i)} mode={this.state.mode[i]}
             language={this.state.language[i]} theme={this.state.theme[i]}  source={this.state.source[i]} onChange={this.onChange.bind(this,i)}/>
 

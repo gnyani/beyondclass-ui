@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import Add from 'material-ui/svg-icons/content/add'
 import Divider from 'material-ui/Divider'
@@ -16,17 +16,20 @@ class CreateAssignment extends Component{
       <Row center='xs'>
       <Col xs>
       <br />
-      <RaisedButton label="Theory Assignment" primary={true} icon={<Add />}  containerElement={<Link to={'/teacher/'+this.props.class+'/create'}/>}/>
+      <FlatButton label="Theory Assignment" style={{verticalAlign: 'middle',border: "0.08em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+         icon={<Add />}  containerElement={<Link to={'/teacher/'+this.props.class+'/create'}/>}/>
       <br /> <br />
       </Col>
       <Col xs>
       <br />
-      <RaisedButton label="Objective Assignment" primary={true} icon={<Add />}  containerElement={<Link to={'/teacher/'+this.props.class+'/createobjectiveassignment'}/>}/>
+      <FlatButton label="Objective Assignment"  style={{verticalAlign: 'middle',border: "0.08em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+      icon={<Add />}  containerElement={<Link to={'/teacher/'+this.props.class+'/createobjectiveassignment'}/>}/>
       <br /> <br />
       </Col>
       <Col xs>
       <br />
-      <RaisedButton label="Programming Assignment" primary={true} icon={<Add />}  containerElement={<Link to={'/teacher/'+this.props.class+'/createpa'}/>}/>
+      <FlatButton label="Programming Assignment" icon={<Add />} style={{verticalAlign: 'middle',border: "0.08em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+       containerElement={<Link to={'/teacher/'+this.props.class+'/createpa'}/>}/>
       <br /> <br />
       </Col>
       </Row>

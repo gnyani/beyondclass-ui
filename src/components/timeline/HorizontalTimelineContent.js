@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Divider from 'material-ui/Divider';
-import {lightBlue300,redA700} from 'material-ui/styles/colors';
+import {redA700} from 'material-ui/styles/colors';
 import HorizontalTimeline from 'react-horizontal-timeline';
 import {Card, CardActions, CardHeader, CardMedia,CardText} from 'material-ui/Card';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -17,7 +17,8 @@ var properties = require('../properties.json');
 const styles = {
   uploadButton: {
     verticalAlign: 'middle',
-    border: "0.1vmin solid #4DD0E1",
+    border: "0.05em solid #30b55b",
+    color: "#30b55b",
     borderRadius: '1vmax'
   },
   uploadInput: {
@@ -261,20 +262,20 @@ if(this.state.postUrls.length!==0)
                   <Grid fluid>
                   <Row center="xs" between="xs">
                   <Col xs>
-                 <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
+                 <a onClick={this.handleOpen.bind(this,i)} style={{color:'#30b55b'}}>  {this.state.likeCounts[i]} likes </a>
                  </Col>
                   <Col xs>
-                 <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
+                 <a onClick={this.handleCommentBoxOpen.bind(this,i)} style={{color:'#30b55b'}} > View Comments</a>
                  </Col>
                   </Row>
                   </Grid>
                   <Grid fluid>
                   <Row >
                   <Col xs>
-                  <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} viewBox="0 0 30 30"/>}/>
+                  <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color='#30b55b' viewBox="0 0 30 30"/>}/>
                   </Col>
                   <Col xs>
-                  <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} viewBox="0 0 30 30"/>}/>
+                  <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color='#30b55b' viewBox="0 0 30 30"/>}/>
                   </Col>
                   </Row>
                   </Grid>
@@ -312,20 +313,20 @@ if(this.state.postUrls.length!==0)
               <Grid fluid>
               <Row center="xs" between="xs">
               <Col xs>
-             <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
+             <a onClick={this.handleOpen.bind(this,i)} style={{color:'#30b55b'}}>  {this.state.likeCounts[i]} likes </a>
               </Col>
               <Col xs>
-             <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
+             <a onClick={this.handleCommentBoxOpen.bind(this,i)} style={{color:'#30b55b'}}> View Comments</a>
               </Col>
               </Row>
               </Grid>
               <Grid fluid>
               <Row >
               <Col xs>
-              <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} viewBox="0 0 30 30" />}/>
+              <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color='#30b55b' viewBox="0 0 30 30" />}/>
               </Col>
               <Col xs>
-              <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} viewBox="0 0 30 30" />}/>
+              <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color='#30b55b' viewBox="0 0 30 30" />}/>
               </Col>
               </Row>
               </Grid>
@@ -359,20 +360,20 @@ if(this.state.postUrls.length!==0)
              <Grid fluid>
              <Row center="xs" between="xs">
              <Col xs>
-            <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
+            <a onClick={this.handleOpen.bind(this,i)} style={{color:'#30b55b'}}>  {this.state.likeCounts[i]} likes </a>
             </Col>
             <Col xs>
-            <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
+            <a onClick={this.handleCommentBoxOpen.bind(this,i)} style={{color:'#30b55b'}}> View Comments</a>
             </Col>
              </Row>
              </Grid>
              <Grid fluid>
              <Row >
              <Col xs>
-             <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} viewBox="0 0 30 30" />}/>
+             <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color='#30b55b' viewBox="0 0 30 30" />}/>
              </Col>
              <Col xs>
-             <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} viewBox="0 0 30 30" />}/>
+             <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color='#30b55b' viewBox="0 0 30 30" />}/>
              </Col>
              </Row>
              </Grid>
@@ -405,20 +406,20 @@ if(this.state.postUrls.length!==0)
                <Grid fluid>
                <Row center="xs" between="xs" >
                <Col xs>
-              <a onClick={this.handleOpen.bind(this,i)}>  {this.state.likeCounts[i]} likes </a>
+              <a onClick={this.handleOpen.bind(this,i)} style={{color:'#30b55b'}}>  {this.state.likeCounts[i]} likes </a>
               </Col>
               <Col xs>
-              <a onClick={this.handleCommentBoxOpen.bind(this,i)}> View Comments</a>
+              <a onClick={this.handleCommentBoxOpen.bind(this,i)} style={{color:'#30b55b'}}> View Comments</a>
               </Col>
                </Row>
                </Grid>
                <Grid fluid>
                <Row >
                <Col xs>
-               <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color={lightBlue300} viewBox="0 0 30 30"/>}/>
+               <FlatButton type="button" label="Like" onClick={this.addLikes.bind(this,i)} fullWidth={true} icon={<ActionThumbUp color='#30b55b' viewBox="0 0 30 30"/>}/>
                </Col>
                <Col xs>
-               <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color={lightBlue300} viewBox="0 0 30 30"/>}/>
+               <FlatButton type="submit" label="Comment" fullWidth={true}  onClick={this.showCommentBox.bind(this,i)} icon={<CommunicationComment color='#30b55b' viewBox="0 0 30 30"/>}/>
                </Col>
                </Row>
                </Grid>
@@ -714,6 +715,7 @@ getLikedUsers(i){
         label="Attach an Image"
         style={styles.uploadButton}
         primary={true}
+        labelStyle={{textTransform: "none", fontSize: '1em'}}
         containerElement="label"
         icon={<AttachFile />}
         >
@@ -722,7 +724,8 @@ getLikedUsers(i){
         <br /><br />
        </Col>
         <Col xs={12} sm ={8} md={4} lg={4}>
-        <FlatButton  className="PostButton" type="submit" label="Post"  disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
+        <FlatButton  className="PostButton"  labelStyle={{textTransform: "none", fontSize: '1em'}}
+          type="submit" label="Post"  disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
         </Col>
         </Row>
         </Grid>

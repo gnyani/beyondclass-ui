@@ -148,6 +148,7 @@ updateProfile(){
       </Col>
       </Row>
       </Grid>
+      <br />
       <div className="UpdateProfile">
       <FlatButton label="Update" labelStyle={{textTransform: "none"}} labelPosition="before" alt="loading" icon={<NavigationArrowForward color="white"/>}
                  className="button" onClick={this.updateProfile} />

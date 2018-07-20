@@ -39,15 +39,15 @@ class TeacherComponent extends Component{
       <Tabs
         value={this.state.value}
         onChange={this.handleChange}
-        inkBarStyle={{backgroundColor:"#FFA107"}}
+        inkBarStyle={{backgroundColor:"#30b55b", height: "0.25em"}}
       >
-      <Tab label="Assignments" value="assignments" buttonStyle={{backgroundColor: '#4d86cf'}}>
+      <Tab label="Assignments" value="assignments" buttonStyle={{backgroundColor: '#39424d', textTransform: 'none', fontSize:'1.3em'}}>
        <CreateAssignment batches={this.props.batches} email={this.props.loggedinuser} branch={this.props.branch} class={this.props.class} key={this.props.class}/>
       </Tab>
-        <Tab label="Announce" value="announce" buttonStyle={{backgroundColor: '#4d86cf'}}>
+        <Tab label="Announce" value="announce" buttonStyle={{backgroundColor: '#39424d', textTransform: 'none', fontSize:'1.3em'}}>
             <TeacherAnnouncement class={this.props.class} key={this.props.class}/>
         </Tab>
-        <Tab label="Handouts" value="handouts" buttonStyle={{backgroundColor: '#4d86cf'}}>
+        <Tab label="Handouts" value="handouts" buttonStyle={{backgroundColor: '#39424d', textTransform: 'none', fontSize:'1.3em'}}>
            <ShareHandouts class={this.props.class} key={this.props.class} userrole={this.props.userrole} branch={this.props.branch}/>
         </Tab>
       </Tabs>

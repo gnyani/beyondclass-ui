@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import {notify} from 'react-notify-toast';
-import {lightBlue300} from 'material-ui/styles/colors';
 import {ActionViewArray,FileFileDownload,NavigationFullscreen,NavigationClose} from '../../styledcomponents/SvgIcons.js'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -97,12 +96,12 @@ class NotesList extends Component{
                 <Row center="xs">
                 <Col xs>
                   <form method="post" action={src+"/download"}>
-                  <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color={lightBlue300} />}/>
+                  <FlatButton type="submit" label="Download" fullWidth={true} icon={<FileFileDownload color='#30b55b' />}/>
                   </form>
                  </Col>
                 <Col xs>
                   <form method="post" action={src}>
-                  <FlatButton type="submit" label="View" fullWidth={true} icon={<NavigationFullscreen color={lightBlue300} />}/>
+                  <FlatButton type="submit" label="View" fullWidth={true} icon={<NavigationFullscreen color='#30b55b' />}/>
                   </form>
                  </Col>
                   </Row>
@@ -223,7 +222,8 @@ if(this.props.userrole==="student"){
      <br />
       </Col>
       <Col xs={6} sm={6} md={4} lg={2} className="NotesList">
-      <FlatButton type="submit" label="View" disabled={this.state.buttonDisabled} icon={<ActionViewArray color="white"/>} className="nextButton" onClick={this.handleSubmit} />
+      <FlatButton type="submit" label="View"  labelStyle={{textTransform: "none", fontSize: '1em'}}
+        disabled={this.state.buttonDisabled} icon={<ActionViewArray color="white"/>} className="nextButton" onClick={this.handleSubmit} />
       <br />
       </Col>
       </Row>

@@ -17,7 +17,7 @@ var properties = require('../../properties.json');
 const styles = {
   uploadButton: {
     verticalAlign: 'middle',
-    border: "0.1vmin solid #4DD0E1",
+    border: "0.1vmin solid #30b55b",
     borderRadius: '1vmax'
   },
   uploadInput: {
@@ -172,9 +172,8 @@ handleCommentChange = (event) => {
         <FlatButton
         label="Choose a PDF file"
         icon={<AttachFile />}
-        primary={true}
+        labelStyle={{textTransform: 'none'}}
         style={styles.uploadButton}
-        containerElement="label"
         >
         <input type="file" accept="application/pdf" style={styles.uploadInput} onChange={this._handleImageChange}/>
         </FlatButton>
@@ -204,7 +203,9 @@ handleCommentChange = (event) => {
           <Row around="xs">
           <Col xs={12} sm={12} md={10} lg={8}>
           <form className="Position" onSubmit={this._handleSubmit}>
-          <FlatButton type="submit" label="Upload File"  className="uploadbutton" icon={<FileFileUpload color="white"/>} disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
+          <FlatButton type="submit" label="Upload File" labelStyle={{textTransform: 'none'}}
+            style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+             className="uploadbutton" icon={<FileFileUpload color="white"/>} disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
           </form>
           <br /><br />
           <Divider />
