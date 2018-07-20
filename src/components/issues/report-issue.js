@@ -13,7 +13,7 @@ var properties = require('../properties.json');
 const styles = {
   uploadButton: {
     verticalAlign: 'middle',
-    border: "0.1vmin solid #4DD0E1",
+    border: "0.1vmin solid #30b55b",
     borderRadius: '1vmax'
   },
   uploadInput: {
@@ -150,8 +150,8 @@ class ReportIssue extends Component{
       <FlatButton
       label="Attach a Screen Shot"
       icon={<AttachFile />}
-      primary={true}
       style={styles.uploadButton}
+      labelStyle={{textTransform: 'none'}}
       containerElement="label"
       >
       <input type="file" accept="image/png,image/jpeg,image/jpg" style={styles.uploadInput} onChange={this._handleImageChange}/>
@@ -162,7 +162,7 @@ class ReportIssue extends Component{
       <Col xs>
       <br />
       <form  onSubmit={this._handleSubmit}>
-      <FlatButton type="submit" label="Submit"  className="submit" icon={<FileFileUpload color="white"/>} disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
+      <FlatButton type="submit" label="Submit"  className="submit" icon={<FileFileUpload color="#30b55b"/>} disabled={this.state.buttonDisabled} onClick={this._handleSubmit} />
       </form>
       </Col>
       </Row>

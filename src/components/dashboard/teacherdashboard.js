@@ -6,6 +6,8 @@ import Add from 'material-ui/svg-icons/content/add'
 import Dialog from 'material-ui/Dialog'
 import {notify} from 'react-notify-toast';
 import DisplayBatches from './DisplayBatches'
+import {List, ListItem} from 'material-ui/List'
+import LibraryBooks from 'material-ui/svg-icons/av/library-books.js'
 import Badge from 'material-ui/Badge';
 import People from 'material-ui/svg-icons/social/people.js'
 
@@ -134,7 +136,15 @@ class TeacherDashboard extends Component{
       />]
     return(
       <div>
-        {this.menuItems(this.props.batches)}
+        <List>
+          <ListItem
+              primaryText="Batches"
+              leftIcon={<LibraryBooks />}
+              initiallyOpen={false}
+              primaryTogglesNestedList={true}
+              nestedItems={this.menuItems(this.props.batches)}
+            />
+        </List>
         <FlatButton type="button" label="Add Batch" fullWidth={true}
           icon={<Add color="#30b55b"/>} labelStyle={{textTransform: 'none'}}
           className="drawerFont" onClick={this.openDialog}/>

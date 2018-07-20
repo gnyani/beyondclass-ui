@@ -131,9 +131,9 @@ width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 
 .Reports .stat{font-size: 5vmin;letter-spacing: 0.1vmin;font-weight: bold;;}
 .Reports .card{background-color:#455A64 !important;color: #CCCCCC !important}
 .Reports .download {background-color: #082d51 !important;color: white!important;border-radius: 1vmax!important }
-.Reports .button{width: 40%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
-.EvaluateAssignment .paragraph{text-align: center;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
-               font-size: 4vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
+.Reports .button{width: 40%!important;border: 0.05em solid #30b55b !important;color: #30b55b!important;border-radius: 1em!important;}
+.EvaluateAssignment .paragraph{text-align: center;font-family: 'Roboto',sans-serif ;font-weight: normal;
+               font-size: 4vmin;letter-spacing: 0.1vmin;color: #39424d}
 .EvaluateAssignment .displayQuestions{text-transform: capitalize !important;}
 .EvaluateAssignment .displayAnswers{text-transform: capitalize !important; font-weight: 400;}
 .EvaluateAssignment .button{width: 40%!important;  border: 1px solid #30b55b !important;
@@ -142,19 +142,19 @@ width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 
 .cardHeader {background-color: lightgrey !important;}
 .cardHeaderwithTopBorder {background-color: lightgrey;border-top-left-radius: 1.5em;border-top-right-radius: 1.5em;}
 .Editor .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: lighter;
-               font-size: 3vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
+               font-size: 3vmin;letter-spacing: 0.1vmin;color: #39424d}
 .Editor .testcases{border: 2px solid #765942;border-radius: 10px;margin-right: 50%;font-size: 2vmin;resize: none;}
 .Editor .tabs{width: 60% !important;margin-left: 20% !important}
 .ProgrammingAssignment .testcases{border: 2px solid #765942;border-radius: 10px;font-size: 2vmin;width: 100%;resize: none;}
 .ProgrammingAssignment .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: bold;
-               font-size: 3vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
+               font-size: 3vmin;letter-spacing: 0.1vmin;color: #39424d}
 .ProgrammingAssignment .testcaseparagraph{text-align: center;font-family: 'Roboto',sans-serif;ont-weight: bold;
-               font-size: 2vmin;letter-spacing: 0.1vmin;color: rgb(162,35,142)}
+               font-size: 2vmin;letter-spacing: 0.1vmin;color: #39424d}
 .ProgrammingAssignment .testcasesDisplay{border: 2px solid #765942;border-radius: 5px;font-size: 2vmin;width: 100%;resize: none;}
 .ProgrammingAssignment .button{width: 40%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
 .report-issue .heading{padding: 0.1%;font-family: 'Roboto',sans-serif;font-weight: normal;
-               font-size: 3.5vmin;letter-spacing: 0.06vmin;color: rgb(162,35,142);}
-.report-issue .submit{background-color: #2196F3 !important;color: white!important;border-radius: 1vmax!important;}
+               font-size: 3.5vmin;letter-spacing: 0.06vmin;color: #39424d}
+.report-issue .submit{ border: 1px solid #30b55b !important; background-color: #fbfbfb !important;color: #30b55b !important;border-radius: 1em!important;}
 .report-issue .image{width:60%;height: 60%;text-align: center;}
 .renderCodingAssignment .positionSummary{width: 70%;margin-left: 15%}
 .renderCodingAssignment .summaryParagraph{text-align: left;font-family: Helvetica Neue,Helvetica,Arial,sans-serif; }
