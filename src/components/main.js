@@ -5,6 +5,11 @@ import {Switch,Route} from 'react-router-dom'
 import TeacherStudentSpace from './teacherstudent/TeacherStudentSpace.js'
 import SubmitAssignment from './teacherstudent/SubmitAssignment'
 
+const TeacherNetwork = Loadable({
+  loader: () => import('./teachernetwork/TeacherNetwork.js'),
+  loading: Loading,
+  timeout: 10000,
+})
 const QpLayout = Loadable({
   loader: () => import('./questionpapers/QpLayout.js'),
   loading: Loading,
@@ -141,6 +146,7 @@ export const Body =(props) => {
     <Route exact path='/updateprofile' render={() =>(<UpdateProfile {...props} />)} />
     <Route exact path='/submissions' render={() => (<Submissions {...props} />)} />
     <Route exact path='/codeeditor' render={() => (<CodeEditor {...props} />)} />
+    <Route exact path='/teachernetwork' render={()=>(<TeacherNetwork {...props} />)} />
     <Route exact path='/notifications' render={() => (<Notifications {...props} />)} />
   </Switch>
 </main>

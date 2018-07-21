@@ -6,6 +6,7 @@ import View from 'material-ui/svg-icons/action/view-list'
 import ViewReport from 'material-ui/svg-icons/content/content-paste'
 import RightIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
 import {Link} from 'react-router-dom'
+import Public from 'material-ui/svg-icons/social/public.js'
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 import { withRouter } from 'react-router'
@@ -54,6 +55,7 @@ constructor(){
    expanded:[],
    assignmentType: [],
    deleteConfirm: false,
+   openNetworkDialog: false,
    isDataLoaded: false,
    selectBatchDialog: false,
    selectBatchDialogWhenOneBatch: false,
@@ -204,7 +206,7 @@ handleConfirmDelete(i){
 }
 
 handleClose = () => {
-  this.setState({deleteConfirm: false, selectBatchDialog: false,selectBatchDialogWhenOneBatch: false});
+  this.setState({deleteConfirm: false, selectBatchDialog: false,selectBatchDialogWhenOneBatch: false, openNetworkDialog: false});
 };
 
 deleteAssignment(){
@@ -353,6 +355,57 @@ submitDuplicateAssignmentRequest = () => {
     })
 }
 
+openDialogForNetwork = (i) => {
+  this.setState({
+    activeIndex : i,
+    openNetworkDialog: true,
+  })
+}
+
+postToNetwork = () => {
+  var createdAssignment;
+  fetch('http://'+properties.getHostName+':8080/assignments/teacher/get/assignment/'+this.state.assignmentIds[this.state.activeIndex],{
+          credentials: 'include',
+          method: 'GET'
+        }).then(response => {
+          if(response.status === 200){
+            return response.json()
+          }else{
+            notify.show("Something went wrong", "error")
+          }
+        }).then (response => {
+          createdAssignment = response
+          return createdAssignment
+        }).then(createdAssignment => {
+          console.log("createdAssignment" + JSON.stringify({createdAssignment}))
+          this.postAssignment(createdAssignment)
+        }).catch(response => {
+        notify.show("Please login before posting an announcement","error");
+        this.context.router.history.push('/');
+       });
+}
+
+postAssignment = (createdAssignment) => {
+  console.log("this got called"+ JSON.stringify(createdAssignment))
+  fetch('http://'+properties.getHostName+':8080/teachersnetwork/savequestionset', {
+         method: 'POST',
+         headers: {
+               'mode': 'cors',
+               'Content-Type': 'application/json'
+           },
+       credentials: 'include',
+       body: JSON.stringify(createdAssignment),
+    }).then(response => {
+      if(response.status === 200){
+        notify.show("Successfully posted to the network", "success")
+      }else{
+        notify.show("Something went wrong", "error")
+      }
+      this.handleClose()
+    })
+}
+
+
 selectBatch = (i) => {
   if(this.props.batches.length > 1){
     this.setState({
@@ -422,7 +475,7 @@ if(this.state.assignmentIds.length !== 0)
                containerElement={<Link to={'/teacher/reports/view/'+this.state.assignmentIds[i]}/>} />
            </CardActions>
            </Col>
-           <Col xs={3} sm={3} md={3} lg={3} >
+           <Col xs={3} sm={3} md={2} lg={2} >
              <CardActions>
                <IconMenu
                   iconButtonElement={<IconButton
@@ -440,7 +493,15 @@ if(this.state.assignmentIds.length !== 0)
 
              </CardActions>
            </Col>
-
+           <Col xs={2} sm={2} md={1} lg={1}>
+             <IconButton tooltip="Make it public"
+               iconStyle={styles.mediumIcon}
+               style={styles.medium}
+               onClick = {this.openDialogForNetwork.bind(this,i)}
+               >
+                      <Public />
+                </IconButton>
+           </Col>
            </Row>
            </Grid>
            <CardText expandable={true} >
@@ -485,7 +546,7 @@ const actions1 = [
     <FlatButton
       label="Confirm"
       primary={true}
-      onTouchTap={this.deleteAssignment}
+      onTouchTap={this.postToNetwork}
     />,
   ]
 
@@ -514,12 +575,12 @@ const actions1 = [
       {this.listSavedAssignments()}
       {this.listAssignments()}
       <Dialog
-            title="Are you sure about deleting this draft assignment"
+            title="Your are about to share your assignment to the community"
             modal={true}
             actions={actions1}
-            open={this.state.deleteConfirm}
+            open={this.state.openNetworkDialog}
             autoScrollBodyContent={true}
-            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            titleStyle={{textAlign:"center",color: "#39424d"}}
             onRequestClose={this.handleClose}
           >
       </Dialog>
@@ -529,7 +590,7 @@ const actions1 = [
             actions={actions}
             open={this.state.selectBatchDialog}
             autoScrollBodyContent={true}
-            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            titleStyle={{textAlign:"center",color: "#39424d"}}
             onRequestClose={this.handleClose}
           >
           <ListBatches batches={this.props.batches} showRefreshIndicator={this.state.showRefreshIndicator} updateBatchSelection={this.updateBatchSelection}/>
@@ -540,7 +601,7 @@ const actions1 = [
             actions={actions2}
             open={this.state.selectBatchDialogWhenOneBatch}
             autoScrollBodyContent={true}
-            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            titleStyle={{textAlign:"center",color: "#39424d"}}
             onRequestClose={this.handleClose}
           >
       </Dialog>
