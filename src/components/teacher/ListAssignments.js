@@ -236,7 +236,7 @@ deleteAssignment(){
 decideSubject = (i) => {
   var buffer = []
   if(this.state.savedAssignmentTypes[i] === 'THEORY')
-  buffer.push(<p key={i}>{<b>'Subject: '</b> +this.state.savedAssignmentSubjects[i]}</p>)
+  buffer.push(<p key={i}><b>Subject: </b> {this.state.savedAssignmentSubjects[i]}</p>)
   return buffer
 }
 

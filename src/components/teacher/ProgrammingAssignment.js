@@ -24,6 +24,7 @@ import TestCases from './TestCases'
 import Save from 'material-ui/svg-icons/content/save'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import IdleTimer from 'react-idle-timer'
+import Divider from 'material-ui/Divider'
 
 const StayVisible = styled.div`
   position: relative;
@@ -279,9 +280,9 @@ validateCreateAssignment = () => {
   if(this.state.controlledDate === null)
   notify.show("Please select last submission date","warning")
   else if(this.state.questions.length === 0)
-  notify.show("Please Add atleast one Question","warning")
+  notify.show("Please add atleast one question","warning")
   else if(this.state.numQuestions > this.state.questions.length)
-  notify.show("number of questions cannot be more than total number of questions","warning")
+  notify.show("Number of questions cannot be more than total number of questions","warning")
   else {
     this.setState({
       submitConfirm: true,
@@ -535,17 +536,14 @@ if(this.state.isDataLoaded){
         {...this.props}
       >
       <div className="ProgrammingAssignment">
-      <Grid fluid >
-      <Row center="xs">
-      <Col xs={9} sm={9} md={6} lg={5}>
-      <br /><br />
-      <FlatButton key={1} label="Go Back"   labelStyle={{textTransform: 'none'}}
-        style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
-        alt="loading" icon={<NavigationArrowBack />}
-       onClick={()=>{this.context.router.history.goBack()}} />
-      </Col>
-      </Row>
-      </Grid>
+        <Grid >
+          <Row center="xs">
+            <Col xs lg={9}>
+              <h4 className="paragraph">Programming Assignment</h4>
+              <Divider />
+            </Col>
+          </Row>
+        </Grid>
       <Grid fluid>
       <br /><br />
       <Row center="xs" bottom="xs">
@@ -576,6 +574,22 @@ if(this.state.isDataLoaded){
       </Col>
       </Row>
       </Grid>
+      <Grid fluid>
+      <Row end="xs" middle="xs">
+        <Col xs={7} sm={7} md={7} lg={3}>
+          <FlatButton label="Add Question" labelStyle ={{textTransform: 'none'}}
+             style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+            primary={true} icon={<Add />} onClick={this.handleShowTextField} />
+        </Col>
+        <Col xs={4} sm={4} md={4} lg={2}>
+          <FlatButton label = "Save" primary={true} labelStyle ={{textTransform: 'none'}}
+            style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+            disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment.bind('save')} />
+        </Col>
+        <Col xs={1} sm={1} md={1} lg={1}>
+        </Col>
+      </Row>
+      </Grid>
       {this.displayQuestions()}
       <Grid fluid>
       <Row center="xs">
@@ -583,27 +597,25 @@ if(this.state.isDataLoaded){
       <br /><br />
       {this.renderTextField()}
       <br /><br />
-      <FlatButton label="Add Question" labelStyle={{textTransform: 'none'}}
-        style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
-         icon={<Add />} onClick={this.handleShowTextField} />
-      <br /><br />
       </Col>
       </Row>
-      <br />
-      <Row center="xs">
-      <Col xs={6} sm={6} md={4} lg={3}>
-      <FlatButton label = "Save" labelStyle={{textTransform: 'none'}}
-        style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
-        primary={true} disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment.bind('save')} />
+      <Row end='xs' middle='xs'>
+      <Col xs>
+          <FlatButton key={1} label="Go Back"
+            alt="loading" icon={<NavigationArrowBack color="#30b55b"/>} labelStyle ={{textTransform: 'none'}}
+            style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+           onClick={()=>{this.context.router.history.goBack()}} />
       </Col>
-      <Col xs={6} sm={6} md={4} lg={3}>
-      <FlatButton label="Submit" labelStyle={{textTransform: 'none'}}
-        style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
-        primary={true} disabled={this.state.buttonDisabled} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
+      <Col xs>
+      <FlatButton label = "Submit" primary={true} labelStyle ={{textTransform: 'none'}}
+         style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+        disabled={this.state.submitButton} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
+      </Col>
+      <Col xs={1} sm={1} md={1} lg={1}>
       </Col>
       </Row>
-      <br /><br />
       </Grid>
+      <br /><br />
       <Dialog
             title={"Are you sure about creating this assignment with last date : "+new Date(this.state.controlledDate)+", Once submitted it cannot be deleted"}
             modal={false}
