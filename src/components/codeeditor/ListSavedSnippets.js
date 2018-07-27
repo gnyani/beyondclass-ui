@@ -238,7 +238,7 @@ handleClose = () => {
       <br />
       <Grid fluid>
       <Row around="xs">
-      <Col xs={11} sm={11} md={8} lg={8}>
+      <Col xs={11} sm={11} md={7} lg={7}>
       {this.renderSnippets()}
       </Col>
       </Row>

@@ -9,7 +9,6 @@ import FlatButton from 'material-ui/FlatButton'
 import {notify} from 'react-notify-toast'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
-import RaisedButton from 'material-ui/RaisedButton'
 import Save from 'material-ui/svg-icons/content/save'
 import Send from 'material-ui/svg-icons/content/send'
 
@@ -29,6 +28,8 @@ constructor(){
      assignmentType: '',
      editorState: EditorState.createEmpty(),
      contentState: '',
+     submitButton: false,
+     saveButton: false,
      answersEditorStates: [],
      answersContentStates: [],
      confirmSubmitDialog: false,
@@ -54,6 +55,9 @@ saveOrSubmit = (option) => {
   }
 }
 saveAssignment = (option) => {
+   this.setState({
+     saveButton: true,
+   })
   fetch('http://'+properties.getHostName+':8080/assignments/student/save', {
          method: 'POST',
          headers: {
@@ -79,12 +83,18 @@ saveAssignment = (option) => {
       }else if(response.status === 500){
         notify.show('Sorry something went wrong please try again',"error")
       }
+      this.setState({
+        saveButton: false,
+      })
     }).catch(response => {
     notify.show("Please login your session expired","error");
     this.context.router.history.push('/');
    });
 }
 submitAssignment = () => {
+  this.setState({
+    submitButton: true,
+  })
   fetch('http://'+properties.getHostName+':8080/assignments/student/submit', {
          method: 'POST',
          headers: {
@@ -106,6 +116,9 @@ submitAssignment = () => {
       }else if(response.status === 500){
         notify.show('Sorry something went wrong please try again',"error")
       }
+      this.setState({
+        submitButton: false,
+      })
     }).catch(response => {
     notify.show("Please login your session expired","error");
     this.context.router.history.push('/');
@@ -160,7 +173,7 @@ componentDidMount(){
         var newanswersEditorStates = []
         for(var i=0; i< response.questions.length ; i++){
           if(response.answersContentStates){
-            if(response.answersContentStates[i] !== '' || response.answersContentStates[i] !== null){
+            if(typeof response.answersContentStates[i] !== "undefined"  && response.answersContentStates[i] !== null){
              newanswersEditorStates.push(EditorState.createWithContent(convertFromRaw(response.answersContentStates[i])))
            }else{
              newanswersEditorStates.push(this.state.editorState)
@@ -171,7 +184,7 @@ componentDidMount(){
         }
           this.setState({
                 questions: response.questions,
-                answers: response.answers,
+                answers: response.answers || [],
                 answersContentStates: response.answersContentStates || [],
                 answersEditorStates: newanswersEditorStates,
                 assignmentType: response.assignmentType,
@@ -291,10 +304,15 @@ displayQuestions(){
      <Grid fluid className="nogutter">
      <Row end="xs" top="xs">
      <Col lg={8}>
-     <RaisedButton label="Save" primary = {true} icon={<Save />} onClick={this.saveOrSubmit.bind(this,'save')}/>
+     <FlatButton label="Save"
+       disabled={this.state.saveButton} labelStyle={{textTransform: 'none'}}
+       style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+        icon={<Save />} onClick={this.saveOrSubmit.bind(this,'save')}/>
      </Col>
      <Col lg={2}>
-     <RaisedButton label="Submit" primary = {true} icon={<Send />} onClick={this.handleDialogOpen}/>
+     <FlatButton label="Submit" className="AnnounceButton" labelStyle={{textTransform: "none", fontSize: '1em'}}
+       disabled={this.state.submitButton}
+        icon={<Send color="white"/>} onClick={this.handleDialogOpen}/>
      </Col>
      </Row>
      </Grid>

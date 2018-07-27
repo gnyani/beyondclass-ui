@@ -149,7 +149,13 @@ class TeacherDashboard extends Component{
       />]
     return(
       <div>
-        <List>
+        <Link to={'/teachernetwork'} style={{ textDecoration: 'none' }}>
+          <MenuItem  primaryText={<p style={{height:'0.7em'}}>TeacherNetwork <sup style={{color: '#30b55b'}}>BETA</sup></p>}
+            className={this.isActive('network')}
+            onClick={this.onChangeSelected.bind(this,'network')}
+            leftIcon={<Public color={this.getColor(this.isActive('network'))}/>}   />
+        </Link>
+        <List >
           <ListItem
               primaryText="Batches"
               className={this.isActive('batches')}
@@ -160,12 +166,6 @@ class TeacherDashboard extends Component{
               nestedItems={this.menuItems(this.props.batches)}
             />
         </List>
-        <Link to={'/teachernetwork'} style={{ textDecoration: 'none' }}>
-          <MenuItem  primaryText="Teacher Network"
-            className={this.isActive('network')}
-            onClick={this.onChangeSelected.bind(this,'network')}
-            leftIcon={<Public color={this.getColor(this.isActive('network'))}/>}   />
-        </Link>
           <Dialog
                 title="Select batch to add"
                 modal={false}

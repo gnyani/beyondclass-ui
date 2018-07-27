@@ -11,7 +11,7 @@ import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
-import {Card, CardActions,CardText,CardHeader, CardTitle} from 'material-ui/Card'
+import {Card, CardActions,CardText,CardHeader} from 'material-ui/Card'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import Download from 'material-ui/svg-icons/file/file-download'
 import ViewQuestions from './ViewQuestions'
@@ -20,6 +20,7 @@ import Settings from 'material-ui//svg-icons/action/settings-applications.js'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import IconButton from 'material-ui/IconButton'
+import ListDataComponent from '../teacherstudent/ListDataComponent'
 import Copy from 'material-ui/svg-icons/content/content-copy'
 import ListBatches from './ListBatches.js'
 
@@ -160,7 +161,7 @@ componentDidMount(){
         newlastDates.push(response[i].lastdate)
         newassignmentType.push(response[i].assignmentType)
         if(response[i].message !== null && response[i].message.trim() !== '')
-        newadditionalComments.push('Additional Comments : '+response[i].message)
+        newadditionalComments.push(response[i].message)
         else {
           newadditionalComments.push(response[i].message)
         }
@@ -280,8 +281,8 @@ listSavedAssignments = () => {
       var createdDate = new Date(this.state.savedCreatedDates[i])
       buffer.push(
         <Grid fluid key={i}>
-        <Row start="xs">
-        <Col xs={12} sm={12} md={12} lg={12} >
+        <Row around="xs">
+        <Col xs={11} sm={11} md={7} lg={7} >
            <Card
             onExpandChange={this.handleConfirmDelete.bind(this,i)}
             >
@@ -377,7 +378,6 @@ postToNetwork = () => {
           createdAssignment = response
           return createdAssignment
         }).then(createdAssignment => {
-          console.log("createdAssignment" + JSON.stringify({createdAssignment}))
           this.postAssignment(createdAssignment)
         }).catch(response => {
         notify.show("Please login before posting an announcement","error");
@@ -386,7 +386,6 @@ postToNetwork = () => {
 }
 
 postAssignment = (createdAssignment) => {
-  console.log("this got called"+ JSON.stringify(createdAssignment))
   fetch('http://'+properties.getHostName+':8080/teachersnetwork/savequestionset', {
          method: 'POST',
          headers: {
@@ -426,17 +425,21 @@ downloadQuestions = () => {
 
 listAssignments(){
   var buffer = []
+  var attributes = ['Assignment Type','Subject','Last Date', 'Comments']
 if(this.state.assignmentIds.length !== 0)
 {
   buffer.push(<p className="paragraph" key={this.state.assignmentIds.length+1}>Your assigments for class {this.props.class} </p>)
   for(let i=0; i<this.state.assignmentIds.length; i++){
     var lastDate = new Date(this.state.lastDates[i])
     var createdDate = new Date(this.state.createdDates[i])
+    var values = [this.state.assignmentType[i],this.state.subjects[i],
+    lastDate.getDate()+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()+" at 11:59 PM",
+    this.state.additionalComments[i]]
     var src = 'http://'+properties.getHostName+':8080/assignments/get/questions/'+this.state.assignmentIds[i]
     buffer.push(
       <Grid fluid key={i}>
-      <Row start="xs">
-      <Col xs={12} sm={12} md={12} lg={12} >
+      <Row around="xs">
+      <Col xs={11} sm={11} md={7} lg={7} >
          <Card
           onExpandChange={this.handleEdit.bind(this,i)}
           expanded={this.state.expanded[i]}
@@ -449,23 +452,14 @@ if(this.state.assignmentIds.length !== 0)
              closeIcon={<Edit  />}
              openIcon={<Edit  />}
            />
-
-           <CardTitle style={{textAlign:"center"}} title={this.state.subjects[i]} subtitle={"last date :"+(lastDate.getDate())+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()+" at 11:59 PM"}  />
-           <CardText style={{textAlign:"center"}}>
-           <p><b>AssignmentType: </b> {this.state.assignmentType[i]}</p>
-           <br />
-           <p>{this.state.additionalComments[i]}</p>
-           </CardText>
+         <CardText className="table">
+             <ListDataComponent attribute={attributes} value={values} />
+         </CardText>
+           <CardText expandable={true} >
+            <ViewQuestions assignmentid={this.state.assignmentIds[i]} />
+          </CardText>
           <Grid fluid>
           <Row center="xs" middle="xs">
-          <Col xs>
-           <CardActions>
-            <FlatButton label="View Questions"
-              labelStyle={{textTransform: 'none',fontSize: '1em'}}
-              style={{verticalAlign: 'middle',border: "0.08em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
-              icon={<View />} onClick={this.handleExpand.bind(this,i)}/>
-            </CardActions>
-          </Col>
           <Col xs>
             <CardActions>
               <FlatButton label="View Reports"
@@ -475,7 +469,7 @@ if(this.state.assignmentIds.length !== 0)
                containerElement={<Link to={'/teacher/reports/view/'+this.state.assignmentIds[i]}/>} />
            </CardActions>
            </Col>
-           <Col xs={3} sm={3} md={2} lg={2} >
+           <Col xs>
              <CardActions>
                <IconMenu
                   iconButtonElement={<IconButton
@@ -489,11 +483,12 @@ if(this.state.assignmentIds.length !== 0)
                   <MenuItem primaryText="Download Questions" leftIcon={<Download />} onClick={this.downloadQuestions.bind(this)}/>
                 </form>
                   <MenuItem primaryText="Duplicate" leftIcon={<Copy  />} onClick={this.selectBatch.bind(this,i)}/>
+                  <MenuItem primaryText="View Questions" leftIcon={<View  />} onClick={this.handleExpand.bind(this,i)}/>
                 </IconMenu>
-
-             </CardActions>
+              </CardActions>
            </Col>
-           <Col xs={2} sm={2} md={1} lg={1}>
+           <Col xs>
+            <CardActions>
              <IconButton tooltip="Make it public"
                iconStyle={styles.mediumIcon}
                style={styles.medium}
@@ -501,13 +496,10 @@ if(this.state.assignmentIds.length !== 0)
                >
                       <Public />
                 </IconButton>
+              </CardActions>
            </Col>
            </Row>
            </Grid>
-           <CardText expandable={true} >
-            <ViewQuestions assignmentid={this.state.assignmentIds[i]} />
-          </CardText>
-           <br />
          </Card>
          <br />
       </Col>

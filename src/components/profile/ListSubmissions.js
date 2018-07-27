@@ -1,10 +1,11 @@
 import React,{Component} from 'react'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import FlatButton from 'material-ui/FlatButton'
-import {Card,CardTitle,CardHeader,CardActions,CardText} from 'material-ui/Card'
+import {Card,CardHeader,CardActions,CardText} from 'material-ui/Card'
 import {Link} from 'react-router-dom'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
+import ListDataComponent from '../teacherstudent/ListDataComponent'
 import Download from 'material-ui/svg-icons/file/file-download'
 
 var properties = require('../properties.json');
@@ -15,36 +16,36 @@ renderSubmittedAssignments(){
   var buffer=[]
   var submissions = this.props.submitAssignmentList
   var assignments = this.props.assignmentsList
+  var attributes = ['Assignment Type','Subject','Status','Submitted On']
   if(submissions.length !== 0){
     buffer.push(<p className="paragraph" key={submissions.length+1}> Your submissions </p>)
     for(let i=0; i<submissions.length ; i++){
       var date = new Date(submissions[i].submissionDate)
+      var values = [assignments[i].assignmentType,assignments[i].subject,submissions[i].status+ ' with '+submissions[i].marksGiven+' marks',
+             date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()]
+      var values1 = [assignments[i].assignmentType,assignments[i].subject,submissions[i].status,
+                    date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()]
       var src = 'http://'+properties.getHostName+':8080/assignments/get/submission/'+assignments[i].assignmentid+'*'+submissions[i].email
       if(submissions[i].status==='ACCEPTED')
       buffer.push(
            <Grid fluid key={i}>
            <Row around="xs">
-           <Col xs={11} sm={11} md={9} lg={8}>
+           <Col xs={11} sm={11} md={7} lg={7}>
            <Card>
            <CardHeader className="cardHeader"  title='Assignment By' subtitle={assignments[i].email} avatar={assignments[i].propicurl}/>
-           <CardText style={{textAlign:'center'}}>
-           <p>AssignmentType : {assignments[i].assignmentType}</p>
-           </CardText>
-           <CardTitle style={{textAlign:'center'}}  title={assignments[i].subject} subtitle={'STATUS : '+submissions[i].status+ ' with '+submissions[i].marksGiven+' marks'  } />
-           <CardText style={{textAlign:'center'}}>
-           <p>Submitted On {date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()} </p>
+           <CardText className="table">
+           <ListDataComponent attribute={attributes} value={values} />
            </CardText>
            <CardActions>
            <Grid fluid>
-           <Row end="xs" top="xs">
+           <Row center="xs" top="xs">
            <Col xs className="EvaluateAssignment">
            <FlatButton label="View Assignment" className="button"
            containerElement={
              <Link to={'/teacher/assignment/'+assignments[i].assignmentid+'*'+submissions[i].email+'/evaluate'} />
            }/>
-           <br /><br />
            </Col>
-           <Col xs={3} sm={3} md={3} lg={4}>
+           <Col xs={3} sm={3} md={3} lg={2}>
             <form method="get" action={src}>
              <FloatingActionButton mini={true} type="submit" backgroundColor={'#30b55b'}>
                <Download />
@@ -64,27 +65,22 @@ renderSubmittedAssignments(){
         buffer.push(
              <Grid fluid key={i}>
              <Row around="xs">
-             <Col xs={11} sm={11} md={9} lg={8}>
+             <Col xs={11} sm={11} md={7} lg={7}>
              <Card>
              <CardHeader className="cardHeader" title='Assignment By' subtitle={assignments[i].email} avatar={assignments[i].propicurl}/>
-             <CardText style={{textAlign:'center'}}>
-             <p>AssignmentType : {assignments[i].assignmentType}</p>
-             </CardText>
-             <CardTitle style={{textAlign:'center'}} title={assignments[i].subject} subtitle={'STATUS : '+submissions[i].status} />
-             <CardText style={{textAlign:'center'}}>
-             <p>Submitted On {date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()} </p>
-             </CardText>
+               <CardText className="table">
+               <ListDataComponent attribute={attributes} value={values1} />
+               </CardText>
              <CardActions>
              <Grid fluid>
-             <Row end="xs" top="xs">
+             <Row center="xs" top="xs">
              <Col xs className="EvaluateAssignment">
              <FlatButton label="View Assignment" className="button"
              containerElement={
                <Link to={'/teacher/assignment/'+assignments[i].assignmentid+'*'+submissions[i].email+'/evaluate'} />
              }/>
-             <br /><br />
              </Col>
-             <Col xs={3} sm={3} md={3} lg={4}>
+             <Col xs={3} sm={3} md={3} lg={2}>
                <form method="get" action={src}>
                <FloatingActionButton type="submit" mini={true} backgroundColor={'#30b55b'}>
                  <Download />

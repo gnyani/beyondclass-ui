@@ -39,7 +39,7 @@ export const NavAppBar = (props) => {
            <ToolbarGroup firstChild={true}>
            <IconButton onClick={props.toggle}> <NavigationMenu color="#ffffff" /> </IconButton>
                  <CustomAvatar viewBox='0 0 30 30'/>
-             <ToolbarTitle text="Beyond Class" style={{marginLeft:'0.5Vmax',fontSize:'1.8Vmax', fontWeight: 'light',color:'#fbfbfb'}}/>
+             <ToolbarTitle text="Beyond Class" style={{marginLeft:'0.5Vmax',fontSize:'1.5em', fontWeight: 'light',color:'#fbfbfb'}}/>
            </ToolbarGroup>
            <ToolbarGroup>
            <div style={{position: 'relative',top: '0.4em',left:'1.5em'}}>
@@ -81,7 +81,7 @@ else{
        <ToolbarGroup firstChild={true}>
        <IconButton onTouchTap={props.toggle}> <NavigationMenu color="#ffffff" /> </IconButton>
              <CustomAvatar viewBox='0 0 30 30'/>
-         <ToolbarTitle text="Beyond Class" style={{marginLeft:'0.5Vmax',fontSize:'1.8Vmax',color:'#ffffff'}}/>
+         <ToolbarTitle text="Beyond Class" style={{marginLeft:'0.5Vmax',fontSize:'1.5em',color:'#ffffff'}}/>
        </ToolbarGroup>
        <ToolbarGroup>
        <IconButton  tooltip="Report Issue" containerElement={<Link to="/report/issue" />} >
