@@ -3,7 +3,6 @@ import {Grid,Row,Col} from 'react-flexbox-grid'
 import RichTextEditorReadOnly from '../teacher/RichTextEditorReadOnly'
 import { EditorState,convertFromRaw } from 'draft-js'
 import {notify} from 'react-notify-toast'
-import RaisedButton from 'material-ui/RaisedButton'
 import Save from 'material-ui/svg-icons/content/save'
 import Send from 'material-ui/svg-icons/content/send'
 import FlatButton from 'material-ui/FlatButton'
@@ -297,7 +296,7 @@ handleClose = () => {
 }
 
 displayQuestions(){
-  var buffer =[]
+  var buffer = []
   for(var i =0;i<this.state.questions.length;i++)
   {
     buffer.push(<div key={i}>
@@ -356,10 +355,13 @@ displayQuestions(){
     </Row>
     <Row center="xs">
     <Col xs={6} sm={6} md={4} lg={3}>
-    <RaisedButton label="Save" primary = {true} icon={<Save />} disabled={this.state.saveButton} onClick={this.saveProgrammingAssignment.bind(this,'save')} />
+    <FlatButton label="Save" labelStyle={{textTransform: 'none'}}
+      style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+       icon={<Save />} disabled={this.state.saveButton} onClick={this.saveProgrammingAssignment.bind(this,'save')} />
     </Col>
     <Col xs={6} sm={6} md={4} lg={3}>
-    <RaisedButton label="Submit" primary = {true} icon={<Send />} disabled={this.state.submitButton} onClick={this.handleSubmit}/>
+    <FlatButton label="Submit" className="AnnounceButton" labelStyle={{textTransform: "none", fontSize: '1em'}}
+       icon={<Send />} disabled={this.state.submitButton} onClick={this.handleSubmit}/>
     </Col>
     </Row>
     </Grid>

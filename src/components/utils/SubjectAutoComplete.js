@@ -1,5 +1,5 @@
 import React,{Component} from 'react'
-import {CSE,ECE,CSESyllabus,IT,ITSyllabus,dataSourceConfig} from '../utils/Subjects.js'
+import {CSE,ECE,ECESyllabus,CSESyllabus,IT,ITSyllabus,dataSourceConfig} from '../utils/Subjects.js'
 import AutoComplete from 'material-ui/AutoComplete'
 import TextField from 'material-ui/TextField'
 
@@ -96,15 +96,33 @@ getIndex(value, arr, prop) {
   }
 }
   if(this.props.branch === 'ECE')
+  {
+  if(this.props.type === 'questionpaper')
   return (
     <AutoComplete
      floatingLabelText="Start Typing Subject Name"
      filter={AutoComplete.fuzzyFilter}
      dataSource={ECE}
+     searchText={this.state.searchText}
+     onUpdateInput={this.handleUpdateInput}
      maxSearchResults={5}
      dataSourceConfig={dataSourceConfig}
      />
   )
+  else {
+    return (
+    <AutoComplete
+     floatingLabelText="Start Typing Subject Name"
+     filter={AutoComplete.fuzzyFilter}
+     searchText={this.state.searchText}
+     onUpdateInput={this.handleUpdateInput}
+     dataSource={ECESyllabus}
+     maxSearchResults={5}
+     dataSourceConfig={dataSourceConfig}
+     />
+  )
+  }
+}
   else{
     return(
     <TextField hintText="Please select a branch" disabled={true} />

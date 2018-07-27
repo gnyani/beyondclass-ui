@@ -8,6 +8,7 @@ import {notify} from 'react-notify-toast';
 import DisplayBatches from './DisplayBatches'
 import {List, ListItem} from 'material-ui/List'
 import LibraryBooks from 'material-ui/svg-icons/av/library-books.js'
+import Public from 'material-ui/svg-icons/social/public.js'
 import Badge from 'material-ui/Badge';
 import People from 'material-ui/svg-icons/social/people.js'
 
@@ -87,33 +88,45 @@ class TeacherDashboard extends Component{
     }
   }
 
+  getColor = (view) => {
+    var buffer
+    if(view === "Active" )
+     buffer = '#30b55b'
+
+    return buffer
+  }
+
   menuItems(batches) {
-    return batches.map((batches,index) => (
-    <div key={index}>  <div  className={this.isActive(this.props.batches[index])}>
-         <Link to={'/teacher/'+this.props.batches[index]}  width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,this.props.batches[index])} >
-          <MenuItem
-          primaryText={'Class  '+this.props.batches[index]}
-          innerDivStyle={{
-            paddingTop: "5px",
-          }}
-          rightIcon={
-            <Badge
-             badgeContent={this.props.studentCountList[batches]}
-             primary={true}
-             badgeStyle={{ width: "24px", height: "24px", backgroundColor: '#30b55b'}}
-             style={{
-               padding: "0px 24px 12px 12px"
-             }}
-           >
-             <People color='#39424d' viewBox="0 0 30 30"/>
-           </Badge>}
-          onClick={this.props.handleMobileToggle}
-          className="drawerFont"
-           />
-           </Link>
-           </div>
-      </div>
-    ));
+  var buffer = []
+    for(var index=0; index < this.props.batches.length; index++){
+      buffer.push(
+           <Link to={'/teacher/'+this.props.batches[index]}  key={index}
+             width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,this.props.batches[index])} >
+            <MenuItem
+            className={this.isActive(this.props.batches[index])}
+            primaryText={'Class  '+this.props.batches[index]}
+            innerDivStyle={{
+              paddingTop: "5px",
+            }}
+            rightIcon={
+              <Badge
+               badgeContent={this.props.studentCountList[this.props.batches[index]]}
+               primary={true}
+               badgeStyle={{ width: "24px", height: "24px", backgroundColor: '#30b55b'}}
+               style={{
+                 padding: "0px 24px 12px 12px"
+               }}
+             >
+               <People color={this.getColor(this.isActive(this.props.batches[index]))} viewBox="0 0 30 30"/>
+             </Badge>}
+            onClick={this.props.handleMobileToggle}
+             />
+             </Link>
+      )
+    }
+    buffer.push(<MenuItem  primaryText="Add Batch" key={this.props.batches.length + 1} fullWidth={true}
+              leftIcon={<Add />} className="drawerFont" onClick={this.openDialog}/>)
+    return buffer;
   }
 
   handleClose = () => {
@@ -136,18 +149,23 @@ class TeacherDashboard extends Component{
       />]
     return(
       <div>
-        <List>
+        <Link to={'/teachernetwork'} style={{ textDecoration: 'none' }}>
+          <MenuItem  primaryText={<p style={{height:'0.7em'}}>TeacherNetwork <sup style={{color: '#30b55b'}}>BETA</sup></p>}
+            className={this.isActive('network')}
+            onClick={this.onChangeSelected.bind(this,'network')}
+            leftIcon={<Public color={this.getColor(this.isActive('network'))}/>}   />
+        </Link>
+        <List >
           <ListItem
               primaryText="Batches"
-              leftIcon={<LibraryBooks />}
+              className={this.isActive('batches')}
+              leftIcon={<LibraryBooks color={this.getColor(this.isActive('batches'))}/>}
               initiallyOpen={false}
               primaryTogglesNestedList={true}
+              onClick={this.onChangeSelected.bind(this,'batches')}
               nestedItems={this.menuItems(this.props.batches)}
             />
         </List>
-        <FlatButton type="button" label="Add Batch" fullWidth={true}
-          icon={<Add color="#30b55b"/>} labelStyle={{textTransform: 'none'}}
-          className="drawerFont" onClick={this.openDialog}/>
           <Dialog
                 title="Select batch to add"
                 modal={false}

@@ -25,6 +25,7 @@ import MenuItem from 'material-ui/MenuItem'
 import RichTextEditorToolBarOnFocus from './RichTextEditorToolBarOnFocus'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import IdleTimer from 'react-idle-timer'
+import Divider from 'material-ui/Divider'
 
 const StayVisible = styled.div`
   position: relative;
@@ -422,17 +423,15 @@ renderTextField(){
         {...this.props}
       >
       <div className="TeacherAssignment">
-      <Grid fluid >
-      <Row center="xs">
-      <Col xs={9} sm={9} md={6} lg={5}>
-      <br /><br />
-      <FlatButton key={1} label="Go Back"
-        alt="loading" icon={<NavigationArrowBack color="#30b55b"/>} labelStyle ={{textTransform: 'none'}}
-        style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
-       onClick={()=>{this.context.router.history.goBack()}} />
-      </Col>
-      </Row>
-      </Grid>
+        <Grid fluid>
+          <Row center="xs">
+            <Col xs lg={9}>
+              <h4 className="paragraph">Theory Assignment</h4>
+              <Divider />
+            </Col>
+          </Row>
+        </Grid>
+      <br />
       <Grid fluid>
       <Row center="xs" bottom="xs">
       <Col xs>
@@ -473,6 +472,22 @@ renderTextField(){
       </Col>
       </Row>
       </Grid>
+      <Grid fluid>
+      <Row end="xs" middle="xs">
+        <Col xs={7} sm={7} md={7} lg={3}>
+          <FlatButton label="Add Question" labelStyle ={{textTransform: 'none'}}
+             style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+            primary={true} icon={<Add />} onClick={this.handleShowTextField} />
+        </Col>
+        <Col xs={4} sm={4} md={4} lg={2}>
+          <FlatButton label = "Save" primary={true} labelStyle ={{textTransform: 'none'}}
+            style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+            disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment.bind('save')} />
+        </Col>
+        <Col xs={1} sm={1} md={1} lg={1}>
+        </Col>
+      </Row>
+      </Grid>
       {this.displayQuestions()}
       <Grid fluid>
       <Row center="xs">
@@ -480,22 +495,21 @@ renderTextField(){
       <br /><br />
       {this.renderTextField()}
       <br /><br />
-      <FlatButton label="Add Question" labelStyle ={{textTransform: 'none'}}
-         style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
-        primary={true} icon={<Add />} onClick={this.handleShowTextField} />
-      <br /><br /><br />
       </Col>
       </Row>
-      <Row center='xs' middle='xs'>
-      <Col xs={6} sm={6} md={4} lg={3}>
-      <FlatButton label = "Save" primary={true} labelStyle ={{textTransform: 'none'}}
-        style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
-        disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment.bind('save')} />
+      <Row end='xs' middle='xs'>
+      <Col xs>
+          <FlatButton key={1} label="Go Back"
+            alt="loading" icon={<NavigationArrowBack color="#30b55b"/>} labelStyle ={{textTransform: 'none'}}
+            style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+           onClick={()=>{this.context.router.history.goBack()}} />
       </Col>
-      <Col xs={6} sm={6} md={4} lg={3}>
+      <Col xs>
       <FlatButton label = "Submit" primary={true} labelStyle ={{textTransform: 'none'}}
          style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
         disabled={this.state.submitButton} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
+      </Col>
+      <Col xs={1} sm={1} md={1} lg={1}>
       </Col>
       </Row>
       </Grid>

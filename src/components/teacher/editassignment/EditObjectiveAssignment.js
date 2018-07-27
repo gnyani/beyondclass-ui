@@ -4,7 +4,6 @@ import {notify} from 'react-notify-toast'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import DatePicker from 'material-ui/DatePicker'
 import TextField from 'material-ui/TextField'
-import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import {Media} from '../../utils/Media'
 import styled from 'styled-components'
@@ -279,10 +278,13 @@ if(this.state.isDataLoaded){
       <Row center="xs">
       <Col xs={9} sm={9} md={6} lg={5}>
       <br /><br />
-      <FlatButton key={1} label="Go Back"   alt="loading" icon={<NavigationArrowBack color="white"/>}
-      className="button" onClick={()=>{this.context.router.history.goBack()}} />
+      <FlatButton key={1} label="Go Back"   alt="loading"
+      icon={<NavigationArrowBack color="#30b55b"/>} labelStyle ={{textTransform: 'none'}}
+      style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+       onClick={()=>{this.context.router.history.goBack()}} />
       </Col>
-      </Row>
+     </Row>
+           <br />
       <Row center="xs" bottom="xs">
       <Col xs>
       <DatePicker hintText="Last Date" minDate={this.state.minDate} defaultDate={new Date(this.state.controlledDate)} onChange={this.handleDateChange} />
@@ -300,7 +302,10 @@ if(this.state.isDataLoaded){
       <br />
       <Row center="xs">
       <Col xs={6} sm={6} md={4} lg={3}>
-      <RaisedButton label="Update" primary={true} disabled={this.state.buttonDisabled} icon={<UpdateIcon />} onClick={this.validateUpdateAssignment} />
+      <FlatButton label="Update"  disabled={this.state.buttonDisabled} icon={<UpdateIcon />}
+        labelStyle ={{textTransform: 'none'}}
+        style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+        onClick={this.validateUpdateAssignment} />
       </Col>
       </Row>
       <br /><br />

@@ -4,12 +4,13 @@ import {Grid,Row,Col} from 'react-flexbox-grid'
 import View from 'material-ui/svg-icons/action/view-list'
 import ViewReport from 'material-ui/svg-icons/content/content-paste'
 import {Link} from 'react-router-dom'
-import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/FlatButton'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
+import ListDataComponent from './ListDataComponent'
 import ViewQuestions from '../teacher/ViewQuestions'
-import {Card, CardActions,CardText,CardHeader, CardTitle} from 'material-ui/Card'
+import {Card, CardActions,CardText,CardHeader} from 'material-ui/Card'
 
 var properties = require('../properties.json')
 
@@ -67,7 +68,7 @@ componentDidMount(){
         newlastDates.push(response[i].lastdate)
         newassignmentType.push(response[i].assignmentType)
         if( response[i].message !== null && response[i].message.trim() !== '')
-        newadditionalComments.push('Additional Comments : '+response[i].message)
+        newadditionalComments.push(''+response[i].message)
         else {
           newadditionalComments.push(response[i].message)
         }
@@ -82,7 +83,8 @@ componentDidMount(){
         additionalComments: newadditionalComments,
         isDataLoaded: true,
       })
-    }).catch(response => {
+    })
+    .catch(response => {
     notify.show("Please login again your session expired","error");
     this.context.router.history.push('/');
    })
@@ -98,16 +100,20 @@ handleExpand(i){
 
 listAssignments(){
   var buffer = []
+  var attributes = ['Assignment Type','Subject','Last Date', 'Comments']
 if(this.state.assignmentIds.length !== 0)
 {
-  buffer.push(<p className="paragraph" key={this.state.assignmentIds.length+1}>Your Pending Assigments</p>)
+  buffer.push(<p className="paragraph" key={this.state.assignmentIds.length+1}>Your pending assigments</p>)
   for(let i=0; i<this.state.assignmentIds.length; i++){
     var lastDate = new Date(this.state.lastDates[i])
     var createdDate = new Date(this.state.createdDates[i])
+    var values = [this.state.assignmentType[i],this.state.subjects[i],
+    lastDate.getDate()+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()+" at 11:59 PM",
+    this.state.additionalComments[i]]
     buffer.push(
       <Grid fluid key={i}>
-      <Row start="xs">
-      <Col xs={12} sm={12} md={12} lg={12} >
+      <Row center="xs">
+      <Col xs={12} sm={12} md={7} lg={7} >
          <Card
           expanded={this.state.expanded[i]}
           >
@@ -123,33 +129,30 @@ if(this.state.assignmentIds.length !== 0)
            </Col>
            </Row>
            </Grid>
-            <CardText style={{textAlign:"center"}}>
-            <p>{'AssignmentType : '+this.state.assignmentType[i]}</p>
-            </CardText>
-           <CardTitle style={{textAlign:"center"}} title={this.state.subjects[i]} subtitle={"last date :"+lastDate.getDate()+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()+" at 11:59 PM"}  />
-           <CardText style={{textAlign:"center"}}>
-
-           <p>{this.state.additionalComments[i]}</p>
+           <CardText className="table">
+                <ListDataComponent attribute={attributes} value={values}/>
            </CardText>
+           <CardText expandable={true} >
+            <ViewQuestions assignmentid={this.state.assignmentIds[i]}/>
+          </CardText>
           <Grid fluid>
           <Row center="xs">
           <Col xs>
            <CardActions>
-            <RaisedButton label="View Questions" primary={true} icon={<View />} onClick={this.handleExpand.bind(this,i)}/>
+            <FlatButton label="View Questions"  labelStyle={{textTransform: 'none'}}
+              style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+              icon={<View />} onClick={this.handleExpand.bind(this,i)}/>
             </CardActions>
           </Col>
           <Col xs>
             <CardActions>
-              <RaisedButton label="Take Assignment" primary={true} icon={<ViewReport />}
+              <FlatButton label="Take Assignment"
+                 icon={<ViewReport color="white"/>} className="AnnounceButton" labelStyle={{textTransform: "none", fontSize: '1em'}}
                containerElement={<Link to={'/student/assignments/take/'+this.state.assignmentIds[i]}/>} />
            </CardActions>
            </Col>
            </Row>
            </Grid>
-           <CardText expandable={true} >
-            <ViewQuestions assignmentid={this.state.assignmentIds[i]}/>
-          </CardText>
-           <br />
          </Card>
          <br />
       </Col>

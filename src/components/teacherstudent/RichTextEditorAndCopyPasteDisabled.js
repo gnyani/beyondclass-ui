@@ -14,6 +14,11 @@ class RichTextEditorAndCopyPasteDisabled extends Component {
           placeholder="Start typing your answer"
           wrapperClassName="demo-wrapper"
           editorClassName="demo-editor"
+          onDrag={(event)=>{event.preventDefault()}}
+          onDrop={(event)=>{event.preventDefault()}}
+          onCut={(event)=>{event.preventDefault()}}
+          onCopy={(event)=>{event.preventDefault()}}
+          onPaste={(event)=>{event.preventDefault()}}
           onEditorStateChange={this.props.onEditorStateChange.bind(this,this.props.questionNumber)}
           onContentStateChange={this.props.onContentStateChange.bind(this,this.props.questionNumber)}
           toolbar={{
@@ -24,9 +29,6 @@ class RichTextEditorAndCopyPasteDisabled extends Component {
             link: { inDropdown: true },
             history: { inDropdown: true },
         }}
-        onDrag={(event)=>{event.preventDefault()}} onDrop={(event)=>{event.preventDefault()}}
-        onCut={(event)=>{event.preventDefault()}} onCopy={(event)=>{event.preventDefault()}}
-        onPaste={(event)=>{event.preventDefault()}}
         />
       </div>
     );

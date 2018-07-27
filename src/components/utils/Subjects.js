@@ -55,3 +55,8 @@ export const ECE = [
   {subjectKey:'Basic Circuit Analysis',valueKey:'BCA'},
   {subjectKey:'Electrical Technology',valueKey:'ET'},
 ]
+
+export const ECESyllabus = [
+  {subjectKey:'Basic Circuit Analysis',valueKey:'BCA'},
+  {subjectKey:'Electrical Technology',valueKey:'ET'},
+]

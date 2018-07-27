@@ -6,11 +6,12 @@ import View from 'material-ui/svg-icons/action/view-list'
 import ViewReport from 'material-ui/svg-icons/content/content-paste'
 import RightIcon from 'material-ui/svg-icons/hardware/keyboard-arrow-right'
 import {Link} from 'react-router-dom'
+import Public from 'material-ui/svg-icons/social/public.js'
 import FlatButton from 'material-ui/FlatButton'
 import Dialog from 'material-ui/Dialog'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
-import {Card, CardActions,CardText,CardHeader, CardTitle} from 'material-ui/Card'
+import {Card, CardActions,CardText,CardHeader} from 'material-ui/Card'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import Download from 'material-ui/svg-icons/file/file-download'
 import ViewQuestions from './ViewQuestions'
@@ -19,6 +20,7 @@ import Settings from 'material-ui//svg-icons/action/settings-applications.js'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import IconButton from 'material-ui/IconButton'
+import ListDataComponent from '../teacherstudent/ListDataComponent'
 import Copy from 'material-ui/svg-icons/content/content-copy'
 import ListBatches from './ListBatches.js'
 
@@ -54,6 +56,7 @@ constructor(){
    expanded:[],
    assignmentType: [],
    deleteConfirm: false,
+   openNetworkDialog: false,
    isDataLoaded: false,
    selectBatchDialog: false,
    selectBatchDialogWhenOneBatch: false,
@@ -158,7 +161,7 @@ componentDidMount(){
         newlastDates.push(response[i].lastdate)
         newassignmentType.push(response[i].assignmentType)
         if(response[i].message !== null && response[i].message.trim() !== '')
-        newadditionalComments.push('Additional Comments : '+response[i].message)
+        newadditionalComments.push(response[i].message)
         else {
           newadditionalComments.push(response[i].message)
         }
@@ -204,7 +207,7 @@ handleConfirmDelete(i){
 }
 
 handleClose = () => {
-  this.setState({deleteConfirm: false, selectBatchDialog: false,selectBatchDialogWhenOneBatch: false});
+  this.setState({deleteConfirm: false, selectBatchDialog: false,selectBatchDialogWhenOneBatch: false, openNetworkDialog: false});
 };
 
 deleteAssignment(){
@@ -233,7 +236,7 @@ deleteAssignment(){
 decideSubject = (i) => {
   var buffer = []
   if(this.state.savedAssignmentTypes[i] === 'THEORY')
-  buffer.push(<p key={i}>{<b>'Subject: '</b> +this.state.savedAssignmentSubjects[i]}</p>)
+  buffer.push(<p key={i}><b>Subject: </b> {this.state.savedAssignmentSubjects[i]}</p>)
   return buffer
 }
 
@@ -278,8 +281,8 @@ listSavedAssignments = () => {
       var createdDate = new Date(this.state.savedCreatedDates[i])
       buffer.push(
         <Grid fluid key={i}>
-        <Row start="xs">
-        <Col xs={12} sm={12} md={12} lg={12} >
+        <Row around="xs">
+        <Col xs={11} sm={11} md={7} lg={7} >
            <Card
             onExpandChange={this.handleConfirmDelete.bind(this,i)}
             >
@@ -353,6 +356,55 @@ submitDuplicateAssignmentRequest = () => {
     })
 }
 
+openDialogForNetwork = (i) => {
+  this.setState({
+    activeIndex : i,
+    openNetworkDialog: true,
+  })
+}
+
+postToNetwork = () => {
+  var createdAssignment;
+  fetch('http://'+properties.getHostName+':8080/assignments/teacher/get/assignment/'+this.state.assignmentIds[this.state.activeIndex],{
+          credentials: 'include',
+          method: 'GET'
+        }).then(response => {
+          if(response.status === 200){
+            return response.json()
+          }else{
+            notify.show("Something went wrong", "error")
+          }
+        }).then (response => {
+          createdAssignment = response
+          return createdAssignment
+        }).then(createdAssignment => {
+          this.postAssignment(createdAssignment)
+        }).catch(response => {
+        notify.show("Please login before posting an announcement","error");
+        this.context.router.history.push('/');
+       });
+}
+
+postAssignment = (createdAssignment) => {
+  fetch('http://'+properties.getHostName+':8080/teachersnetwork/savequestionset', {
+         method: 'POST',
+         headers: {
+               'mode': 'cors',
+               'Content-Type': 'application/json'
+           },
+       credentials: 'include',
+       body: JSON.stringify(createdAssignment),
+    }).then(response => {
+      if(response.status === 200){
+        notify.show("Successfully posted to the network", "success")
+      }else{
+        notify.show("Something went wrong", "error")
+      }
+      this.handleClose()
+    })
+}
+
+
 selectBatch = (i) => {
   if(this.props.batches.length > 1){
     this.setState({
@@ -373,17 +425,21 @@ downloadQuestions = () => {
 
 listAssignments(){
   var buffer = []
+  var attributes = ['Assignment Type','Subject','Last Date', 'Comments']
 if(this.state.assignmentIds.length !== 0)
 {
   buffer.push(<p className="paragraph" key={this.state.assignmentIds.length+1}>Your assigments for class {this.props.class} </p>)
   for(let i=0; i<this.state.assignmentIds.length; i++){
     var lastDate = new Date(this.state.lastDates[i])
     var createdDate = new Date(this.state.createdDates[i])
+    var values = [this.state.assignmentType[i],this.state.subjects[i],
+    lastDate.getDate()+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()+" at 11:59 PM",
+    this.state.additionalComments[i]]
     var src = 'http://'+properties.getHostName+':8080/assignments/get/questions/'+this.state.assignmentIds[i]
     buffer.push(
       <Grid fluid key={i}>
-      <Row start="xs">
-      <Col xs={12} sm={12} md={12} lg={12} >
+      <Row around="xs">
+      <Col xs={11} sm={11} md={7} lg={7} >
          <Card
           onExpandChange={this.handleEdit.bind(this,i)}
           expanded={this.state.expanded[i]}
@@ -396,23 +452,14 @@ if(this.state.assignmentIds.length !== 0)
              closeIcon={<Edit  />}
              openIcon={<Edit  />}
            />
-
-           <CardTitle style={{textAlign:"center"}} title={this.state.subjects[i]} subtitle={"last date :"+(lastDate.getDate())+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()+" at 11:59 PM"}  />
-           <CardText style={{textAlign:"center"}}>
-           <p><b>AssignmentType: </b> {this.state.assignmentType[i]}</p>
-           <br />
-           <p>{this.state.additionalComments[i]}</p>
-           </CardText>
+         <CardText className="table">
+             <ListDataComponent attribute={attributes} value={values} />
+         </CardText>
+           <CardText expandable={true} >
+            <ViewQuestions assignmentid={this.state.assignmentIds[i]} />
+          </CardText>
           <Grid fluid>
           <Row center="xs" middle="xs">
-          <Col xs>
-           <CardActions>
-            <FlatButton label="View Questions"
-              labelStyle={{textTransform: 'none',fontSize: '1em'}}
-              style={{verticalAlign: 'middle',border: "0.08em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
-              icon={<View />} onClick={this.handleExpand.bind(this,i)}/>
-            </CardActions>
-          </Col>
           <Col xs>
             <CardActions>
               <FlatButton label="View Reports"
@@ -422,7 +469,7 @@ if(this.state.assignmentIds.length !== 0)
                containerElement={<Link to={'/teacher/reports/view/'+this.state.assignmentIds[i]}/>} />
            </CardActions>
            </Col>
-           <Col xs={3} sm={3} md={3} lg={3} >
+           <Col xs>
              <CardActions>
                <IconMenu
                   iconButtonElement={<IconButton
@@ -436,17 +483,23 @@ if(this.state.assignmentIds.length !== 0)
                   <MenuItem primaryText="Download Questions" leftIcon={<Download />} onClick={this.downloadQuestions.bind(this)}/>
                 </form>
                   <MenuItem primaryText="Duplicate" leftIcon={<Copy  />} onClick={this.selectBatch.bind(this,i)}/>
+                  <MenuItem primaryText="View Questions" leftIcon={<View  />} onClick={this.handleExpand.bind(this,i)}/>
                 </IconMenu>
-
-             </CardActions>
+              </CardActions>
            </Col>
-
+           <Col xs>
+            <CardActions>
+             <IconButton tooltip="Make it public"
+               iconStyle={styles.mediumIcon}
+               style={styles.medium}
+               onClick = {this.openDialogForNetwork.bind(this,i)}
+               >
+                      <Public />
+                </IconButton>
+              </CardActions>
+           </Col>
            </Row>
            </Grid>
-           <CardText expandable={true} >
-            <ViewQuestions assignmentid={this.state.assignmentIds[i]} />
-          </CardText>
-           <br />
          </Card>
          <br />
       </Col>
@@ -485,7 +538,7 @@ const actions1 = [
     <FlatButton
       label="Confirm"
       primary={true}
-      onTouchTap={this.deleteAssignment}
+      onTouchTap={this.postToNetwork}
     />,
   ]
 
@@ -514,12 +567,12 @@ const actions1 = [
       {this.listSavedAssignments()}
       {this.listAssignments()}
       <Dialog
-            title="Are you sure about deleting this draft assignment"
+            title="Your are about to share your assignment to the community"
             modal={true}
             actions={actions1}
-            open={this.state.deleteConfirm}
+            open={this.state.openNetworkDialog}
             autoScrollBodyContent={true}
-            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            titleStyle={{textAlign:"center",color: "#39424d"}}
             onRequestClose={this.handleClose}
           >
       </Dialog>
@@ -529,7 +582,7 @@ const actions1 = [
             actions={actions}
             open={this.state.selectBatchDialog}
             autoScrollBodyContent={true}
-            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            titleStyle={{textAlign:"center",color: "#39424d"}}
             onRequestClose={this.handleClose}
           >
           <ListBatches batches={this.props.batches} showRefreshIndicator={this.state.showRefreshIndicator} updateBatchSelection={this.updateBatchSelection}/>
@@ -540,7 +593,7 @@ const actions1 = [
             actions={actions2}
             open={this.state.selectBatchDialogWhenOneBatch}
             autoScrollBodyContent={true}
-            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            titleStyle={{textAlign:"center",color: "#39424d"}}
             onRequestClose={this.handleClose}
           >
       </Dialog>

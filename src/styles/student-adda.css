@@ -3,10 +3,9 @@
 body,html {height: 100%;width:100%;overflow: hidden;margin: 0;outline: 0;margin: 0;padding: 0;min-width:initial;}
 .backgroundHome{height: 100%;width: 100%;position: absolute;background: url("studentAddaHome.jpg") no-repeat center center fixed;background-size: 100% 100%;}
 body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
-               font-size: 2em;letter-spacing: 0.07em;color: rgb(162,35,142)}
+               font-size: 2em;letter-spacing: 0.07em;color: #39424d}
 .b-100{height:100%;width:100%}
 .signUpForm{background: #455A64;color: #FFCCBC;position: relative;top: 125%;border-radius: 7%}
-body .container{border: 2vmin solid rgb(123, 76, 16);background: rgba(20, 21, 18, 0.89); width: calc(80%);margin: 0 calc(10%);box-shadow: -3px 8px 20px 0px rgb(95, 87, 87);border-radius: 1.5em}
 .table table {font-family: arial, sans-serif ;border-collapse: collapse ;width: 100% ;}
 .table td, th {border: 1px solid #ffffff ;text-align: left ;padding: 8px ;}
 .table tr:nth-child(even) {background-color: #dddddd ;}
@@ -16,7 +15,7 @@ body .container{border: 2vmin solid rgb(123, 76, 16);background: rgba(20, 21, 18
 .nogutter {margin: 0 !important;padding: 0 !important;width: 100% !important;}
 
 .announcements .heading{padding: 0.1%;font-family:'Roboto', sans-serif;font-weight: normal;
-               font-size: 4vmin;letter-spacing: 0.08vmin;color: #39424d;margin-right: 15vmin;}
+               font-size: 1.7em;letter-spacing: 0.08vmin;color: #39424d;margin-right: 15vmin;}
 .announcements .fontStyle{  font-family: 'Roboto', sans-serif;font-size: 3.5vmin;font-style: italic;
                             font-weight: 100;letter-spacing: 0.08vmin;color: #da7373;}
 .announcements .messageStyle{   font-family: 'Roboto',sans-serif;font-size:3vmin;font-style: italic;font-weight: 50;
@@ -109,9 +108,10 @@ body .container{border: 2vmin solid rgb(123, 76, 16);background: rgba(20, 21, 18
 .signupButton{width: 65%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
 .UpdateProfile .button {margin-left: 40% !important;background-color: #30b55b !important;color: white!important;border-radius: 1em!important;}
 /*profilePicChange*/
-.img__wrap {position: relative;border-radius:50%;margin-left: 20%;margin-top: 12%;height: 18vmin;width: 18vmin;}
-.img__img{border-radius:50%;height:18vmin;width:18vmin;}
-.img__description_layer {position: absolute;top: 0;bottom: 0;left: 0;right: 0;border-radius:50%;background: #30b55b ;color: #fff;visibility: hidden;opacity: 0;display: flex;align-items: center;justify-content: center;/* transition effect. not necessary */transition: opacity .2s, visibility .2s;}
+.img__wrap {position: relative;border-radius:50%;margin-left: 25%;margin-top: 12%;height: 14vmin;width: 14vmin;}
+.img__img{border-radius:50%;height:14vmin;width:14vmin;}
+.img__description_layer {position: absolute;top: 0;bottom: 0;left: 0;right: 0;border-radius:50%;background: #30b55b ;
+  color: #fff;visibility: hidden;opacity: 0;display: flex;align-items: center;justify-content: center;/* transition effect. not necessary */transition: opacity .2s, visibility .2s;}
 .img__wrap:hover .img__description_layer {visibility: visible;opacity: 1;cursor: pointer;}
 .img__description {transition: .2s;padding:18%;font-size: 3vmin;transform: translateY(1em);}
 .img__wrap:hover .img__description {transform: translateY(0);}
@@ -123,7 +123,7 @@ width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 
 .TeacherAssignment .displayQuestions{
     letter-spacing: 0.5vmin;text-transform: capitalize;}
 .TeacherAssignment .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: normal;
-               font-size: 4vmin;letter-spacing: 0.1vmin;color: #39424d}
+               font-size: 1.7em;letter-spacing: 0.1vmin;color: #39424d}
 .TeacherAssignment .button{width: 40%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
 .Reports .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: lighter;
                font-size: 3vmin;letter-spacing: 0.1vmin;color:#39424d}
@@ -161,7 +161,7 @@ width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 
 .SavedSnippets .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: lighter;
                font-size: 3vmin;letter-spacing: 0.1vmin;color: '#30b55b'}
 .ListHandouts .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: normal;
-                              font-size: 4vmin;letter-spacing: 0.1vmin;color: #39424d}
+                              font-size: 1.7em;letter-spacing: 0.1vmin;color: #39424d}
 .ListHandouts .iframe{width:60%;height: 350px;}
 
 legend {

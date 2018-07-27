@@ -97,7 +97,7 @@ class StudentTeacherAnnouncements extends Component{
         <Grid fluid>
         <Row  center="xs" middle="xs">
         <Col  xs={2} sm={2} md={2} lg={1}>
-          <ChatOutline style={{height:'3em', width: '3em', marginTop: '0.5em', marginLeft: '1em', color:'#30b55b'}}/>
+          <ChatOutline style={{height:'2.5em', width: '2.5em', marginTop: '0.5em', marginLeft: '1em', color:'#30b55b'}}/>
         </Col>
         <Col xs={8} sm={8} md={8} lg={7}>
         <h2 className="heading">Announcements from your teachers</h2>

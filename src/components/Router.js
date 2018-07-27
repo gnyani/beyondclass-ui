@@ -48,11 +48,15 @@ class Router extends Component {
     <Route exact path='/teacher/createpa/:class/edit/:assignmentid' component={DashboardLayout} />
     <Route exact path='/teacher/assignment/:assignmentid/evaluate' component={DashboardLayout} />
     <Route exact path='/student/assignments/take/:assignmentid' component={DashboardLayout} />
+    <Route exact path='/teacher/createpa/edit/:assignmentid' component={DashboardLayout} />
+    <Route exact path='/teacher/createobjectiveassignment/edit/:assignmentid' component={DashboardLayout} />
+    <Route exact path='/teacher/create/edit/:assignmentid' component={DashboardLayout} />
     <Route exact path='/teacherstudentspace' component={DashboardLayout} />
     <Route exact path='/updateprofile' component={DashboardLayout} />
     <Route exact path='/submissions' component={DashboardLayout} />
     <Route exact path='/codeeditor' component={DashboardLayout} />
     <Route exact path='/notifications' component={DashboardLayout} key={new Date().getTime()}/>
+    <Route exact path='/teachernetwork' component={DashboardLayout} />
   </Switch>
     );
   }

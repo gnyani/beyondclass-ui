@@ -5,6 +5,11 @@ import {Switch,Route} from 'react-router-dom'
 import TeacherStudentSpace from './teacherstudent/TeacherStudentSpace.js'
 import SubmitAssignment from './teacherstudent/SubmitAssignment'
 
+const TeacherNetwork = Loadable({
+  loader: () => import('./teachernetwork/TeacherNetwork.js'),
+  loading: Loading,
+  timeout: 10000,
+})
 const QpLayout = Loadable({
   loader: () => import('./questionpapers/QpLayout.js'),
   loading: Loading,
@@ -137,10 +142,14 @@ export const Body =(props) => {
     <Route exact path='/teacher/createobjectiveassignment/:class/saved/:assignmentid' render={({match}) =>(< ObjectiveAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
     <Route exact path='/teacher/createobjectiveassignment/:class/edit/:assignmentid' render={({match}) =>(< EditObjectiveAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
     <Route exact path='/teacher/createpa/:class/edit/:assignmentid' render={({match}) =>(< EditProgrammingAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
+    <Route exact path='/teacher/create/edit/:assignmentid' render={({match}) =>(< EditTheoryAssignment {...props} assignmentid={match.params.assignmentid} email={match.params.email} />)} />
+    <Route exact path='/teacher/createpa/edit/:assignmentid' render={({match}) =>(< EditProgrammingAssignment {...props} assignmentid={match.params.assignmentid} email={match.params.email} />)} />
+    <Route exact path='/teacher/createobjectiveassignment/edit/:assignmentid' render={({match}) =>(< EditObjectiveAssignment {...props} assignmentid={match.params.assignmentid}  email={match.params.email} />)} />
     <Route exact path='/teacherstudentspace' render={() =>(<TeacherStudentSpace {...props} />)} />
     <Route exact path='/updateprofile' render={() =>(<UpdateProfile {...props} />)} />
     <Route exact path='/submissions' render={() => (<Submissions {...props} />)} />
     <Route exact path='/codeeditor' render={() => (<CodeEditor {...props} />)} />
+    <Route exact path='/teachernetwork' render={()=>(<TeacherNetwork {...props} />)} />
     <Route exact path='/notifications' render={() => (<Notifications {...props} />)} />
   </Switch>
 </main>

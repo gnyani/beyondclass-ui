@@ -9,7 +9,6 @@ import Add from 'material-ui/svg-icons/content/add'
 import AddBox from 'material-ui/svg-icons/content/add-box'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
 import SelectField from 'material-ui/SelectField'
-import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import Delete from 'material-ui/svg-icons/action/delete'
 import IconButton from 'material-ui/IconButton'
@@ -27,6 +26,7 @@ import AlternateOptions from './AlternateOptions'
 import Save from 'material-ui/svg-icons/content/save'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import IdleTimer from 'react-idle-timer'
+import Divider from 'material-ui/Divider'
 
 const StayVisible = styled.div`
   position: relative;
@@ -515,14 +515,15 @@ if(this.state.isDataLoaded){
         {...this.props}
       >
       <div className="TeacherAssignment">
+        <Grid >
+          <Row center="xs">
+            <Col xs lg={9}>
+              <h4 className="paragraph">Objective Assignment</h4>
+              <Divider />
+            </Col>
+          </Row>
+        </Grid>
       <Grid fluid>
-      <Row center="xs">
-      <Col xs={9} sm={9} md={6} lg={5}>
-      <br /><br />
-      <FlatButton key={1} label="Go Back"   alt="loading" icon={<NavigationArrowBack color="white"/>}
-      className="button" onClick={()=>{this.context.router.history.goBack()}} />
-      </Col>
-      </Row>
       <Row center="xs" bottom="xs">
       <Col xs>
       <SubjectAutoComplete type="syllabus" branch={this.props.branch} searchText={this.state.subjectValue} handleSubjectChange={this.handleSubjectChange} />
@@ -577,28 +578,48 @@ if(this.state.isDataLoaded){
       </Col>
       </Row>
       </Grid>
-      {this.displayQuestions()}
       <Grid fluid>
-      <Row center="xs">
-      <Col xs>
-      <br /><br />
-      {this.renderTextField()}
-      <br /><br />
-      <RaisedButton label="Add Question" primary={true} icon={<Add />} onClick={this.handleShowTextField} />
-      <br /><br />
-      </Col>
+      <Row end="xs" middle="xs">
+        <Col xs={7} sm={7} md={7} lg={3}>
+          <FlatButton label="Add Question" labelStyle ={{textTransform: 'none'}}
+             style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+            primary={true} icon={<Add />} onClick={this.handleShowTextField} />
+        </Col>
+        <Col xs={4} sm={4} md={4} lg={2}>
+          <FlatButton label = "Save" primary={true} labelStyle ={{textTransform: 'none'}}
+            style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+            disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment.bind('save')} />
+        </Col>
+        <Col xs={1} sm={1} md={1} lg={1}>
+        </Col>
       </Row>
-      <br />
-      <Row center="xs">
-      <Col xs={6} sm={6} md={4} lg={3}>
-      <RaisedButton label = "Save" primary={true} disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment.bind('save')} />
-      </Col>
-      <Col xs={6} sm={6} md={4} lg={3}>
-      <RaisedButton label="Submit" primary={true} disabled={this.state.buttonDisabled} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
-      </Col>
-      </Row>
-      <br /><br />
       </Grid>
+      {this.displayQuestions()}
+        <Grid fluid>
+        <Row center="xs">
+        <Col xs>
+        <br /><br />
+        {this.renderTextField()}
+        <br /><br />
+        </Col>
+        </Row>
+        <Row end='xs' middle='xs'>
+        <Col xs>
+            <FlatButton key={1} label="Go Back"
+              alt="loading" icon={<NavigationArrowBack color="#30b55b"/>} labelStyle ={{textTransform: 'none'}}
+              style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+             onClick={()=>{this.context.router.history.goBack()}} />
+        </Col>
+        <Col xs>
+        <FlatButton label = "Submit" primary={true} labelStyle ={{textTransform: 'none'}}
+           style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+          disabled={this.state.submitButton} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
+        </Col>
+        <Col xs={1} sm={1} md={1} lg={1}>
+        </Col>
+        </Row>
+        </Grid>
+        <br /> <br />
       <Dialog
             title={"Are you sure about creating this assignment with last date : "+new Date(this.state.controlledDate)+", Once submitted it cannot be deleted or edited"}
             modal={false}
