@@ -18,6 +18,7 @@ import Avatar from 'material-ui/Avatar'
 import PropTypes from 'prop-types'
 import {DeleteOutline} from '../../styledcomponents/SvgIcons'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
+import '../../components/anouncements/Announcements.css'
 
 var properties = require('../properties.json');
 
@@ -110,7 +111,7 @@ listItems = () =>{
   if(this.state.isDataLoaded)
     {
     if(this.state.users.length === 0){
-      buffer.push(<h4>You don't have any announcements yet !!! </h4>)
+      buffer.push(<h4 className="fontreq">You don't have any announcements yet !!! </h4>)
     }else{
       for (var i=0;i<this.state.users.length;i++){
         var date = new Date(parseInt(this.state.announcementIds[i].split('-')[7],10))
@@ -300,6 +301,19 @@ return(
     <Col xs={8} sm={8} md={8} lg={5}>
     <h2 className="heading">Announcement Board</h2>
     </Col>
+    <Col xs={8} sm={8} md={8} lg={8}>
+    <TextField
+     value = {this.state.message}
+     onChange = {this.handleChange}
+     hintText = "Give an announcement"
+     className="input"
+     onKeyPress={this.Enter}
+     />
+    </Col>
+    <Col xs={2} sm={2} md={2} lg={2}>
+  <FlatButton label="Announce" type="submit"  labelStyle={{textTransform: "none", fontSize: '1em'}} disabled={this.state.buttonDisabled}
+  className="AnnounceButton" onTouchTap={this.handleSubmit} />
+    </Col>
     </Row>
     </Grid>
 
@@ -322,23 +336,14 @@ return(
     />
 
 
-    <TextField
-     value = {this.state.message}
-     onChange = {this.handleChange}
-     hintText = "Give an announcement"
-     className="input"
-     onKeyPress={this.Enter}
-     />
 
-   <FlatButton label="Announce" type="submit"  labelStyle={{textTransform: "none", fontSize: '1em'}} disabled={this.state.buttonDisabled}
-     className="AnnounceButton" onTouchTap={this.handleSubmit} />
      <Dialog
            title="Are you sure you want to Delete this anouncement"
            modal={false}
            actions={actions}
            open={this.state.DeleteConfirm}
            autoScrollBodyContent={true}
-           titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+           titleStyle={{textAlign:"center",color: "rgb(0,0,0)"}}
            onRequestClose={this.handleClose}
          >
      </Dialog>

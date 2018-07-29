@@ -23,15 +23,16 @@ body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic
 .announcements .dateStyle {position: relative;float: right;top:1vmin;right: 1vmin;color: #da7373}
 .announcements .dateStyleTeacher {position: relative;float: right;top:1vmin;right: 1vmin;color: #bbbbbb}
 .announcements .listPrimaryText {text-align: left !important; cursor: default !important;
-  font-family: 'Roboto', sans-serif !important;font-weight: bold !important;}
+  font-family: 'Roboto', sans-serif !important;font-weight: bold !important;background: white;
+  border-bottom: 1px solid #d8d2d2;box-shadow: 3px 5px 15px 0px #d4d0d0}
 .announcements .paragraph{text-align: center;font-family: 'Roboto',sans-serif;font-weight: normal;
                font-size: 4vmin;letter-spacing: 0.1vmin;color: #39424d}
 .announcements .note{text-align: center;font-family: 'Roboto',sans-serif;font-weight: lighter;
                font-size: 2.5vmin;letter-spacing: 0.1vmin;color: #39424d}
 
 .announcements .deleteSpan{float:right; margin-right: 1.5em;}
-.input{ float: left !important;margin-left: 10%;width: 65% !important;border: 0px !important;padding: 5px 0px !important;margin-bottom: 20px !important;}
-.AnnounceButton{ box-shadow: 1px 2px 8px 0px grey;margin-right: 3% !important; border-radius: 1em !important; text-transform: none !important;
+.input{ float: left !important;margin-left: 7%;width: 90% !important;border: 0px !important;padding: 5px 0px !important;margin-bottom: 9px !important;}
+.AnnounceButton{ cursor: pointer !important; box-shadow: 1px 2px 8px 0px grey;margin: 1% 6% 1% 0% !important; border-radius: 1em !important; text-transform: none !important;
                  background-color: #30b55b !important; color: rgb(255,255,255) !important;}
 .vertical-scroll{height:101vh;overflow-y: auto; width: 100%;overflow-x: hidden;}
 ::-webkit-scrollbar { width: 0.4em;border-radius: 0.4em;}

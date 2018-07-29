@@ -1,0 +1,6 @@
+.nogutter .fontreq{
+    border: 1px solid lightgrey;
+    padding:10px;
+    font-family:'Roboto', sans-serif;
+    border-radius: 50px;
+}
