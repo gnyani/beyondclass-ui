@@ -75,13 +75,28 @@ const TheoryAssignment = Loadable({
   loading: Loading,
   timeout: 10000,
 })
+const ViewTheoryAssignment = Loadable({
+  loader: () => import('./teachernetwork/viewquestionset/ViewTheoryAssignment.js'),
+  loading: Loading,
+  timeout: 10000,
+})
 const EditTheoryAssignment = Loadable({
   loader: () => import('./teacher/editassignment/EditTheoryAssignment'),
   loading: Loading,
   timeout: 10000,
 })
+const ViewProgrammingAssignment = Loadable({
+  loader: () => import('./teachernetwork/viewquestionset/ViewProgrammingAssignment.js'),
+  loading: Loading,
+  timeout: 10000,
+})
 const EditProgrammingAssignment = Loadable({
   loader: () => import('./teacher/editassignment/EditProgrammingAssignment'),
+  loading: Loading,
+  timeout: 10000,
+})
+const ViewObjectiveAssignment = Loadable({
+  loader: () => import('./teachernetwork/viewquestionset/ViewObjectiveAssignment'),
   loading: Loading,
   timeout: 10000,
 })
@@ -136,15 +151,15 @@ export const Body =(props) => {
     <Route exact path='/teacher/reports/view/:assignmentid' render={({match}) =>(<Reports {...props} assignmentid={match.params.assignmentid}/>)} />
     <Route exact path='/teacher/assignment/:submissionid/evaluate' render={({match}) =>(<EvaluateAssignment {...props} submissionid={match.params.submissionid}/>)} />
     <Route exact path='/student/assignments/take/:assignmentid' render={({match}) =>(<SubmitAssignment {...props} assignmentid={match.params.assignmentid}/>)} />
-    <Route exact path='/teacher/create/:class/saved/:assignmentid' render={({match}) =>(< TheoryAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
-    <Route exact path='/teacher/create/:class/edit/:assignmentid' render={({match}) =>(< EditTheoryAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
-    <Route exact path='/teacher/createpa/:class/saved/:assignmentid' render={({match}) =>(< ProgrammingAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
-    <Route exact path='/teacher/createobjectiveassignment/:class/saved/:assignmentid' render={({match}) =>(< ObjectiveAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
-    <Route exact path='/teacher/createobjectiveassignment/:class/edit/:assignmentid' render={({match}) =>(< EditObjectiveAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
-    <Route exact path='/teacher/createpa/:class/edit/:assignmentid' render={({match}) =>(< EditProgrammingAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
-    <Route exact path='/teacher/create/edit/:assignmentid' render={({match}) =>(< EditTheoryAssignment {...props} assignmentid={match.params.assignmentid} email={match.params.email} />)} />
-    <Route exact path='/teacher/createpa/edit/:assignmentid' render={({match}) =>(< EditProgrammingAssignment {...props} assignmentid={match.params.assignmentid} email={match.params.email} />)} />
-    <Route exact path='/teacher/createobjectiveassignment/edit/:assignmentid' render={({match}) =>(< EditObjectiveAssignment {...props} assignmentid={match.params.assignmentid}  email={match.params.email} />)} />
+    <Route exact path='/teacher/create/:class/saved/:assignmentid' render={({match}) =>(<TheoryAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
+    <Route exact path='/teacher/create/:class/edit/:assignmentid' render={({match}) =>(<EditTheoryAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
+    <Route exact path='/teacher/createpa/:class/saved/:assignmentid' render={({match}) =>(<ProgrammingAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
+    <Route exact path='/teacher/createobjectiveassignment/:class/saved/:assignmentid' render={({match}) =>(<ObjectiveAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
+    <Route exact path='/teacher/createobjectiveassignment/:class/edit/:assignmentid' render={({match}) =>(<EditObjectiveAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
+    <Route exact path='/teacher/createpa/:class/edit/:assignmentid' render={({match}) =>(<EditProgrammingAssignment {...props} assignmentid={match.params.assignmentid} class={match.params.class} email={match.params.email} />)} />
+    <Route exact path='/teacher/create/edit/:assignmentid' render={({match}) =>(<ViewTheoryAssignment {...props} assignmentid={match.params.assignmentid} email={match.params.email} />)} />
+    <Route exact path='/teacher/createpa/edit/:assignmentid' render={({match}) =>(<ViewProgrammingAssignment {...props} assignmentid={match.params.assignmentid} email={match.params.email} />)} />
+    <Route exact path='/teacher/createobjectiveassignment/edit/:assignmentid' render={({match}) =>(<ViewObjectiveAssignment {...props} assignmentid={match.params.assignmentid}  email={match.params.email} />)} />
     <Route exact path='/teacherstudentspace' render={() =>(<TeacherStudentSpace {...props} />)} />
     <Route exact path='/updateprofile' render={() =>(<UpdateProfile {...props} />)} />
     <Route exact path='/submissions' render={() => (<Submissions {...props} />)} />

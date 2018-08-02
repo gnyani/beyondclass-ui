@@ -23,6 +23,7 @@ import IconButton from 'material-ui/IconButton'
 import ListDataComponent from '../teacherstudent/ListDataComponent'
 import Copy from 'material-ui/svg-icons/content/content-copy'
 import ListBatches from './ListBatches.js'
+import {get} from 'lodash'
 
 
 var properties = require('../properties.json');
@@ -47,12 +48,16 @@ constructor(){
    savedCreatedDates:[],
    savedAssignmentTypes: [],
    savedAssignmentSubjects: [],
+   savedAssignmentIdReferences: [],
    assignmentIds: [],
    propicUrls: [],
    createdDates: [],
    subjects:[],
    lastDates:[],
+   createdBy: [],
+   creatorCollege: [],
    additionalComments: [],
+   questionSetReferenceId: [],
    expanded:[],
    assignmentType: [],
    deleteConfirm: false,
@@ -91,6 +96,7 @@ componentDidMount(){
           savedCreatedDates: [],
           savedAssignmentTypes: [],
           savedAssignmentSubjects: [],
+          savedAssignmentIdReferences: [],
         })
       }
       else{
@@ -101,18 +107,21 @@ componentDidMount(){
       var newSavedCreatedDates = []
       var newSavedAssignmentTypes = []
       var newSavedAssignmentSubjects = []
+      var newSavedAssignmentIdReferences = []
       if(response)
       for(let i=0; i<response.length;i++){
         newSavedAssignmentIds.push(response[i].assignmentid)
         newSavedCreatedDates.push(response[i].createDate)
         newSavedAssignmentTypes.push(response[i].assignmentType)
         newSavedAssignmentSubjects.push(response[i].subject)
+        newSavedAssignmentIdReferences.push(get(response[i],"author.questionSetReferenceId", ''))
       }
       this.setState({
         savedAssignmentIds: newSavedAssignmentIds,
         savedAssignmentTypes: newSavedAssignmentTypes,
         savedCreatedDates: newSavedCreatedDates,
         savedAssignmentSubjects: newSavedAssignmentSubjects,
+        savedAssignmentIdReferences: newSavedAssignmentIdReferences,
       })
     })
 
@@ -139,6 +148,9 @@ componentDidMount(){
           lastDates: [],
           assignmentType: [],
           additionalComments: [],
+          questionSetReferenceId: [],
+          createdBy: [],
+          creatorCollege: [],
         })
       }
       else{
@@ -152,6 +164,9 @@ componentDidMount(){
       var newlastDates=[]
       var newadditionalComments=[]
       var newassignmentType=[]
+      var newquestionSetReferenceIds=[]
+      var newcreatedBy=[]
+      var newcreatorCollege=[]
       if(response)
       for(let i=0; i<response.length;i++){
         newassignmentIds.push(response[i].assignmentid)
@@ -160,11 +175,10 @@ componentDidMount(){
         newsubjects.push(response[i].subject)
         newlastDates.push(response[i].lastdate)
         newassignmentType.push(response[i].assignmentType)
-        if(response[i].message !== null && response[i].message.trim() !== '')
+        newquestionSetReferenceIds.push(get(response[i],"author.questionSetReferenceId",''))
         newadditionalComments.push(response[i].message)
-        else {
-          newadditionalComments.push(response[i].message)
-        }
+        newcreatedBy.push(get(response[i],"author.realOwner.firstName",'')+get(response[i],"author.realOwner.lastName",''))
+        newcreatorCollege.push(get(response[i],"author.realOwner.college",''))
       }
       this.setState({
         assignmentIds: newassignmentIds,
@@ -174,6 +188,9 @@ componentDidMount(){
         lastDates: newlastDates,
         assignmentType: newassignmentType,
         additionalComments: newadditionalComments,
+        questionSetReferenceId: newquestionSetReferenceIds,
+        createdBy: newcreatedBy,
+        creatorCollege: newcreatorCollege,
         isDataLoaded: true,
       })
     }).catch(response => {
@@ -199,7 +216,7 @@ shouldComponentUpdate(){
   return true
 }
 
-handleConfirmDelete(i){
+handleConfirmDelete = (i) =>{
   this.setState({
     deleteConfirm:true,
     index:i,
@@ -276,9 +293,10 @@ listSavedAssignments = () => {
   var buffer = []
   if(this.state.savedAssignmentIds.length !== 0)
   {
+
     buffer.push(<p className="paragraph" key={this.state.savedAssignmentIds.length+1}>Your draft assigments for class {this.props.class} </p>)
     for(let i=0; i<this.state.savedAssignmentIds.length; i++){
-      var createdDate = new Date(this.state.savedCreatedDates[i])
+        var createdDate = new Date(this.state.savedCreatedDates[i])
       buffer.push(
         <Grid fluid key={i}>
         <Row around="xs">
@@ -286,14 +304,14 @@ listSavedAssignments = () => {
            <Card
             onExpandChange={this.handleConfirmDelete.bind(this,i)}
             >
-             <CardHeader className="cardHeader"
-               title={this.props.email}
-               subtitle={"Saved on "+createdDate.getDate()+"-"+(createdDate.getMonth()+1)+"-"+createdDate.getFullYear()+" at "+createdDate.getHours()+":"+createdDate.getMinutes()}
-               avatar={this.state.propicUrls[i]}
-               showExpandableButton={true}
-               closeIcon={<DeleteOutline color="red" />}
-               openIcon={<DeleteOutline color="red" />}
-             />
+            <CardHeader className="cardHeader"
+            title={this.props.email}
+            subtitle={"Saved on "+createdDate.getDate()+"-"+(createdDate.getMonth()+1)+"-"+createdDate.getFullYear()+" at "+createdDate.getHours()+":"+createdDate.getMinutes()}
+            avatar={this.state.propicUrls[i]}
+            showExpandableButton={true}
+            closeIcon={<DeleteOutline color="red" />}
+            openIcon={<DeleteOutline color="red" />}
+            />
              <CardText style={{textAlign:"center"}}>
              <p><b>Assignment Type: </b> {this.state.savedAssignmentTypes[i]}</p>
              <br />
@@ -365,7 +383,7 @@ openDialogForNetwork = (i) => {
 
 postToNetwork = () => {
   var createdAssignment;
-  fetch('http://'+properties.getHostName+':8080/assignments/teacher/get/assignment/'+this.state.assignmentIds[this.state.activeIndex],{
+  fetch('http://'+properties.getHostName+':8080/assignments/teacher/get/assignment/publish/'+this.state.assignmentIds[this.state.activeIndex],{
           credentials: 'include',
           method: 'GET'
         }).then(response => {
@@ -425,16 +443,16 @@ downloadQuestions = () => {
 
 listAssignments(){
   var buffer = []
-  var attributes = ['Assignment Type','Subject','Last Date', 'Comments']
+  var attributes = ['Assignment Type','Subject','Last Date', 'Comments', 'Created By']
 if(this.state.assignmentIds.length !== 0)
 {
   buffer.push(<p className="paragraph" key={this.state.assignmentIds.length+1}>Your assigments for class {this.props.class} </p>)
   for(let i=0; i<this.state.assignmentIds.length; i++){
     var lastDate = new Date(this.state.lastDates[i])
-    var createdDate = new Date(this.state.createdDates[i])
     var values = [this.state.assignmentType[i],this.state.subjects[i],
     lastDate.getDate()+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()+" at 11:59 PM",
-    this.state.additionalComments[i]]
+    this.state.additionalComments[i], this.state.createdBy[i]+' ('+this.state.creatorCollege[i]+')']
+    var createdDate = new Date(this.state.createdDates[i])
     var src = 'http://'+properties.getHostName+':8080/assignments/get/questions/'+this.state.assignmentIds[i]
     buffer.push(
       <Grid fluid key={i}>
@@ -444,14 +462,14 @@ if(this.state.assignmentIds.length !== 0)
           onExpandChange={this.handleEdit.bind(this,i)}
           expanded={this.state.expanded[i]}
           >
-           <CardHeader className="cardHeader"
-             title={this.props.email}
-             subtitle={"Created on "+createdDate.getDate()+"-"+(createdDate.getMonth()+1)+"-"+createdDate.getFullYear()+" at "+createdDate.getHours()+":"+createdDate.getMinutes()}
-             avatar={this.state.propicUrls[i]}
-             showExpandableButton={true}
-             closeIcon={<Edit  />}
-             openIcon={<Edit  />}
-           />
+          <CardHeader className="cardHeader"
+            title={this.props.email}
+            subtitle={"Created on "+createdDate.getDate()+"-"+(createdDate.getMonth()+1)+"-"+createdDate.getFullYear()+" at "+createdDate.getHours()+":"+createdDate.getMinutes()}
+            avatar={this.state.propicUrls[i]}
+            showExpandableButton={true}
+            closeIcon={<Edit  />}
+            openIcon={<Edit  />}
+          />
          <CardText className="table">
              <ListDataComponent attribute={attributes} value={values} />
          </CardText>
@@ -555,6 +573,19 @@ const actions1 = [
       />,
     ]
 
+    const actions3 = [
+        <FlatButton
+          label="Cancel"
+          primary={true}
+          onTouchTap={this.handleClose}
+        />,
+        <FlatButton
+          label="Confirm"
+          primary={true}
+          onTouchTap={this.deleteAssignment}
+        />,
+      ]
+
     const actions2 = [
         <FlatButton
           label="Close"
@@ -592,6 +623,16 @@ const actions1 = [
             modal={true}
             actions={actions2}
             open={this.state.selectBatchDialogWhenOneBatch}
+            autoScrollBodyContent={true}
+            titleStyle={{textAlign:"center",color: "#39424d"}}
+            onRequestClose={this.handleClose}
+          >
+      </Dialog>
+      <Dialog
+            title="Are you sure you want to delete this draft?"
+            modal={true}
+            actions={actions3}
+            open={this.state.deleteConfirm}
             autoScrollBodyContent={true}
             titleStyle={{textAlign:"center",color: "#39424d"}}
             onRequestClose={this.handleClose}

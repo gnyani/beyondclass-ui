@@ -5,7 +5,6 @@ import DatePicker from 'material-ui/DatePicker'
 import TextField from 'material-ui/TextField'
 import UpdateIcon from 'material-ui/svg-icons/action/update.js'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
-import RaisedButton from 'material-ui/RaisedButton'
 import FlatButton from 'material-ui/FlatButton'
 import {Media} from '../../utils/Media'
 import styled from 'styled-components'
@@ -217,7 +216,8 @@ return buffer;
       <Col xs={9} sm={9} md={6} lg={5}>
       <br /><br />
       <FlatButton key={1} label="Go Back"   alt="loading" icon={<NavigationArrowBack color="white"/>}
-      className="button" onClick={()=>{this.context.router.history.goBack()}} />
+      labelStyle ={{textTransform: 'none'}} style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+       onClick={()=>{this.context.router.history.goBack()}} />
       </Col>
       </Row>
       </Grid>
@@ -238,7 +238,9 @@ return buffer;
       <Grid fluid>
       <Row center='xs' middle='xs'>
       <Col xs>
-      <RaisedButton label = "Update" primary={true} disabled={this.state.submitButton} icon={<UpdateIcon />} onClick={this.validateUpdateAssignment} />
+      <FlatButton label = "Update" primary={true} disabled={this.state.submitButton}
+        labelStyle ={{textTransform: 'none'}} style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+        icon={<UpdateIcon />} onClick={this.validateUpdateAssignment} />
       </Col>
       </Row>
       </Grid>

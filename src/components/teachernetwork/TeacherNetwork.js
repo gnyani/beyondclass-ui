@@ -15,6 +15,12 @@ import ListDataComponent from '../teacherstudent/ListDataComponent'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import Copy from 'material-ui/svg-icons/content/content-copy'
 import ListBatches from '../teacher/ListBatches.js'
+import ListComments from './ListComments'
+import Pagination from 'material-ui-pagination';
+import IconButton from 'material-ui/IconButton';
+import ClearAll from 'material-ui/svg-icons/action/highlight-off.js'
+import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'
+import { get } from 'lodash'
 
 var properties = require('../properties.json');
 
@@ -45,8 +51,41 @@ class TeacherNetwork extends Component{
       selectBatchDialog: false,
       batchIndex: null,
       showRefreshIndicator: false,
+      total: 3,
+      display:4,
+      number: 1,
+	    subjectValue:'',
+      key: 1,
     }
   }
+
+handlePageChange= (number) => {
+     this.setState({
+       number: number,
+       users:[],
+       messages:[],
+       message : '',
+	    })
+this.getData(this.state.subjectValue,number);
+};
+
+handleClearFilter = () => {
+    this.setState({
+  	    subjectValue:'',
+  	    number:1,
+  	    key: this.state.key+1,
+  	  },function(){
+  	    this.getData('',1)
+  	  })
+  	}
+
+handleSubjectChange = (subjectValue) => {
+  	    this.setState({
+                subjectValue:subjectValue,
+        	      number: 1,
+        	    })
+	    this.getData(subjectValue,1);
+};
 
 
  addLike = (setId, index) => {
@@ -120,7 +159,6 @@ class TeacherNetwork extends Component{
          comments: newComments,
          commentBox: [],
        })
-       console.log("comments in commetning" + newComments[0] + "state" + this.state.comments[0].length)
      }).catch(response => {
      notify.show("Please login your session expired","error");
      this.context.router.history.push('/');
@@ -157,28 +195,29 @@ handleCommentChange = (e) => this.setState({commentText:e.target.value});
 
  handleEdit = (i) => {
    if(this.state.response[i].previousAssignmentType === 'THEORY'){
-     this.context.router.history.push('/teacher/create/edit/'+this.state.response[i].secondaryId)
+     this.context.router.history.push('/teacher/create/edit/'+this.state.response[i].referenceAssignmentId)
    }else if(this.state.response[i].previousAssignmentType === 'CODING'){
-     this.context.router.history.push('/teacher/createpa/edit/'+this.state.response[i].secondaryId)
+     this.context.router.history.push('/teacher/createpa/edit/'+this.state.response[i].referenceAssignmentId)
    }else if(this.state.response[i].previousAssignmentType === 'OBJECTIVE'){
-    this.context.router.history.push('/teacher/createobjectiveassignment/edit/'+this.state.response[i].secondaryId)
+    this.context.router.history.push('/teacher/createobjectiveassignment/edit/'+this.state.response[i].referenceAssignmentId)
    }
  }
 
   listQuestionSets = () => {
     var buffer = []
-    var attributes = ['Question Set Type','Description']
+    var response = this.state.response
+    var attributes = ['College','Branch','Question Set Type','Description','Subject', 'Questions Type']
   if(this.state.isDataLoaded === true && this.state.response.length > 0){
-    for(var i=0; i < this.state.response.length; i++){
-      var values = [this.state.response[i].questionSetType, this.state.response[i].questionSetDescription ]
-      var createdDate = new Date(this.state.response[i].createdAt)
+    for(var i=0; i < response.length; i++){
+      var values = [get(response[i],"postedUser.college",''), get(response[i],"postedUser.branch",''),response[i].questionSetType, response[i].questionSetDescription, get(response[i],"subject",''), response[i].previousAssignmentType ]
+      var createdDate = new Date(response[i].createdAt)
       buffer.push(
         <div key={i}>
         <Card>
           <CardHeader className="cardHeader"
-            title={this.state.response[i].email}
+            title={response[i].email}
             subtitle={"Created on "+createdDate.getDate()+"-"+(createdDate.getMonth()+1)+"-"+createdDate.getFullYear()+" at "+createdDate.getHours()+":"+createdDate.getMinutes()}
-            avatar={""}
+            avatar={get(response[i],"postedUser.normalpicUrl",'') || get(response[i],"postedUser.googlepicUrl",'')}
           />
         <Grid fluid>
           <Row around="xs">
@@ -239,7 +278,7 @@ handleCommentChange = (e) => this.setState({commentText:e.target.value});
       </div>
       )
     }
-  }else if(this.state.response.length === 0){
+  }else if(this.state.response.length === 0 && this.state.isDataLoaded === true){
     buffer.push(<p key={i} className="paragraph">No public question sets available</p>)
   }else{
     buffer.push(<Grid fluid className="RefreshIndicator" key={1}>
@@ -259,40 +298,49 @@ handleCommentChange = (e) => this.setState({commentText:e.target.value});
   }
     return buffer
   }
-
+getData = (param,pageNumber) => {
+  fetch('http://'+properties.getHostName+':8080/teachersnetwork/viewquestionsets?subject='+param+'&pageNumber='+pageNumber, {
+           credentials: 'include',
+           method: 'GET'
+        }).then(response => {
+          if(response.status === 200 )
+          return response.json()
+          else if(response.status === 204){
+            this.setState({
+              isDataLoaded: true,
+              response:[] ,
+              likeCount: [],
+              comments: [],
+              likedUsers: [],
+              total: response.totalPages,
+            })
+          }
+          else if (response.status === 500){
+            notify.show("something went wrong","error")
+          }
+        }).then(response => {
+          if(response){
+            var newLikeCount = []
+            var newComments = []
+            var newLikedUsers = []
+            for (var i =0 ; i < response.content.length; i++){
+                newLikeCount.push(response.content[i].likedBy.length)
+                newLikedUsers.push(response.content[i].likedBy.slice())
+                newComments.push(response.content[i].comments.slice())
+            }
+            this.setState({
+              isDataLoaded: true,
+              response: response.content,
+              likeCount: newLikeCount,
+              comments: newComments,
+              likedUsers: newLikedUsers,
+              total: response.totalPages
+            })
+          }
+        })
+}
   componentDidMount(){
-    fetch('http://'+properties.getHostName+':8080/teachersnetwork/viewquestionsets', {
-             credentials: 'include',
-             method: 'GET'
-          }).then(response => {
-            if(response.status === 200 )
-            return response.json()
-            else if(response.status === 204){
-
-            }
-            else if (response.status === 500){
-              notify.show("something went wrong","error")
-            }
-          }).then(response => {
-            if(response){
-              var newLikeCount = []
-              var newComments = []
-              var newLikedUsers = []
-              for (var i =0 ; i < response.length; i++){
-                  newLikeCount.push(response[i].likedBy.length)
-                  newLikedUsers.push(response[i].likedBy.slice())
-                  newComments.push(response[i].comments.slice())
-              }
-              this.setState({
-                isDataLoaded: true,
-                response: response,
-                likeCount: newLikeCount,
-                comments: newComments,
-                likedUsers: newLikedUsers,
-              })
-            }
-            console.log("comments" + newComments[0] + "state" + this.state.comments[0].length)
-          })
+   this.getData('',1)
   }
 
   updateBatchSelection = (batches) => {
@@ -301,18 +349,6 @@ handleCommentChange = (e) => this.setState({commentText:e.target.value});
     })
   }
 
-  displayComments = () => {
-    var buffer = []
-     var rawComments = []
-     console.log("index is"+ this.state.activeIndex + "comments are" + this.state.comments.length)
-    rawComments = this.state.comments[0]
-    // for(var i=0; i< rawComments.length; i++){
-    //   buffer.push(
-    //     <p>rawComments[i].username: rawComments[i].commentContent</p>
-    //   )
-    // }
-    return buffer;
-  }
 
   submitDuplicateAssignmentRequest = () => {
     var batch = this.props.batches[this.state.batchIndex]
@@ -320,32 +356,36 @@ handleCommentChange = (e) => this.setState({commentText:e.target.value});
       showRefreshIndicator: true
     })
 
-    fetch('http://'+properties.getHostName+':8080/assignments/teacher/duplicate/'+this.state.response[this.state.activeIndex].secondaryId, {
-           method: 'POST',
-           headers: {
-                 'mode': 'cors',
-                 'Content-Type': 'application/json'
-             },
-         credentials: 'include',
-         body: batch,
+    fetch('http://'+properties.getHostName+':8080/teachersnetwork/get/assignment/'+this.state.response[this.state.activeIndex].referenceAssignmentId+'?questionsetid='+this.state.response[this.state.activeIndex].id, {
+      credentials: 'include',
+      method: 'GET'
       }).then(response => {
-        if(response.status === 201){
-          return response.json()
-        }else{
-          notify.show("Sorry something went wrong","error")
+        if(response.status === 200 )
+        return response.json()
+        else{
+          notify.show("something went wrong","error")
         }
       }).then(response => {
-          this.decideRedirectAssignment(response.assignmentid,response.assignmentType,response.batch)
+        this.decideRedirectAssignment(null ,response.assignmentType, batch, response)
       })
   }
 
-  decideRedirectAssignment = (id,type,batch) => {
+  decideRedirectAssignment = (id,type,batch,assignment ) => {
     if(type === 'THEORY')
-    this.context.router.history.push('/teacher/create/'+batch+'/saved/'+id)
+    this.context.router.history.push({
+      pathname: '/teacher/create/'+batch+'/saved/'+id,
+      state: {assignment: assignment}
+    })
     else if(type === 'OBJECTIVE')
-    this.context.router.history.push('/teacher/createobjectiveassignment/'+batch+'/saved/'+id)
+    this.context.router.history.push({
+      pathname: '/teacher/createobjectiveassignment/'+batch+'/saved/'+id,
+      state: {assignment: assignment}
+    })
     else{
-      this.context.router.history.push('/teacher/createpa/'+batch+'/saved/'+id)
+      this.context.router.history.push({
+        pathname: '/teacher/createpa/'+batch+'/saved/'+id,
+        state: {assignment: assignment}
+      })
     }
   }
 
@@ -381,6 +421,22 @@ handleCommentChange = (e) => this.setState({commentText:e.target.value});
       >
       <div>
       <Grid fluid>
+    <Row between='xs' bottom='xs'>
+       <Col xs lg={9}>
+	       <SubjectAutoComplete branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} key={this.state.key}/>
+	       <IconButton tooltip="Clear filter" onClick={this.handleClearFilter} >
+	       <ClearAll/>
+	       </IconButton>
+        </Col>
+    	 <Col xs >
+	      <Pagination
+	      total = { this.state.total }
+	      current = { this.state.number }
+	      display = { this.state.display }
+	      onChange = { this.handlePageChange}
+	      />
+       </Col>
+    </Row>
       <Row around = "xs">
       <Col xs={11} sm={11} md={7} lg={7} className="Reports">
       <br />
@@ -409,7 +465,7 @@ handleCommentChange = (e) => this.setState({commentText:e.target.value});
             titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
             onRequestClose={this.handleClose}
           >
-          {this.state.comments[0]}
+          <ListComments comments={this.state.comments[this.state.activeIndex]} />
       </Dialog>
       <Dialog
             title="Select the batch to duplicate the assignment"
