@@ -70,6 +70,7 @@ constructor(){
     totalActiveTime: null,
     saveButton: false,
     isDataLoaded: false,
+    postedToNetwork: false,
   }
   this.renderTextField = this.renderTextField.bind(this)
   this.displayQuestions = this.displayQuestions.bind(this)
@@ -103,6 +104,7 @@ componentDidMount(){
           subjectValue: SubjectsNameLookup[response.subject],
           numQuestions: response.numberOfQuesPerStudent,
           controlledDate: response.lastdate,
+          postedToNetwork: response.postedToNetwork,
         })
       }).catch(response => {
       notify.show("Please login your session expired","error");
@@ -124,7 +126,8 @@ componentDidMount(){
         validity: response.validity.slice(),
         subjectValue: SubjectsNameLookup[response.subject],
         numQuestions: response.numberOfQuesPerStudent,
-        controlledDate: response.lastdate,
+        controlledDate: this.state.controlledDate,
+        postedToNetwork: response.postedToNetwork,
       })
    }else {
       this.setState({
@@ -184,7 +187,8 @@ _onActive = () => {
          questionSetReferenceId: this.props.location.state.assignment.author.questionSetReferenceId,
          realOwner: this.props.location.state.assignment.author.realOwner,
        },
-       assignmentType: 'OBJECTIVE'
+       assignmentType: 'OBJECTIVE',
+       postedToNetwork: this.state.postedToNetwork,
      }
    }
   else{
@@ -198,7 +202,8 @@ _onActive = () => {
        message: this.state.message,
        subject: this.state.subject,
        numberOfQuesPerStudent: this.state.numQuestions,
-       assignmentType: 'OBJECTIVE'
+       assignmentType: 'OBJECTIVE',
+       postedToNetwork: this.state.postedToNetwork
      }
    }
    return buffer
@@ -319,6 +324,7 @@ getAssignmentBody = () => {
       },
       assignmentType: 'OBJECTIVE',
       numberOfQuesPerStudent: this.state.numQuestions,
+      postedToNetwork: this.state.postedToNetwork,
    }
   }else{
     buffer = {
@@ -332,6 +338,7 @@ getAssignmentBody = () => {
       validity: this.state.validity,
       assignmentType: 'OBJECTIVE',
       numberOfQuesPerStudent: this.state.numQuestions,
+      postedToNetwork: this.state.postedToNetwork,
     }
   }
   return buffer

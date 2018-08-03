@@ -66,6 +66,7 @@ constructor(){
     timeout: 5000,
     isIdle: false,
     totalActiveTime: null,
+    postedToNetwork: false,
   }
   this.renderTextField = this.renderTextField.bind(this)
   this.displayQuestions = this.displayQuestions.bind(this)
@@ -132,6 +133,7 @@ componentDidMount(){
           subjectValue: SubjectsNameLookup[response.subject],
           questionsEditoStates: newEditorStates.slice(),
           numQuestions: response.numberOfQuesPerStudent,
+          postedToNetwork: response.postedToNetwork
         })
       }).catch(response => {
       notify.show("Please login your session expired","error");
@@ -147,11 +149,12 @@ componentDidMount(){
        questions: response.questions,
        message: response.message,
        subject: response.subject,
-       controlledDate: response.lastdate,
+       controlledDate: this.state.controlledDate,
        isDataLoaded: true,
        subjectValue: SubjectsNameLookup[response.subject],
        questionsEditoStates: newEditorStates.slice(),
        numQuestions: response.numberOfQuesPerStudent,
+       postedToNetwork: response.postedToNetwork
      })
    }
    else{
@@ -196,6 +199,7 @@ _onActive = () => {
      questions: this.state.questions,
      assignmentType: 'THEORY',
      numberOfQuesPerStudent: this.state.numQuestions,
+     postedToNetwork: this.state.postedToNetwork,
      author: {
          questionSetReferenceId: this.props.location.state.assignment.author.questionSetReferenceId,
          realOwner: this.props.location.state.assignment.author.realOwner,
@@ -212,6 +216,7 @@ _onActive = () => {
         questions: this.state.questions,
         assignmentType: 'THEORY',
         numberOfQuesPerStudent: this.state.numQuestions,
+        postedToNetwork: this.state.postedToNetwork,
      }
    }
    return buffer
@@ -261,6 +266,7 @@ getAssignmentBody = () => {
       questions: this.state.questions,
       assignmentType: 'THEORY',
       numberOfQuesPerStudent: this.state.numQuestions,
+      postedToNetwork: this.state.postedToNetwork,
       author: {
         questionSetReferenceId: this.props.location.state.assignment.author.questionSetReferenceId,
         realOwner: this.props.location.state.assignment.author.realOwner,
@@ -276,6 +282,7 @@ getAssignmentBody = () => {
       questions: this.state.questions,
       assignmentType: 'THEORY',
       numberOfQuesPerStudent: this.state.numQuestions,
+      postedToNetwork: this.state.postedToNetwork,
     }
   }
   return buffer
