@@ -87,7 +87,7 @@ else{
        <IconButton  tooltip="Report Issue" containerElement={<Link to="/report/issue" />} >
          <BugOutline color="white" />
        </IconButton>
-       <div style={{position: 'relative', right: '1.5em'}}>
+       <div style={{position: 'relative', right: '1em'}}>
          <IconButton  tooltip="Logout"  onTouchTap={props.logout}>
           <Lock color="white" />
          </IconButton>

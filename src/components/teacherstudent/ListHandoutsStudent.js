@@ -5,7 +5,6 @@ import {ActionViewArray,FileFileDownload,NavigationFullscreen} from '../../style
 import {Card, CardActions, CardHeader, CardMedia, CardTitle} from 'material-ui/Card';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import UnauthorizedPage from '../UnauthorizedPage.js'
-import Divider from 'material-ui/Divider'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'

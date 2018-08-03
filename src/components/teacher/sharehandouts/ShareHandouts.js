@@ -46,7 +46,6 @@ class ShareHandouts extends Component{
       comment: '',
       uploadStarted: false,
     };
-    this._handleImageChange = this._handleImageChange.bind(this);
     this._handleSubmit = this._handleSubmit.bind(this);
     this.handleSubjectChange = this.handleSubjectChange.bind(this);
   }
@@ -115,7 +114,7 @@ handleCommentChange = (event) => {
     }
   }
 
-  _handleImageChange(e) {
+  _handleImageChange = (e) => {
     e.preventDefault();
 
     let reader = new FileReader();
@@ -172,6 +171,7 @@ handleCommentChange = (event) => {
         <FlatButton
         label="Choose a PDF file"
         icon={<AttachFile />}
+        containerElement="label"
         labelStyle={{textTransform: 'none'}}
         style={styles.uploadButton}
         >
