@@ -5,6 +5,7 @@ import Pagination from 'material-ui-pagination';
 import {notify} from 'react-notify-toast';
 import IconButton from 'material-ui/IconButton';
 import {DeleteOutline} from '../../styledcomponents/SvgIcons'
+import {ChatOutline} from '../../styledcomponents/SvgIcons.js'
 import Dialog from 'material-ui/Dialog'
 import {List, ListItem} from 'material-ui/List'
 import Avatar from 'material-ui/Avatar'
@@ -92,11 +93,11 @@ class TeacherAnnouncement extends Component{
    var buffer=[]
    if(this.state.announcements.length !== 0)
    {
-     buffer.push(<h2 className="heading" key={5}> Your announcements for class {this.props.class}</h2>)
+     buffer.push(<h2 className="heading" style={{fontSize:'20px'}} key={5}> Your announcements for class {this.props.class}</h2>)
    for (let i=0;i<this.state.announcements.length;i++){
      var date = new Date(parseInt(this.state.announcementIds[i].split('-')[6],10))
      buffer.push(
-                   <Grid fluid key={i} className="noGutter">
+                   <Grid fluid key={i} className="nogutter">
                    <Row middle="xs">
                    <Col xs>
                      <ListItem
@@ -104,14 +105,17 @@ class TeacherAnnouncement extends Component{
                       leftAvatar={<Avatar src={this.state.profilePictures[i]} />}
                       disabled={true}
                       primaryText={this.state.announcements[i]}
+                      rightIconButton={
+                        <IconButton 
+                        onClick = {this.handleDialogOpen.bind(this,i)}>
+                        <DeleteOutline color='red' />
+                        </IconButton>
+                      }
                       secondaryText={<p style={{fontWeight: 'lighter'}}>
                         Posted on {date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}
                       </p>}
                       secondaryTextLines={2}
                       />
-                   </Col>
-                   <Col xs={1} sm={1} md={1} lg={1}>
-                   <IconButton onClick = {this.handleDialogOpen.bind(this,i)}><DeleteOutline color='red' /></IconButton>
                    </Col>
                    </Row>
                    </Grid>
@@ -120,9 +124,7 @@ class TeacherAnnouncement extends Component{
       }
  }
  else{
-   buffer.push(<p className="name" key={1}><span className="paragraph">
-                You did not make any announcements to this class yet !!!
-               </span></p>)
+  buffer.push(<p className="fontreq" key={1}>You did not make any announcements to this class yet !!!</p>)
  }
  return buffer;
 }
@@ -224,39 +226,47 @@ class TeacherAnnouncement extends Component{
         onTouchTap={this.handleClose}
       />]
     return(
-      <Grid fluid>
-      <Row around="xs">
-      <Col xs={12} sm={12} md={10} lg={10}>
       <div className="announcements">
+      <Grid fluid>
+        <Row  center="xs" middle="xs">
+        <Col  xs={2} sm={2} md={2} lg={1}>
+          <ChatOutline style={{height:'2.5em', width: '2.5em', marginTop: '0.5em', marginLeft: '1em', color:'#30b55b'}}/>
+        </Col>
+        <Col xs={8} sm={8} md={8} lg={5}>
+          <h2 className="heading">Announcement Board</h2>
+        </Col>
+          <Col xs={8} sm={8} md={8} lg={8}>
+            <TextField
+             value = {this.state.message}
+             onChange = {this.handleMessageChange}
+             hintText = "Give an anouncement"
+             className="input"
+             onKeyPress={this.Enter}
+             />
+         </Col>
+         <Col xs={2} sm={2} md={2} lg={2}>
+            <FlatButton label="Announce" type="submit"  disabled={this.state.buttonDisabled}
+              labelStyle = {{textTransform: 'none', fontSize: '1em'}}
+             className="AnnounceButton" onTouchTap={this.handleSubmit}/>
+           </Col>
+        </Row>
+      </Grid>
+      <Grid fluid className="nogutter">
+      <Row center="xs">
+      <Col xs={12} sm={12} md={8} lg={8}>
       <List>
               {this.list()}
       </List>
-       </div>
+      </Col>
+      </Row>
+      </Grid>
        <br />
-       <Grid fluid>
-        <Row center="xs">
-          <Pagination
+      <Pagination
           total = { this.state.total }
           current = { this.state.number }
           display = { this.state.display }
           onChange = { this.handlePageChange}
           />
-        </Row>
-       </Grid>
-
-       <TextField
-        value = {this.state.message}
-        onChange = {this.handleMessageChange}
-        hintText = "Give an anouncement"
-        className="input"
-        onKeyPress={this.Enter}
-        />
-
-       <FlatButton label="Announce" type="submit"  disabled={this.state.buttonDisabled}
-         labelStyle = {{textTransform: 'none', fontSize: '1em'}}
-        className="AnnounceButton" onTouchTap={this.handleSubmit}/>
-
-
         <Dialog
               title="Are you sure you want to Delte this anouncement"
               modal={false}
@@ -267,9 +277,7 @@ class TeacherAnnouncement extends Component{
               onRequestClose={this.handleClose}
             >
         </Dialog>
-      </Col>
-      </Row>
-      </Grid>
+      </div>
     )
   }
 }
