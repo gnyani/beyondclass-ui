@@ -36,6 +36,7 @@ class StudentClassDetails extends Component{
       >
         <MenuItem value={1} primaryText="Select" />
         <MenuItem value={'VASV'} label="VASV" primaryText="Vasavi College Of Engineering" />
+        <MenuItem value={'OU'} label="OU"  primaryText="Osmania University" />
         <MenuItem value={'SREC'} label="SREC"  primaryText="SR Engineering College" />
         <MenuItem value={'KITS'} label="KITS" primaryText="KITS Engineering College" />
         <MenuItem value={'GNITS'} label="GNITS" primaryText="GNITS Engineering College" />
