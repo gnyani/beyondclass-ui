@@ -307,3 +307,43 @@ legend {
     box-sizing: border-box;
     z-index: 1;
 }
+.fontreq{
+  border: 1px solid lightgrey;
+  padding:10px;
+  font-family:'Roboto', sans-serif;
+  border-radius: 50px;
+}
+.headfont{
+  font-size: small !important;
+}
+.headfont > .icn{
+  text-align: right !important;
+}
+.assgn{
+  margin: 2% 25% !important;
+  text-align: center !important;
+}
+.listhand{
+  margin: 0% 23%;
+  border: 1px solid transparent;
+  box-shadow: 3px 5px 15px 0px #d4d0d0;
+  border-top: 3px solid lightgray;
+}
+.customhead {
+  padding: 0.1%;
+  font-family: 'Roboto', sans-serif;
+  font-weight: normal;
+  font-size: 1.7em;
+  letter-spacing: 0.08vmin;
+  color: #39424d;
+  margin-right: 15vmin;
+}
+.text-left{
+  text-align: left;
+}
+.text-right{
+  text-align: right;
+}
+.text-center{
+  text-align: center;
+}

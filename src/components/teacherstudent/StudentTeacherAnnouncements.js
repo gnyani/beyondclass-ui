@@ -25,7 +25,7 @@ class StudentTeacherAnnouncements extends Component{
   listItems = () => {
  var buffer = []
     if(this.state.announcements.length === 0)
-    buffer.push(<p key={1} className="heading">You are all caught up, you don't have any announcements yet</p>)
+    buffer.push(<p key={1} className="fontreq">You are all caught up, you don't have any announcements yet</p>)
     else{
     for (let i=0;i<this.state.announcements.length;i++){
         var date = new Date(parseInt(this.state.announcementIds[i].split('-')[6],10))
@@ -95,11 +95,11 @@ class StudentTeacherAnnouncements extends Component{
     return(
       <div className="announcements">
         <Grid fluid>
-        <Row  center="xs" middle="xs">
-        <Col  xs={2} sm={2} md={2} lg={1}>
+        <Row className="headfont" center="xs" middle="xs">
+        <Col className="icn" xs={2} sm={2} md={2} lg={1}>
           <ChatOutline style={{height:'2.5em', width: '2.5em', marginTop: '0.5em', marginLeft: '1em', color:'#30b55b'}}/>
         </Col>
-        <Col xs={8} sm={8} md={8} lg={7}>
+        <Col xs={8} sm={8} md={8} lg={6}>
         <h2 className="heading">Announcements from your teachers</h2>
         </Col>
         </Row>

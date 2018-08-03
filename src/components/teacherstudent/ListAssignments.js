@@ -161,7 +161,7 @@ if(this.state.assignmentIds.length !== 0)
   )
 }
 }else if(this.state.assignmentIds.length === 0 && this.state.isDataLoaded === true){
-  buffer.push(<p className="paragraph" key={1} >You are all caught up !!!</p>)
+  buffer.push(<p className="fontreq assgn" key={1} >You are all caught up !!!</p>)
 }else{
   buffer.push(
   <Grid fluid className="RefreshIndicator" key={1}>

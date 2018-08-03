@@ -90,7 +90,7 @@ class ListHandoutsStudent extends Component{
       )
     }
   }else if(this.state.links.length === 0 && this.state.loadHandouts === true){
-    return(<p>No handouts were found for this class</p>)
+    return(<p className="fontreq">No handouts were found for selected class</p>)
   }
     return buffer
   }
@@ -147,25 +147,34 @@ class ListHandoutsStudent extends Component{
 if(this.props.userrole==="student"){
    return(
      <div className="ListHandouts">
-     <p className="paragraph">View your handouts</p>
+     {/* <p className="paragraph">View your handouts</p> */}
      <Grid fluid className="nogutter">
-     <Row center="xs" middle="xs">
-     <Col xs={12} sm={12} md={5} lg={3}>
+     <Row className="headfont" center="xs" middle="xs">
+        <Col className="icn" xs={2} sm={2} md={2} lg={1}>
+          <ActionViewArray style={{height:'2.5em', width: '2.5em', marginTop: '0.5em', marginLeft: '1em', color:'#30b55b'}}/>
+        </Col>
+        <Col xs={8} sm={8} md={8} lg={4}>
+        <h2 className="customhead">View your handouts</h2>
+        </Col>
+      </Row>
+     <Row className="listhand" center="xs" middle="xs">
+     <Col xs={12} sm={12} md={9} lg={9}>
      <SubjectAutoComplete branch={this.props.branch} handleSubjectChange={this.handleSubjectChange} />
      <br />
      <br />
       </Col>
-      <Col xs={6} sm={6} md={4} lg={2} className="NotesList">
+      <Col xs={6} sm={6} md={3} lg={3} className="NotesList">
       <FlatButton type="submit" label="View" labelStyle={{textTransform: "none", fontSize: '1em'}}
-        disabled={this.state.buttonDisabled} icon={<ActionViewArray color="white"/>} className="nextButton" onClick={this.loadHandouts} />
+        disabled={this.state.buttonDisabled} className="nextButton" onClick={this.loadHandouts} />
+        {/* icon={<ActionViewArray color="white"/>} */}
       <br />
       </Col>
       </Row>
-     <Row around="xs">
+     {/* <Row around="xs">
      <Col xs={12} sm={12} md={10} lg={8}>
       <Divider />
     </Col>
-    </Row>
+    </Row> */}
     </Grid>
      <Grid fluid className="nogutter">
      <br />
