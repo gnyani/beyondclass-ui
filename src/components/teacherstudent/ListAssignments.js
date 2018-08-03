@@ -11,6 +11,7 @@ import RefreshIndicator from 'material-ui/RefreshIndicator'
 import ListDataComponent from './ListDataComponent'
 import ViewQuestions from '../teacher/ViewQuestions'
 import {Card, CardActions,CardText,CardHeader} from 'material-ui/Card'
+import {get} from 'lodash'
 
 var properties = require('../properties.json')
 
@@ -26,6 +27,8 @@ constructor(){
    lastDates:[],
    additionalComments: [],
    assignmentType: [],
+   createdBy: [],
+   creatorCollege: [],
    expanded:[],
    isDataLoaded: false,
   }
@@ -60,6 +63,8 @@ componentDidMount(){
       var newlastDates=[]
       var newadditionalComments=[]
       var newassignmentType=[]
+      var newcreatedBy=[]
+      var newcreatorCollege=[]
       for(let i=0; i<response.length;i++){
         newassignmentIds.push(response[i].assignmentid)
         newpropicUrls.push(response[i].propicurl)
@@ -67,11 +72,9 @@ componentDidMount(){
         newsubjects.push(response[i].subject)
         newlastDates.push(response[i].lastdate)
         newassignmentType.push(response[i].assignmentType)
-        if( response[i].message !== null && response[i].message.trim() !== '')
-        newadditionalComments.push(''+response[i].message)
-        else {
-          newadditionalComments.push(response[i].message)
-        }
+        newadditionalComments.push(response[i].message)
+        newcreatedBy.push(get(response[i],"author.realOwner.firstName",'')+get(response[i],"author.realOwner.firstName",''))
+        newcreatorCollege.push(get(response[i],"author.realOwner.college",''))
       }
       this.setState({
         assignmentIds: newassignmentIds,
@@ -81,6 +84,8 @@ componentDidMount(){
         lastDates: newlastDates,
         assignmentType: newassignmentType,
         additionalComments: newadditionalComments,
+        createdBy: newcreatedBy,
+        creatorCollege: newcreatorCollege,
         isDataLoaded: true,
       })
     })
@@ -100,7 +105,7 @@ handleExpand(i){
 
 listAssignments(){
   var buffer = []
-  var attributes = ['Assignment Type','Subject','Last Date', 'Comments']
+  var attributes = ['Assignment Type','Subject','Last Date', 'Comments', 'Created By']
 if(this.state.assignmentIds.length !== 0)
 {
   buffer.push(<p className="paragraph" key={this.state.assignmentIds.length+1}>Your pending assigments</p>)
@@ -109,7 +114,7 @@ if(this.state.assignmentIds.length !== 0)
     var createdDate = new Date(this.state.createdDates[i])
     var values = [this.state.assignmentType[i],this.state.subjects[i],
     lastDate.getDate()+"-"+(lastDate.getMonth()+1)+"-"+lastDate.getFullYear()+" at 11:59 PM",
-    this.state.additionalComments[i]]
+    this.state.additionalComments[i], this.state.createdBy[i]+' ('+ this.state.creatorCollege[i]+')']
     buffer.push(
       <Grid fluid key={i}>
       <Row center="xs">

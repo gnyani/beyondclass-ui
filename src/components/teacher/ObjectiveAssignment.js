@@ -76,7 +76,7 @@ constructor(){
 }
 
 componentDidMount(){
-  if(this.props.assignmentid){
+  if(this.props.assignmentid && this.props.assignmentid !== 'null'){
   fetch('http://'+properties.getHostName+':8080/assignments/teacher/get/'+this.props.assignmentid, {
         credentials: 'include',
         method: 'GET'
@@ -108,7 +108,25 @@ componentDidMount(){
       notify.show("Please login your session expired","error");
       this.context.router.history.push('/');
      });
-    }else{
+   }else if(this.props.location.state){
+     var response = this.props.location.state.assignment
+     var newEditorStates = []
+    for(let i=0; i<response.questions.length;i++){
+      newEditorStates.push({id:++id,value:EditorState.createWithContent(convertFromRaw(response.questions[i]))})
+      }
+      this.setState({
+        questions: response.questions,
+        message: response.message,
+        subject: response.subject,
+        isDataLoaded: true,
+        questionsEditoStates: newEditorStates.slice(),
+        options: response.options.slice(),
+        validity: response.validity.slice(),
+        subjectValue: SubjectsNameLookup[response.subject],
+        numQuestions: response.numberOfQuesPerStudent,
+        controlledDate: response.lastdate,
+      })
+   }else {
       this.setState({
         isDataLoaded:true,
       })
@@ -149,6 +167,42 @@ _onActive = () => {
      this.saveCreateAssignment(option)
    }
  }
+ getBody = () => {
+   var buffer = ''
+   if(this.props.location.state){
+   buffer = {
+       email: this.props.loggedinuser,
+       batch : this.props.class,
+       lastdate: this.state.controlledDate,
+       questions: this.state.questions,
+       options: this.state.options,
+       validity: this.state.validity,
+       message: this.state.message,
+       subject: this.state.subject,
+       numberOfQuesPerStudent: this.state.numQuestions,
+       author: {
+         questionSetReferenceId: this.props.location.state.assignment.author.questionSetReferenceId,
+         realOwner: this.props.location.state.assignment.author.realOwner,
+       },
+       assignmentType: 'OBJECTIVE'
+     }
+   }
+  else{
+      buffer = {
+       email: this.props.loggedinuser,
+       batch : this.props.class,
+       lastdate: this.state.controlledDate,
+       questions: this.state.questions,
+       options: this.state.options,
+       validity: this.state.validity,
+       message: this.state.message,
+       subject: this.state.subject,
+       numberOfQuesPerStudent: this.state.numQuestions,
+       assignmentType: 'OBJECTIVE'
+     }
+   }
+   return buffer
+ }
 
  saveCreateAssignment = (option) => {
    this.setState({
@@ -161,18 +215,7 @@ _onActive = () => {
                 'Content-Type': 'application/json'
             },
         credentials: 'include',
-        body: JSON.stringify({
-          email: this.props.loggedinuser,
-          batch : this.props.class,
-          lastdate: this.state.controlledDate,
-          questions: this.state.questions,
-          options: this.state.options,
-          validity: this.state.validity,
-          message: this.state.message,
-          subject: this.state.subject,
-          numberOfQuesPerStudent: this.state.numQuestions,
-          assignmentType: 'OBJECTIVE'
-       })
+        body: JSON.stringify(this.getBody())
      }).then(response =>{
        this.setState({
          saveButton: false,
@@ -258,6 +301,42 @@ validateCreateAssignment = () => {
   }
 }
 
+getAssignmentBody = () => {
+  var buffer = ''
+  if(this.props.location.state){
+    buffer = {
+      email: this.props.loggedinuser,
+      subject: this.state.subject,
+      batch : this.props.class,
+      lastdate: this.state.controlledDate,
+      message: this.state.message,
+      questions: this.state.questions,
+      options: this.state.options,
+      validity: this.state.validity,
+      author: {
+        questionSetReferenceId: this.props.location.state.assignment.author.questionSetReferenceId,
+        realOwner: this.props.location.state.assignment.author.realOwner,
+      },
+      assignmentType: 'OBJECTIVE',
+      numberOfQuesPerStudent: this.state.numQuestions,
+   }
+  }else{
+    buffer = {
+      email: this.props.loggedinuser,
+      subject: this.state.subject,
+      batch : this.props.class,
+      lastdate: this.state.controlledDate,
+      message: this.state.message,
+      questions: this.state.questions,
+      options: this.state.options,
+      validity: this.state.validity,
+      assignmentType: 'OBJECTIVE',
+      numberOfQuesPerStudent: this.state.numQuestions,
+    }
+  }
+  return buffer
+}
+
 submitCreateAssignment = () => {
   this.setState({
     submitButton: true,
@@ -270,18 +349,7 @@ submitCreateAssignment = () => {
                'Content-Type': 'application/json'
            },
        credentials: 'include',
-       body: JSON.stringify({
-         email: this.props.loggedinuser,
-         subject: this.state.subject,
-         batch : this.props.class,
-         lastdate: this.state.controlledDate,
-         message: this.state.message,
-         questions: this.state.questions,
-         options: this.state.options,
-         validity: this.state.validity,
-         assignmentType: 'OBJECTIVE',
-         numberOfQuesPerStudent: this.state.numQuestions,
-      })
+       body: JSON.stringify(this.getAssignmentBody())
     }).then(response =>{
       this.setState({
         submitButton: false,

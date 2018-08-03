@@ -124,7 +124,7 @@ class TeacherDashboard extends Component{
              </Link>
       )
     }
-    buffer.push(<MenuItem  primaryText="Add Batch" key={this.props.batches.length + 1} fullWidth={true}
+    buffer.push(<MenuItem  primaryText="Add Batch" key={this.props.batches.length + 1}
               leftIcon={<Add />} className="drawerFont" onClick={this.openDialog}/>)
     return buffer;
   }
