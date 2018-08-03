@@ -101,7 +101,8 @@ class TeacherDashboard extends Component{
     for(var index=0; index < this.props.batches.length; index++){
       buffer.push(
            <Link to={'/teacher/'+this.props.batches[index]}  key={index}
-             width={this.props.width} style={{ textDecoration: 'none' }} onClick={this.onChangeSelected.bind(this,this.props.batches[index])} >
+             width={this.props.width} style={{ textDecoration: 'none' }}
+             onClick={this.onChangeSelected.bind(this,this.props.batches[index])} >
             <MenuItem
             className={this.isActive(this.props.batches[index])}
             primaryText={'Class  '+this.props.batches[index]}

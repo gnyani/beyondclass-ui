@@ -201,7 +201,10 @@ componentDidMount(){
         isDataLoaded: true,
         postedToNetwork:newPostedToNetwork
       })
-    })
+    }).catch(response => {
+    notify.show("Please login before viewing dashboard","error");
+    this.context.router.history.push('/');
+   });
 }
 
 
@@ -518,7 +521,7 @@ if(this.state.assignmentIds.length !== 0)
            </Col>
            <Col xs>
             <CardActions>
-             <IconButton tooltip="Make it public"
+             <IconButton tooltip="Publish"
                iconStyle={styles.mediumIcon}
                style={styles.medium} disabled={this.state.postedToNetwork[i]}
                onClick = {this.openDialogForNetwork.bind(this,i)}

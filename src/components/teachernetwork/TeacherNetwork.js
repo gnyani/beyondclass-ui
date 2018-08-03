@@ -279,7 +279,7 @@ handleCommentChange = (e) => this.setState({commentText:e.target.value});
       )
     }
   }else if(this.state.response.length === 0 && this.state.isDataLoaded === true){
-    buffer.push(<p key={i} className="paragraph">No public question sets available</p>)
+    buffer.push(<p key={1} className="paragraph">No public question sets available</p>)
   }else{
     buffer.push(<Grid fluid className="RefreshIndicator" key={1}>
     <Row center="xs">
@@ -352,22 +352,25 @@ getData = (param,pageNumber) => {
 
   submitDuplicateAssignmentRequest = () => {
     var batch = this.props.batches[this.state.batchIndex]
-    this.setState({
-      showRefreshIndicator: true
-    })
-
-    fetch('http://'+properties.getHostName+':8080/teachersnetwork/get/assignment/'+this.state.response[this.state.activeIndex].referenceAssignmentId+'?questionsetid='+this.state.response[this.state.activeIndex].id, {
-      credentials: 'include',
-      method: 'GET'
-      }).then(response => {
-        if(response.status === 200 )
-        return response.json()
-        else{
-          notify.show("something went wrong","error")
-        }
-      }).then(response => {
-        this.decideRedirectAssignment(null ,response.assignmentType, batch, response)
+    if(typeof batch === "undefined"){
+      notify.show("Please  select a batch", "error")
+    }else{
+      this.setState({
+        showRefreshIndicator: true
       })
+      fetch('http://'+properties.getHostName+':8080/teachersnetwork/get/assignment/'+this.state.response[this.state.activeIndex].referenceAssignmentId+'?questionsetid='+this.state.response[this.state.activeIndex].id, {
+        credentials: 'include',
+        method: 'GET'
+        }).then(response => {
+          if(response.status === 200 )
+          return response.json()
+          else{
+            notify.show("something went wrong","error")
+          }
+        }).then(response => {
+          this.decideRedirectAssignment(null ,response.assignmentType, batch, response)
+        })
+    }
   }
 
   decideRedirectAssignment = (id,type,batch,assignment ) => {
