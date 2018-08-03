@@ -428,11 +428,12 @@ displayQuestions(){
     <Grid fluid key={this.state.questionsEditoStates[i].id}>
     <Row start="xs" bottom="xs">
     <Col xs={10} sm={10} md={11} lg={11}>
-    <RichTextEditorToolBarOnFocus editorStyle={{borderStyle:'solid',borderRadius:'10',borderWidth:'0.6px'}}
+    <RichTextEditorToolBarOnFocus editorStyle={{borderStyle:'solid',borderRadius:'10',borderWidth:'0.6px',borderTop:'2px solid darkgery'}}
     onEditorStateChange={this.onArrayEditorStateChange} onContentStateChange={this.onArrayContentStateChange}
     questionNumber = {i}
     editorState={this.state.questionsEditoStates[i].value} />
     </Col>
+
     <Col xs={2} sm={2} md={1} lg={1}>
     <IconButton onClick={this.deleteQuestion.bind(this,i)}><Delete color="red" viewBox="0 0 20 20" /></IconButton>
     </Col>
@@ -488,13 +489,13 @@ renderTextField(){
         <Grid fluid>
           <Row center="xs">
             <Col xs lg={9}>
-              <h4 className="paragraph">Theory Assignment</h4>
+              <h4 className="paragraph" style={{margin: '20px 0px'}}>Theory Assignment</h4>
               <Divider />
             </Col>
           </Row>
         </Grid>
       <br />
-      <Grid fluid>
+      <Grid fluid className="cont">
       <Row center="xs" bottom="xs">
       <Col xs>
       <SubjectAutoComplete type="syllabus" branch={this.props.branch} searchText={this.state.subjectValue} handleSubjectChange={this.handleSubjectChange} />
@@ -505,15 +506,15 @@ renderTextField(){
       </Row>
       <Row center="xs">
       <Col xs>
-      <TextField style={{width: '75%'}} value={this.state.message} hintText="Additional Comments" floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
+      <TextField style={{width: '81%'}} value={this.state.message}  floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
       </Col>
       </Row>
       <br />
       <Row center="xs" middle='xs'>
-      <Col xs={8} sm={8} md={7} lg={4} >
-      <h4>Number of Questions to be given to each Student:</h4>
+      <Col xs={8} sm={8} md={7} lg={7} >
+      <h4 className="robfont">Number of Questions to be given to each Student:</h4>
       </Col>
-      <Col xs={4} sm={4} md={3} lg={3}>
+      <Col xs={4} sm={4} md={5} lg={5} className="text-left">
       <SelectField
         value={this.state.numQuestions}
         onChange={this.handleNumberChange}
@@ -533,15 +534,14 @@ renderTextField(){
       </SelectField>
       </Col>
       </Row>
-      </Grid>
-      <Grid fluid>
-      <Row end="xs" middle="xs">
-        <Col xs={7} sm={7} md={7} lg={3}>
+      <Divider style={{margin: '18px 0px 18px'}}/>
+      <Row >
+        <Col xs={7} sm={7} md={10} lg={10}>
           <FlatButton label="Add Question" labelStyle ={{textTransform: 'none'}}
              style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
             primary={true} icon={<Add />} onClick={this.handleShowTextField} />
         </Col>
-        <Col xs={4} sm={4} md={4} lg={2}>
+        <Col xs={4} sm={4} md={2} lg={2} className="text-center">
           <FlatButton label = "Save" primary={true} labelStyle ={{textTransform: 'none'}}
             style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
             disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment.bind('save')} />
@@ -549,9 +549,7 @@ renderTextField(){
         <Col xs={1} sm={1} md={1} lg={1}>
         </Col>
       </Row>
-      </Grid>
       {this.displayQuestions()}
-      <Grid fluid>
       <Row center="xs">
       <Col xs>
       <br /><br />
@@ -559,8 +557,8 @@ renderTextField(){
       <br /><br />
       </Col>
       </Row>
-      <Row end='xs' middle='xs'>
-      <Col xs>
+      <Row end='xs' middle='xs' style={{marginBottom: '40px'}}>
+      <Col xs style={{textAlign:'left'}}>
           <FlatButton key={1} label="Go Back"
             alt="loading" icon={<NavigationArrowBack color="#30b55b"/>} labelStyle ={{textTransform: 'none'}}
             style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
@@ -570,8 +568,6 @@ renderTextField(){
       <FlatButton label = "Submit" primary={true} labelStyle ={{textTransform: 'none'}}
          style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
         disabled={this.state.submitButton} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
-      </Col>
-      <Col xs={1} sm={1} md={1} lg={1}>
       </Col>
       </Row>
       </Grid>

@@ -25,16 +25,16 @@ renderOptions = () => {
              <TextField key={i} value={this.props.inputs[i] || ''}
              multiLine={true}
              underlineShow={false}
-             hintText="Start typing the input"
-             style={{width:'100%'}}
+             floatingLabelText="Start typing the input"
+             style={{width:'100%',paddingBottom:'24px'}}
              onChange={this.props.handleInputsChange.bind(this,this.props.qindex,i)}/>
              </TableRowColumn>
              <TableRowColumn>
              <TextField key={i} value={this.props.outputs[i] || ''}
              multiLine={true}
              underlineShow={false}
-             style={{width:'100%'}}
-             hintText="Start typing the output"
+             style={{width:'100%',paddingBottom:'24px'}}
+             floatingLabelText="Start typing the output"
              onChange={this.props.handleOutputsChange.bind(this,this.props.qindex,i)}/></TableRowColumn>
         </TableRow>
       )
@@ -46,15 +46,15 @@ renderOptions = () => {
              <TextField key={i} value={this.props.inputs[i] || ''}
              multiLine={true}
              underlineShow={false}
-             style={{width:'100%'}}
-             hintText="Start typing the input"
+             style={{width:'100%',paddingBottom:'24px'}}
+             floatingLabelText="Start typing the input"
              onChange={this.props.handleInputsChange.bind(this,i)}/></TableRowColumn>
              <TableRowColumn>
              <TextField key={i} value={this.props.outputs[i] || ''}
              multiLine={true}
              underlineShow={false}
-             style={{width:'100%'}}
-             hintText="Start typing the output"
+             style={{width:'100%',paddingBottom:'24px'}}
+             floatingLabelText="Start typing the output"
              onChange={this.props.handleOutputsChange.bind(this,i)}/></TableRowColumn>
         </TableRow>
       )
