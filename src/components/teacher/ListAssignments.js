@@ -46,6 +46,7 @@ constructor(){
   this.state={
    savedAssignmentIds:[],
    savedCreatedDates:[],
+   postedToNetwork:[],
    savedAssignmentTypes: [],
    savedAssignmentSubjects: [],
    savedAssignmentIdReferences: [],
@@ -108,6 +109,7 @@ componentDidMount(){
       var newSavedAssignmentTypes = []
       var newSavedAssignmentSubjects = []
       var newSavedAssignmentIdReferences = []
+      var newPostedToNetwork = []
       if(response)
       for(let i=0; i<response.length;i++){
         newSavedAssignmentIds.push(response[i].assignmentid)
@@ -115,6 +117,7 @@ componentDidMount(){
         newSavedAssignmentTypes.push(response[i].assignmentType)
         newSavedAssignmentSubjects.push(response[i].subject)
         newSavedAssignmentIdReferences.push(get(response[i],"author.questionSetReferenceId", ''))
+        newPostedToNetwork.push(response[i].postedToNetwork?response[i].postedToNetwork:false)
       }
       this.setState({
         savedAssignmentIds: newSavedAssignmentIds,
@@ -122,6 +125,7 @@ componentDidMount(){
         savedCreatedDates: newSavedCreatedDates,
         savedAssignmentSubjects: newSavedAssignmentSubjects,
         savedAssignmentIdReferences: newSavedAssignmentIdReferences,
+        postedToNetwork: newPostedToNetwork
       })
     })
 
@@ -151,6 +155,7 @@ componentDidMount(){
           questionSetReferenceId: [],
           createdBy: [],
           creatorCollege: [],
+          postedToNetwork: []
         })
       }
       else{
@@ -167,6 +172,7 @@ componentDidMount(){
       var newquestionSetReferenceIds=[]
       var newcreatedBy=[]
       var newcreatorCollege=[]
+      var newPostedToNetwork=[]
       if(response)
       for(let i=0; i<response.length;i++){
         newassignmentIds.push(response[i].assignmentid)
@@ -179,6 +185,7 @@ componentDidMount(){
         newadditionalComments.push(response[i].message)
         newcreatedBy.push(get(response[i],"author.realOwner.firstName",'')+get(response[i],"author.realOwner.lastName",''))
         newcreatorCollege.push(get(response[i],"author.realOwner.college",''))
+        newPostedToNetwork.push(response[i].postedToNetwork)
       }
       this.setState({
         assignmentIds: newassignmentIds,
@@ -192,11 +199,9 @@ componentDidMount(){
         createdBy: newcreatedBy,
         creatorCollege: newcreatorCollege,
         isDataLoaded: true,
+        postedToNetwork:newPostedToNetwork
       })
-    }).catch(response => {
-    notify.show("Please login before viewing dashboard","error");
-    this.context.router.history.push('/');
-   });
+    })
 }
 
 
@@ -397,6 +402,12 @@ postToNetwork = () => {
           return createdAssignment
         }).then(createdAssignment => {
           this.postAssignment(createdAssignment)
+          var newPostedToNetwork=this.state.postedToNetwork.slice()
+          newPostedToNetwork[this.state.activeIndex]=true
+          this.setState({
+            postedToNetwork:newPostedToNetwork
+
+          })
         }).catch(response => {
         notify.show("Please login before posting an announcement","error");
         this.context.router.history.push('/');
@@ -509,7 +520,7 @@ if(this.state.assignmentIds.length !== 0)
             <CardActions>
              <IconButton tooltip="Make it public"
                iconStyle={styles.mediumIcon}
-               style={styles.medium}
+               style={styles.medium} disabled={this.state.postedToNetwork[i]}
                onClick = {this.openDialogForNetwork.bind(this,i)}
                >
                       <Public />

@@ -67,6 +67,7 @@ constructor(){
     totalActiveTime: null,
     saveButton: false,
     isDataLoaded: false,
+    postedToNetwork: false,
   }
   this.renderTextField = this.renderTextField.bind(this)
   this.displayQuestions = this.displayQuestions.bind(this)
@@ -98,6 +99,7 @@ componentDidMount(){
           alloutputs: response.outputs,
           numQuestions: response.numberOfQuesPerStudent,
           controlledDate: response.lastdate,
+          postedToNetwork: response.postedToNetwork
         })
       }).catch(response => {
       notify.show("Please login your session expired","error");
@@ -116,7 +118,8 @@ componentDidMount(){
         allinputs: response.inputs,
         alloutputs: response.outputs,
         numQuestions: response.numberOfQuesPerStudent,
-        controlledDate: response.lastdate,
+        controlledDate: this.state.controlledDate,
+        postedToNetwork: response.postedToNetwork
       })
    }else{
       this.setState({
@@ -172,6 +175,7 @@ _onActive = () => {
        inputs: this.state.allinputs,
        outputs: this.state.alloutputs,
        message: this.state.message,
+       postedToNetwork: this.state.postedToNetwork,
        numberOfQuesPerStudent: this.state.numQuestions,
        assignmentType: 'CODING',
        author: {
@@ -189,6 +193,7 @@ _onActive = () => {
         inputs: this.state.allinputs,
         outputs: this.state.alloutputs,
         message: this.state.message,
+        postedToNetwork:this.state.postedToNetwork,
         numberOfQuesPerStudent: this.state.numQuestions,
         assignmentType: 'CODING'
      }
@@ -344,10 +349,12 @@ getAssignmentBody = () => {
       message: this.state.message,
       numberOfQuesPerStudent: this.state.numQuestions,
       assignmentType: 'CODING',
+      postedToNetwork: this.state.postedToNetwork,
       author: {
         questionSetReferenceId: this.props.location.state.assignment.author.questionSetReferenceId,
         realOwner: this.props.location.state.assignment.author.realOwner,
       }
+
    }
   }else{
     buffer = {
@@ -359,7 +366,8 @@ getAssignmentBody = () => {
       outputs: this.state.alloutputs,
       message: this.state.message,
       numberOfQuesPerStudent: this.state.numQuestions,
-      assignmentType: 'CODING'
+      assignmentType: 'CODING',
+      postedToNetwork: this.state.postedToNetwork
     }
   }
   return buffer
