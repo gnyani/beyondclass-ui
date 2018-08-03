@@ -26,9 +26,9 @@ renderOptions = () => {
              <TableRowColumn>{i+1}</TableRowColumn>
              <TableRowColumn>
              <TextField key={i} value={this.props.options[i] || ''} underlineShow={false}
-             hintText="Start typing the option text"
+             floatingLabelText="Type your option"
              multiLine={true}
-             style={{width:'100%'}}
+             style={{width:'100%',paddingBottom:'24px'}}
              onChange={this.props.handleOptionsChange.bind(this,this.props.qindex,i)}/></TableRowColumn>
         </TableRow>
       )
@@ -38,9 +38,9 @@ renderOptions = () => {
              <TableRowColumn>{i+1}</TableRowColumn>
              <TableRowColumn>
              <TextField key={i} value={this.props.options[i] || ''} underlineShow={false}
-             hintText="Start typing the option text"
+             floatingLabelText="Type your option"
              multiLine={true}
-             style={{width:'100%'}}
+             style={{width:'100%',paddingBottom:'24px'}}
              onChange={this.props.handleOptionsChange.bind(this,i)}/></TableRowColumn>
         </TableRow>
       )
@@ -53,9 +53,9 @@ renderOptions = () => {
              <TableRowColumn>{i+1}</TableRowColumn>
              <TableRowColumn>
              <TextField key={i} value={this.props.options[i] || ''} underlineShow={false}
-             hintText="Start typing the option text"
+             floatingLabelText="Type your option"
              multiLine={true}
-             style={{width:'100%'}}
+             style={{width:'100%',paddingBottom:'24px'}}
              onChange={this.props.handleOptionsChange.bind(this,this.props.qindex,i)}/></TableRowColumn>
         </TableRow>
       )
@@ -65,9 +65,9 @@ renderOptions = () => {
              <TableRowColumn>{i+1}</TableRowColumn>
              <TableRowColumn>
              <TextField key={i} value={this.props.options[i] || ''} underlineShow={false}
-             hintText="Start typing the option text"
+             floatingLabelText="Type your option"
              multiLine={true}
-             style={{width:'100%'}}
+             style={{width:'100%',paddingBottom:'24px'}}
              onChange={this.props.handleOptionsChange.bind(this,i)}/></TableRowColumn>
         </TableRow>
       )
@@ -121,7 +121,7 @@ renderOptions = () => {
             enableSelectAll={false}
             >
             <TableRow>
-                <TableHeaderColumn colSpan="2" style={{textAlign: 'center',fontWeight: 'bold',fontSize: '1em'}}>
+                <TableHeaderColumn colSpan="2" style={{textAlign: 'left',fontWeight: 'bold',fontSize: '1em'}}>
                   Check all the correct Options
                 </TableHeaderColumn>
               </TableRow>

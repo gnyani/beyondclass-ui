@@ -535,8 +535,8 @@ displayQuestions(){
     <IconButton onClick={this.deleteQuestion.bind(this,i)}><Delete color="red" viewBox="0 0 20 20" /></IconButton>
     </Col>
     </Row>
-    <Row center="xs">
-    <Col xs={10} md={10} sm={8} lg={8}>
+    <Row center="xs" style={{marginTop:'20px'}}>
+    <Col xs={10} md={10} sm={8} lg={8} className="objassalt">
     <TestCases inputs={this.state.allinputs[i]}
     handleInputsChange={this.handleInputsChange} qindex={i}
     outputs={this.state.alloutputs[i]}
@@ -565,8 +565,8 @@ renderTextField(){
       <IconButton onClick={this.addQuestion}><AddBox viewBox='0 0 20 20' color="green"/></IconButton>
       </Col>
       </Row>
-      <Row center="xs" >
-        <Col xs={10} md={10} sm={8} lg={8}>
+      <Row center="xs"  style={{marginTop:'20px'}}>
+        <Col xs={10} md={10} sm={8} lg={8} className="objassalt">
       <TestCases inputs={this.state.inputs}
       handleInputsChange={this.handleQuestionInputsChange}
       outputs={this.state.outputs}
@@ -601,7 +601,7 @@ if(this.state.isDataLoaded){
         {...this.props}
       >
       <div className="ProgrammingAssignment">
-        <Grid >
+        <Grid fluid>
           <Row center="xs">
             <Col xs lg={9}>
               <h4 className="paragraph">Programming Assignment</h4>
@@ -609,22 +609,22 @@ if(this.state.isDataLoaded){
             </Col>
           </Row>
         </Grid>
-      <Grid fluid>
+      <Grid fluid className="cont">
       <br /><br />
       <Row center="xs" bottom="xs">
       <Col xs={6} sm={6} md={4} lg={5}>
       <DatePicker hintText="Last Date" floatingLabelText="Last Date" minDate={this.state.minDate} defaultDate={new Date(this.state.controlledDate)} onChange={this.handleDateChange} />
       </Col>
       <Col xs={6} sm={6} md={4} lg={4}>
-      <TextField hintText="Additional Comments" style={{width:'75%'}} value={this.state.message} floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
+      <TextField style={{width:'100%'}} value={this.state.message} floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
       </Col>
       </Row>
       <br />
       <Row center="xs" middle='xs'>
-      <Col xs={8} sm={8} md={7} lg={4} >
-      <h4>Number of Questions to be given to each Student:</h4>
+      <Col xs={8} sm={8} md={7} lg={7} >
+      <h4 className="robfont">Number of Questions to be given to each Student:</h4>
       </Col>
-      <Col xs={4} sm={4} md={3} lg={3}>
+      <Col xs={4} sm={4} md={5} lg={5} className="text-left">
       <SelectField
         value={this.state.numQuestions}
         onChange={this.handleNumberChange}
@@ -638,15 +638,14 @@ if(this.state.isDataLoaded){
       </SelectField>
       </Col>
       </Row>
-      </Grid>
-      <Grid fluid>
-      <Row end="xs" middle="xs">
-        <Col xs={7} sm={7} md={7} lg={3}>
+      <Divider style={{margin: '18px 0px 18px'}}/>
+      <Row >
+        <Col xs={7} sm={7} md={10} lg={10}>
           <FlatButton label="Add Question" labelStyle ={{textTransform: 'none'}}
              style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
             primary={true} icon={<Add />} onClick={this.handleShowTextField} />
         </Col>
-        <Col xs={4} sm={4} md={4} lg={2}>
+        <Col xs={4} sm={4} md={2} lg={2} className="text-center">
           <FlatButton label = "Save" primary={true} labelStyle ={{textTransform: 'none'}}
             style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
             disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment.bind('save')} />
@@ -654,9 +653,7 @@ if(this.state.isDataLoaded){
         <Col xs={1} sm={1} md={1} lg={1}>
         </Col>
       </Row>
-      </Grid>
       {this.displayQuestions()}
-      <Grid fluid>
       <Row center="xs">
       <Col xs>
       <br /><br />
@@ -664,8 +661,8 @@ if(this.state.isDataLoaded){
       <br /><br />
       </Col>
       </Row>
-      <Row end='xs' middle='xs'>
-      <Col xs>
+      <Row end='xs' middle='xs' style={{marginBottom: '40px'}}>
+      <Col xs style={{textAlign:'left'}}>
           <FlatButton key={1} label="Go Back"
             alt="loading" icon={<NavigationArrowBack color="#30b55b"/>} labelStyle ={{textTransform: 'none'}}
             style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
@@ -675,8 +672,6 @@ if(this.state.isDataLoaded){
       <FlatButton label = "Submit" primary={true} labelStyle ={{textTransform: 'none'}}
          style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
         disabled={this.state.submitButton} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
-      </Col>
-      <Col xs={1} sm={1} md={1} lg={1}>
       </Col>
       </Row>
       </Grid>
