@@ -370,3 +370,13 @@ th{
 td{
   padding-top: 0px !important;
 }
+.contactus{
+  border: 1px solid lightgrey;
+  background: #46a0a0;
+  color: white;
+  box-shadow: 3px 5px 15px 0px #d4d0d0;
+  font-family: 'Roboto', sans-serif;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  height: 50px;
+}
