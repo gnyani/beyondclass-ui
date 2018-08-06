@@ -315,6 +315,20 @@ submitCreateAssignment = (option) => {
     notify.show("Please login your session expired","error");
     this.context.router.history.push('/');
    });
+   if(this.props.location.state){
+     fetch('http://'+properties.getHostName+':8080/teachersnetwork/questionset/'+this.props.location.state.assignment.author.questionSetReferenceId+'/adduser/',{
+       method: 'POST',
+       headers: {
+             'mode': 'cors',
+             'Content-Type': 'application/json'
+         },
+     credentials: 'include',
+     body: JSON.stringify(this.props.location.state.assignment.author.realOwner),
+      }).catch(response => {
+      notify.show("Please login your session expired","error");
+      this.context.router.history.push('/');
+     });
+    }
 }
 
 onEditorStateChange: Function = (editorState) => {
