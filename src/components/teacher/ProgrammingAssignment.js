@@ -4,12 +4,11 @@ import {notify} from 'react-notify-toast'
 import DatePicker from 'material-ui/DatePicker'
 import TextField from 'material-ui/TextField'
 import Add from 'material-ui/svg-icons/content/add'
-import AddBox from 'material-ui/svg-icons/content/add-box'
 import CheckIcon from 'material-ui/svg-icons/navigation/check'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import SelectField from 'material-ui/SelectField'
 import FlatButton from 'material-ui/FlatButton'
-import Delete from 'material-ui/svg-icons/action/delete'
+import {DeleteOutline} from '../../styledcomponents/SvgIcons'
 import IconButton from 'material-ui/IconButton'
 import {Media} from '../utils/Media'
 import styled from 'styled-components'
@@ -310,6 +309,7 @@ handleOutputsChange = (qindex, index, event) => {
 handleClose = () => {
   this.setState({
     submitConfirm: false,
+    addQuestionDialog: false,
   })
 }
 
@@ -489,6 +489,7 @@ addQuestion = () => {
     allinputs: allinputs,
     alloutputs: alloutputs,
     showTextField: false,
+    addQuestionDialog: false,
   })
 
   }
@@ -513,6 +514,11 @@ deleteQuestion = (i) => {
 
 handleNumberChange = (event, index, numQuestions) => this.setState({numQuestions});
 
+handleAddQuestionDialog = () => {
+  this.setState({
+    addQuestionDialog: true,
+  })
+}
 
 handleDateChange = (event, date) => {
   this.setState({
@@ -524,19 +530,6 @@ handleMessageChange = (event) => {
   this.setState({
     message:event.target.value
   })
-}
-
-handleShowTextField = () => {
-
-  if(this.state.showTextField === true)
-   {
-  this.addQuestion()
-  }else{
-  this.setState({
-    editorState: EditorState.createEmpty(),
-    showTextField: true,
-  })
-}
 }
 
 displayQuestions(){
@@ -555,11 +548,11 @@ displayQuestions(){
     editorState={this.state.questionsEditoStates[i].value} />
     </Col>
     <Col xs={2} sm={2} md={1} lg={1}>
-    <IconButton onClick={this.deleteQuestion.bind(this,i)}><Delete color="red" viewBox="0 0 20 20" /></IconButton>
+    <IconButton onClick={this.deleteQuestion.bind(this,i)}><DeleteOutline color="red" /></IconButton>
     </Col>
     </Row>
     <Row center="xs" style={{marginTop:'20px'}}>
-    <Col xs={10} md={10} sm={8} lg={8} className="objassalt">
+    <Col xs lg={8} className="objassalt">
     <TestCases inputs={this.state.allinputs[i]}
     handleInputsChange={this.handleInputsChange} qindex={i}
     outputs={this.state.alloutputs[i]}
@@ -575,21 +568,17 @@ return buffer;
 
 renderTextField(){
   var buffer=[]
-  if(this.state.showTextField){
     buffer.push(
       <div key={this.state.showTextField}>
       <Grid fluid className="nogutter">
       <Row center="xs" middle="xs">
-      <Col xs={10} sm={10} md={10} lg={11}>
+      <Col xs>
       <RichTextEditor editorState={this.state.editorState} onEditorStateChange={this.onEditorStateChange}
         onContentStateChange={this.onContentStateChange} placeholder='Start typing a question'  />
       </Col>
-      <Col xs={2} sm={2} md={2} lg={1}>
-      <IconButton onClick={this.addQuestion}><AddBox viewBox='0 0 20 20' color="green"/></IconButton>
-      </Col>
       </Row>
       <Row center="xs"  style={{marginTop:'20px'}}>
-        <Col xs={10} md={10} sm={8} lg={8} className="objassalt">
+        <Col xs lg={10} className="objassalt">
       <TestCases inputs={this.state.inputs}
       handleInputsChange={this.handleQuestionInputsChange}
       outputs={this.state.outputs}
@@ -600,10 +589,6 @@ renderTextField(){
       </Grid>
       <br />
       </div>)
-  }
-  else{
-    buffer.push("")
-  }
   return buffer;
 }
   render(){
@@ -618,6 +603,17 @@ renderTextField(){
         primary={true}
         onTouchTap={this.handleClose}
       />]
+      const actions1 = [
+            <FlatButton
+              label="Add"
+              primary={true}
+              onTouchTap={this.addQuestion}
+            />,
+            <FlatButton
+              label="Cancel"
+              primary={true}
+              onTouchTap={this.handleClose}
+            />]
 if(this.state.isDataLoaded){
     return(
       <StayVisible
@@ -666,7 +662,7 @@ if(this.state.isDataLoaded){
         <Col xs={7} sm={7} md={10} lg={10}>
           <FlatButton label="Add Question" labelStyle ={{textTransform: 'none'}}
              style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
-            primary={true} icon={<Add />} onClick={this.handleShowTextField} />
+            primary={true} icon={<Add />} onClick={this.handleAddQuestionDialog} />
         </Col>
         <Col xs={4} sm={4} md={2} lg={2} className="text-center">
           <FlatButton label = "Save" primary={true} labelStyle ={{textTransform: 'none'}}
@@ -677,13 +673,8 @@ if(this.state.isDataLoaded){
         </Col>
       </Row>
       {this.displayQuestions()}
-      <Row center="xs">
-      <Col xs>
       <br /><br />
-      {this.renderTextField()}
       <br /><br />
-      </Col>
-      </Row>
       <Row end='xs' middle='xs' style={{marginBottom: '40px'}}>
       <Col xs style={{textAlign:'left'}}>
           <FlatButton key={1} label="Go Back"
@@ -708,6 +699,17 @@ if(this.state.isDataLoaded){
             titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
             onRequestClose={this.handleClose}
           >
+      </Dialog>
+      <Dialog
+            title={"Add Question"}
+            modal={false}
+            actions={actions1}
+            open={this.state.addQuestionDialog}
+            autoScrollBodyContent={true}
+            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+            onRequestClose={this.handleClose}
+          >
+          {this.renderTextField()}
       </Dialog>
       </div>
       <IdleTimer
