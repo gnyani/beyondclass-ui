@@ -273,10 +273,10 @@ return buffer
       buffer.push(
         <Grid fluid key={1}>
         <Row around="xs">
-        <Col xs={11} sm={11} md={9} lg={8}>
-                <div >
+        <Col xs={11} sm={11} md={9} lg={8} className="mtop">
+                <div className='shadow'>
                 <fieldset>
-                  <legend >Insights</legend>
+                  <h3 >Insights<hr></hr></h3>
                   <p> Time Spent : {this.state.timespent} </p>
                   <p>{this.state.insight1}</p>
                   <p>{this.state.insight2}</p>
@@ -307,10 +307,10 @@ return buffer
        buffer.push(
          <Grid fluid key={1}>
          <Row around="xs">
-         <Col xs={11} sm={11} md={9} lg={8}>
-                 <div >
+         <Col xs={11} sm={11} md={9} lg={8} className="mtop">
+                 <div className='shadow'>
                  <fieldset>
-                   <legend >Insights</legend>
+                  <h3 >Insights<hr></hr></h3>
                    <p> Time Spent : {this.state.timespent} </p>
                    <p>{this.state.insight1}</p>
                    {this.showRemarks()}
@@ -323,10 +323,10 @@ return buffer
        buffer.push(
          <Grid fluid key={1}>
          <Row around="xs">
-         <Col xs={11} sm={11} md={9} lg={8}>
-                 <div >
+         <Col xs={11} sm={11} md={9} lg={8} className="mtop">
+                 <div className='shadow'>
                  <fieldset>
-                   <legend >Insights</legend>
+                 <h3 >Insights<hr></hr></h3>
                    <p> Time Spent : {this.state.timespent} </p>
                    {this.showRemarks()}
                    </fieldset>
@@ -351,7 +351,8 @@ if(this.state.assignmentType ===  'THEORY')
        <Row around="xs">
        <Col xs={11} sm={11} md={9} lg={8}>
        <Card>
-      <CardTitle className="displayQuestions" title={<RichTextEditorReadOnly editorState={this.convertToEditorState(this.state.questions[i])} />} />
+      <CardTitle className="displayQuestions" title={<RichTextEditorReadOnly editorState={this.convertToEditorState(this.state.questions[i])} style={{margin:'0px;'}}/>} />
+      <hr style={{margin: '5px 15px'}}></hr>
       <CardText className="displayAnswers">
       <RichTextEditorReadOnly editorState={this.convertToEditorState(this.state.answersContentStates[i])} editorStyle={{height: '180px'}}/>
       </CardText>
@@ -398,13 +399,12 @@ if(this.state.assignmentType ===  'THEORY')
        onChange = {this.handleRemarksChange}
        style={{width: "60%"}}
        floatingLabelText = "Remarks"
-       hintText = "Remarks"
        />
       </Row>
       <br />
       <Row center="xs" middle="xs">
       <Col xs={4} sm={4} md={4} lg={1}>
-      <p style={{fontWeight:'Bold'}}> Marks: </p>
+      <p style={{fontWeight:'Bold',fontFamily:"'Roboto', sans-serif"}}> Marks: </p>
       </Col>
       <Col xs={6} sm={6} md={6} lg={2}>
       <NumericInput style={numberstyle} value={this.state.assignmentMarks} precision={1} size={8} step={0.5}
@@ -416,10 +416,10 @@ if(this.state.assignmentType ===  'THEORY')
       <br /><br />
       <Grid fluid >
           <Row center="xs">
-          <Col xs={11} sm={11} md={6} lg={4}>
+          <Col xs={11} sm={11} md={6} lg={4} className='text-left'>
           <FlatButton className="button" label="Accept" icon={<CheckIcon color="#30b55b"/>} onClick={this.openAcceptAssignmentDialog.bind(this)}/>
           </Col>
-          <Col xs={11} sm={11} md={6} lg={4}>
+          <Col xs={11} sm={11} md={6} lg={4} className='text-right'>
           <FlatButton className="button" label="Reject" icon={<RejectIcon color="#30b55b"/>} onClick={this.openRejectAssignmentDialog.bind(this)}/>
           </Col>
           </Row>
