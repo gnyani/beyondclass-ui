@@ -13,6 +13,8 @@ export const CSE = [
   {subjectKey: 'Computer Architecture' ,valueKey:'CA'},
   {subjectKey: 'Environmental Studies',valueKey:'ES'},
   {subjectKey: 'Computer Networks',valueKey:'CN'},
+  {subjectKey: 'Software Engineering',valueKey:'SE'},
+  {subjectKey:'Machine Learning',valueKey:'ML'},
 ];
 
 export const CSESyllabus = [
@@ -26,13 +28,36 @@ export const CSESyllabus = [
   {subjectKey: 'Java Lab',valueKey: 'JAVALAB'},
   {subjectKey: 'Operating Systems Lab',valueKey: 'OSLAB'},
   {subjectKey: 'Computer Networks',valueKey:'CN'},
-  {subjectKey: 'Finishing School 2', valueKey: 'FS2'}
+  {subjectKey: 'Finishing School 2', valueKey: 'FS2'},
+  {subjectKey: 'Software Engineering',valueKey:'SE'},
+  {subjectKey:'Machine Learning',valueKey:'ML'},
 ];
 
 export const IT = [
   {subjectKey:'Machine Learning',valueKey:'ML'},
+  {subjectKey:'Operating Systems',valueKey:'OS'},
+  {subjectKey:'Data Structures',valueKey:'DS'},
+  {subjectKey:'Object Oriented Programming JAVA',valueKey:'JAVA'},
+  {subjectKey: 'Design and Analysis of Algorithms',valueKey:'DAA'},
+  {subjectKey: 'Mathematics - 4',valueKey:'M4'},
+  {subjectKey: 'Computer Architecture' ,valueKey:'CA'},
+  {subjectKey: 'Environmental Studies',valueKey:'ES'},
+  {subjectKey: 'Computer Networks',valueKey:'CN'},
+  {subjectKey: 'Software Engineering',valueKey:'SE'},
 ]
 export const ITSyllabus = [
+  {subjectKey:'Operating Systems',valueKey:'OS'},
+  {subjectKey:'Data Structures',valueKey:'DS'},
+  {subjectKey:'Object Oriented Programming JAVA',valueKey:'JAVA'},
+  {subjectKey: 'Design and Analysis of Algorithms',valueKey:'DAA'},
+  {subjectKey: 'Mathematics - 4',valueKey:'M4'},
+  {subjectKey: 'Computer Architecture' ,valueKey:'CA'},
+  {subjectKey: 'Environmental Studies',valueKey:'ES'},
+  {subjectKey: 'Java Lab',valueKey: 'JAVALAB'},
+  {subjectKey: 'Operating Systems Lab',valueKey: 'OSLAB'},
+  {subjectKey: 'Computer Networks',valueKey:'CN'},
+  {subjectKey: 'Finishing School 2', valueKey: 'FS2'},
+  {subjectKey: 'Software Engineering',valueKey:'SE'},
   {subjectKey:'Machine Learning',valueKey:'ML'},
 ]
 
@@ -49,6 +74,7 @@ export const SubjectsNameLookup = {
   'FS2':'Finishing School 2',
   'ML':'Machine Learning',
   'CN':'Computer Networks',
+  'SE':'Software Engineering'
 }
 
 export const ECE = [
