@@ -391,3 +391,8 @@ td{
 .mtop{
   margin-top: 10px;
 }
+.uprcase{
+  font-size: large !important;
+  text-transform: uppercase !important;
+  color: #848181 !important;
+}

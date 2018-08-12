@@ -524,7 +524,7 @@ displayQuestions(){
     <Grid fluid >
     <Row start="xs" bottom="xs">
     <Col xs={10} sm={10} md={11} lg={11}>
-    <RichTextEditorToolBarOnFocus editorStyle={{borderStyle:'solid',borderRadius:'10',borderWidth:'0.6px'}}
+    <RichTextEditorToolBarOnFocus editorClassName="demo-editor" editorStyle={{borderStyle:'solid',borderRadius:'10',borderWidth:'0.6px'}}
     onEditorStateChange={this.onArrayEditorStateChange} onContentStateChange={this.onArrayContentStateChange}
     questionNumber = {i}
     editorState={this.state.questionsEditoStates[i].value} />
@@ -555,7 +555,7 @@ renderTextField(){
       <Grid fluid className="nogutter">
       <Row center="xs" middle="xs">
       <Col xs>
-      <RichTextEditor editorState={this.state.editorState} onEditorStateChange={this.onEditorStateChange}
+      <RichTextEditor editorClassName="demo-editor" editorState={this.state.editorState} onEditorStateChange={this.onEditorStateChange}
         onContentStateChange={this.onContentStateChange} placeholder='Start typing a question'  />
       </Col>
       </Row>

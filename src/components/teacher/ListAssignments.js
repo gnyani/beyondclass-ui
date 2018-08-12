@@ -460,7 +460,7 @@ listAssignments(){
   var attributes = ['Assignment Type','Subject','Last Date', 'Comments', 'Created By']
 if(this.state.assignmentIds.length !== 0)
 {
-  buffer.push(<p className="paragraph" key={this.state.assignmentIds.length+1}>Your assigments for class {this.props.class} </p>)
+  buffer.push(<p className="paragraph uprcase" key={this.state.assignmentIds.length+1}>Your assignments for class {this.props.class} </p>)
   for(let i=0; i<this.state.assignmentIds.length; i++){
     var lastDate = new Date(this.state.lastDates[i])
     var values = [this.state.assignmentType[i],this.state.subjects[i],
