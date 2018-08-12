@@ -66,7 +66,8 @@ class StudentClassDetails extends Component{
       >
             <MenuItem value={1} primaryText="Select" />
             <MenuItem value={'CSE'} label="CSE" primaryText="Computer Science and Engineering" />
-            {/*<MenuItem value={'ECE'} label="ECE" primaryText="Ellectronics and Communication Engineering" />*/}
+            <MenuItem value={'IT'} label="IT" primaryText="Information Technology" />
+            <MenuItem value={'ECE'} label="ECE" primaryText="Electronics and Communication Engineering" />
       </SelectField>
       </Col>
       </Row>
