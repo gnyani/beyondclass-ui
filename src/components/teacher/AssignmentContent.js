@@ -6,7 +6,7 @@ import {SubjectsNameLookup} from '../utils/Subjects.js'
 import DatePicker from 'material-ui/DatePicker'
 import TextField from 'material-ui/TextField'
 import Add from 'material-ui/svg-icons/content/add'
-import CheckIcon from 'material-ui/svg-icons/navigation/check'
+import CheckIcon from 'material-ui/svg-icons/action/assignment.js'
 import Save from 'material-ui/svg-icons/content/save'
 import SelectField from 'material-ui/SelectField'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
@@ -580,7 +580,7 @@ renderTextField(){
            onClick={()=>{this.context.router.history.goBack()}} />
       </Col>
       <Col xs>
-      <FlatButton label = "Submit" primary={true} labelStyle ={{textTransform: 'none'}}
+      <FlatButton label = "Schedule" primary={true} labelStyle ={{textTransform: 'none'}}
          style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
         disabled={this.state.submitButton} icon={<CheckIcon />} onClick={this.validateCreateAssignment} />
       </Col>
