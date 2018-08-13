@@ -215,7 +215,7 @@ return buffer;
       <Row center="xs">
       <Col xs={9} sm={9} md={6} lg={5}>
       <br /><br />
-      <FlatButton key={1} label="Go Back"   alt="loading" icon={<NavigationArrowBack color="white"/>}
+      <FlatButton key={1} label="Go Back"   alt="loading" icon={<NavigationArrowBack color="#30b55b"/>}
       labelStyle ={{textTransform: 'none'}} style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
        onClick={()=>{this.context.router.history.goBack()}} />
       </Col>

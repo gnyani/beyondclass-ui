@@ -11,6 +11,7 @@ import LibraryBooks from 'material-ui/svg-icons/av/library-books.js'
 import Public from 'material-ui/svg-icons/social/public.js'
 import Badge from 'material-ui/Badge';
 import People from 'material-ui/svg-icons/social/people.js'
+import ListBatchStudents from './ListBatchStudents.js'
 
 var properties = require('../properties.json');
 
@@ -22,7 +23,9 @@ class TeacherDashboard extends Component{
       selected: '',
       addClassDialog: false,
       year: "Select*",
+      showStudentsList: false,
       section: "0",
+      activeIndex: 0,
     }
     this.isActive = this.isActive.bind(this)
   }
@@ -96,6 +99,13 @@ class TeacherDashboard extends Component{
     return buffer
   }
 
+  listStudents = (index) => {
+    this.setState({
+      showStudentsList: true,
+      activeIndex: index,
+    })
+  }
+
   menuItems(batches) {
   var buffer = []
     for(var index=0; index < this.props.batches.length; index++){
@@ -118,7 +128,7 @@ class TeacherDashboard extends Component{
                  padding: "0px 24px 12px 12px"
                }}
              >
-               <People color={this.getColor(this.isActive(this.props.batches[index]))} viewBox="0 0 30 30"/>
+               <People color={this.getColor(this.isActive(this.props.batches[index]))} onClick={this.listStudents.bind(this,index)} viewBox="0 0 30 30"/>
              </Badge>}
             onClick={this.props.handleMobileToggle}
              />
@@ -133,6 +143,7 @@ class TeacherDashboard extends Component{
   handleClose = () => {
     this.setState({
      addClassDialog: false,
+     showStudentsList: false,
     })
   }
 
@@ -148,6 +159,13 @@ class TeacherDashboard extends Component{
         primary={true}
         onTouchTap={this.addClass}
       />]
+      const actions1 = [
+        <FlatButton
+          label="Close"
+          primary={true}
+          onTouchTap={this.handleClose}
+        />]
+
     return(
       <div>
         <Link to={'/teachernetwork'} style={{ textDecoration: 'none' }}>
@@ -161,7 +179,7 @@ class TeacherDashboard extends Component{
               primaryText="Batches"
               className={this.isActive('batches')}
               leftIcon={<LibraryBooks color={this.getColor(this.isActive('batches'))}/>}
-              initiallyOpen={false}
+              initiallyOpen={true}
               primaryTogglesNestedList={true}
               onClick={this.onChangeSelected.bind(this,'batches')}
               nestedItems={this.menuItems(this.props.batches)}
@@ -180,6 +198,17 @@ class TeacherDashboard extends Component{
               section={this.state.section}
               handleSectionChange={this.handleSectionChange}
               handleYearChange={this.handleYearChange} />
+          </Dialog>
+          <Dialog
+                title={"List of students in class "+this.props.batches[this.state.activeIndex]}
+                modal={false}
+                actions={actions1}
+                style={{marginLeft: "25%", width: "50%"}}
+                open={this.state.showStudentsList}
+                titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
+                onRequestClose={this.handleClose}
+              >
+            <ListBatchStudents batch={this.props.batches[this.state.activeIndex]}/>
           </Dialog>
       </div>
     )
