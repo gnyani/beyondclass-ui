@@ -103,7 +103,7 @@ componentDidMount(){
           validity: response.validity.slice(),
           subjectValue: SubjectsNameLookup[response.subject],
           numQuestions: response.numberOfQuesPerStudent,
-          controlledDate: response.lastdate,
+          controlledDate: new Date(response.lastdate),
           postedToNetwork: response.postedToNetwork,
         })
       }).catch(response => {

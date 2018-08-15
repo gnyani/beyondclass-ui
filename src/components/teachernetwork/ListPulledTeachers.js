@@ -8,7 +8,7 @@ import Avatar from 'material-ui/Avatar'
 
 var properties = require('../properties.json');
 
-class ListBatchStudents extends Component{
+class ListPulledTeachers extends Component{
 
   constructor(){
     super();
@@ -18,7 +18,7 @@ class ListBatchStudents extends Component{
     }
   }
 
- renderStudentsList = () => {
+ renderTeachersList = () => {
    var buffer = []
    if(this.state.isDataLoaded){
      if(typeof this.state.response === 'undefined'){
@@ -31,7 +31,9 @@ class ListBatchStudents extends Component{
             leftAvatar={<Avatar src={this.state.response[i].normalpicUrl||this.state.response[i].googlepicUrl} />}
             disabled={true}
             primaryText={this.state.response[i].firstName+' '+this.state.response[i].lastName}
-            secondaryText={this.state.response[i].email}
+            secondaryText={<p><span>{this.state.response[i].email}</span> <br />
+                        College: {this.state.response[i].college}</p>}
+            secondaryTextLines={2}
             />
             <Divider inset={true} />
           </div>
@@ -65,7 +67,7 @@ class ListBatchStudents extends Component{
  }
 
   componentDidMount() {
-    fetch('http://'+properties.getHostName+':8080/get/students/list?batch='+this.props.batch,{
+    fetch('http://'+properties.getHostName+':8080/teachersnetwork/pulled/teachers/list?questionsetid='+this.props.questionsets.id,{
       credentials: 'include',
       method: 'GET'
     }).then(response => {
@@ -88,11 +90,11 @@ class ListBatchStudents extends Component{
     return(
       <div>
       <List>
-      {this.renderStudentsList()}
+       {this.renderTeachersList()}
       </List>
       </div>
     )
     }
 }
 
-export default ListBatchStudents
+export default ListPulledTeachers

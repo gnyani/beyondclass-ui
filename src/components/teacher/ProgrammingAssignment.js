@@ -97,7 +97,7 @@ componentDidMount(){
           allinputs: response.inputs,
           alloutputs: response.outputs,
           numQuestions: response.numberOfQuesPerStudent,
-          controlledDate: response.lastdate,
+          controlledDate: new Date(response.lastdate),
           postedToNetwork: response.postedToNetwork
         })
       }).catch(response => {

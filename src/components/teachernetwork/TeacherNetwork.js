@@ -18,8 +18,10 @@ import ListBatches from '../teacher/ListBatches.js'
 import ListComments from './ListComments'
 import Pagination from 'material-ui-pagination';
 import IconButton from 'material-ui/IconButton';
+import Tree from 'material-ui/svg-icons/hardware/device-hub.js'
 import ClearAll from 'material-ui/svg-icons/action/highlight-off.js'
 import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'
+import ListPulledTeachers from './ListPulledTeachers.js'
 import { get } from 'lodash'
 
 var properties = require('../properties.json');
@@ -49,6 +51,7 @@ class TeacherNetwork extends Component{
       likeDialogOpen: false,
       commentDialogOpen: false,
       selectBatchDialog: false,
+      showPulledUsersDialog: false,
       batchIndex: null,
       showRefreshIndicator: false,
       total: 3,
@@ -122,12 +125,12 @@ handleSubjectChange = (subjectValue) => {
    })
  }
 
- handleCommentBoxOpen = (i) => {
-   this.setState({
-     commentDialogOpen: true,
-     activeIndex: i,
-   })
- }
+handlePulledUsersDialog = (i) => {
+  this.setState({
+    showPulledUsersDialog: true,
+    activeIndex: i,
+  })
+}
 
  postComment = (setId, index) => {
    if(this.state.commentText.trim() === ''){
@@ -239,21 +242,24 @@ handleCommentChange = (e) => this.setState({commentText:e.target.value});
            </CardActions>
          </Col>
          <Col xs>
-           <FlatButton label="Pull"
+           <FlatButton label={"Pull"}
              labelStyle={{textTransform: 'none',fontSize: '1em'}} onClick={this.handlePull.bind(this,i)}
              style={{verticalAlign: 'middle',backgroundColor: "#30b55b", color: 'white'}}
               icon={<Copy />} />
+         </Col>
+         <Col xs>
+           <FlatButton label={"("+response[i].referenceAssignmentUsers.length+") Tree"}
+             labelStyle={{textTransform: 'none',fontSize: '1em'}} onClick={this.handlePulledUsersDialog.bind(this,i)}
+             style={{verticalAlign: 'middle',backgroundColor: "#30b55b", color: 'white'}}
+              icon={<Tree />} />
          </Col>
           </Row>
           <CardActions>
             <div >
             <Grid fluid>
             <Row center="xs" between="xs">
-            <Col xs>
+            <Col xs={4} sm={4} md={4} lg={6}>
            <a onClick={this.handleOpen.bind(this,i)} style={{color:'#30b55b'}}> {this.state.likeCount[i]} likes </a>
-           </Col>
-           <Col xs>
-           <a onClick={this.handleCommentBoxOpen.bind(this,i)} style={{color:'#30b55b'}}> View Comments</a>
            </Col>
             </Row>
             </Grid>
@@ -271,6 +277,15 @@ handleCommentChange = (e) => this.setState({commentText:e.target.value});
             </Grid>
             </div>
           </CardActions>
+          </Grid>
+          <Grid fluid className="nogutter">
+            <Row start="xs">
+              <Col xs>
+              <CardText >
+                <ListComments comments={this.state.comments[i]} />
+              </CardText>
+              </Col>
+            </Row>
           </Grid>
           {this.state.commentBox[i]}
         </Card>
@@ -337,7 +352,10 @@ getData = (param,pageNumber) => {
               total: response.totalPages
             })
           }
-        })
+        }).catch(response => {
+        notify.show("Please login your session expired","error");
+        this.context.router.history.push('/');
+       });
 }
   componentDidMount(){
    this.getData('',1)
@@ -397,6 +415,7 @@ getData = (param,pageNumber) => {
       likeDialogOpen: false,
       commentDialogOpen: false,
       selectBatchDialog: false,
+      showPulledUsersDialog: false,
     })
   }
   render(){
@@ -460,18 +479,7 @@ getData = (param,pageNumber) => {
           {this.state.likedUsers[this.state.activeIndex]}
       </Dialog>
       <Dialog
-            title="Comments"
-            modal={false}
-            actions={actions}
-            open={this.state.commentDialogOpen}
-            autoScrollBodyContent={true}
-            titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
-            onRequestClose={this.handleClose}
-          >
-          <ListComments comments={this.state.comments[this.state.activeIndex]} />
-      </Dialog>
-      <Dialog
-            title="Select the batch to duplicate the assignment"
+            title="Select the batch to pull the assignment"
             modal={true}
             actions={actions1}
             open={this.state.selectBatchDialog}
@@ -480,6 +488,17 @@ getData = (param,pageNumber) => {
             onRequestClose={this.handleClose}
           >
           <ListBatches batches={this.props.batches} showRefreshIndicator={this.state.showRefreshIndicator} updateBatchSelection={this.updateBatchSelection}/>
+      </Dialog>
+      <Dialog
+            title="Teachers who pulled this assignment"
+            modal={true}
+            actions={actions}
+            open={this.state.showPulledUsersDialog}
+            autoScrollBodyContent={true}
+            titleStyle={{textAlign:"center",color: "#39424d"}}
+            onRequestClose={this.handleClose}
+          >
+         <ListPulledTeachers questionsets={this.state.response[this.state.activeIndex]}/>
       </Dialog>
       </StayVisible>
     )
