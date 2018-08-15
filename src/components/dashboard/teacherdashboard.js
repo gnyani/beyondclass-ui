@@ -207,6 +207,7 @@ class TeacherDashboard extends Component{
                 open={this.state.showStudentsList}
                 titleStyle={{textAlign:"center",color: "rgb(162,35,142)"}}
                 onRequestClose={this.handleClose}
+                autoScrollBodyContent={true}
               >
             <ListBatchStudents batch={this.props.batches[this.state.activeIndex]}/>
           </Dialog>

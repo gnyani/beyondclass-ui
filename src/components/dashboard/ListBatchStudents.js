@@ -42,6 +42,10 @@ class ListBatchStudents extends Component{
   }
   else{
      buffer.push(<Grid fluid className="RefreshIndicator">
+     <br /><br /><br />
+     <br /><br /><br />
+     <br /><br /><br />
+     <br /><br /><br />
      <Row center="xs">
      <Col xs>
        <RefreshIndicator
@@ -54,6 +58,8 @@ class ListBatchStudents extends Component{
          />
      </Col>
      </Row>
+     <br /><br /><br />
+     <br /><br /><br />
      </Grid>)
    }
    return buffer
