@@ -31,8 +31,7 @@ class ListPulledTeachers extends Component{
             leftAvatar={<Avatar src={this.state.response[i].normalpicUrl||this.state.response[i].googlepicUrl} />}
             disabled={true}
             primaryText={this.state.response[i].firstName+' '+this.state.response[i].lastName}
-            secondaryText={<p><span>{this.state.response[i].email}</span> <br />
-                        College: {this.state.response[i].college}</p>}
+            secondaryText={<p>College: {this.state.response[i].college}</p>}
             secondaryTextLines={2}
             />
             <Divider inset={true} />
