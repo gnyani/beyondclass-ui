@@ -22,7 +22,7 @@ class ListPulledTeachers extends Component{
    var buffer = []
    if(this.state.isDataLoaded){
      if(typeof this.state.response === 'undefined'){
-       buffer.push(<h4>No students enrolled in this class yet, please contact beyondclass for adding new students </h4>)
+       buffer.push(<h4>No teachers pulled this assignment yet!!! </h4>)
      }else{
        for(var i=0; i<this.state.response.length; i++){
          buffer.push(
