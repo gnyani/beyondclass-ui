@@ -62,7 +62,7 @@ class TeacherClassDetails extends Component{
         <MenuItem value={1} primaryText="Select" />
         <MenuItem value={'OU'} label="OU" primaryText="Osmania University" />
         <MenuItem value={'SREC'} label="SREC" primaryText="SR Engineering College" />
-        <MenuItem value={'KITS'} label="KITS" primaryText="KITS Engineering College" />
+        <MenuItem value={'KU'} label="KU" primaryText="Kakatiya University" />
       </SelectField>
       </Col>
       <Col xs={11} sm={11} md={5} lg={5}>
