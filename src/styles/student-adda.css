@@ -386,6 +386,7 @@ td{
 .shadow{
   border: 1px solid transparent;
   box-shadow: 0px 0px 5px 1px lightgrey;
+  font-family: 'Roboto',sans-serif;
 }
 .shadow > fieldset{
   border: 0px;
@@ -393,6 +394,9 @@ td{
 }
 .mtop{
   margin-top: 10px;
+}
+.pbottom{
+  padding-bottom: 30px !important;
 }
 .uprcase{
   font-size: large !important;
