@@ -12,6 +12,7 @@ import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 import Dialog from 'material-ui/Dialog'
 import ListDataComponent from '../teacherstudent/ListDataComponent'
+import Divider from 'material-ui/Divider'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import Copy from 'material-ui/svg-icons/content/content-copy'
 import ListBatches from '../teacher/ListBatches.js'
@@ -254,6 +255,8 @@ handleCommentChange = (e) => this.setState({commentText:e.target.value});
               icon={<Tree />} />
          </Col>
           </Row>
+          <br />
+          <Divider style={{height: '2.5px'}}/>
           <CardActions>
             <div >
             <Grid fluid>
@@ -277,6 +280,7 @@ handleCommentChange = (e) => this.setState({commentText:e.target.value});
             </Grid>
             </div>
           </CardActions>
+            <Divider style={{height: '2.5px'}}/>
           </Grid>
           <Grid fluid className="nogutter">
             <Row start="xs">
