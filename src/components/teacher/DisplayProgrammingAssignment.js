@@ -71,6 +71,7 @@ renderRows = () => {
       >
      <CardTitle className="displayQuestions" title={<RichTextEditorReadOnly editorState={this.convertToEditorState(this.props.question)} />} />
      <CardText>
+      <hr></hr>
      <h3>TestCases:</h3>
      {this.renderInputs()}
      </CardText>

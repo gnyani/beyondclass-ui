@@ -54,6 +54,8 @@ constructor(){
     subjectValue: '',
     message: '',
     numQuestions: 1,
+    threshold:80,
+    thresholdarray:[],
     controlledDate: date,
     editorState: EditorState.createEmpty(),
     contentState: '',
@@ -198,6 +200,7 @@ _onActive = () => {
      lastdate: this.state.controlledDate,
      message: this.state.message,
      questions: this.state.questions,
+     thresholdarray: this.state.thresholdarray,
      assignmentType: 'THEORY',
      numberOfQuesPerStudent: this.state.numQuestions,
      postedToNetwork: this.state.postedToNetwork,
@@ -213,6 +216,7 @@ _onActive = () => {
         subject: this.state.subject,
         batch : this.props.class,
         lastdate: this.state.controlledDate,
+        thresholdarray: this.state.thresholdarray,
         message: this.state.message,
         questions: this.state.questions,
         assignmentType: 'THEORY',
@@ -264,6 +268,7 @@ getAssignmentBody = () => {
       batch : this.props.class,
       lastdate: this.state.controlledDate,
       message: this.state.message,
+      thresholdarray: this.state.thresholdarray,
       questions: this.state.questions,
       assignmentType: 'THEORY',
       numberOfQuesPerStudent: this.state.numQuestions,
@@ -279,6 +284,7 @@ getAssignmentBody = () => {
       subject: this.state.subject,
       batch : this.props.class,
       lastdate: this.state.controlledDate,
+      thresholdarray: this.state.thresholdarray,
       message: this.state.message,
       questions: this.state.questions,
       assignmentType: 'THEORY',
@@ -380,17 +386,20 @@ addQuestion = () => {
   var newquestions = this.state.questions.slice()
   var newquestionEditorStates = this.state.questionsEditoStates.slice()
   var question = this.state.questionValue
+  var newthresholdarray = this.state.thresholdarray.slice()
 
   if(question.trim() === "")
     notify.show("You cannot add empty Question","warning")
   else
   {
   newquestions.push(this.state.contentState)
+  newthresholdarray.push(this.state.threshold)
   newquestionEditorStates.push({id:++id,value:this.state.editorState})
   this.setState({
     questions: newquestions,
     questionsEditoStates: newquestionEditorStates,
     questionValue: '',
+    thresholdarray:newthresholdarray,
     editorState:EditorState.createEmpty(),
     showTextField: false,
     addQuestionDialog: false,
@@ -401,22 +410,27 @@ addQuestion = () => {
 handleAddQuestionDialog = () => {
   this.setState({
     addQuestionDialog: true,
+    threshold: 80,
   })
 }
 
 
 deleteQuestion = (i) => {
   var newquestions = this.state.questions.slice()
+  var newthresholdarray = this.state.thresholdarray.slice()
   newquestions.splice(i,1)
+  newthresholdarray.splice(i,1)
   var newquestionEditorStates = this.state.questionsEditoStates.slice()
   newquestionEditorStates.splice(i,1)
   this.setState({
     questions: newquestions,
-    questionsEditoStates: newquestionEditorStates
+    questionsEditoStates: newquestionEditorStates,
+    thresholdarray:newthresholdarray
   })
 }
 
 handleNumberChange = (event, index, numQuestions) => this.setState({numQuestions});
+handleThresholdChange = (event, index, threshold) => this.setState({threshold});
 
 handleSubjectChange = (subjectValue) => {
   this.setState({
@@ -465,8 +479,26 @@ renderTextField(){
     buffer.push(
       <div key={this.state.showTextField}>
       <Grid fluid className="nogutter">
-      <Row center="xs" middle="xs">
-      <Col xs={10} sm={10} md={10} lg={11}>
+      <Row end="xs" middle="xs">
+      <Col xs={6} sm={6} md={6} lg={6} >
+      <SelectField
+        floatingLabelText="Plagiarism Threshold"
+        value={this.state.threshold}
+        onChange={this.handleThresholdChange}
+        style={{width: '50%',textAlign: 'left'}}
+        maxHeight={200}
+      >
+        <MenuItem value={50}  primaryText="50" />
+        <MenuItem value={60}  primaryText="60" />
+        <MenuItem value={70}  primaryText="70" />
+        <MenuItem value={80}  primaryText="80" />
+        <MenuItem value={90}  primaryText="90" />
+        <MenuItem value={95}  primaryText="95" />
+      </SelectField>
+      </Col>
+     </Row>
+     <Row center="xs" middle="xs">
+      <Col xs>
       <RichTextEditor editorState={this.state.editorState} onEditorStateChange={this.onEditorStateChange}
         onContentStateChange={this.onContentStateChange} placeholder='Start typing a question'  />
       </Col>

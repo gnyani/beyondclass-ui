@@ -316,10 +316,12 @@ if(this.state.isDataLoaded){
       <Grid fluid>
       <br /><br />
       <Row center="xs" bottom="xs">
-      <Col xs={6} sm={6} md={4} lg={5}>
+      <Col xs>
       <DatePicker hintText="Last Date" floatingLabelText="Last Date" minDate={this.state.minDate} defaultDate={new Date(this.state.controlledDate)} onChange={this.handleDateChange} />
       </Col>
-      <Col xs={6} sm={6} md={4} lg={4}>
+      </Row>
+      <Row center="xs" bottom="xs">      
+      <Col xs>
       <TextField hintText="Additional Comments" style={{width:'75%'}} value={this.state.message} floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
       </Col>
       </Row>

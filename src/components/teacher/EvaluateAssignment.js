@@ -77,7 +77,7 @@ class EvaluateAssignment extends Component{
      questions: [],
      answers: [],
      questionIndex: [],
-     assignmentMarks: 3,
+     assignmentMarks: 4,
      timespent: '',
      insight1: '',
      insight2: '',
@@ -407,8 +407,8 @@ if(this.state.assignmentType ===  'THEORY')
       <p style={{fontWeight:'Bold',fontFamily:"'Roboto', sans-serif"}}> Marks: </p>
       </Col>
       <Col xs={6} sm={6} md={6} lg={2}>
-      <NumericInput style={numberstyle} value={this.state.assignmentMarks} precision={1} size={8} step={0.5}
-      min={1} max={5} mobile={false} onChange={this.handleMarksChange.bind(this)}
+      <NumericInput style={numberstyle} value={this.state.assignmentMarks} precision={1} size={8} step={1}
+      min={1} max={10} mobile={false} onChange={this.handleMarksChange.bind(this)}
     />
     </Col>
       </Row>
