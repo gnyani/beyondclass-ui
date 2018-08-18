@@ -270,7 +270,7 @@ renderListItems(){
     var submittedDate = new Date(this.state.submittedStudents[i].submissionDate)
   if(this.state.submittedStudents[i].status==='PENDING_APPROVAL')
  buffer.push(<div key={i}>
-   <Grid fluid className="nogutter">
+   <Grid fluid className="nogutter shadow">
    <Row around="xs" middle="xs">
    <Col xs>
    <ListItem
@@ -298,7 +298,7 @@ renderListItems(){
 else if(this.state.submittedStudents[i].status === 'REJECTED')
 {
     buffer.push(<div key={i}>
-      <Grid fluid className="nogutter">
+      <Grid fluid className="nogutter shadow">
       <Row around="xs" middle="xs">
       <Col xs>
       <ListItem
@@ -326,7 +326,7 @@ else if(this.state.submittedStudents[i].status === 'REJECTED')
     }
     else {
       buffer.push(<div key={i}>
-        <Grid fluid className="nogutter">
+        <Grid fluid className="nogutter shadow ">
           <Row around="xs" middle="xs">
             <Col xs>
               <ListItem
@@ -522,7 +522,7 @@ return(
       <Divider />
       <div className="Reports">
       {this.nonZeroSubmissions()}
-      <Grid fluid className="nogutter">
+      <Grid fluid className="nogutter pbottom">
       <Row around="xs">
       <Col xs={11} sm={11} md={9} lg={8}>
       <List>
