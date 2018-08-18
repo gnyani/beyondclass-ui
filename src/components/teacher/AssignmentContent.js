@@ -54,7 +54,7 @@ constructor(){
     subjectValue: '',
     message: '',
     numQuestions: 1,
-    threshold:50,
+    threshold:80,
     thresholdarray:[],
     controlledDate: date,
     editorState: EditorState.createEmpty(),
@@ -410,7 +410,7 @@ addQuestion = () => {
 handleAddQuestionDialog = () => {
   this.setState({
     addQuestionDialog: true,
-    threshold: 50,
+    threshold: 80,
   })
 }
 
@@ -479,15 +479,13 @@ renderTextField(){
     buffer.push(
       <div key={this.state.showTextField}>
       <Grid fluid className="nogutter">
-      <Row center="xs" middle="xs">
-      <Col xs={8} sm={8} md={8} lg={8} className="text-right">
-      <b><label>Plagiarism Threshold</label></b>
-      </Col>
-      <Col xs={4} sm={4} md={4} lg={4}>
+      <Row end="xs" middle="xs">
+      <Col xs={6} sm={6} md={6} lg={6} >
       <SelectField
+        floatingLabelText="Plagiarism Threshold"
         value={this.state.threshold}
         onChange={this.handleThresholdChange}
-        style={{width: '50%'}}
+        style={{width: '50%',textAlign: 'left'}}
         maxHeight={200}
       >
         <MenuItem value={50}  primaryText="50" />
@@ -498,7 +496,9 @@ renderTextField(){
         <MenuItem value={95}  primaryText="95" />
       </SelectField>
       </Col>
-      <Col xs={10} sm={10} md={10} lg={11}>
+     </Row>
+     <Row center="xs" middle="xs">
+      <Col xs>
       <RichTextEditor editorState={this.state.editorState} onEditorStateChange={this.onEditorStateChange}
         onContentStateChange={this.onContentStateChange} placeholder='Start typing a question'  />
       </Col>

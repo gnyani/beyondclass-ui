@@ -56,6 +56,8 @@ constructor(){
     inputs: [],
     outputs: [],
     controlledDate: date,
+    threshold: 60,
+    thresholdarray: [],
     editorState: EditorState.createEmpty(),
     contentState: '',
     questionsEditoStates: [],
@@ -67,6 +69,7 @@ constructor(){
     saveButton: false,
     isDataLoaded: false,
     postedToNetwork: false,
+    addQuestionDialog: false,
   }
   this.renderTextField = this.renderTextField.bind(this)
   this.displayQuestions = this.displayQuestions.bind(this)
@@ -172,6 +175,7 @@ _onActive = () => {
        lastdate: this.state.controlledDate,
        questions: this.state.questions,
        inputs: this.state.allinputs,
+       thresholdarray: this.state.thresholdarray,
        outputs: this.state.alloutputs,
        message: this.state.message,
        postedToNetwork: this.state.postedToNetwork,
@@ -189,6 +193,7 @@ _onActive = () => {
         batch : this.props.class,
         lastdate: this.state.controlledDate,
         questions: this.state.questions,
+        thresholdarray: this.state.thresholdarray,
         inputs: this.state.allinputs,
         outputs: this.state.alloutputs,
         message: this.state.message,
@@ -343,6 +348,7 @@ getAssignmentBody = () => {
       email: this.props.loggedinuser,
       batch : this.props.class,
       lastdate: this.state.controlledDate,
+      thresholdarray: this.state.thresholdarray,
       questions: this.state.questions,
       inputs: this.handleAllInputs(this.state.allinputs),
       outputs: this.state.alloutputs,
@@ -361,6 +367,7 @@ getAssignmentBody = () => {
       email: this.props.loggedinuser,
       batch : this.props.class,
       lastdate: this.state.controlledDate,
+      thresholdarray: this.state.thresholdarray,
       questions: this.state.questions,
       inputs: this.handleAllInputs(this.state.allinputs),
       outputs: this.state.alloutputs,
@@ -463,6 +470,7 @@ onContentStateChange: Function = (contentState) => {
 
 addQuestion = () => {
   var newquestions = this.state.questions.slice()
+  var newthresholdarray = this.state.thresholdarray.slice()
   var newquestionEditorStates = this.state.questionsEditoStates.slice()
   var question = this.state.questionValue
   if(question.trim() === "")
@@ -472,6 +480,7 @@ addQuestion = () => {
   else
   {
   newquestions.push(this.state.contentState)
+  newthresholdarray.push(this.state.threshold)
   newquestionEditorStates.push({id: ++id,value:this.state.editorState})
   var allinputs = this.state.allinputs.slice()
   var alloutputs = this.state.alloutputs.slice()
@@ -488,6 +497,7 @@ addQuestion = () => {
     output: '',
     allinputs: allinputs,
     alloutputs: alloutputs,
+    thresholdarray: newthresholdarray,
     showTextField: false,
     addQuestionDialog: false,
   })
@@ -513,10 +523,12 @@ deleteQuestion = (i) => {
 }
 
 handleNumberChange = (event, index, numQuestions) => this.setState({numQuestions});
+handleThresholdChange = (event, index, threshold) => this.setState({threshold});
 
 handleAddQuestionDialog = () => {
   this.setState({
     addQuestionDialog: true,
+    threshold: 60,
   })
 }
 
@@ -571,6 +583,24 @@ renderTextField(){
     buffer.push(
       <div key={this.state.showTextField}>
       <Grid fluid className="nogutter">
+      <Row end="xs" middle="xs">
+        <Col xs={6} sm={6} md={6} lg={6} >
+        <SelectField
+          floatingLabelText="Plagiarism Threshold"
+          value={this.state.threshold}
+          onChange={this.handleThresholdChange}
+          style={{width: '50%',textAlign: 'left'}}
+          maxHeight={200}
+        >
+          <MenuItem value={50}  primaryText="50" />
+          <MenuItem value={60}  primaryText="60" />
+          <MenuItem value={70}  primaryText="70" />
+          <MenuItem value={80}  primaryText="80" />
+          <MenuItem value={90}  primaryText="90" />
+          <MenuItem value={95}  primaryText="95" />
+        </SelectField>
+        </Col>
+       </Row>
       <Row center="xs" middle="xs">
       <Col xs>
       <RichTextEditor editorState={this.state.editorState} onEditorStateChange={this.onEditorStateChange}
