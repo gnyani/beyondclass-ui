@@ -136,7 +136,7 @@ width: 100%; height: 150px; padding: 12px 20px; box-sizing: border-box; border: 
 .EvaluateAssignment .paragraph{text-align: center;font-family: 'Roboto',sans-serif ;font-weight: normal;
                font-size: 4vmin;letter-spacing: 0.1vmin;color: #39424d}
 .EvaluateAssignment .displayQuestions{text-transform: capitalize !important;}
-.EvaluateAssignment .displayAnswers{text-transform: capitalize !important; font-weight: 400;}
+.EvaluateAssignment .displayAnswers{font-weight: 400;}
 .EvaluateAssignment .button{width: 40%!important;  border: 1px solid #30b55b !important;
   background-color: #fbfbfb !important;color: #30b55b !important;border-radius: 1em!important;}
 .EvaluateAssignment .insightsBorder{padding-left: 2%;padding-top: 0.5%;padding-bottom: 1%;padding-right: 1%;outline-color:black;outline-style:dashed;}

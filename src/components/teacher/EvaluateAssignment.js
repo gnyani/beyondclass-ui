@@ -156,9 +156,9 @@ class EvaluateAssignment extends Component{
        }).then( response => {
          var insight1 = (response.insight1 !== null ? response.insight1 : '' )
          var insight2 = (response.insight2 !== null ? response.insight2 : '' )
-         var insight3 = (response.insight1 !== null ? response.insight3 : '' )
-         var insight4 = (response.insight2 !== null ? response.insight4 : '' )
-         var insight5 = (response.insight1 !== null ? response.insight5 : '' )
+         var insight3 = (response.insight3 !== null ? response.insight3 : '' )
+         var insight4 = (response.insight4 !== null ? response.insight4 : '' )
+         var insight5 = (response.insight5 !== null ? response.insight5 : '' )
          this.setState({
            insight1: insight1,
            insight2: insight2,
