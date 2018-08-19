@@ -540,7 +540,7 @@ if(this.state.assignmentIds.length !== 0)
   )
 }
 }else if(this.state.isDataLoaded){
-  buffer.push(<p className="paragraph" key={1}>You did not give any Assigments to this class yet !!!</p>)
+  buffer.push(<p className="paragraph uprcase" key={1}>You did not give any Assigments to this class yet !!!</p>)
 }else{
   buffer.push(<Grid fluid className="RefreshIndicator" key={1}>
   <Row center="xs">
