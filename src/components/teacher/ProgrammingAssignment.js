@@ -3,6 +3,7 @@ import {Grid,Row,Col} from 'react-flexbox-grid'
 import {notify} from 'react-notify-toast'
 import DatePicker from 'material-ui/DatePicker'
 import TextField from 'material-ui/TextField'
+import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'
 import Add from 'material-ui/svg-icons/content/add'
 import CheckIcon from 'material-ui/svg-icons/action/assignment.js'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
@@ -48,6 +49,7 @@ constructor(){
     minDate: new Date(new Date().setDate(new Date().getDate()+1)),
     questions: [],
     showTextField: false,
+    subject: '',
     questionValue: '',
     message: '',
     numQuestions: 1,
@@ -56,6 +58,8 @@ constructor(){
     inputs: [],
     outputs: [],
     controlledDate: date,
+    threshold: 60,
+    thresholdarray: [],
     editorState: EditorState.createEmpty(),
     contentState: '',
     questionsEditoStates: [],
@@ -67,6 +71,7 @@ constructor(){
     saveButton: false,
     isDataLoaded: false,
     postedToNetwork: false,
+    addQuestionDialog: false,
   }
   this.renderTextField = this.renderTextField.bind(this)
   this.displayQuestions = this.displayQuestions.bind(this)
@@ -169,9 +174,11 @@ _onActive = () => {
    buffer = {
        email: this.props.loggedinuser,
        batch : this.props.class,
+       subject: this.state.subject,
        lastdate: this.state.controlledDate,
        questions: this.state.questions,
        inputs: this.state.allinputs,
+       thresholdarray: this.state.thresholdarray,
        outputs: this.state.alloutputs,
        message: this.state.message,
        postedToNetwork: this.state.postedToNetwork,
@@ -187,8 +194,10 @@ _onActive = () => {
       buffer = {
         email: this.props.loggedinuser,
         batch : this.props.class,
+        subject: this.state.subject,
         lastdate: this.state.controlledDate,
         questions: this.state.questions,
+        thresholdarray: this.state.thresholdarray,
         inputs: this.state.allinputs,
         outputs: this.state.alloutputs,
         message: this.state.message,
@@ -342,7 +351,9 @@ getAssignmentBody = () => {
     buffer = {
       email: this.props.loggedinuser,
       batch : this.props.class,
+      subject: this.state.subject,
       lastdate: this.state.controlledDate,
+      thresholdarray: this.state.thresholdarray,
       questions: this.state.questions,
       inputs: this.handleAllInputs(this.state.allinputs),
       outputs: this.state.alloutputs,
@@ -360,7 +371,9 @@ getAssignmentBody = () => {
     buffer = {
       email: this.props.loggedinuser,
       batch : this.props.class,
+      subject: this.state.subject,
       lastdate: this.state.controlledDate,
+      thresholdarray: this.state.thresholdarray,
       questions: this.state.questions,
       inputs: this.handleAllInputs(this.state.allinputs),
       outputs: this.state.alloutputs,
@@ -463,6 +476,7 @@ onContentStateChange: Function = (contentState) => {
 
 addQuestion = () => {
   var newquestions = this.state.questions.slice()
+  var newthresholdarray = this.state.thresholdarray.slice()
   var newquestionEditorStates = this.state.questionsEditoStates.slice()
   var question = this.state.questionValue
   if(question.trim() === "")
@@ -472,6 +486,7 @@ addQuestion = () => {
   else
   {
   newquestions.push(this.state.contentState)
+  newthresholdarray.push(this.state.threshold)
   newquestionEditorStates.push({id: ++id,value:this.state.editorState})
   var allinputs = this.state.allinputs.slice()
   var alloutputs = this.state.alloutputs.slice()
@@ -488,6 +503,7 @@ addQuestion = () => {
     output: '',
     allinputs: allinputs,
     alloutputs: alloutputs,
+    thresholdarray: newthresholdarray,
     showTextField: false,
     addQuestionDialog: false,
   })
@@ -513,10 +529,18 @@ deleteQuestion = (i) => {
 }
 
 handleNumberChange = (event, index, numQuestions) => this.setState({numQuestions});
+handleThresholdChange = (event, index, threshold) => this.setState({threshold});
+
+handleSubjectChange = (subjectValue) => {
+  this.setState({
+    subject: subjectValue
+  })
+}
 
 handleAddQuestionDialog = () => {
   this.setState({
     addQuestionDialog: true,
+    threshold: 60,
   })
 }
 
@@ -571,6 +595,24 @@ renderTextField(){
     buffer.push(
       <div key={this.state.showTextField}>
       <Grid fluid className="nogutter">
+      <Row end="xs" middle="xs">
+        <Col xs={6} sm={6} md={6} lg={6} >
+        <SelectField
+          floatingLabelText="Plagiarism Threshold"
+          value={this.state.threshold}
+          onChange={this.handleThresholdChange}
+          style={{width: '50%',textAlign: 'left'}}
+          maxHeight={200}
+        >
+          <MenuItem value={50}  primaryText="50" />
+          <MenuItem value={60}  primaryText="60" />
+          <MenuItem value={70}  primaryText="70" />
+          <MenuItem value={80}  primaryText="80" />
+          <MenuItem value={90}  primaryText="90" />
+          <MenuItem value={95}  primaryText="95" />
+        </SelectField>
+        </Col>
+       </Row>
       <Row center="xs" middle="xs">
       <Col xs>
       <RichTextEditor editorState={this.state.editorState} onEditorStateChange={this.onEditorStateChange}
@@ -630,14 +672,19 @@ if(this.state.isDataLoaded){
         </Grid>
       <Grid fluid className="cont">
       <br /><br />
-      <Row center="xs" bottom="xs">
-      <Col xs={6} sm={6} md={4} lg={5}>
-      <DatePicker hintText="Last Date" floatingLabelText="Last Date" minDate={this.state.minDate} defaultDate={new Date(this.state.controlledDate)} onChange={this.handleDateChange} />
-      </Col>
-      <Col xs={6} sm={6} md={4} lg={4}>
-      <TextField style={{width:'100%'}} value={this.state.message} floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
-      </Col>
-      </Row>
+        <Row center="xs" bottom="xs">
+        <Col xs>
+        <SubjectAutoComplete type="syllabus" branch={this.props.branch} searchText={this.state.subjectValue} handleSubjectChange={this.handleSubjectChange} />
+        </Col>
+        <Col xs>
+        <DatePicker hintText="Last Date" floatingLabelText="Last Date" defaultDate={new Date(this.state.controlledDate)} minDate={this.state.minDate} onChange={this.handleDateChange} />
+        </Col>
+        </Row>
+        <Row center="xs">
+        <Col xs>
+        <TextField style={{width: '81%'}} value={this.state.message}  floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
+        </Col>
+        </Row>
       <br />
       <Row center="xs" middle='xs'>
       <Col xs={8} sm={8} md={7} lg={7} >

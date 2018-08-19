@@ -18,15 +18,19 @@ displayQuestions = () => {
     buffer.push(
       <div key={i}>
       <Grid fluid>
-      <Row center="xs">
-      <Col xs>
-      <RichTextEditorReadOnly editorStyle={{borderStyle:'solid',borderWidth:'0.1px'}} editorState={this.convertToEditorState(this.props.questions[i])} />
+      <Row around="xs">
+      <Col xs={11} sm={11} md={9} lg={8}>
+      <div className='shadow'>
+      <RichTextEditorReadOnly editorStyle={{borderWidth:'0.1px'}} editorState={this.convertToEditorState(this.props.questions[i])} />
+      </div>
       </Col>
       </Row>
-      <Row center = "xs">
+      <Row around = "xs">
       <Col xs={11} sm={11} md={9} lg={8}>
+      <div className='shadow'>
       <ColoredStudentOptions options = {this.props.options[i]} userValidity = {this.props.userValidity[i]}
       validity = {this.props.validity[i]}/>
+      </div>
       </Col>
       </Row>
       </Grid>

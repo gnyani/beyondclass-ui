@@ -14,6 +14,8 @@ export const CSE = [
   {subjectKey: 'Environmental Studies',valueKey:'ES'},
   {subjectKey: 'Computer Networks',valueKey:'CN'},
   {subjectKey: 'Software Engineering',valueKey:'SE'},
+  {subjectKey: 'C programming', valueKey: 'C'},
+  {subjectKey: 'C++ programming', valueKey: 'C++'},
   {subjectKey:'Machine Learning',valueKey:'ML'},
 ];
 
@@ -30,6 +32,8 @@ export const CSESyllabus = [
   {subjectKey: 'Computer Networks',valueKey:'CN'},
   {subjectKey: 'Finishing School 2', valueKey: 'FS2'},
   {subjectKey: 'Software Engineering',valueKey:'SE'},
+  {subjectKey: 'C programming', valueKey: 'C'},
+  {subjectKey: 'C++ programming', valueKey: 'C++'},
   {subjectKey:'Machine Learning',valueKey:'ML'},
 ];
 
@@ -43,6 +47,8 @@ export const IT = [
   {subjectKey: 'Computer Architecture' ,valueKey:'CA'},
   {subjectKey: 'Environmental Studies',valueKey:'ES'},
   {subjectKey: 'Computer Networks',valueKey:'CN'},
+  {subjectKey: 'C programming', valueKey: 'C'},
+  {subjectKey: 'C++ programming', valueKey: 'C++'},
   {subjectKey: 'Software Engineering',valueKey:'SE'},
 ]
 export const ITSyllabus = [
@@ -58,6 +64,8 @@ export const ITSyllabus = [
   {subjectKey: 'Computer Networks',valueKey:'CN'},
   {subjectKey: 'Finishing School 2', valueKey: 'FS2'},
   {subjectKey: 'Software Engineering',valueKey:'SE'},
+  {subjectKey: 'C programming', valueKey: 'C'},
+  {subjectKey: 'C++ programming', valueKey: 'C++'},
   {subjectKey:'Machine Learning',valueKey:'ML'},
 ]
 
@@ -74,15 +82,21 @@ export const SubjectsNameLookup = {
   'FS2':'Finishing School 2',
   'ML':'Machine Learning',
   'CN':'Computer Networks',
-  'SE':'Software Engineering'
+  'SE':'Software Engineering',
+  'C': 'C programming',
+  'C++': 'C++ programming',
 }
 
 export const ECE = [
   {subjectKey:'Basic Circuit Analysis',valueKey:'BCA'},
   {subjectKey:'Electrical Technology',valueKey:'ET'},
+  {subjectKey: 'C programming', valueKey: 'C'},
+  {subjectKey: 'C++ programming', valueKey: 'C++'},
 ]
 
 export const ECESyllabus = [
   {subjectKey:'Basic Circuit Analysis',valueKey:'BCA'},
   {subjectKey:'Electrical Technology',valueKey:'ET'},
+  {subjectKey: 'C programming', valueKey: 'C'},
+  {subjectKey: 'C++ programming', valueKey: 'C++'},
 ]
