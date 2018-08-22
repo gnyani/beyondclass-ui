@@ -31,6 +31,7 @@ constructor(){
     theme: ["textmate","textmate","textmate","textmate","textmate"],
     languageValue: ["javascript","javascript","javascript","javascript","javascript"],
     hackerRankCodes: '',
+    langcodes: [20, 20, 20, 20, 20],
     mode: ["javascript","javascript","javascript","javascript","javascript"],
     submitConfirm : false,
     timeout: 5000,
@@ -67,15 +68,18 @@ setMode = () => {
   var editorModesMap = new Map(Object.entries(editorModes))
   var hackerRankLangNotationMap=new Map(Object.entries(hackerRankLangNotation))
   var newLanguageValue = this.state.languageValue.slice()
+  var newLangCodes = this.state.langcodes.slice()
   newLanguageValue[this.state.i] = hackerRankLangNotationMap.get(this.state.value)
   var newLanguage = this.state.language.slice()
   newLanguage[this.state.i] = this.state.value
+  newLangCodes[this.state.i] = this.state.hackerRankCodes[hackerRankLangNotationMap.get(this.state.value)]
   var newMode = this.state.mode.slice()
   newMode[this.state.i] = editorModesMap.get(this.state.value)
   var newSource = this.state.source.slice()
   newSource[this.state.i] = map.get(this.state.value)
   this.setState({
     languageValue: newLanguageValue,
+    langcodes: newLangCodes,
     language: newLanguage,
     mode: newMode,
     source: newSource,
@@ -130,6 +134,7 @@ componentDidMount(){
      }).then(response => {
        var source = response.source ? response.source : this.state.source
        var mode = response.language ? response.language : this.state.mode
+       var langcodes = response.langCodes ? response.langCodes : this.state.langcodes
        var theme = response.theme ? response.theme : this.state.theme
        var totalActiveTime = response.timespent ? response.timespent : this.state.totalActiveTime
        var map = new Map(Object.entries(HelloWorldTemplates))
@@ -150,6 +155,7 @@ componentDidMount(){
        this.setState({
          languageValue: mode.slice(),
          language: language,
+         langcodes: langcodes,
          questions: response.questions.slice(),
          mode: mode,
          source: source,
@@ -184,10 +190,6 @@ _onActive = () => {
  }
 
  submitProgrammingAssignment = () => {
-   var codeslist = this.state.hackerRankCodes
-   var langcode = []
-   for(var i=0;i<this.state.languageValue.length;i++)
-   langcode[i] = codeslist[this.state.languageValue[i]]
 
    this.setState({
      submitButton: true,
@@ -206,7 +208,7 @@ _onActive = () => {
           questions:this.state.questions.slice(),
           source: this.state.source.slice(),
           language: this.state.mode.slice(),
-          langcode: langcode,
+          langcode: this.state.langcodes,
           tempassignmentid: this.props.assignmentid,
           theme: this.state.theme.slice(),
           email: this.props.email,
@@ -245,6 +247,7 @@ saveProgrammingAssignment = (option) => {
        body: JSON.stringify({
          source: this.state.source,
          language: this.state.mode,
+         langCodes: this.state.langcodes,
          tempassignmentid: this.props.assignmentid,
          theme: this.state.theme,
          email: this.props.email,
@@ -309,7 +312,7 @@ displayQuestions(){
       </Row>
       </Grid>
     <Editor state={"Assignment"} question={this.state.questions[i]}  email={this.props.email}  assignmentid={this.props.assignmentid}
-            languageValue={this.state.languageValue[i]} setMode={this.setModeConfirm.bind(this,i)} setTheme={this.setTheme.bind(this,i)} mode={this.state.mode[i]}
+            languageValue={this.state.langcodes[i]} setMode={this.setModeConfirm.bind(this,i)} setTheme={this.setTheme.bind(this,i)} mode={this.state.mode[i]}
             language={this.state.language[i]} theme={this.state.theme[i]}  source={this.state.source[i]} onChange={this.onChange.bind(this,i)}/>
 
       <br />

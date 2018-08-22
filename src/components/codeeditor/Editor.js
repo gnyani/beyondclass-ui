@@ -216,8 +216,6 @@ compileAndRun = () => {
   if(this.props.source.trim() === "")
   notify.show("Source code cannot be empty","error")
   else{
-  var codeslist = this.state.hackerRankCodes
-  var langcode = codeslist[this.props.languageValue]
   this.setState({
     buttonDisabled: true,
     submissionStarted: true,
@@ -232,7 +230,7 @@ compileAndRun = () => {
        credentials: 'include',
        body: JSON.stringify({
          source: this.props.source,
-         lang: langcode,
+         lang: this.props.languageValue,
          assignmentid: this.props.assignmentid,
          question: this.props.question,
       })
