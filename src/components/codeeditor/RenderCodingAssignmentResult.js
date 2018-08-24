@@ -9,8 +9,8 @@ class RenderCodingAssignmentResult extends Component{
     if( this.props.runtime !== ""){
     buffer.push(
     <div key={2}>
-    <h5 className="summaryParagraph">Program RunTime : [{this.props.runtime.toString()}] in seconds</h5>
-    <h5 className="summaryParagraph">Program Memory : [{this.props.memory.toString()}] in bytes</h5>
+    <h5 className="summaryParagraph">Program RunTime : [{this.props.runtime}] in seconds</h5>
+    <h5 className="summaryParagraph">Program Memory : [{this.props.memory}] in bytes</h5>
     </div>
       )
     }
