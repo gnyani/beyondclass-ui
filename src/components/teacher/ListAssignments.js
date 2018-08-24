@@ -260,7 +260,6 @@ deleteAssignment(){
 
 decideSubject = (i) => {
   var buffer = []
-  if(this.state.savedAssignmentTypes[i] === 'THEORY')
   buffer.push(<p key={i}><b>Subject: </b> {this.state.savedAssignmentSubjects[i]}</p>)
   return buffer
 }
@@ -302,7 +301,7 @@ listSavedAssignments = () => {
   if(this.state.savedAssignmentIds.length !== 0)
   {
 
-    buffer.push(<p className="paragraph" key={this.state.savedAssignmentIds.length+1}>Your draft assigments for class {this.props.class} </p>)
+    buffer.push(<p className="paragraph uprcase" key={this.state.savedAssignmentIds.length+1}>Your draft assigments for class {this.props.class} </p>)
     for(let i=0; i<this.state.savedAssignmentIds.length; i++){
         var createdDate = new Date(this.state.savedCreatedDates[i])
       buffer.push(

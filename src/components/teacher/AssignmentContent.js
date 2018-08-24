@@ -170,7 +170,7 @@ componentDidMount(){
       this.setState({
         totalActiveTime: this.state.totalActiveTime + 20000
       });
-      if(this.state.totalActiveTime % 20000 === 0 )
+      if(this.state.totalActiveTime % 60000 === 0 )
       {
         this.validateSaveCreateAssignment('autosave')
       }

@@ -4,6 +4,7 @@ import {notify} from 'react-notify-toast'
 import DatePicker from 'material-ui/DatePicker'
 import TextField from 'material-ui/TextField'
 import SubjectAutoComplete from '../utils/SubjectAutoComplete.js'
+import {SubjectsNameLookup} from '../utils/Subjects.js'
 import Add from 'material-ui/svg-icons/content/add'
 import CheckIcon from 'material-ui/svg-icons/action/assignment.js'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
@@ -60,6 +61,7 @@ constructor(){
     controlledDate: date,
     threshold: 60,
     thresholdarray: [],
+    subjectValue: '',
     editorState: EditorState.createEmpty(),
     contentState: '',
     questionsEditoStates: [],
@@ -97,6 +99,8 @@ componentDidMount(){
         this.setState({
           questions: response.questions,
           message: response.message,
+          subject: response.subject,
+          subjectValue: SubjectsNameLookup[response.subject],
           isDataLoaded: true,
           questionsEditoStates: newEditorStates.slice(),
           allinputs: response.inputs,
@@ -117,8 +121,10 @@ componentDidMount(){
       }this.setState({
         questions: response.questions,
         message: response.message,
+        subject: response.subject,
         isDataLoaded: true,
         questionsEditoStates: newEditorStates.slice(),
+        subjectValue: SubjectsNameLookup[response.subject],
         allinputs: response.inputs,
         alloutputs: response.outputs,
         numQuestions: response.numberOfQuesPerStudent,
@@ -135,7 +141,7 @@ componentDidMount(){
       this.setState({
         totalActiveTime: this.state.totalActiveTime + 20000
       });
-      if(this.state.totalActiveTime % 20000 === 0 )
+      if(this.state.totalActiveTime % 60000 === 0 )
       {
         this.validateSaveCreateAssignment('autosave')
       }
