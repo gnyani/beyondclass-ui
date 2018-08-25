@@ -205,10 +205,7 @@ submitRequest(){
         buttonDisabled: false
       })
     }
-    }).catch(response => {
-    notify.show("Please login before you can compile your program","error");
-    this.context.router.history.push('/');
-   });
+    })
  }
 }
 
