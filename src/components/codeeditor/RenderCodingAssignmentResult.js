@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import {Grid,Row,Col} from 'react-flexbox-grid'
+import Divider from 'material-ui/Divider'
 
 class RenderCodingAssignmentResult extends Component{
 
@@ -9,8 +10,8 @@ class RenderCodingAssignmentResult extends Component{
     if( this.props.runtime !== ""){
     buffer.push(
     <div key={2}>
-    <h5 className="summaryParagraph">Program RunTime : [{this.props.runtime}] in seconds</h5>
-    <h5 className="summaryParagraph">Program Memory : [{this.props.memory}] in bytes</h5>
+    <h5 className="summaryParagraph">Program RunTime : [{this.props.runtime ? this.props.runtime.toString() : ''}] in seconds</h5>
+    <h5 className="summaryParagraph">Program Memory : [{this.props.memory ? this.props.memory.toString() : ''}] in bytes</h5>
     </div>
       )
     }
@@ -35,8 +36,14 @@ class RenderCodingAssignmentResult extends Component{
       <fieldset>
       <h3 style={{'textAlign':'left'}}>Summary <hr></hr></h3>
       <h4 className="summaryParagraph">Some of the test cases are failing</h4>
-      <h5 className="summaryParagraph">Expected :</h5><TextareaAutosize key={2} className="OutputTextInput" disabled={true} value={this.props.expected} />
-      <h5 className="summaryParagraph">Actual :</h5> <TextareaAutosize key={3} className="OutputTextInput" disabled={true} value={this.props.actual} />
+      <h4 className="summaryParagraph">Failed Test Case:</h4>
+      <h5 className="summaryParagraph">StdIn:<hr></hr></h5>
+      <TextareaAutosize key={2} className="OutputTextInput" disabled={true} value={this.props.expectedInput} />
+      <h5 className="summaryParagraph">StdOut:<hr></hr></h5>
+      <TextareaAutosize key={3} className="OutputTextInput" disabled={true} value={this.props.expected} />
+      <Divider />
+      <h5 className="summaryParagraph">Actual Output :</h5>
+      <TextareaAutosize key={4} className="OutputTextInput" disabled={true} value={this.props.actual} />
       <h5 className="summaryParagraph"> TotalPassedTests : {this.props.passCount} </h5>
       <h5 className="summaryParagraph"> TotalTestCases: {this.props.totalCount} </h5>
       <h5 className="summaryParagraph"> FailedCase: {this.props.failedCase}</h5>

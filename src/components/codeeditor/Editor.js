@@ -243,6 +243,7 @@ compileAndRun = () => {
       this.setState({
         assignmentStatus: response.codingAssignmentStatus,
         expected: response.expected,
+        expectedInput: response.expectedInput,
         actual: response.actual,
         passCount: response.passCount,
         totalCount: response.totalCount,
@@ -377,7 +378,7 @@ else if(this.props.state==="Assignment"){
     </Row>
     </Grid>
     <br /><br/><br />
-    <RenderCodingAssignmentResult assignmentStatus={this.state.assignmentStatus} expected={this.state.expected}
+    <RenderCodingAssignmentResult assignmentStatus={this.state.assignmentStatus} expected={this.state.expected} expectedInput={this.state.expectedInput}
      actual={this.state.actual} errorMessage={this.state.errorMessage} runtime={this.state.runtime} memory={this.state.memory}
      failedCase={this.state.failedCase} passCount={this.state.passCount} totalCount={this.state.totalCount}/>
     </div>
