@@ -67,7 +67,9 @@ class RenderCodingAssignmentResult extends Component{
       <fieldset>
       <h3 style={{'textAlign':'left'}}>Summary<hr></hr></h3>
       <h4 className="summaryParagraph">RunTime Exception</h4>
-      <h5 className="summaryParagraph">Error :</h5><TextareaAutosize key={2} className="OutputTextInput" disabled={true} value={this.props.errorMessage} />
+      <h5 className="summaryParagraph">StdIn:<hr></hr></h5>
+      <TextareaAutosize key={2} className="OutputTextInput" disabled={true} value={this.props.expectedInput} />
+      <h5 className="summaryParagraph">Error :</h5><TextareaAutosize key={3} className="OutputTextInput" disabled={true} value={this.props.errorMessage} />
       {this.showRunStats()}
       </fieldset>
       </div>
