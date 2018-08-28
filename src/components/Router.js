@@ -10,7 +10,7 @@ const DashboardLayout = Loadable({
   timeout: 10000,
 })
 const Register = Loadable({
-  loader: () => import('./registration/register.js'),
+  loader: () => import('./registration/register-temp.js'),
   loading: Loading,
   timeout: 10000,
 })
