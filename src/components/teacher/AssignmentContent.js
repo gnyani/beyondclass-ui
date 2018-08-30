@@ -134,6 +134,7 @@ componentDidMount(){
           controlledDate: new Date(response.lastdate),
           isDataLoaded: true,
           subjectValue: SubjectsNameLookup[response.subject],
+          thresholdarray: response.thresholdarray,
           questionsEditoStates: newEditorStates.slice(),
           numQuestions: response.numberOfQuesPerStudent,
           postedToNetwork: response.postedToNetwork
@@ -154,6 +155,7 @@ componentDidMount(){
        subject: response.subject,
        controlledDate: this.state.controlledDate,
        isDataLoaded: true,
+       thresholdarray: response.thresholdarray,
        subjectValue: SubjectsNameLookup[response.subject],
        questionsEditoStates: newEditorStates.slice(),
        numQuestions: response.numberOfQuesPerStudent,

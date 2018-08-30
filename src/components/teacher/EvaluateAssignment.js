@@ -370,7 +370,7 @@ if(this.state.assignmentType ===  'THEORY')
    for(var i=0; i<this.state.questionIndex.length;i++){
    buffer.push(
      <div key={i}>
-     <RenderCodingAssignmentResult assignmentStatus={response[i].codingAssignmentStatus} expected={response[i].expected}
+     <RenderCodingAssignmentResult assignmentStatus={response[i].codingAssignmentStatus} expected={response[i].expected} expectedInput={response[i].expectedInput}
       actual={response[i].actual} errorMessage={response[i].errorMessage} runtime={response[i].runtime || ""} memory={response[i].memory || ""}
       failedCase={response[i].failedCase} passCount={response[i].passCount} totalCount={response[i].totalCount}/>
       <br /><br />
