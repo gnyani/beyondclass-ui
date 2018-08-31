@@ -126,11 +126,17 @@ submitAssignment = () => {
 }
 isValidForSaveOrSubmit = () => {
   var flag = false
-  for(let i=0 ; i < this.state.answers.length ; i++)
+  for(let i=0 ; i < this.state.questions.length ; i++)
   {
-    let answer = this.state.answers[i].trim()
-    if(answer !== ''){
-      flag = true
+    if(typeof this.state.answers[i] !== "undefined" && this.state.answers[i] !== null){
+      let answer = this.state.answers[i].trim()
+      if(answer !== ''){
+        flag = true
+      }
+    }else{
+      notify.show("Please attempt all the answers", "warning")
+      flag = false
+      break;
     }
   }
   return flag
@@ -247,11 +253,6 @@ onArrayContentStateChange: Function = (index,contentState) => {
     })
    }
 };
-
-
-
-
-
 
 displayQuestions(){
   var buffer =[]
