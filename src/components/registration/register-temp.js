@@ -37,7 +37,7 @@ class RegisterTemp extends Component{
     return(
       <Grid fluid>
       <br /><br />
-      <Row around="xs">
+      <Row center="xs">
       <Col xs={4} sm={4} md={3} lg={3}>
       <RaisedButton key={1} label="Logout" primary={true} onClick={this.logoutSession} />
       </Col>
@@ -49,7 +49,7 @@ class RegisterTemp extends Component{
       </div>
       </Col>
       </Row>
-      <Row around="xs">
+      <Row around="xs" className="announcements">
       <Col xs={11} sm={11} md={7} lg={7}>
       <ContactUs />
       </Col>
