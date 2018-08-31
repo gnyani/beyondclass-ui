@@ -138,14 +138,11 @@ class EvaluateAssignment extends Component{
              userName: response.userName,
              rollNumber: response.rollNumber,
              remarks: get(response,'submitAssignment.remarks',''),
-             codingAssignmentResponse : response.submitAssignment.codingAssignmentResponse,
+             codingAssignmentResponse : get(response,'submitAssignment.codingAssignmentResponse', ''),
              mode: response.submitAssignment.mode,
              isDataLoaded: true,
            })
-         }).catch(response => {
-         notify.show("Please login your session expired","error");
-         this.context.router.history.push('/');
-        });
+         })
 
  fetch('http://'+properties.getHostName+':8080/assignments/teacher/insights/'+this.props.submissionid.replace('*','-'), {
           credentials: 'include',
@@ -370,9 +367,9 @@ if(this.state.assignmentType ===  'THEORY')
    for(var i=0; i<this.state.questionIndex.length;i++){
    buffer.push(
      <div key={i}>
-     <RenderCodingAssignmentResult assignmentStatus={response[i].codingAssignmentStatus} expected={response[i].expected} expectedInput={response[i].expectedInput}
-      actual={response[i].actual} errorMessage={response[i].errorMessage} runtime={response[i].runtime || ""} memory={response[i].memory || ""}
-      failedCase={response[i].failedCase} passCount={response[i].passCount} totalCount={response[i].totalCount}/>
+     <RenderCodingAssignmentResult assignmentStatus={get(response[i],"codingAssignmentStatus",'')} expected={get(response[i],"expected", '')} expectedInput={get(response[i],"expectedInput", '')}
+      actual={get(response[i],"actual",'')} errorMessage={get(response[i],"errorMessage",'')} runtime={get(response[i],"runtime",'') || ""} memory={get(response[i],"memory",'') || ""}
+      failedCase={get(response[i],"failedCase",'')} passCount={get(response[i],"passCount", '')} totalCount={get(response[i],"totalCount",'')}/>
       <br /><br />
      <DisplayProgrammingAssignment mode={this.state.mode[i]} question={this.state.questions[i]}
      source={this.state.answers[i]} inputs={this.state.inputs[this.state.questionIndex[i]]} outputs={this.state.outputs[this.state.questionIndex[i]]}/>
