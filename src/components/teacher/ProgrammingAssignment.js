@@ -59,7 +59,7 @@ constructor(){
     inputs: [],
     outputs: [],
     controlledDate: date,
-    threshold: 60,
+    threshold: 80,
     thresholdarray: [],
     subjectValue: '',
     editorState: EditorState.createEmpty(),
@@ -514,7 +514,7 @@ handleSubjectChange = (subjectValue) => {
 handleAddQuestionDialog = () => {
   this.setState({
     addQuestionDialog: true,
-    threshold: 60,
+    threshold: 80,
   })
 }
 
