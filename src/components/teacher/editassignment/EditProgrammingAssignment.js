@@ -104,35 +104,11 @@ handleInputsChange = (qindex, index, event) => {
 handleOutputsChange = (qindex, index, event) => {
     var Outputs = this.state.alloutputs.slice()
     var NewOutputs = Outputs[qindex]
-    if(NewOutputs.length > 1){
-      if(event.target.value.trim() !== ''){
        NewOutputs[index] = event.target.value
        Outputs[qindex] = NewOutputs
        this.setState({
          alloutputs: Outputs,
        })
-      }else{
-       NewOutputs.splice(index,1)
-       Outputs[qindex] = NewOutputs
-       var OldInputs = this.state.allinputs.slice()
-       var NewInputs = OldInputs[qindex]
-       NewInputs.splice(index,1)
-       OldInputs[qindex] = NewInputs
-       this.setState({
-         alloutputs: Outputs,
-         allinputs: OldInputs,
-       })
-      }
-    }
-    else if(NewOutputs.length === 1){
-      if(event.target.value.trim() !== ''){
-       NewOutputs[index] = event.target.value
-       Outputs[qindex] = NewOutputs
-       this.setState({
-         alloutputs: Outputs,
-       })
-      }
-    }
 }
 
 handleClose = () => {
@@ -320,7 +296,7 @@ if(this.state.isDataLoaded){
       <DatePicker hintText="Last Date" floatingLabelText="Last Date" minDate={this.state.minDate} defaultDate={new Date(this.state.controlledDate)} onChange={this.handleDateChange} />
       </Col>
       </Row>
-      <Row center="xs" bottom="xs">      
+      <Row center="xs" bottom="xs">
       <Col xs>
       <TextField hintText="Additional Comments" style={{width:'75%'}} value={this.state.message} floatingLabelText="Additional Comments"  onChange={this.handleMessageChange}/>
       </Col>

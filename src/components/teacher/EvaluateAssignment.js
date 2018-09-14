@@ -138,14 +138,11 @@ class EvaluateAssignment extends Component{
              userName: response.userName,
              rollNumber: response.rollNumber,
              remarks: get(response,'submitAssignment.remarks',''),
-             codingAssignmentResponse : response.submitAssignment.codingAssignmentResponse,
+             codingAssignmentResponse : get(response,'submitAssignment.codingAssignmentResponse', ''),
              mode: response.submitAssignment.mode,
              isDataLoaded: true,
            })
-         }).catch(response => {
-         notify.show("Please login your session expired","error");
-         this.context.router.history.push('/');
-        });
+         })
 
  fetch('http://'+properties.getHostName+':8080/assignments/teacher/insights/'+this.props.submissionid.replace('*','-'), {
           credentials: 'include',
@@ -166,10 +163,11 @@ class EvaluateAssignment extends Component{
            insight4: insight4,
            insight5: insight5,
          })
-       }).catch(response => {
-       notify.show("Please login your session expired","error");
-       this.context.router.history.push('/');
-      });
+       })
+      //  .catch(response => {
+      //  notify.show("Please login your session expired","error");
+      //  this.context.router.history.push('/');
+      // });
   }
   rejectAssignment = () => {
     fetch('http://'+properties.getHostName+':8080/assignments/update/evaluation/'+this.state.assignmentid+'-'+this.state.email, {
@@ -227,7 +225,8 @@ class EvaluateAssignment extends Component{
            notify.show("Sorry Something Went Wrong","error")
          }
          this.handleClose()
-       }).catch(response => {
+       })
+       .catch(response => {
        notify.show("Please login your session expired","error");
        this.context.router.history.push('/');
       });
@@ -339,6 +338,14 @@ return buffer
     return buffer
   }
 
+  getEditorState = (i) => {
+    if(typeof this.state.answersContentStates[i] !== "undefined"  && this.state.answersContentStates[i] !== null){
+      return this.convertToEditorState(this.state.answersContentStates[i])
+    }else{
+      return EditorState.createEmpty()
+    }
+  }
+
   renderAssignment(){
    var buffer = []
    var response = this.state.codingAssignmentResponse
@@ -354,7 +361,7 @@ if(this.state.assignmentType ===  'THEORY')
       <CardTitle className="displayQuestions" title={<RichTextEditorReadOnly editorState={this.convertToEditorState(this.state.questions[i])} style={{margin:'0px;'}}/>} />
       <hr style={{margin: '5px 15px'}}></hr>
       <CardText className="displayAnswers">
-      <RichTextEditorReadOnly editorState={this.convertToEditorState(this.state.answersContentStates[i])} editorStyle={{height: '180px'}}/>
+      <RichTextEditorReadOnly editorState={this.getEditorState(i)} editorStyle={{height: '180px'}}/>
       </CardText>
       </Card>
       <br /><br />
@@ -370,9 +377,9 @@ if(this.state.assignmentType ===  'THEORY')
    for(var i=0; i<this.state.questionIndex.length;i++){
    buffer.push(
      <div key={i}>
-     <RenderCodingAssignmentResult assignmentStatus={response[i].codingAssignmentStatus} expected={response[i].expected} expectedInput={response[i].expectedInput}
-      actual={response[i].actual} errorMessage={response[i].errorMessage} runtime={response[i].runtime || ""} memory={response[i].memory || ""}
-      failedCase={response[i].failedCase} passCount={response[i].passCount} totalCount={response[i].totalCount}/>
+     <RenderCodingAssignmentResult assignmentStatus={get(response[i],"codingAssignmentStatus",'')} expected={get(response[i],"expected", '')} expectedInput={get(response[i],"expectedInput", '')}
+      actual={get(response[i],"actual",'')} errorMessage={get(response[i],"errorMessage",'')} runtime={get(response[i],"runtime",'') || ""} memory={get(response[i],"memory",'') || ""}
+      failedCase={get(response[i],"failedCase",'')} passCount={get(response[i],"passCount", '')} totalCount={get(response[i],"totalCount",'')}/>
       <br /><br />
      <DisplayProgrammingAssignment mode={this.state.mode[i]} question={this.state.questions[i]}
      source={this.state.answers[i]} inputs={this.state.inputs[this.state.questionIndex[i]]} outputs={this.state.outputs[this.state.questionIndex[i]]}/>

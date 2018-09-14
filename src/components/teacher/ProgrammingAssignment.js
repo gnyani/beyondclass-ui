@@ -59,7 +59,7 @@ constructor(){
     inputs: [],
     outputs: [],
     controlledDate: date,
-    threshold: 60,
+    threshold: 80,
     thresholdarray: [],
     subjectValue: '',
     editorState: EditorState.createEmpty(),
@@ -165,11 +165,11 @@ _onActive = () => {
  }
 
  validateSaveCreateAssignment = (option) => {
-   if(this.state.questions.length === 0 && option === 'autosave'){
+   if((this.state.questions.length === 0 || this.state.subject === '') && option === 'autosave'){
      //do nothing
    }
-   else if(this.state.questions.length === 0)
-       notify.show("Please add atleast one question before you can save the assignment","warning")
+   else if(this.state.questions.length === 0 || this.state.subject === '')
+       notify.show("Please add atleast one question and select subject before you can save the assignment","warning")
    else{
      this.saveCreateAssignment(option)
    }
@@ -260,20 +260,10 @@ _onActive = () => {
 
 handleQuestionOutputsChange = (index, event) => {
   var OldOutputs = this.state.outputs.slice()
-  if(event.target.value.trim() !== ''){
     OldOutputs[index] = event.target.value
     this.setState({
       outputs: OldOutputs,
     })
-  }else{
-    OldOutputs.splice(index,1)
-    var OldInputs = this.state.inputs.slice()
-    OldInputs.splice(index,1)
-    this.setState({
-      inputs: OldInputs,
-      outputs: OldOutputs,
-    })
-  }
 }
 
 
@@ -292,35 +282,11 @@ handleInputsChange = (qindex, index, event) => {
 handleOutputsChange = (qindex, index, event) => {
     var Outputs = this.state.alloutputs.slice()
     var NewOutputs = Outputs[qindex]
-    if(NewOutputs.length > 1){
-      if(event.target.value.trim() !== ''){
        NewOutputs[index] = event.target.value
        Outputs[qindex] = NewOutputs
        this.setState({
          alloutputs: Outputs,
        })
-      }else{
-       NewOutputs.splice(index,1)
-       Outputs[qindex] = NewOutputs
-       var OldInputs = this.state.allinputs.slice()
-       var NewInputs = OldInputs[qindex]
-       NewInputs.splice(index,1)
-       OldInputs[qindex] = NewInputs
-       this.setState({
-         alloutputs: Outputs,
-         allinputs: OldInputs,
-       })
-      }
-    }
-    else if(NewOutputs.length === 1){
-      if(event.target.value.trim() !== ''){
-       NewOutputs[index] = event.target.value
-       Outputs[qindex] = NewOutputs
-       this.setState({
-         alloutputs: Outputs,
-       })
-      }
-    }
 }
 
 handleClose = () => {
@@ -548,7 +514,7 @@ handleSubjectChange = (subjectValue) => {
 handleAddQuestionDialog = () => {
   this.setState({
     addQuestionDialog: true,
-    threshold: 60,
+    threshold: 80,
   })
 }
 
