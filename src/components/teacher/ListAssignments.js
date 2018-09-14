@@ -15,6 +15,7 @@ import {Card, CardActions,CardText,CardHeader} from 'material-ui/Card'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import Download from 'material-ui/svg-icons/file/file-download'
 import ViewQuestions from './ViewQuestions'
+import Add from 'material-ui/svg-icons/content/add'
 import Edit from 'material-ui/svg-icons/image/edit.js'
 import Settings from 'material-ui//svg-icons/action/settings-applications.js'
 import IconMenu from 'material-ui/IconMenu'
@@ -608,6 +609,38 @@ const actions1 = [
       ]
     return(
       <div className="TeacherAssignment">
+      <Grid flex>
+        <Row around='xs'>
+          <Col xs={12} sm={12} md={12} lg={12} className="fab-btn">
+          <IconMenu iconButtonElement={
+                  <IconButton
+                    touch={true}
+                    tooltip="New Assignment"
+                    tooltipPosition="top-left"
+                    className="fab-icon-btn"
+                  >
+                    <Add className="whitecol"/>
+                  </IconButton>
+                }>
+            <Link style={{textDecoration: 'none'}} to={'/teacher/'+this.props.class+'/create'} >
+              <MenuItem >
+              Theory Assignment
+              </MenuItem>
+            </Link>
+            <Link style={{textDecoration: 'none'}} to={'/teacher/'+this.props.class+'/createobjectiveassignment'} >
+              <MenuItem >
+              Objective Assignment
+              </MenuItem>
+            </Link>
+            <Link style={{textDecoration: 'none'}} to={'/teacher/'+this.props.class+'/createpa'} >
+              <MenuItem >
+              Programming Assignment
+              </MenuItem>
+            </Link>
+          </IconMenu>
+          </Col>
+        </Row>
+      </Grid>
       {this.listSavedAssignments()}
       {this.listAssignments()}
       <Dialog
