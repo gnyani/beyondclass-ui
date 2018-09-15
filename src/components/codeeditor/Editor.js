@@ -141,9 +141,9 @@ setTheme = (e,index,value) => {
   })
 }
 setMode = (e,index,value) => {
-  var map = new Map(Object.entries(HelloWorldTemplates))
-  var editorModesMap = new Map(Object.entries(editorModes))
-  var hackerRankLangNotationMap=new Map(Object.entries(hackerRankLangNotation))
+  var map = this.buildMap(HelloWorldTemplates)
+  var editorModesMap = this.buildMap(editorModes)
+  var hackerRankLangNotationMap = this.buildMap(hackerRankLangNotation)
   this.setState({
     languageValue: hackerRankLangNotationMap.get(value),
     language: value,
@@ -151,6 +151,10 @@ setMode = (e,index,value) => {
     value: map.get(value),
     source: map.get(value)
   })
+}
+
+buildMap = (obj) => {
+    return Object.keys(obj).reduce((map, key) => map.set(key, obj[key]), new Map());
 }
 
 scrollToBottom = () => {
