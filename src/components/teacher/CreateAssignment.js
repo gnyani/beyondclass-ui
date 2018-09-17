@@ -1,10 +1,6 @@
 import React,{Component} from 'react'
-import FlatButton from 'material-ui/FlatButton'
-import {Grid,Row,Col} from 'react-flexbox-grid'
-import Add from 'material-ui/svg-icons/content/add'
 import Divider from 'material-ui/Divider'
 import ListAssignments from './ListAssignments'
-import {Link} from 'react-router-dom'
 import { withRouter } from 'react-router'
 import PropTypes from 'prop-types'
 
@@ -12,7 +8,7 @@ import PropTypes from 'prop-types'
 class CreateAssignment extends Component{
   render(){
     return(<div>
-      <Grid fluid>
+      {/* <Grid fluid>
       <Row center='xs'>
       <Col xs>
       <br />
@@ -33,7 +29,7 @@ class CreateAssignment extends Component{
       <br /> <br />
       </Col>
       </Row>
-      </Grid>
+      </Grid> */}
       <Divider />
       <br />
       <ListAssignments batches={this.props.batches} class={this.props.class} email={this.props.email}  branch={this.props.branch}/>
