@@ -239,9 +239,8 @@ compileAndRun = () => {
       if(response.status === 200)
       return response.json()
       else if(response.status === 500){
-        notify.show("Sorry something went wrong or you might not be connected to internet","error")
+        notify.show("Sorry something went wrong ","error")
       }
-
     }).then(response =>{
       if(response)
       this.setState({

@@ -15,7 +15,7 @@ body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic
 .nogutter {margin: 0 !important;padding: 0 !important;width: 100% !important;}
 
 .announcements .heading{padding: 0.1%;font-family:'Roboto', sans-serif;font-weight: normal;
-               font-size: 1.7em;letter-spacing: 0.08vmin;color: #39424d;margin-right: 15vmin;}
+               font-size: 1.2em;letter-spacing: 0.08vmin;color: #848181;margin-right: 20vmin;}
 .announcements .fontStyle{  font-family: 'Roboto', sans-serif;font-size: 3.5vmin;font-style: italic;
                             font-weight: 100;letter-spacing: 0.08vmin;color: #da7373;}
 .announcements .messageStyle{   font-family: 'Roboto',sans-serif;font-size:3vmin;font-style: italic;font-weight: 50;

@@ -536,7 +536,7 @@ displayQuestions(){
   {
   buffer.push(
     <div key={this.state.questionsEditoStates[i].id}>
-    <p className="paragraph"> Question{i+1}</p>
+    <p className="paragraph uprcase"> Question: {i+1}</p>
     <Grid fluid >
     <Row start="xs" bottom="xs">
     <Col xs={10} sm={10} md={11} lg={11}>
@@ -549,6 +549,7 @@ displayQuestions(){
     <IconButton onClick={this.deleteQuestion.bind(this,i)}><DeleteOutline color="red" /></IconButton>
     </Col>
     </Row>
+    <br />
     <Row center="xs" style={{marginTop:'20px'}}>
     <Col xs lg={8} className="objassalt">
     <TestCases inputs={this.state.allinputs[i]}
@@ -680,15 +681,16 @@ if(this.state.isDataLoaded){
       </Row>
       <Divider style={{margin: '18px 0px 18px'}}/>
       <Row >
-        <Col xs={7} sm={7} md={10} lg={10}>
+        <Col xs={7} sm={7} md={10} lg={10} style={{textAlign:'left'}}>
+            <FlatButton key={1} label="Go Back"
+              alt="loading" icon={<NavigationArrowBack color="#30b55b"/>} labelStyle ={{textTransform: 'none'}}
+              style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+             onClick={()=>{this.context.router.history.goBack()}} />
+        </Col>
+        <Col xs>
           <FlatButton label="Add Question" labelStyle ={{textTransform: 'none'}}
              style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
             primary={true} icon={<Add />} onClick={this.handleAddQuestionDialog} />
-        </Col>
-        <Col xs={4} sm={4} md={2} lg={2} className="text-center">
-          <FlatButton label = "Save" primary={true} labelStyle ={{textTransform: 'none'}}
-            style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
-            disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment.bind('save')} />
         </Col>
         <Col xs={1} sm={1} md={1} lg={1}>
         </Col>
@@ -696,12 +698,11 @@ if(this.state.isDataLoaded){
       {this.displayQuestions()}
       <br /><br />
       <br /><br />
-      <Row end='xs' middle='xs' style={{marginBottom: '40px'}}>
-      <Col xs style={{textAlign:'left'}}>
-          <FlatButton key={1} label="Go Back"
-            alt="loading" icon={<NavigationArrowBack color="#30b55b"/>} labelStyle ={{textTransform: 'none'}}
-            style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
-           onClick={()=>{this.context.router.history.goBack()}} />
+      <Row  middle='xs' style={{marginBottom: '40px'}}>
+      <Col xs={7} sm={7} md={10} lg={10}>
+        <FlatButton label = "Save" primary={true} labelStyle ={{textTransform: 'none'}}
+          style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+          disabled={this.state.saveButton} icon={<Save />} onClick={this.validateSaveCreateAssignment.bind('save')} />
       </Col>
       <Col xs>
       <FlatButton label = "Schedule" primary={true} labelStyle ={{textTransform: 'none'}}
