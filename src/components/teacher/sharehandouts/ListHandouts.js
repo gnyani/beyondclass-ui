@@ -189,7 +189,7 @@ class ListHandouts extends Component{
 if(this.props.userrole==="teacher"){
    return(
      <div className="ListHandouts">
-     <p className="paragraph">Your handouts for the class {this.props.batch}</p>
+     <p className="paragraph uprcase">Your handouts for the class {this.props.batch}</p>
      <Grid fluid className="nogutter">
      <Row around="xs">
      <Col xs={12} sm={12} md={10} lg={8}>

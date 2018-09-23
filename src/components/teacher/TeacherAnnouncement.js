@@ -93,7 +93,7 @@ class TeacherAnnouncement extends Component{
    var buffer=[]
    if(this.state.announcements.length !== 0)
    {
-     buffer.push(<h2 className="heading" style={{fontSize:'20px'}} key={5}> Your announcements for class {this.props.class}</h2>)
+     buffer.push(<h2 className="paragraph uprcase" style={{fontSize:'20px'}} key={5}> Your announcements for class {this.props.class}</h2>)
    for (let i=0;i<this.state.announcements.length;i++){
      var date = new Date(parseInt(this.state.announcementIds[i].split('-')[6],10))
      buffer.push(
@@ -106,7 +106,7 @@ class TeacherAnnouncement extends Component{
                       disabled={true}
                       primaryText={this.state.announcements[i]}
                       rightIconButton={
-                        <IconButton 
+                        <IconButton
                         onClick = {this.handleDialogOpen.bind(this,i)}>
                         <DeleteOutline color='red' />
                         </IconButton>
@@ -227,13 +227,14 @@ class TeacherAnnouncement extends Component{
       />]
     return(
       <div className="announcements">
+        <br />
       <Grid fluid>
         <Row  center="xs" middle="xs">
         <Col  xs={2} sm={2} md={2} lg={1}>
           <ChatOutline style={{height:'2.5em', width: '2.5em', marginTop: '0.5em', marginLeft: '1em', color:'#30b55b'}}/>
         </Col>
         <Col xs={8} sm={8} md={8} lg={5}>
-          <h2 className="heading">Announcement Board</h2>
+          <h2 className="heading">ANNOUNCEMENT BOARD</h2>
         </Col>
           <Col xs={8} sm={8} md={8} lg={8}>
             <TextField

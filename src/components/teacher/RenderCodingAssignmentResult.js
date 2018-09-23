@@ -61,6 +61,16 @@ class RenderCodingAssignmentResult extends Component{
       </fieldset>
       </div>
     )
+    else if(this.props.assignmentStatus === 'TIME_OUT')
+    buffer.push(
+      <div className="shadow" key={1}>
+      <fieldset>
+      <h3 style={{'textAlign':'left'}}>Summary<hr></hr></h3>
+      <h4 className="summaryParagraph">Request Time Out</h4>
+      <h5 className="summaryParagraph">Error :</h5><TextareaAutosize key={2} className="OutputTextInput" disabled={true} value={this.props.errorMessage} />
+      </fieldset>
+      </div>
+    )
     else if(this.props.assignmentStatus === 'RUNTIME_ERROR')
     buffer.push(
       <div className="shadow" key={1}>

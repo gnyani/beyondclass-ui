@@ -6,6 +6,7 @@ import {notify} from 'react-notify-toast'
 import Save from 'material-ui/svg-icons/content/save'
 import Send from 'material-ui/svg-icons/content/send'
 import FlatButton from 'material-ui/FlatButton'
+import RaisedButton from 'material-ui/RaisedButton'
 import Dialog from 'material-ui/Dialog'
 import {HelloWorldTemplates} from '../codeeditor/HelloWorldTemplates'
 import {editorModes,hackerRankLangNotation} from '../codeeditor/Utils'
@@ -358,12 +359,12 @@ displayQuestions(){
     </Row>
     <Row center="xs">
     <Col xs={6} sm={6} md={4} lg={3}>
-    <FlatButton label="Save" labelStyle={{textTransform: 'none'}}
-      style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
+    <RaisedButton label="Save" labelStyle={{textTransform: 'none',fontSize: '1em',color: 'white'}}
+       backgroundColor={'#30b55b'}
        icon={<Save />} disabled={this.state.saveButton} onClick={this.saveProgrammingAssignment.bind(this,'save')} />
     </Col>
     <Col xs={6} sm={6} md={4} lg={3}>
-    <FlatButton label="Submit" className="AnnounceButton" labelStyle={{textTransform: "none", fontSize: '1em'}}
+    <RaisedButton label="Submit"  labelStyle={{textTransform: "none", fontSize: '1em', color: 'white'}} backgroundColor={'#30b55b'}
        icon={<Send />} disabled={this.state.submitButton} onClick={this.handleSubmit}/>
     </Col>
     </Row>

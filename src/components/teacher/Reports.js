@@ -1,7 +1,6 @@
 import React,{Component} from 'react'
 import {Media} from '../utils/Media'
 import styled from 'styled-components'
-import CircularProgressbar from 'react-circular-progressbar'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import RefreshIndicator from 'material-ui/RefreshIndicator'
 import Divider from 'material-ui/Divider'
@@ -19,7 +18,6 @@ import EmailOutline from 'material-ui/svg-icons/communication/mail-outline.js'
 import Download from 'material-ui/svg-icons/file/file-download'
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back'
 import AssignmentReturn from 'material-ui/svg-icons/action/assignment-return'
-import {Card} from 'material-ui/Card'
 import {Link} from 'react-router-dom'
 import FlatButton from 'material-ui/FlatButton'
 import { withRouter } from 'react-router'
@@ -31,6 +29,7 @@ import {transparent} from 'material-ui/styles/colors'
 import {grey400} from 'material-ui/styles/colors'
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
+import ReportStats from './ReportStats'
 
 var properties = require('../properties.json');
 
@@ -214,22 +213,11 @@ notifyOthers = () => {
 }
 nonZeroSubmissions = () => {
   var buffer=[]
-  buffer.push(<Grid fluid key={0}>
-        <Row center="xs">
-        <Col xs={9} sm={9} md={6} lg={5}>
-        <br /><br />
-        <FlatButton key={1} label="Go Back" labelStyle={{textTransform: "none"}}
-          alt="loading" icon={<NavigationArrowBack color="#30b55b"/>}
-          className="button" onClick={()=>{this.context.router.history.goBack()}} />
-        </Col>
-        </Row>
-        </Grid>)
     var src = 'http://'+properties.getHostName+':8080/assignments/generate/excel/'+this.props.assignmentid
   if(this.state.numberOfStudentsSubmitted && this.state.numberOfStudentsSubmitted>0)
   {
  buffer.push(
   <div key={1}>
-  <p className="paragraph">Submitted Students</p>
   <br />
   <Grid fluid>
   <Row center="xs">
@@ -244,6 +232,7 @@ nonZeroSubmissions = () => {
   </Row>
   </Grid>
   <br />
+  <p className="paragraph">Submitted Students</p>
   </div>)
 }else{
   buffer.push(<Grid fluid key={1} className="paragraph">
@@ -437,86 +426,23 @@ return(
       {... this.props}>
       <div className="Reports">
       <br />
-      <Grid fluid>
-      <Row around="xs">
-      <Col xs={10} sm={10} md={7} lg={5}>
-      <br />
-      <Card className="card">
-      <Grid fluid >
-      <Row around="xs">
-      <Col xs={5} sm={5} md={5} lg={5}>
-      <br />
-      <CircularProgressbar percentage={this.state.percentdaysCompleted} strokeWidth={8}/>
-       <br /><br />
-       </Col>
-       <Col xs>
-       <br /><br /><br />
-       <span className="statsparagraph">Days Left</span><br />
-       <span className="stat">{this.state.numberOfDaysLeft}/{this.state.totalNumberOfDays} </span>
-       </Col>
-       </Row>
-       </Grid>
-      </Card>
-      </Col>
-      <Col xs={10} sm={10} md={7} lg={5}>
-      <br />
-      <Card className="card">
-      <Grid fluid >
-      <Row around="xs">
-      <Col xs={5} sm={5} md={5} lg={5}>
-      <br />
-      <CircularProgressbar percentage={this.state.percentStudentsSubmitted} strokeWidth={8}/>
-       <br /><br />
-       </Col>
-       <Col xs>
-       <br /><br /><br />
-       <span className="statsparagraph">Submissions</span><br />
-       <span className="stat">{this.state.numberOfStudentsSubmitted}/{this.state.totalEligibleNumberOfStudents} </span>
-       </Col>
-       </Row>
-       </Grid>
-      </Card>
-      </Col>
-      <Col xs={10} sm={10} md={7} lg={5}>
-      <br />
-      <Card className="card">
-      <Grid fluid >
-      <Row around="xs">
-      <Col xs={5} sm={5} md={5} lg={5}>
-      <br />
-      <CircularProgressbar percentage={this.state.percentOfEvaluationsDone} strokeWidth={8}/>
-       <br /><br />
-       </Col>
-       <Col xs>
-       <br /><br /><br />
-       <span className="statsparagraph">Evaluations Done</span><br />
-       <span className="stat">{this.state.evaluationsDone}/{this.state.numberOfStudentsSubmitted} </span>
-       </Col>
-       </Row>
-       </Grid>
-      </Card>
-      </Col>
-      <Col xs={10} sm={10} md={7} lg={5}>
-      <br />
-      <Card className="card">
-      <Grid fluid >
-      <Row around="xs">
-      <Col xs={5} sm={5} md={5} lg={5}>
-      <br />
-      <CircularProgressbar percentage={this.state.percentOfStudentsWorked} strokeWidth={8}/>
-       <br /><br />
-       </Col>
-       <Col xs>
-       <br /><br /><br />
-       <span className="statsparagraph">Students Started Working</span><br />
-       <span className="stat">{this.state.studentsWorked}/{this.state.totalEligibleNumberOfStudents} </span>
-       </Col>
-       </Row>
-       </Grid>
-      </Card>
-      </Col>
-      </Row>
+      <Grid fluid key={0}>
+              <Row center="xs">
+              <Col xs={5} sm={5} md={3} lg={4}>
+              <FlatButton key={1} label="Go Back" labelStyle={{textTransform: "none"}}
+                alt="loading" icon={<NavigationArrowBack color="#30b55b"/>}
+                className="button" onClick={()=>{this.context.router.history.goBack()}} />
+              </Col>
+              </Row>
       </Grid>
+      <br />
+      <Divider />
+      <br />
+      <ReportStats percentdaysCompleted={this.state.percentdaysCompleted} numberOfDaysLeft={this.state.numberOfDaysLeft}
+        totalNumberOfDays={this.state.totalNumberOfDays} percentStudentsSubmitted={this.state.percentStudentsSubmitted}
+        numberOfStudentsSubmitted={this.state.numberOfStudentsSubmitted} totalEligibleNumberOfStudents={this.state.totalEligibleNumberOfStudents}
+        percentOfEvaluationsDone={this.state.percentOfEvaluationsDone} evaluationsDone={this.state.evaluationsDone}
+        percentOfStudentsWorked={this.state.percentOfStudentsWorked} studentsWorked={this.state.studentsWorked}/>
       </div>
       <br />
       <Divider />
@@ -592,7 +518,7 @@ else
   </Col>
   </Row>
   </Grid>
-    </StayVisible>)
+</StayVisible>)
   }
 }
 Reports.contextTypes = {

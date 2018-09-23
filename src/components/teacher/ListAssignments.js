@@ -491,7 +491,7 @@ if(this.state.assignmentIds.length !== 0)
           </CardText>
           <Grid fluid>
           <Row center="xs" middle="xs">
-          <Col xs>
+          <Col xs={4} sm={4} md={4} lg={4}>
             <CardActions>
               <FlatButton label="View Reports"
                 labelStyle={{textTransform: 'none',fontSize: '1em'}}
@@ -500,8 +500,16 @@ if(this.state.assignmentIds.length !== 0)
                containerElement={<Link to={'/teacher/reports/view/'+this.state.assignmentIds[i]}/>} />
            </CardActions>
            </Col>
-           <Col xs>
-             <CardActions>
+             <Col xs={4} sm={4} md={4} lg={4}>
+               <CardActions>
+                 <FlatButton label="Duplicate"
+                   labelStyle={{textTransform: 'none',fontSize: '1em'}}
+                   style={{verticalAlign: 'middle',backgroundColor: "#30b55b", color: 'white'}}
+                   icon={<Copy />}
+                  onClick={this.selectBatch.bind(this,i)} />
+              </CardActions>
+              </Col>
+              <Col xs={2} sm={2} md={2} lg={2}>
                <IconMenu
                   iconButtonElement={<IconButton
                     iconStyle={styles.mediumIcon}
@@ -513,13 +521,10 @@ if(this.state.assignmentIds.length !== 0)
                 <form method="get" action={src} id="form_download_id">
                   <MenuItem primaryText="Download Questions" leftIcon={<Download />} onClick={this.downloadQuestions.bind(this)}/>
                 </form>
-                  <MenuItem primaryText="Duplicate" leftIcon={<Copy  />} onClick={this.selectBatch.bind(this,i)}/>
                   <MenuItem primaryText="View Questions" leftIcon={<View  />} onClick={this.handleExpand.bind(this,i)}/>
                 </IconMenu>
-              </CardActions>
            </Col>
-           <Col xs>
-            <CardActions>
+           <Col xs={2} sm={2} md={2} lg={2}>
              <IconButton tooltip="Publish"
                iconStyle={styles.mediumIcon}
                style={styles.medium} disabled={this.state.postedToNetwork[i]}
@@ -527,7 +532,6 @@ if(this.state.assignmentIds.length !== 0)
                >
                       <Public />
                 </IconButton>
-              </CardActions>
            </Col>
            </Row>
            </Grid>
