@@ -1,11 +1,12 @@
 import React,{Component} from 'react'
-import {Card, CardTitle, CardText,CardActions} from 'material-ui/Card'
+import {Card, CardTitle, CardText,CardActions,CardHeader} from 'material-ui/Card'
 import RichTextEditorReadOnly from '../teacher/RichTextEditorReadOnly'
 import {Grid,Row,Col} from 'react-flexbox-grid'
 import FlatButton from 'material-ui/FlatButton'
 import View from 'material-ui/svg-icons/action/view-list'
 import { EditorState,convertFromRaw } from 'draft-js'
 import AceEditor from 'react-ace'
+import Divider from 'material-ui/Divider'
 
 class DisplayProgrammingAssignment extends Component{
 
@@ -66,16 +67,26 @@ renderRows = () => {
       <Grid fluid key={1}>
       <Row around="xs">
       <Col xs={11} sm={11} md={9} lg={8}>
-      <Card
-      expanded = {this.state.expanded}
-      >
-     <CardTitle className="displayQuestions" title={<RichTextEditorReadOnly editorState={this.convertToEditorState(this.props.question)} />} />
-     <CardText>
+      <Card>
+      <CardHeader
+        title = "Question"
+        style={{backgroundColor: "#d6d6d6",textAlign: "center",fontFamily: "'Roboto', sans-serif"}}
+        titleStyle = {{fontWeight: "bold", fontSize : "1.5em"}}
+        showExpandableButton={true}
+        actAsExpander={true}
+        >
+      </CardHeader>
+     <CardText className="displayQuestions" expandable={true}>
+       <RichTextEditorReadOnly editorState={this.convertToEditorState(this.props.question)} />
+      </CardText>
+     <CardText expandable={true}>
       <hr></hr>
      <h3>TestCases:</h3>
      {this.renderInputs()}
      </CardText>
-     <CardText expandable={true} >
+     <Divider />
+     <CardText  >
+         <br />
      <AceEditor
      mode={this.props.mode}
      theme='textmate'
@@ -86,17 +97,6 @@ renderRows = () => {
      highlightActiveLine={false}
        />
      </CardText>
-     <CardActions>
-     <Grid fluid>
-     <Row center="xs">
-     <Col xs>
-      <FlatButton label="View Code" labelStyle={{textTransform: 'none'}}
-        style={{verticalAlign: 'middle',border: "0.05em solid #30b55b",color: "#30b55b",borderRadius: '1vmax'}}
-         icon={<View />} onClick={this.handleExpand.bind(this)}/>
-      </Col>
-      </Row>
-      </Grid>
-      </CardActions>
      </Card>
      <br /><br />
      </Col>
