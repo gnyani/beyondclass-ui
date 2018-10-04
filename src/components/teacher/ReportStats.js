@@ -15,8 +15,8 @@ class ReportStats extends Component{
           title="ASSIGNMENT INSIGHTS"
           actAsExpander={true}
           showExpandableButton={true}
-          titleStyle = {{fontFamily: "'Roboto', sans-serif",fontSize: "2vmin",fontStyle: "bold",
-                                      fontWeight: "200",letterSpacing: "0.04vmin",color: "black"}}
+          titleStyle = {{fontFamily: "'Roboto', sans-serif",fontSize: "2vmin",fontWeight: "bold",
+                                    letterSpacing: "0.04vmin",color: "black"}}
           style={{backgroundColor: "#d6d6d6",textAlign: "center"}}
         />
       <CardActions expandable={true}>
