@@ -127,11 +127,29 @@ validateUpdateAssignment = () => {
   }
 }
 
+cleanArray = (actual) => {
+  var newArray = []
+  for (var i = 0; i < actual.length; i++) {
+    if (actual[i]) {
+      newArray.push(actual[i]);
+    }
+  }
+  return newArray;
+}
+
+handleAllOutputs = (alloutputs) => {
+  var newAllOutputs = []
+  for (var i = 0; i < alloutputs.length; i++){
+    newAllOutputs.push(this.cleanArray(alloutputs[i].slice()))
+  }
+ return newAllOutputs
+}
+
 handleAllInputs = (allinputs) => {
   var newAllInputs = []
   for (var i=0; i<allinputs.length;i++){
     var newInputs = allinputs[i].slice(0,this.state.alloutputs[i].length)
-    newAllInputs.push(newInputs)
+    newAllInputs.push(this.cleanArray(newInputs))
   }
  return newAllInputs
 }
@@ -152,7 +170,7 @@ submitUpdateAssignment = () => {
          lastdate: this.state.controlledDate,
          questions: this.state.questions,
          inputs:  this.handleAllInputs(this.state.allinputs),
-         outputs: this.state.alloutputs,
+         outputs: this.handleAllOutputs(this.state.alloutputs),
          message: this.state.message,
          assignmentType: 'CODING'
       })
