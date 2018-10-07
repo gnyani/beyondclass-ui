@@ -53,7 +53,7 @@ loginToolbar(){
                 <Row>
                     <Col xs>
                 <form action= {loginUrl}>
-                  <FlatButton type="submit" label="SignIn/Signup" className="signupButton"/> <br /><br />
+                  <FlatButton type="submit" label="SignIn / Signup" className="signupButton"/> <br /><br />
                 </form>
                 </Col>
             </Row>

@@ -79,8 +79,13 @@ componentDidMount(){
       <div>
       <br />
       <Grid fluid>
-      <Row around = 'xs' top="xs">
-      <Col xs={8} sm={8} md={4} lg={4}>
+      <Row around = 'xs' center="xs" top="xs" className="Reports">
+      <Col xs={8} sm={8} md={7} lg={7}>
+      <p className="paragraph">Submissions Summary</p>
+      </Col>
+      </Row>
+      <Row around = 'xs' center="xs" top="xs">
+      <Col xs={8} sm={8} md={7} lg={7}>
       <Card >
       <CardText className="table">
       <table>
@@ -101,13 +106,21 @@ componentDidMount(){
             <td>REJECTED</td>
             <td>{this.state.rejected}</td>
           </tr>
+          <tr>
+            <td>TOTAL ASSIGNMENTS SUBMITTED</td>
+            <td>{this.state.totalCount}</td>
+          </tr>
+          <tr>
+            <td>TOTAL POINTS</td>
+            <td>{this.state.totalPoints}</td>
+          </tr>
         </tbody>
           </table>
       </CardText>
       </Card>
       <br /><br />
       </Col>
-      <Col xs={8} sm={8} md={4} lg={3}>
+      {/* <Col xs={8} sm={8} md={4} lg={3}>
       <Card >
       <CardHeader
       title="Total Assignments Submitted" style={{backgroundColor: 'lightgrey',fontWeight: 'bold'}}
@@ -124,7 +137,7 @@ componentDidMount(){
       <CardTitle title={this.state.totalPoints} style={{textAlign:'center'}} />
       </Card>
       <br /><br />
-      </Col>
+      </Col> */}
       </Row>
       </Grid>
       <Divider />
