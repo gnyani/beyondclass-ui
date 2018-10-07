@@ -190,7 +190,7 @@ list(buffer){
     var date= new Date(this.state.createdDates[index])
   buffer.push(<div key={Date.now()+index}>
     <Grid fluid>
-    <Row around="xs" middle="xs">
+    <Row around="xs" middle="xs" className="formshadow">
     <Col xs={11} sm={11} md={11} lg={11}>
     <ListItem
       leftAvatar={<Avatar src={this.state.notificationPictureUrls[index]} />}
@@ -198,7 +198,7 @@ list(buffer){
       onTouchTap={this.handleRoute.bind(this,this.state.notificationType[index],index)}
       secondaryText={<p>{date.getDate()+"-"+(date.getMonth()+1)+"-"+date.getFullYear()+" at "+date.getHours()+":"+date.getMinutes()}</p>}
     />
-    <Divider inset={true}/>
+    {/* <Divider inset={true}/> */}
     </Col>
     <Col xs={1} sm={1} md={1} lg={1}>
     <IconMenu iconButtonElement={

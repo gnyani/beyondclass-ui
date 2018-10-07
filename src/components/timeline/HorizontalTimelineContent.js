@@ -698,6 +698,9 @@ getLikedUsers(i){
       <div>
      <div  style={{textAlign:'center'}} className="timeline">
         <br /> <br />
+        <Grid fluid>
+        <Row center="xs" around="xs" top="xs">
+        <Col xs={12} sm ={12} md={12} lg={12}>
         <TextField
         hintText="I guess you might wanna share something"
         value = {this.state.message}
@@ -708,8 +711,7 @@ getLikedUsers(i){
         rowsMax={4}
         style={{width:'60%'}}
         />
-        <Grid fluid>
-        <Row around="xs" top="xs">
+        </Col>
         <Col xs={12} sm ={8} md={5} lg={5} >
         <FlatButton
         label="Attach an Image"
