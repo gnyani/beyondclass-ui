@@ -1,11 +1,11 @@
 .material-icons {font-family: 'Material Icons';font-weight: normal;font-style: normal;font-size: 24px;  /* Preferred icon size */display: inline-block;line-height: 1;text-transform: none;letter-spacing: normal;word-wrap: normal;white-space: nowrap;direction: ltr;/* Support for all WebKit browsers. */-webkit-font-smoothing: antialiased;/* Support for Safari and Chrome. */text-rendering: optimizeLegibility;/* Support for Firefox. */-moz-osx-font-smoothing: grayscale;/* Support for IE. */font-feature-settings: 'liga';color:#8a7a7a;}
 .StudentAdda{ margin: 0;padding: 0;border: 0;font-size: 15px;vertical-align: baseline;background: transparent;}
 body,html {height: 100%;width:100%;overflow: hidden;margin: 0;outline: 0;margin: 0;padding: 0;min-width:initial;}
-.backgroundHome{height: 100%;width: 100%;position: absolute;background: url("studentAddaHome.jpg") no-repeat center center fixed;background-size: 100% 100%;}
+.backgroundHome{height: 100%;width: 100%;position: absolute; background: linear-gradient(to right, rgb(237, 66, 100), rgb(255, 237, 188))}
 body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
                font-size: 2em;letter-spacing: 0.07em;color: #39424d}
 .b-100{height:100%;width:100%}
-.signUpForm{background: #455A64;color: #FFCCBC;position: relative;top: 125%;border-radius: 10px}
+.signUpForm{color: white;position: absolute;top: 30%;border-radius: 7%}
 .table table {font-family: arial, sans-serif ;border-collapse: collapse ;width: 100% ;}
 .table td, th {border: 1px solid #ffffff ;text-align: left ;padding: 8px ;}
 .table tr:nth-child(even) {background-color: #dddddd ;}
@@ -104,9 +104,11 @@ body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic
 }
 .question{font-weight: bolder;}
 .studentAddaLogoContainer{margin-top: 1vmin;color: rgb(245, 124, 0);background-color: rgb(26, 35, 126);user-select: none;display: inline-flex;align-items: center;justify-content: center;font-size: 3.5vmin;border-radius: 50%;height: 45px;width: 45px;}
-.text{text-align: center;font-family: 'Roboto',sans-serif;font-size: 3.5vmin;letter-spacing: 0.5vmin;font-weight: 100;}
+.text{text-align: center;font-family: 'Roboto',sans-serif;font-size: 50px;letter-spacing: 0.5vmin;font-weight: bolder;margin-bottom:0px;}
+.signUpForm h3{text-align: center;font-family: 'Roboto',sans-serif;letter-spacing: 0.5vmin;}
 .studentAddaLogo{margin-top: 0.4vmin;color: white;background-color: #30b55b;user-select: none;display: inline-flex;align-items: center;justify-content: center;font-size: 3.5vmin;border-radius: 50%;height: 45px;width: 45px;}
-.signupButton{width: 65%!important;background-color: #2196F3 !important;color: white!important;border-radius: 1em!important;}
+.signupButton{padding-left:20px !important;width: 60%!important;background: url("googlelogo.png") 3px 4px no-repeat;background-size: 28px;background-color: white !important;color: black!important;border-radius: 1em!important;}
+.signupButton > div > span { text-transform: none!important;top: -1px !important }
 .UpdateProfile .button {margin-left: 40% !important;background-color: #30b55b !important;color: white!important;border-radius: 1em!important;}
 /*profilePicChange*/
 .img__wrap {position: relative;border-radius:50%;margin-left: 25%;margin-top: 12%;height: 14vmin;width: 14vmin;}
@@ -421,4 +423,9 @@ td{
   background: #30b55b !important;
   border-radius: 50px;
   box-shadow: 0px 3px 5px -1px rgba(0, 0, 0, 0.2), 0px 6px 10px 0px rgba(0, 0, 0, 0.14), 0px 1px 18px 0px rgba(0, 0, 0, 0.12)
+}
+@media only screen and (max-width: 425px){
+  .signupButton{
+    width: 100% !important;
+  }
 }
