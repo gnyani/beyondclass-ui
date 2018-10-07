@@ -135,8 +135,8 @@ var buffer = []
     {
     return(
       <Grid fluid>
-      <Row between="xs">
-      <Col xs={12} sm={12} md={10} lg={10}>
+      <Row between="xs" center="xs" className="shadow">
+      <Col xs={12} sm={12} md={12} lg={12}>
       <div>
       <div className="QuestionPapers">
        <div >
