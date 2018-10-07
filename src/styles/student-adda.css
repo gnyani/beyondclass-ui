@@ -5,7 +5,7 @@ body,html {height: 100%;width:100%;overflow: hidden;margin: 0;outline: 0;margin:
 body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
                font-size: 2em;letter-spacing: 0.07em;color: #39424d}
 .b-100{height:100%;width:100%}
-.signUpForm{color: white;position: relative;top: 50%;border-radius: 7%}
+.signUpForm{color: white;position: absolute;top: 30%;border-radius: 7%}
 .table table {font-family: arial, sans-serif ;border-collapse: collapse ;width: 100% ;}
 .table td, th {border: 1px solid #ffffff ;text-align: left ;padding: 8px ;}
 .table tr:nth-child(even) {background-color: #dddddd ;}
@@ -108,7 +108,7 @@ body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic
 .signUpForm h3{text-align: center;font-family: 'Roboto',sans-serif;letter-spacing: 0.5vmin;}
 .studentAddaLogo{margin-top: 0.4vmin;color: white;background-color: #30b55b;user-select: none;display: inline-flex;align-items: center;justify-content: center;font-size: 3.5vmin;border-radius: 50%;height: 45px;width: 45px;}
 .signupButton{padding-left:20px !important;width: 60%!important;background: url("googlelogo.png") 3px 4px no-repeat;background-size: 28px;background-color: white !important;color: black!important;border-radius: 1em!important;}
-.signupButton > div > span { text-transform: capitalize !important;top: -1px !important }
+.signupButton > div > span { text-transform: none!important;top: -1px !important }
 .UpdateProfile .button {margin-left: 40% !important;background-color: #30b55b !important;color: white!important;border-radius: 1em!important;}
 /*profilePicChange*/
 .img__wrap {position: relative;border-radius:50%;margin-left: 25%;margin-top: 12%;height: 14vmin;width: 14vmin;}
