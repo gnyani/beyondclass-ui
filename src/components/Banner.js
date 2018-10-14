@@ -34,23 +34,24 @@ loginToolbar(){
   return(<div className="backgroundHome">
       <Grid fluid >
         <Row center="xs" >
-          <Col xs={12} sm={10} md={7} lg={5}>
               <Grid fluid className="signUpForm">
-                <Row>
-                    <Col xs={12} sm={12} md={12} lg={12}>
-                    <h2 className="text">Beyond Class</h2>
-                    <h3>Your Virtual Class room</h3>
+                <Row center="xs">
+                    <Col xs>
+                    <h1 className="text">BeyondClass</h1>
+                    <p>Your virtual class room</p>
                     </Col>
                 </Row>
+                <br /><br />
                 <Row>
                     <Col xs>
                 <form action= {loginUrl}>
-                  <FlatButton type="submit" label="SignIn to Workspace" className="signupButton"/> <br /><br />
+                  <FlatButton type="submit" label="SignIn to Workspace"
+                    labelStyle={{fontWeight: "600"}}
+                    className="signupButton"/> <br /><br />
                 </form>
                 </Col>
             </Row>
               </Grid>
-          </Col>
         </Row>
       </Grid>
       </div>
