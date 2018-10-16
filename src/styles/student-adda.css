@@ -1,7 +1,7 @@
 .material-icons {font-family: 'Material Icons';font-weight: normal;font-style: normal;font-size: 24px;  /* Preferred icon size */display: inline-block;line-height: 1;text-transform: none;letter-spacing: normal;word-wrap: normal;white-space: nowrap;direction: ltr;/* Support for all WebKit browsers. */-webkit-font-smoothing: antialiased;/* Support for Safari and Chrome. */text-rendering: optimizeLegibility;/* Support for Firefox. */-moz-osx-font-smoothing: grayscale;/* Support for IE. */font-feature-settings: 'liga';color:#8a7a7a;}
 .StudentAdda{ margin: 0;padding: 0;border: 0;font-size: 15px;vertical-align: baseline;background: transparent;}
 body,html {height: 100%;width:100%;overflow: hidden;margin: 0;outline: 0;margin: 0;padding: 0;min-width:initial;}
-.backgroundHome{height: 100%;width: 100%;position: absolute; background: linear-gradient(to bottom, rgb(67,141,225), rgb(73,202,247))}
+.backgroundHome{height: 100%;width: 100%;position: absolute; background: linear-gradient(to top right, rgb(67,141,225), rgb(73,202,247))}
 body .headings{ color: #444;text-align: center;padding: 0.1%;font-family: "Comic Sans MS",cursive,Comic Sans;font-weight: normal;
                font-size: 2em;letter-spacing: 0.07em;color: #39424d}
 .b-100{height:100%;width:100%}
