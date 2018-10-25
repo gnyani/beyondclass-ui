@@ -17,7 +17,7 @@ class RichTextEditorToolBarOnFocus extends Component {
           onEditorStateChange={this.props.onEditorStateChange.bind(this,this.props.questionNumber)}
           onContentStateChange={this.props.onContentStateChange.bind(this,this.props.questionNumber)}
           toolbar={{
-            options: ['inline', 'list','blockType','image','link','embedded','fontSize', 'fontFamily','emoji','colorPicker','history'],
+            options: ['inline', 'list','blockType','link','embedded','fontSize', 'fontFamily','emoji','colorPicker','history'],
             inline: { inDropdown: true },
             list: { inDropdown: true },
             textAlign: { inDropdown: true },

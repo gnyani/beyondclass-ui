@@ -17,7 +17,7 @@ class RichTextEditor extends Component {
           onEditorStateChange={this.props.onEditorStateChange}
           onContentStateChange={this.props.onContentStateChange}
           toolbar={{
-            options: ['inline', 'list','blockType','image','link','embedded','fontSize', 'fontFamily','emoji','colorPicker','history'],
+            options: ['inline', 'list','blockType','link','embedded','fontSize', 'fontFamily','emoji','colorPicker','history'],
             inline: { inDropdown: true },
             list: { inDropdown: true },
             textAlign: { inDropdown: true },

@@ -106,7 +106,7 @@ componentDidMount(){
           allinputs: response.inputs,
           alloutputs: response.outputs,
           numQuestions: response.numberOfQuesPerStudent,
-          thresholdarray: response.thresholdarray,
+          thresholdarray: response.thresholdarray || [],
           controlledDate: new Date(response.lastdate),
           postedToNetwork: response.postedToNetwork
         })
@@ -129,7 +129,7 @@ componentDidMount(){
         allinputs: response.inputs,
         alloutputs: response.outputs,
         numQuestions: response.numberOfQuesPerStudent,
-        thresholdarray: response.thresholdarray,
+        thresholdarray: response.thresholdarray || [],
         controlledDate: this.state.controlledDate,
         postedToNetwork: response.postedToNetwork
       })
