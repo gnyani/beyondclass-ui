@@ -455,7 +455,7 @@ addQuestion = () => {
   var question = this.state.questionValue
   if(question.trim() === "")
     notify.show("You cannot add empty Question","warning")
-  else if(this.state.inputs.length === 0)
+  else if(this.state.inputs.length === 0 || this.state.outputs.length === 0)
      notify.show("Please add atleast one test case for each question","warning")
   else
   {
@@ -676,6 +676,21 @@ if(this.state.isDataLoaded){
         <MenuItem value={3}  primaryText="Three" />
         <MenuItem value={4}  primaryText="Four" />
         <MenuItem value={5}  primaryText="Five" />
+        <MenuItem value={6}  primaryText="Six" />
+        <MenuItem value={7}  primaryText="Seven" />
+        <MenuItem value={8}  primaryText="Eight" />
+        <MenuItem value={9}  primaryText="Nine" />
+        <MenuItem value={10}  primaryText="Ten" />
+        <MenuItem value={11}  primaryText="Eleven" />
+        <MenuItem value={12}  primaryText="Twelve" />
+        <MenuItem value={13}  primaryText="Thirteen" />
+        <MenuItem value={14}  primaryText="Fourteen" />
+        <MenuItem value={15}  primaryText="Fifteen" />
+        <MenuItem value={16}  primaryText="Sixteen" />
+        <MenuItem value={17}  primaryText="Seventeen" />
+        <MenuItem value={18}  primaryText="Eighteen" />
+        <MenuItem value={19}  primaryText="Nineteen" />
+        <MenuItem value={20}  primaryText="Twenty" />
       </SelectField>
       </Col>
       </Row>
