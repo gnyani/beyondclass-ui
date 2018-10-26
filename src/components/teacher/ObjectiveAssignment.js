@@ -634,7 +634,7 @@ if(this.state.isDataLoaded){
       <SelectField
         value={this.state.numQuestions}
         onChange={this.handleNumberChange}
-        style={{width: '70%'}}
+        style={{width: '50%'}}
         maxHeight={200}
       >
         <MenuItem value={1}  primaryText="One" />

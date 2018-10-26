@@ -670,6 +670,7 @@ if(this.state.isDataLoaded){
         value={this.state.numQuestions}
         onChange={this.handleNumberChange}
         style={{width: '50%'}}
+        maxHeight={200}
       >
         <MenuItem value={1}  primaryText="One" />
         <MenuItem value={2}  primaryText="Two" />
